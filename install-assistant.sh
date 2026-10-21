@@ -358,6 +358,24 @@ choose_server_ip() {
     printf '%s\n' "$(translate 'Bitte eine angezeigte Nummer oder q wählen.' 'Please choose a listed number or q.')"
   done
 }
+choose_install_source() {
+  local choice version
+  version=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$SOURCE/install/release-image.json") || return
+  printf '\n%s\n' "$(translate 'HUE2LOX INSTALLIEREN' 'INSTALL HUE2LOX')"
+  printf '%s\n' "$(translate "1  Fertiges Image $version von Docker Hub (Standard)" "1  Prebuilt image $version from Docker Hub (default)")"
+  printf '%s\n' "$(translate "2  Fertiges Image $version von GHCR" "2  Prebuilt image $version from GHCR")"
+  printf '%s\n' "$(translate '3  Lokal aus diesen Quelldateien bauen (Entwicklung / main testen)' '3  Build these source files locally (development / testing main)')"
+  printf '%s\n' "$(translate 'Fertige Images enthalten die veröffentlichte Version; Änderungen aus main nur mit Option 3 testen.' 'Prebuilt images contain the published version; choose option 3 to test changes from main.')"
+  while true; do
+    read -r -p "$(translate 'Installationsweg [1]: ' 'Installation method [1]: ')" choice || return 1
+    case "${choice:-1}" in
+      1) INSTALL_SOURCE=image; INSTALL_REGISTRY=dockerhub; return;;
+      2) INSTALL_SOURCE=image; INSTALL_REGISTRY=ghcr; return;;
+      3) INSTALL_SOURCE=build; INSTALL_REGISTRY=dockerhub; return;;
+      *) printf '%s\n' "$(translate 'Bitte 1, 2 oder 3 wählen.' 'Please choose 1, 2 or 3.')";;
+    esac
+  done
+}
 prepare_setup() {
   root_required || return
   if [[ -e "$DEST" || -L "$DEST" ]]; then
@@ -365,6 +383,7 @@ prepare_setup() {
   fi
   command -v python3 >/dev/null || { printf "$(translate 'Python fehlt: zuerst Grundpakete auswählen.\n' 'Python is missing: select Base packages first.\n')"; return 1; }
   local ip port mode scheme public_url
+  choose_install_source || return
   printf '\n%s\n' "$(translate 'VERBINDUNG ZUR WEB-OBERFLÄCHE' 'WEB INTERFACE CONNECTION')"
   printf '%s\n' "$(translate '1  HTTPS direkt – Zertifikat automatisch erzeugen (Standard)' '1  Direct HTTPS – generate a certificate automatically (default)')"
   printf '%s\n' "$(translate '2  HTTP – zum Beispiel hinter Traefik / Reverse Proxy' '2  HTTP – for example behind Traefik / a reverse proxy')"
@@ -396,13 +415,13 @@ except (ValueError,OSError) as error:
     sys.exit(('Address/port unavailable: ' if en else 'Adresse/Port nicht nutzbar: ')+str(error))
 PY
   confirm "$(translate "Neue Installation in $DEST für $public_url vorbereiten?" "Prepare a new installation in $DEST for $public_url?")" || return 0
-  run python3 "$SOURCE/scripts/prepare-install.py" --destination "$DEST" --host "$ip" --port "$port" --scheme "$scheme" --public-url "$public_url" || return
+  run python3 "$SOURCE/scripts/prepare-install.py" --destination "$DEST" --host "$ip" --port "$port" --scheme "$scheme" --public-url "$public_url" --source "$INSTALL_SOURCE" --registry "$INSTALL_REGISTRY" || return
   feedback success "$(translate 'Vorbereitung abgeschlossen. Weiter mit Schritt 6.' 'Preparation complete. Continue with step 6.')"
 }
 start_setup() {
   root_required || return
   command -v python3 >/dev/null || { printf "$(translate 'Python fehlt: zuerst Grundpakete auswählen.\n' 'Python is missing: select Base packages first.\n')"; return 1; }
-  confirm "$(translate "Installation in $DEST bauen/starten und Verbindung prüfen?" "Build/start installation in $DEST and check the connection?")" || return 0
+  confirm "$(translate "Installation in $DEST mit dem gespeicherten Installationsweg starten und Verbindung prüfen?" "Start installation in $DEST using its saved installation method and check the connection?")" || return 0
   run python3 "$SOURCE/scripts/start-install.py" --destination "$DEST" || return
 }
 main() {

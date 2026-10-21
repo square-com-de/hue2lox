@@ -18,7 +18,7 @@ setup=importlib.util.module_from_spec(spec);spec.loader.exec_module(setup)
 def main():
     with tempfile.TemporaryDirectory(prefix='hue2lox-fresh-smoke-') as tmp:
         with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
-        root=setup.prepare(Path(tmp)/'instance','127.0.0.1',port)
+        root=setup.prepare(Path(tmp)/'instance','127.0.0.1',port,source='build')
         env=dict(os.environ,PORT=str(port),BIND_HOST='127.0.0.1',TLS_CERT=str(root/'certs/server.crt'),TLS_KEY=str(root/'certs/server.key'),HUE_STATE_DIR=str(root/'data'),HUE_REGISTRY_FILE=str(root/'data/registry.json'),HUE_ADMIN_AUTH_FILE=str(root/'data/admin_auth.json'),HUE_CONTROL_TOKEN_FILE=str(root/'secrets/control_token'),HUE_PUBLIC_URL=f'https://127.0.0.1:{port}',HUE_LEGACY_ENABLED='0',HUE_WRITES_ENABLED='0',HUE_COLOR_ENABLED='0',HUE_WHITE_ENABLED='0')
         base=env['HUE_PUBLIC_URL'];ctx=ssl.create_default_context(cafile=str(root/'certs/server.crt'))
         original_token=(root/'secrets/control_token').read_bytes();original_key=(root/'certs/server.key').read_bytes()

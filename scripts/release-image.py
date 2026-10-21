@@ -47,10 +47,17 @@ def plan(event, event_name, repository, commit):
             'commit': commit, 'release_id': release['id'], 'image': IMAGE, 'images': list(IMAGES)}
 
 
+def check_installer_version(version, path=None):
+    path = path or Path(__file__).resolve().parents[1]/'install/release-image.json'
+    if json.loads(path.read_text()).get('version') != version:
+        raise ValueError('Update install/release-image.json to the release version before tagging')
+
+
 def current_plan():
     event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
     commit = run('git', 'rev-parse', 'HEAD')
     result = plan(event, os.environ['GITHUB_EVENT_NAME'], os.environ['GITHUB_REPOSITORY'], commit)
+    check_installer_version(result['version'])
     if commit != os.environ['GITHUB_SHA']:
         raise ValueError('Checkout does not match the release workflow commit')
     if run('git', 'rev-parse', result['tag'] + '^{commit}') != commit:

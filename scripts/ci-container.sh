@@ -19,7 +19,7 @@ project="hue2lox-ci-$$"
 compose() { docker compose --project-directory "$test_root/instance" -p "$project" -f "$test_root/instance/compose.yaml" -f "$test_root/image.yaml" "$@"; }
 cleanup() { compose down --remove-orphans >/dev/null 2>&1 || true; rm -rf -- "$test_root"; }
 trap cleanup EXIT HUP INT TERM
-python3 "$repo/scripts/prepare-install.py" --destination "$test_root/instance" --host 127.0.0.1 --port 18443
+python3 "$repo/scripts/prepare-install.py" --source build --destination "$test_root/instance" --host 127.0.0.1 --port 18443
 printf 'services:\n  hue2lox:\n    image: hue2lox-ci:check\n' > "$test_root/image.yaml"
 compose config --quiet
 compose up -d --build --wait --wait-timeout 120
@@ -56,7 +56,7 @@ echo 'PASS: fresh Docker build, health, non-root user, read-only application, HT
 
 # Prepare a separate HTTP backend without certificate files or TLS variables.
 compose down
-python3 "$repo/scripts/prepare-install.py" --destination "$test_root/http" --host 127.0.0.1 --port 18444 --scheme http --public-url https://hue.example.org
+python3 "$repo/scripts/prepare-install.py" --source build --destination "$test_root/http" --host 127.0.0.1 --port 18444 --scheme http --public-url https://hue.example.org
 # Reuse the tested image through the generated HTTP Compose file.
 http_compose() { docker compose --project-directory "$test_root/http" -p "$project-http" -f "$test_root/http/compose.yaml" -f "$test_root/image.yaml" "$@"; }
 trap 'http_compose down --remove-orphans >/dev/null 2>&1 || true; cleanup' EXIT HUP INT TERM
