@@ -10,6 +10,7 @@ import platform
 from pathlib import Path
 import re
 import sys
+import sysconfig
 
 
 def apk_packages(text):
@@ -27,12 +28,16 @@ def apk_packages(text):
     return sorted(result, key=lambda package: package['name'])
 
 
+def python_library_roots():
+    return sorted({Path(sysconfig.get_path(key)) for key in ('stdlib', 'purelib', 'platlib')})
+
+
 def inventory():
     database = Path('/lib/apk/db/installed')
     if not database.is_file():
         raise SystemExit('Expected the Alpine package database in the candidate image')
     files = {}
-    roots = [Path('/usr/share/licenses'), Path('/usr/local/lib/python3.12'), Path('/app')]
+    roots = [Path('/usr/share/licenses'), *python_library_roots(), Path('/app')]
     for root in roots:
         if not root.exists():
             continue
@@ -52,7 +57,7 @@ def inventory():
                                 'license': dist.metadata.get('License-Expression') or dist.metadata.get('License'),
                                 'license_files': dist.metadata.get_all('License-File', [])})
     vendored = []
-    for vendor in Path('/usr/local/lib/python3.12').rglob('vendor.txt'):
+    for vendor in sorted({p for root in python_library_roots() for p in root.rglob('vendor.txt')}):
         for line in vendor.read_text().splitlines():
             match = re.match(r'\s*([\w.-]+)==([^\s;#]+)', line)
             if match:

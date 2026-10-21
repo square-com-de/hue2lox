@@ -9,10 +9,11 @@ repo=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
     -f "$repo/docker/compose.control.yaml" -f "$repo/docker/compose.color.yaml" \
     -f "$repo/docker/compose.white.yaml" config --quiet)
 # Also exercise the conventional docker build entry point, without device access.
-docker pull python:3.12-alpine
+base_image=$(sed -n 's/^FROM //p' "$repo/Dockerfile")
+docker pull "$base_image"
 docker build -t hue2lox-default-ci:check -f "$repo/Dockerfile" "$repo"
 docker run --rm --entrypoint python hue2lox-default-ci:check -c 'import app,json; assert json.load(open("/app/config/registry.json")) == {"schema_version":1,"bridges":[]}'
-docker image inspect python:3.12-alpine --format 'Base: {{json .RepoDigests}} {{.Os}}/{{.Architecture}}'
+docker image inspect "$base_image" --format 'Base: {{json .RepoDigests}} {{.Os}}/{{.Architecture}}'
 test_root=$(mktemp -d /tmp/hue2lox-ci.XXXXXXXX)
 project="hue2lox-ci-$$"
 compose() { docker compose --project-directory "$test_root/instance" -p "$project" -f "$test_root/instance/compose.yaml" -f "$test_root/image.yaml" "$@"; }

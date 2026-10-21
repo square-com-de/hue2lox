@@ -1,7 +1,7 @@
 [
   {
     "name": ".python-rundeps",
-    "version": "20261001.214925",
+    "version": "20261016.222653",
     "license": "",
     "origin": null,
     "commit": null,
@@ -99,33 +99,6 @@
     "arch": "x86_64"
   },
   {
-    "name": "keyutils-libs",
-    "version": "1.6.3-r4",
-    "license": "GPL-2.0-or-later AND LGPL-2.0-or-later",
-    "origin": "keyutils",
-    "commit": "8bac74716d06c84627ab02d101fd9d2bafd0a34c",
-    "url": "https://people.redhat.com/~dhowells/keyutils/",
-    "arch": "x86_64"
-  },
-  {
-    "name": "krb5-conf",
-    "version": "1.0-r2",
-    "license": "MIT",
-    "origin": "krb5-conf",
-    "commit": "4a46b2cb955e25fd6d6f913794d35bc6d876aea9",
-    "url": "https://web.mit.edu/kerberos/www/",
-    "arch": "x86_64"
-  },
-  {
-    "name": "krb5-libs",
-    "version": "1.22.2-r1",
-    "license": "MIT",
-    "origin": "krb5",
-    "commit": "92bc4f0d36aa5307e819fb57167fc19952cf515f",
-    "url": "https://web.mit.edu/kerberos/www/",
-    "arch": "x86_64"
-  },
-  {
     "name": "libapk",
     "version": "3.0.8-r0",
     "license": "GPL-2.0-only",
@@ -141,15 +114,6 @@
     "origin": "bzip2",
     "commit": "33283848034c9885d984c8e8697c645c57324938",
     "url": "https://sourceware.org/bzip2/",
-    "arch": "x86_64"
-  },
-  {
-    "name": "libcom_err",
-    "version": "1.47.4-r0",
-    "license": "GPL-2.0-or-later AND LGPL-2.0-or-later AND BSD-3-Clause AND MIT",
-    "origin": "e2fsprogs",
-    "commit": "8683a6972cb245fbbdb535dad6435a9930bb9374",
-    "url": "https://e2fsprogs.sourceforge.net/",
     "arch": "x86_64"
   },
   {
@@ -171,12 +135,12 @@
     "arch": "x86_64"
   },
   {
-    "name": "libintl",
-    "version": "1.0-r0",
-    "license": "LGPL-2.1-or-later",
-    "origin": "gettext",
-    "commit": "a0b12dbf67fb047e79a1b76c6dfe6f2904d0d391",
-    "url": "https://www.gnu.org/software/gettext/gettext.html",
+    "name": "libgcc",
+    "version": "15.2.0-r5",
+    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+    "origin": "gcc",
+    "commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+    "url": "https://gcc.gnu.org",
     "arch": "x86_64"
   },
   {
@@ -186,15 +150,6 @@
     "origin": "ncurses",
     "commit": "2cee8a7328d061418336ad327b512d96bcd7bc5e",
     "url": "https://invisible-island.net/ncurses/",
-    "arch": "x86_64"
-  },
-  {
-    "name": "libnsl",
-    "version": "2.0.1-r2",
-    "license": "LGPL-2.0-or-later",
-    "origin": "libnsl",
-    "commit": "a9e2a2dc46f377eb25884f7fea9834492de7f518",
-    "url": "https://github.com/thkukuk/libnsl",
     "arch": "x86_64"
   },
   {
@@ -216,21 +171,12 @@
     "arch": "x86_64"
   },
   {
-    "name": "libtirpc",
-    "version": "1.3.5-r1",
-    "license": "BSD-3-Clause",
-    "origin": "libtirpc",
-    "commit": "4519a8c0bafdd843397d13a9146c906ff64a6c2f",
-    "url": "https://sourceforge.net/projects/libtirpc/",
-    "arch": "x86_64"
-  },
-  {
-    "name": "libtirpc-conf",
-    "version": "1.3.5-r1",
-    "license": "BSD-3-Clause",
-    "origin": "libtirpc",
-    "commit": "4519a8c0bafdd843397d13a9146c906ff64a6c2f",
-    "url": "https://sourceforge.net/projects/libtirpc/",
+    "name": "libstdc++",
+    "version": "15.2.0-r5",
+    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+    "origin": "gcc",
+    "commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+    "url": "https://gcc.gnu.org",
     "arch": "x86_64"
   },
   {
@@ -243,12 +189,12 @@
     "arch": "x86_64"
   },
   {
-    "name": "libverto",
-    "version": "0.3.2-r2",
-    "license": "MIT",
-    "origin": "libverto",
-    "commit": "84a227baf001b6e0208e3352b294e4d7a40e93de",
-    "url": "https://github.com/latchset/libverto",
+    "name": "mpdecimal",
+    "version": "4.0.1-r0",
+    "license": "BSD-2-Clause",
+    "origin": "mpdecimal",
+    "commit": "c0519b85456e9b838e3142e1d233aab0b433b476",
+    "url": "https://www.bytereef.org/mpdecimal/index.html",
     "arch": "x86_64"
   },
   {
@@ -316,10 +262,10 @@
   },
   {
     "name": "tzdata",
-    "version": "2026d-r0",
+    "version": "2026e-r0",
     "license": "Public-Domain",
     "origin": "tzdata",
-    "commit": "a19caf9fe771707618d4d9e4fa2dd9db8155b461",
+    "commit": "faa135a1a22c90309bf381766a7cc47490dea786",
     "url": "https://www.iana.org/time-zones",
     "arch": "x86_64"
   },
@@ -334,11 +280,20 @@
   },
   {
     "name": "zlib",
-    "version": "1.3.2-r0",
+    "version": "1.3.2-r1",
     "license": "Zlib",
     "origin": "zlib",
-    "commit": "f248b33b5943c7dc69bf691031d7612ab2e8ed93",
+    "commit": "0afa2da0e8c8051c6f8f64a7a388e5a259904245",
     "url": "https://zlib.net/",
+    "arch": "x86_64"
+  },
+  {
+    "name": "zstd-libs",
+    "version": "1.5.7-r2",
+    "license": "BSD-3-Clause OR GPL-2.0-or-later",
+    "origin": "zstd",
+    "commit": "3c6e2ee2b16f403d53eab39c4426eb61f003c322",
+    "url": "https://facebook.github.io/zstd/",
     "arch": "x86_64"
   }
 ]

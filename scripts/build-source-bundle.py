@@ -139,7 +139,8 @@ def component_map(output, notices):
                 if not row['source_files'] or not row['license_files']:
                     raise ValueError('Unmapped runtime package: ' + row['name'])
             records.append(row)
-    for name, version in (('python', '3.12.15'), ('pip', '25.0.1'), ('typing_extensions', '4.12.2')):
+    for source in read('python-sources.json'):
+        name, version = source['name'], source['version']
         records.append(dict(name=name, version=version, platforms=['linux/amd64', 'linux/arm64'],
                             source_files=[p.relative_to(output).as_posix() for p in (output / 'sources' / name).glob('*')],
                             license_files=notices[name]))
@@ -147,7 +148,7 @@ def component_map(output, notices):
     with tarfile.open(pip_archive) as tf:
         manifest = next(m for m in tf if m.name.endswith('/pip/_vendor/vendor.txt'))
         text = tf.extractfile(manifest).read().decode()
-    aliases = {'pyproject-hooks': 'pyproject_hooks', 'setuptools': 'pkg_resources'}
+    aliases = {'pyproject-hooks': 'pyproject_hooks', 'setuptools': 'pkg_resources', 'tomli-w': 'tomli_w'}
     for name, version in parse_vendors(text):
         directory = aliases.get(name.lower(), name.lower())
         paths = notices['typing_extensions'] if directory == 'typing_extensions' else [p for p in notices['pip'] if '/_vendor/' + directory + '/' in p]
@@ -161,7 +162,16 @@ def component_map(output, notices):
     return records
 
 
+def validate_base():
+    base = read('base-image.json')
+    expected = 'FROM ' + base['image'] + '@' + base['index_digest']
+    for name in ('Dockerfile', 'docker/Dockerfile.status'):
+        if (ROOT / name).read_text().splitlines()[0] != expected:
+            raise ValueError('Docker base differs from source locks: ' + name)
+
+
 def assemble(output, cache=None, evidence=None):
+    validate_base()
     output.mkdir(parents=True, exist_ok=False)
     with ThreadPoolExecutor(max_workers=6) as pool:
         list(pool.map(lambda job: fetch(job, output, cache), source_jobs()))
