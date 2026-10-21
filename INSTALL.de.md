@@ -116,6 +116,39 @@ Beim Start **Deutsch oder English** auswählen. Jeder verändernde Schritt fragt
 
 # Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt
 
+## HTTP oder HTTPS im Entwicklungs-Installer
+
+Diese Auswahl gibt es im aktuellen Installer aus `main`, **nicht im unveränderten RC3-ZIP**.
+In Schritt 5 wählst du:
+
+1. **HTTPS direkt (Standard):** Der Installer erzeugt ein selbstsigniertes Zertifikat
+   und einen Schlüssel. Öffne die angezeigte HTTPS-Adresse. Die Zertifikatserneuerung bleibt verfügbar.
+2. **HTTP, etwa hinter Traefik:** Der Installer erzeugt kein Serverzertifikat und lässt
+   beide TLS-Variablen weg. Gib die Browser-Adresse an, z. B. `https://hue.example.org`,
+   ohne Pfad oder abschließenden Schrägstrich. Enter übernimmt die angezeigte direkte HTTP-Adresse.
+
+Beim Reverse Proxy leitest du die Browser-Adresse an `http://SERVER-IP:PORT` weiter,
+behältst den ursprünglichen Host-Header bei und verwaltest HTTPS/Zertifikate am Proxy.
+Die HTTP-Verbindung zum Backend ist unverschlüsselt; beschränke den Zugriff auf
+vertrauenswürdige Clients beziehungsweise den Proxy. Der Installer prüft das lokale
+Backend, nicht die Proxy-Konfiguration. Richte den Proxy ein, bevor du die HTTPS-
+Browser-Adresse öffnest. Eine HTTPS-Browser-Adresse verwendet sichere Session-Cookies,
+auch wenn das Backend HTTP nutzt. Die Zertifikatsprüfung der Hue Bridges bleibt in beiden Modi aktiv.
+
+Protokoll, Browser-Adresse und Installationsname werden gespeichert und beim Start
+wiederverwendet. Bestehende Installationen werden nicht umgestellt oder überschrieben.
+Wähle zum separaten Test einen neuen Ordner und einen freien Port. Vorbereitung per Skript:
+
+```sh
+python3 scripts/prepare-install.py --destination /opt/hue2lox-proxy \
+  --host 192.0.2.50 --port 18443 --scheme http --public-url https://hue.example.org
+```
+
+Ohne `--scheme` bleibt direktes HTTPS der Standard. Das Skript bereitet Dateien vor;
+starte anschließend mit Schritt 6 des Installers auf dem Server. Bei HTTP erfolgt die
+Zertifikatserneuerung am Proxy, nicht in Hue2Lox.
+
+
 ## 1. Voraussetzungen
 
 | Was? | Was du brauchst |

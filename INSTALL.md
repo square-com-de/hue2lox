@@ -4,6 +4,39 @@
 
 This guide installs **RC3** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
 
+## HTTP or HTTPS in the development installer
+
+This choice is available in the current `main` installer, **not in the unchanged RC3 ZIP**.
+In step 5 choose:
+
+1. **Direct HTTPS (default):** the installer creates a self-signed certificate and key.
+   Open the displayed HTTPS address. Certificate renewal remains available.
+2. **HTTP, for example behind Traefik:** the installer creates no server certificate
+   and omits both TLS variables. Enter the browser address, e.g. `https://hue.example.org`,
+   without a path or trailing slash. Press Enter to use the displayed direct HTTP address.
+
+For a reverse proxy, route that browser address to `http://SERVER-IP:PORT`, preserve
+its original Host header, and manage HTTPS/certificate renewal at the proxy.
+Backend HTTP is unencrypted; restrict access to trusted clients/the proxy.
+The installer checks the local backend, not the proxy configuration. Configure the
+proxy before opening the HTTPS browser address. HTTPS browser addresses use Secure
+session cookies even when the backend uses HTTP. Hue Bridge certificate validation
+remains enabled in both modes.
+
+The saved protocol, browser address and installation name are reused at start.
+Existing installations are not converted or overwritten. For a separate trial,
+choose a new directory and an unused port. For scripted preparation:
+
+```sh
+python3 scripts/prepare-install.py --destination /opt/hue2lox-proxy \
+  --host 192.0.2.50 --port 18443 --scheme http --public-url https://hue.example.org
+```
+
+Omitting `--scheme` retains direct HTTPS. The script prepares files; start through
+installer step 6 on the server. Certificate renewal on an HTTP installation is
+handled by the proxy, not Hue2Lox.
+
+
 ## Requirements and supported systems
 
 You need a Linux server or VM, its address and user account, root or sudo access, Internet access for packages and the Docker base image, and access to your Hue Bridge on the local network. Install the OS and SSH first; the installer cannot establish an SSH connection to a server without SSH. macOS and Windows are clients, not installation targets.

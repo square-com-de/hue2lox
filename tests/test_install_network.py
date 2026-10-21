@@ -14,7 +14,17 @@ class NetworkHealthTests(unittest.TestCase):
         command=json.loads(line)
         response=Mock(status=200)
         response.read.return_value=b'{"status":"ok"}'
-        with patch.dict(os.environ, {'BIND_HOST':'10.200.0.138','PORT':'19443'}), patch.object(ssl,'create_default_context') as context, patch.object(urllib.request,'urlopen',return_value=response) as request:
+        with patch.dict(os.environ, {'BIND_HOST':'10.200.0.138','PORT':'19443','TLS_CERT':'/certs/server.crt'}), patch.object(ssl,'create_default_context') as context, patch.object(urllib.request,'urlopen',return_value=response) as request:
             exec(command[3], {})
             request.assert_called_once_with('https://10.200.0.138:19443/health',context=context.return_value,timeout=3)
             context.assert_called_once_with(cafile='/certs/server.crt')
+
+    def test_http_health_does_not_load_certificate(self):
+        compose=(Path(__file__).resolve().parent.parent/'docker/compose.install.yaml').read_text()
+        command=json.loads(next(line.strip()[6:] for line in compose.splitlines() if line.strip().startswith('test: ')))
+        response=Mock(status=200)
+        response.read.return_value=b'{"status":"ok"}'
+        with patch.dict(os.environ, {'BIND_HOST':'127.0.0.1','PORT':'18444'}, clear=True), patch.object(ssl,'create_default_context') as context, patch.object(urllib.request,'urlopen',return_value=response) as request:
+            exec(command[3], {})
+            request.assert_called_once_with('http://127.0.0.1:18444/health',context=None,timeout=3)
+            context.assert_not_called()

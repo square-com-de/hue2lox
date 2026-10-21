@@ -34,7 +34,7 @@ services:
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
     healthcheck:
-      test: ["CMD", "python", "-c", "import os,ssl,urllib.request; c=ssl.create_default_context(cafile='/certs/server.crt'); r=urllib.request.urlopen('https://'+os.environ['BIND_HOST']+':'+os.environ['PORT']+'/health',context=c,timeout=3); assert r.status==200 and r.read()==b'{\"status\":\"ok\"}'"]
+      test: ["CMD", "python", "-c", "import os,ssl,urllib.request; t=os.environ.get('TLS_CERT'); c=ssl.create_default_context(cafile=t) if t else None; r=urllib.request.urlopen(('https://' if t else 'http://')+os.environ['BIND_HOST']+':'+os.environ['PORT']+'/health',context=c,timeout=3); assert r.status==200 and r.read()==b'{\"status\":\"ok\"}'"]
       interval: 30s
       timeout: 5s
       retries: 3

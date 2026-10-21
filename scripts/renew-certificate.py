@@ -15,6 +15,8 @@ FILES = ('.env', 'certs/server.crt', 'certs/server.key', 'health-test.crt')
 
 def renew(destination, host=None):
     dest = Path(destination).resolve()
+    if (dest/'.env').is_file() and 'HUE2LOX_SCHEME=http' in (dest/'.env').read_text().splitlines():
+        raise ValueError('HTTP installation: renew certificates at the reverse proxy instead')
     for name in FILES + ('compose.yaml', 'data/registry.json', 'data/admin_auth.json', 'secrets/control_token'):
         path = dest / name
         if not path.is_file() or path.is_symlink():

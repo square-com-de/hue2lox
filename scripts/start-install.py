@@ -16,8 +16,7 @@ import urllib.request
 
 def preflight(destination):
     dest = Path(destination).resolve()
-    required = ('compose.yaml', '.env', 'health-test.crt', 'certs/server.crt',
-                'certs/server.key', 'secrets/control_token', 'data/registry.json',
+    required = ('compose.yaml', '.env', 'secrets/control_token', 'data/registry.json',
                 'data/admin_auth.json')
     for name in required:
         if not (dest / name).is_file():
@@ -30,17 +29,31 @@ def preflight(destination):
     port = int(env.get('HUE2LOX_PORT', '0'))
     if not 1024 <= port <= 65535:
         raise ValueError('Invalid installation port.')
-    url = f'https://{host}:{port}'
-    if env.get('HUE_PUBLIC_URL') != url:
+    scheme = env.get('HUE2LOX_SCHEME', 'https')
+    if scheme not in ('http', 'https'): raise ValueError('Invalid installation protocol')
+    url = f'{scheme}://{host}:{port}'
+    if scheme == 'https' and env.get('HUE_PUBLIC_URL') != url:
         raise ValueError('Public URL and bind address disagree. Correct the installation before starting.')
+    if not re.fullmatch(r'https?://[A-Za-z0-9.-]+(?::[0-9]+)?', env.get('HUE_PUBLIC_URL', '')):
+        raise ValueError('Invalid browser URL; use an HTTP(S) origin without a path')
+    from urllib.parse import urlsplit
+    public = urlsplit(env['HUE_PUBLIC_URL'])
+    if public.port is not None and not 1 <= public.port <= 65535:
+        raise ValueError('Invalid browser URL port')
     # Port zero checks address ownership without conflicting with an already running instance.
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         try:
             sock.bind((host, 0))
         except OSError as error:
             raise ValueError('Configured IP does not belong to this server or cannot be bound.') from error
-    context = ssl.create_default_context(cafile=str(dest / 'health-test.crt'))
-    context.load_cert_chain(dest / 'certs/server.crt', dest / 'certs/server.key')
+    context = None
+    if scheme == 'https':
+        for name in ('health-test.crt', 'certs/server.crt', 'certs/server.key'):
+            if not (dest/name).is_file(): raise ValueError('Installation incomplete: ' + name)
+        context = ssl.create_default_context(cafile=str(dest / 'health-test.crt'))
+        context.load_cert_chain(dest / 'certs/server.crt', dest / 'certs/server.key')
+    elif 'TLS_CERT:' in (dest/'compose.yaml').read_text() or 'TLS_KEY:' in (dest/'compose.yaml').read_text():
+        raise ValueError('HTTP installation must omit both TLS variables')
     return dest, url, context
 
 
@@ -127,7 +140,7 @@ def start(destination):
                                label, *build], cwd=dest).returncode
         if code:
             raise subprocess.CalledProcessError(code, ['docker', 'compose', 'up'])
-        print('HTTPS health check …', flush=True)
+        print('HTTP(S) health check …', flush=True)
     else:
         subprocess.run(build, check=True, cwd=dest)
     # Verify the actual configured endpoint; never print configuration/secrets.
@@ -135,12 +148,16 @@ def start(destination):
         try:
             with urllib.request.urlopen(url + '/health', context=context, timeout=3) as response:
                 if response.status == 200 and response.read(256) == b'{"status":"ok"}':
-                    print_success(url)
+                    values = dict(line.split('=', 1) for line in (dest/'.env').read_text().splitlines() if '=' in line)
+                    print_success(values['HUE_PUBLIC_URL'])
+                    if values['HUE_PUBLIC_URL'] != url:
+                        print(('Backend checked: ' if os.environ.get('HUE2LOX_INSTALL_LANG') == 'en' else 'Backend geprüft: ') + url)
+                        print('Configure/check your reverse proxy separately.' if os.environ.get('HUE2LOX_INSTALL_LANG') == 'en' else 'Reverse Proxy separat einrichten und prüfen.')
                     return
         except (OSError, ValueError):
             pass
         time.sleep(2)
-    raise ValueError('Service did not pass HTTPS health check. Inspect logs for this installation; no success confirmed.')
+    raise ValueError('Service did not pass HTTP(S) health check. Inspect logs for this installation; no success confirmed.')
 
 
 if __name__ == '__main__':
