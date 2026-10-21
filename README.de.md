@@ -32,6 +32,18 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
+Wähle den Installationsweg, der zu dir passt:
+
+| Installationsweg | Für wen? | Status und Anleitung |
+| --- | --- | --- |
+| **Installer mit Docker** | Für Einsteiger: Der Assistent richtet Docker ein und baut Hue2Lox auf deinem Server. | **In RC3 verfügbar** · [Installationsanleitung](INSTALL.de.md) |
+| **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In Vorbereitung** · [Container-Anleitung (Vorschau, Englisch)](docs/DOCKER.md) |
+| **Python-Installer, ohne Docker** | Um Hue2Lox direkt als Dienst auf Debian zu betreiben. | **In Vorbereitung** · Anleitung folgt. |
+
+Das fertige GHCR-Image und der native Python-Installer sind noch nicht als veröffentlichte Installationswege verfügbar. Nutze vorerst den Docker-Installer unten: Er baut das Image lokal und benötigt kein fertiges Hue2Lox-Image.
+
+### Mit dem Docker-Installer loslegen (RC3)
+
 Du brauchst einen Linux-Server, eine VM oder einen Raspberry Pi mit unterstütztem 64-Bit-Betriebssystem, eine Hue Bridge und einen Loxone Miniserver für die Steuerung. Dein Mac oder Windows-PC begleitet dich bei der Einrichtung.
 
 1. **Installer starten:** Die [Installationsanleitung](INSTALL.de.md) führt dich durch Anmeldung am Server, direkten RC3-Download mit Prüfsumme und Start des Installers.
@@ -73,6 +85,7 @@ Details stehen in den [Release-Hinweisen](RELEASE.md) und den [dokumentierten Te
 | --- | --- |
 | Bedienung, Fehlerbehebung, Backup | [Handbuch](docs/MANUAL.de.md) |
 | Neue Testinstallation | [Installation](INSTALL.de.md) |
+| Fertiges Docker-Image — in Vorbereitung | [Container-Anleitung (Vorschau, Englisch)](docs/DOCKER.md) |
 | HTTP-Ausgänge und XML in Loxone | [Bebilderte Anleitung](docs/TUTORIAL.de.md) |
 | Architektur und Container | [Technik](docs/CONTAINER.md) |
 | Qualitätsprüfungen und Mitarbeit | [Entwicklung](CONTRIBUTING.md) |
