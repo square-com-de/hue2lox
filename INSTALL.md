@@ -49,7 +49,7 @@ You need a Linux server or VM, its address and user account, root or sudo access
 | DietPi based on Debian 12 / 13 | amd64, arm64 | Detection tested automatically; full platform acceptance pending |
 | Other Linux distributions | Install prerequisites manually; existing Docker and Compose can be reused | No general compatibility claim |
 
-A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. Images are built locally from source; no prebuilt Hue2Lox image is distributed.
+A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. This installer builds images locally from source. For the prebuilt RC4 image, use the separate [container guide](docs/DOCKER.md).
 
 ## 1. Connect to the server
 
