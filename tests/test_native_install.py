@@ -100,7 +100,13 @@ class NativePackageTests(unittest.TestCase):
     def test_expanded_member_limit_checked_before_reading_payload(self):
         info = tarfile.TarInfo('hue2lox-native/oversized')
         info.size = 32 * 1024 * 1024 + 1
-        digest = package(self.archive, extra=[(info, None)])
+        # Intentionally truncated: the size guard must reject this header before
+        # reading payload. Python 3.15's TAR writer refuses a missing fileobj.
+        import gzip
+        with gzip.open(self.archive, 'wb') as archive:
+            archive.write(info.tobuf())
+            archive.write(b'\0' * 1024)
+        digest = hashlib.sha256(self.archive.read_bytes()).hexdigest()
         with self.assertRaisesRegex(ValueError, 'large'):
             self.verify(digest)
         self.assertFalse(self.destination.exists())
