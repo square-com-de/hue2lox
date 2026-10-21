@@ -32,6 +32,18 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
+Choose the installation method that suits you:
+
+| Installation method | Who is it for? | Status and guide |
+| --- | --- | --- |
+| **Installer with Docker** | A guided setup for beginners. The assistant prepares Docker and builds Hue2Lox on your server. | **Available in RC3** · [Installation guide](INSTALL.md) |
+| **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **In preparation** · [Container guide (preview)](docs/DOCKER.md) |
+| **Python installer, without Docker** | For running Hue2Lox directly as a service on Debian. | **In preparation** · Installation guide to follow. |
+
+The prebuilt GHCR image and the native Python installer are not yet available as released installation methods. For now, use the Docker installer below; it builds the image locally and does not need a prebuilt Hue2Lox image.
+
+### Get started with the Docker installer (RC3)
+
 You need a Linux server, VM or Raspberry Pi with a supported 64-bit OS, a Hue Bridge and a Loxone Miniserver for control. Use your Mac or Windows PC to follow the setup guide.
 
 1. **Start the installer:** the [English installation guide](INSTALL.md) takes you through connecting to the server, downloading RC3 directly with its checksum and starting the installer.
@@ -73,7 +85,7 @@ See [release notes](RELEASE.md) and [documented test results](docs/TEST-RESULTS.
 | --- | --- |
 | Usage, troubleshooting and backup | [Manual](docs/MANUAL.md) |
 | Fresh test installation | [Installation](INSTALL.md) |
-| Docker image (Unraid, Synology, Compose) | [Container guide](docs/DOCKER.md) |
+| Prebuilt Docker image — in preparation | [Container guide (preview)](docs/DOCKER.md) |
 | Loxone HTTP outputs and XML | [Illustrated guide](docs/TUTORIAL.md) |
 | Architecture and container | [Technical reference (German)](docs/CONTAINER.md) |
 | Quality checks and contributing | [Development](CONTRIBUTING.md) |
