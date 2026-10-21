@@ -1,3 +1,5 @@
+Historical prototype implementation record. For the current source layout see CONTRIBUTING.md and scripts/install-status.sh; the selective copy/rollback commands below refer to the old layout.
+
 Read-only Hue Go update. No PUT, POST or control endpoint exists.
 GET /health remains exactly {"status":"ok"} and does not depend on bridge state.
 GET /hue-go/status reads current on/brightness, or returns HTTP 502 with a generic error.

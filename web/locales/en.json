@@ -366,5 +366,14 @@
   "Kompakte Lichtleiste": "Compact light bar",
   "Resonate-Wandleuchte": "Resonate wall light",
   "Filamentlampe": "Filament bulb",
-  "Hue-Modelltabelle (ZIP mit Lizenz)": "Hue model catalog (ZIP with license)"
+  "Hue-Modelltabelle (ZIP mit Lizenz)": "Hue model catalog (ZIP with license)",
+  "[Zahl außerhalb Diagnosebereich]": "[Number outside diagnostic range]",
+  "[Text ausgeblendet]": "[Text hidden]",
+  "[Falscher Datentyp]": "[Wrong data type]",
+  "[Verschachtelung ausgeblendet]": "[Nesting hidden]",
+  "[weitere Felder]": "[Other fields]",
+  "[Feld ausgeblendet]": "[Field hidden]",
+  "[ausgeblendet]": "[Hidden]",
+  "JSON ungültig: Zeile ": "Invalid JSON: line ",
+  ", Spalte ": ", column "
 }

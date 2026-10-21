@@ -2,7 +2,7 @@ services:
   hue2lox:
     build:
       context: .
-      dockerfile: Dockerfile.status
+      dockerfile: docker/Dockerfile.status
     restart: unless-stopped
     ports:
       - "${HUE2LOX_BIND_IP:-127.0.0.1}:8443:8443"

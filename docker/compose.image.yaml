@@ -1,0 +1,41 @@
+# Run the published image: no source checkout, no build, one data volume.
+# Works with plain `docker compose up -d` and with the Unraid Compose Manager.
+# Serves plain HTTP; put a reverse proxy in front for HTTPS.
+# Host networking lets Hue2Lox discover bridges on the LAN; it listens on PORT.
+services:
+  hue2lox:
+    # Channels: ":rc" = newest release candidate, ":latest" = newest stable release,
+    # exact version tags pin one release. This template is for the planned image distribution;
+    # no image is promised by the existing ZIP-only RC releases.
+    image: ghcr.io/square-com-de/hue2lox:rc
+    container_name: hue2lox
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      PORT: "18443"
+      # Address clients use to reach it (use https://... if a reverse proxy terminates TLS).
+      HUE_PUBLIC_URL: "http://192.168.0.10:18443"
+      # Optional initial admin password (default: admin). Only used on first start.
+      # HUE2LOX_ADMIN_PASSWORD: "change-me"
+      # Lamp control is on by default (control token: see the admin interface).
+      # Set HUE_WRITES_ENABLED to "0" to block all control (403 writes_disabled).
+      # COLOR/WHITE individually disable only the corresponding capability.
+      # HUE_WRITES_ENABLED: "0"   # switching and dimming (needed for all control)
+      # HUE_COLOR_ENABLED: "0"    # RGB
+      # HUE_WHITE_ENABLED: "0"    # tunable white
+    volumes:
+      # Credentials, control token and bridge registry. Back this up.
+      # A named volume starts out writable for the container's user. To use a host folder
+      # instead (e.g. /mnt/user/appdata/hue2lox/data), create it first and make it writable
+      # for UID/GID 10001: mkdir -p <dir> && chown 10001:10001 <dir>
+      - hue2lox-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  hue2lox-data:

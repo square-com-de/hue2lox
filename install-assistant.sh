@@ -102,6 +102,14 @@ status_row() {
   if [[ -t 1 && "${TERM:-dumb}" != dumb && -z "${NO_COLOR+x}" ]]; then reset='\033[0m'; else colour=; fi
   printf '  %b[%-7s]%b %-16s %s\n' "$colour" "$marker" "$reset" "$name" "$message"
 }
+welcome_heading() {
+  local colour= reset=
+  if [[ -t 1 && "${TERM:-dumb}" != dumb && -z "${NO_COLOR+x}" ]]; then
+    colour='\033[1;36m'; reset='\033[0m'
+  fi
+  printf '\n\n%b================================================\n  HUE2LOX INSTALLER\n  Willkommen / Welcome\n================================================%b\n\n' "$colour" "$reset"
+  printf '  Bitte Sprache wählen / Please select a language\n\n  [1] Deutsch\n  [2] English\n\n'
+}
 choose_language() {
   local language
   while true; do
@@ -389,6 +397,7 @@ main() {
   if [[ "${1:-}" == --check ]]; then status; return; fi
   if [[ -n "${1:-}" ]]; then printf "$(translate 'Aufruf: bash install-assistant.sh [--verbose] [--check]\n' 'Usage: bash install-assistant.sh [--verbose] [--check]\n')"; return 1; fi
   if [[ ! -t 0 ]]; then printf "$(translate 'Bitte interaktiv im Server-Terminal starten, nicht über eine Pipe.\n' 'Run interactively in the server terminal, not through a pipe.\n')"; return 1; fi
+  welcome_heading
   choose_language || return 0
   local choice
   while true; do
