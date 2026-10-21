@@ -1,11 +1,12 @@
 name: Prepare container images
-# No registry login or push: distribution remains blocked by RELEASE.md.
+# Read-only preparation. Only release-image.yml may publish these exact candidates.
 on:
   push:
     branches: [main]
     tags: ['v*']
   pull_request:
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 jobs:
@@ -28,6 +29,11 @@ jobs:
           push: false
           load: true
           tags: hue2lox-candidate:inventory
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=Apache-2.0
+            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}/blob/${{ github.sha }}/docs/GHCR-RELEASE.md
       - name: Inventory the exact image without network or application startup
         env:
           ARCH: ${{ matrix.arch }}
@@ -41,7 +47,50 @@ jobs:
             -B - < scripts/image-inventory.py > evidence/inventory.json
           cp Dockerfile evidence/
           cp compliance/base-image.json evidence/
-          sha256sum evidence/* > evidence/SHA256SUMS.txt
+      - name: Boot the exact platform candidate and check HTTP health
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          container=$(docker run -d --platform "linux/$ARCH" hue2lox-candidate:inventory)
+          trap 'docker rm -fv "$container" >/dev/null' EXIT
+          healthy=false
+          for attempt in $(seq 1 60); do
+            if docker exec "$container" python -c 'import urllib.request; assert urllib.request.urlopen("http://127.0.0.1:8443/health", timeout=2).status == 200'; then
+              healthy=true
+              break
+            fi
+            sleep 2
+          done
+          test "$healthy" = true
+      - name: Scan the exact platform image
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
+        with:
+          image-ref: hue2lox-candidate:inventory
+          scanners: vuln
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          format: json
+          output: evidence/vulnerabilities.json
+          exit-code: '1'
+      - name: Produce platform SBOM
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
+        with:
+          image-ref: hue2lox-candidate:inventory
+          format: spdx-json
+          output: evidence/sbom.spdx.json
+      - name: Seal evidence and retain release candidate
+        run: |
+          (cd evidence && sha256sum * > SHA256SUMS.txt)
+          docker save hue2lox-candidate:inventory | gzip > image.tar.gz
+          sha256sum image.tar.gz > image.tar.gz.sha256
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-image-${{ matrix.arch }}
+          path: |
+            image.tar.gz
+            image.tar.gz.sha256
+          if-no-files-found: error
+          retention-days: 7
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: image-evidence-${{ matrix.arch }}

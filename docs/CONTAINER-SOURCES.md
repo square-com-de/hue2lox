@@ -36,6 +36,9 @@ file checksum list. It refuses missing inputs and incomplete component mappings.
 
 ### Delivery with a future image release
 
+The [GHCR release runbook](GHCR-RELEASE.md) describes automated attachment and
+anonymous verification of these assets before image upload.
+
 Upload the archive and checksum as permanent assets beside the matching image
 release, together with the application source and per-platform image digests.
 Link them from the registry description and release notes. Verify anonymous

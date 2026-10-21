@@ -40,7 +40,10 @@ Isolated CI covers backup/restore, certificate renewal and an IP change. A fresh
 ## Future prebuilt image release gate
 
 Preparation status and per-platform evidence: [Container compliance](docs/IMAGE-COMPLIANCE.md).
-The image workflow currently builds and inventories candidates without pushing to any registry.
+The preparation workflow builds and inventories candidates without pushing to any registry.
+The separate [GHCR release workflow](docs/GHCR-RELEASE.md) is prepared for a future
+published release: tests, both platform scans and source-material checks gate
+publication. Merging it alone does not publish images or change RC3.
 
 Before changing the delivery model, complete and review the following for the
 exact image to be distributed:
