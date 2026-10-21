@@ -2,6 +2,8 @@ import copy
 import importlib.util
 import io
 import json
+import os
+import zipfile
 import subprocess
 import tempfile
 import unittest
@@ -127,6 +129,63 @@ class ReleaseTests(unittest.TestCase):
             self.assertFalse(any('gh' in c.args for c in reads.call_args_list))
             for c in commands.call_args_list:
                 self.assertIn('DOCKER_CONFIG', c.kwargs['env'])
+
+    def test_prepare_archives_the_commit_not_untracked_workspace_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path.cwd()
+            os.chdir(directory)
+            try:
+                subprocess.run(['git', 'init', '-q'], check=True)
+                Path('README.md').write_text('committed source')
+                subprocess.run(['git', 'add', 'README.md'], check=True)
+                subprocess.run(['git', '-c', 'user.name=Test', '-c', 'user.email=test@example.org',
+                                '-c', 'commit.gpgsign=false', 'commit', '-qm', 'fixture'], check=True)
+                commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+                Path('private-untracked.txt').write_text('not a release file')
+                Path('materials').mkdir()
+                Path('materials/hue2lox-base-sources.tar.gz').write_bytes(b'checked bundle')
+                Path('evidence/amd64').mkdir(parents=True)
+                Path('evidence/arm64').mkdir()
+                info = m.plan(event(), 'release', m.REPO, commit)
+                original_run = subprocess.run
+
+                def command(args, **kwargs):
+                    if args[0] == 'sha256sum':
+                        return subprocess.CompletedProcess(args, 0)
+                    return original_run(args, **kwargs)
+
+                with patch.object(m.subprocess, 'run', side_effect=command), \
+                     patch.object(m, 'verify_inventory', return_value='image-id'):
+                    assets = m.prepare(info)
+                with zipfile.ZipFile(assets / 'hue2lox-v1.0.0-rc.4.zip') as archive:
+                    self.assertEqual(archive.read('hue2lox-v1.0.0-rc.4/README.md'), b'committed source')
+                    self.assertFalse(any('private-untracked' in name for name in archive.namelist()))
+                for line in (assets / 'SHA256SUMS.txt').read_text().splitlines():
+                    expected, name = line.split('  ')
+                    self.assertEqual(m.digest(assets / name), expected)
+            finally:
+                os.chdir(previous)
+
+    def test_stable_promotion_requires_github_latest_and_public_verification(self):
+        info = m.plan(event('v1.0.0', False), 'release', m.REPO, SHA)
+        manifests = [{'Descriptor': {'platform': {'architecture': a}, 'digest': 'sha256:' + a}}
+                     for a in m.ARCHES]
+        for latest in ('v1.0.0', 'v1.1.0'):
+            with self.subTest(latest=latest), tempfile.TemporaryDirectory() as directory, \
+                 patch.object(m, 'run', side_effect=[json.dumps(manifests), 'image-id', 'image-id',
+                                                    json.dumps({'tag_name': latest})]), \
+                 patch.object(m.subprocess, 'run') as commands, \
+                 patch.object(m, 'verify_inventory', return_value='image-id'), \
+                 patch.object(m, 'ensure_asset'), \
+                 patch.object(m, 'Path', side_effect=lambda name: Path(directory) / name):
+                m.verify_public(info)
+                pushes = [c.args[0] for c in commands.call_args_list if 'push' in c.args[0]]
+                self.assertEqual(bool(pushes), latest == 'v1.0.0')
+        with patch.object(m, 'run', side_effect=RuntimeError('anonymous access denied')), \
+             patch.object(m.subprocess, 'run') as commands:
+            with self.assertRaises(RuntimeError):
+                m.verify_public(info)
+            commands.assert_not_called()
 
     def test_workflow_has_no_manual_publishing_path(self):
         text = (ROOT / '.github/workflows/release-image.yml').read_text()
