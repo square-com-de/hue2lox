@@ -11,9 +11,8 @@ import subprocess
 import tempfile
 
 SOURCE=Path(__file__).resolve().parent.parent
-CODE=('lamp_types.py','app.py','hue_client.py','color.py','dashboard.py','admin_auth.py',
-      'loxone_export.py','bridge_store.py','bridge_admin.py','scenes.py','discovery.py',
-      'request_monitor.py','Dockerfile.status','.dockerignore','LICENSE','NOTICE','THIRD-PARTY-NOTICES.md','INSTALL.md','RELEASE.md')
+CODE=('.dockerignore','LICENSE','NOTICE','THIRD-PARTY-NOTICES.md','INSTALL.md','RELEASE.md')
+
 
 def installation_name():
     adjectives = 'jolly happy clever sunny brave gentle merry lucky cosmic nifty calm bright speedy friendly playful curious dancing flying glowing magic smiling tiny mighty quiet silver golden bold cozy lively fancy swift purple'.split()
@@ -30,16 +29,16 @@ def prepare(destination,host,port=8443):
     if dest.exists() or dest.is_symlink():raise ValueError('Destination already exists; nothing changed')
     if not dest.parent.is_dir():raise ValueError('Destination parent must exist')
     if not shutil.which('openssl'):raise ValueError('OpenSSL is required')
-    spec=importlib.util.spec_from_file_location('fresh_admin',SOURCE/'admin_auth.py')
+    spec=importlib.util.spec_from_file_location('fresh_admin',SOURCE/'src/admin_auth.py')
     auth=importlib.util.module_from_spec(spec);spec.loader.exec_module(auth)
     work=Path(tempfile.mkdtemp(prefix='.hue2lox-setup-',dir=dest.parent))
     try:
         for file in CODE:shutil.copyfile(SOURCE/file,work/file);(work/file).chmod(0o644)
-        for directory in ('web','catalog','trust','install'):
+        for directory in ('src','docker','config','web','catalog','trust','install','docs'):
             shutil.copytree(SOURCE/directory,work/directory)
             for path in (work/directory).rglob('*'):path.chmod(0o755 if path.is_dir() else 0o644)
             (work/directory).chmod(0o755)
-        shutil.copyfile(SOURCE/'compose.install.yaml',work/'compose.yaml')
+        shutil.copyfile(SOURCE/'docker/compose.install.yaml',work/'compose.yaml')
         for directory in ('data','certs','secrets'):(work/directory).mkdir(mode=0o700)
         for path,value in [('data/registry.json',{'schema_version':1,'bridges':[]}),('data/admin_auth.json',auth.create_credentials('admin','admin'))]:
             (work/path).write_text(json.dumps(value));(work/path).chmod(0o600)

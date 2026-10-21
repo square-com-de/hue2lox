@@ -1,0 +1,46 @@
+{
+  "image": "python:3.12-alpine",
+  "index_digest": "sha256:1b668429b3511ab407d8e00648891631b0b1a4d7e15e3ca70f38ab5b91ad4ab4",
+  "platforms": [
+    {
+      "annotations": {
+        "com.docker.official-images.bashbrew.arch": "amd64",
+        "org.opencontainers.image.base.digest": "sha256:d56c381f961d307a21b3ca004cf1e3910f106644aefb1f43e654c8a56c4fd395",
+        "org.opencontainers.image.base.name": "alpine:3.24",
+        "org.opencontainers.image.created": "2026-10-01T21:44:38Z",
+        "org.opencontainers.image.revision": "2a3b794c223ab067d122719541cdd54a068732a5",
+        "org.opencontainers.image.source": "https://github.com/docker-library/python.git#2a3b794c223ab067d122719541cdd54a068732a5:3.12/alpine3.24",
+        "org.opencontainers.image.url": "https://hub.docker.com/_/python",
+        "org.opencontainers.image.version": "3.12.15-alpine3.24"
+      },
+      "digest": "sha256:2055081c860db8c842b663415b795b026e7e5cc63b59c5193fcc9997713ea5b8",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      "size": 1735
+    },
+    {
+      "annotations": {
+        "com.docker.official-images.bashbrew.arch": "arm64v8",
+        "org.opencontainers.image.base.digest": "sha256:260479a1cfaf304c4c20da7f8405d3ce313513dcd534bb743257bdd2fe0f3e2d",
+        "org.opencontainers.image.base.name": "alpine:3.24",
+        "org.opencontainers.image.created": "2026-10-01T21:47:36Z",
+        "org.opencontainers.image.revision": "2a3b794c223ab067d122719541cdd54a068732a5",
+        "org.opencontainers.image.source": "https://github.com/docker-library/python.git#2a3b794c223ab067d122719541cdd54a068732a5:3.12/alpine3.24",
+        "org.opencontainers.image.url": "https://hub.docker.com/_/python",
+        "org.opencontainers.image.version": "3.12.15-alpine3.24"
+      },
+      "digest": "sha256:a4ccdf11e73bd3f74e07f95e63f1b003467bb16cb77e942ddf45476c2cb8467c",
+      "mediaType": "application/vnd.oci.image.manifest.v1+json",
+      "platform": {
+        "architecture": "arm64",
+        "os": "linux",
+        "variant": "v8"
+      },
+      "size": 1737
+    }
+  ],
+  "status": "candidate-inventory-not-release-approval"
+}

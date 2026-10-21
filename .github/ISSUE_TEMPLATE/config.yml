@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security / Sicherheitsproblem
+    url: https://github.com/square-com-de/hue2lox/security/policy
+    about: Please follow the security policy; do not post credentials or exploitable details publicly.

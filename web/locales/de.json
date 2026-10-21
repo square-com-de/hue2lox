@@ -366,5 +366,14 @@
   "Kompakte Lichtleiste": "Kompakte Lichtleiste",
   "Resonate-Wandleuchte": "Resonate-Wandleuchte",
   "Filamentlampe": "Filamentlampe",
-  "Hue-Modelltabelle (ZIP mit Lizenz)": "Hue-Modelltabelle (ZIP mit Lizenz)"
+  "Hue-Modelltabelle (ZIP mit Lizenz)": "Hue-Modelltabelle (ZIP mit Lizenz)",
+  "[Zahl außerhalb Diagnosebereich]": "[Zahl außerhalb Diagnosebereich]",
+  "[Text ausgeblendet]": "[Text ausgeblendet]",
+  "[Falscher Datentyp]": "[Falscher Datentyp]",
+  "[Verschachtelung ausgeblendet]": "[Verschachtelung ausgeblendet]",
+  "[weitere Felder]": "[weitere Felder]",
+  "[Feld ausgeblendet]": "[Feld ausgeblendet]",
+  "[ausgeblendet]": "[ausgeblendet]",
+  "JSON ungültig: Zeile ": "JSON ungültig: Zeile ",
+  ", Spalte ": ", Spalte "
 }
