@@ -1,14 +1,14 @@
-# Wartung: Zertifikat, IP-Wechsel und Wiederherstellung
+# Maintenance: certificates, IP changes and recovery
 
-[English](MAINTENANCE.en.md)
+[Deutsch](MAINTENANCE.de.md)
 
-Diese Anleitung gilt für die mit `prepare-install.py` vorbereitete Installation ab dem Stand, der `scripts/renew-certificate.py` enthält. RC1 enthält dieses neue Werkzeug noch nicht. Für alte Prototyp-Installationen ist sie nicht geeignet. Alle Befehle laufen auf dem Linux-Zielserver. Pfade und Beispiel-IP anpassen; keine echte Installation für einen Test verwenden.
+This guide applies to installations prepared with `prepare-install.py` and a source version containing `scripts/renew-certificate.py`. RC1 does not contain this new tool. Legacy prototype installations are not supported. Run commands on the Linux target server, adjust paths/IPs, and use a disposable installation for testing.
 
-**Betriebsabnahme noch offen:** Der Ablauf ist für echte Browser-/Miniserververbindungen noch unbestätigt. Automatische Tests sind keine Betriebsfreigabe.
+**Operational acceptance pending:** This procedure remains unconfirmed for real browser/Miniserver connections. Automated tests are not operational approval.
 
-## Vorbereiten und vollständig sichern
+## Stop and take a complete backup
 
-`INSTANCE` ist der vom Installer gewählte Zielordner, `SOURCE` der entpackte neue Quellstand. Als root anmelden (`sudo -i` oder `su -`). Nur diese Compose-Installation stoppen; keine globalen Docker-Neustarts. Auch externe Neustart-Automationen für die Wartung pausieren.
+`INSTANCE` is the installation directory selected in the installer; `SOURCE` is the extracted new source tree. Become root using `sudo -i` or `su -`. Stop only this Compose installation and pause any external restart automation during maintenance.
 
 ```sh
 sudo -i
@@ -22,33 +22,33 @@ cp -a "$INSTANCE" "$BACKUP/instance"
 printf 'Backup: %s\n' "$BACKUP"
 ```
 
-Die Sicherung enthält private Bridge-Zugänge, Steuerungstoken, Passwortdaten und Zertifikatsschlüssel. Privat aufbewahren, bei Übertragung verschlüsseln; nicht an GitHub/Issues anhängen. `cp -a` erhält Rechte und Eigentümer. Zusätzlich den verwendeten Quellstand bzw. das Image und seine Version sichern, damit ein späterer Neubau nicht unbemerkt andere Abhängigkeiten verwendet. Der vollständige Zielordner enthält `.env`, Compose, `data`, `secrets`, `certs`, `health-test.crt` und Build-Dateien. Eine Sicherung nur von `registry.json` reicht nicht.
+The backup contains private bridge credentials, control tokens, password records and certificate keys. Keep it private, encrypt transfers and never attach it to GitHub/issues. `cp -a` preserves permissions and ownership. Also retain the source/image version so a later rebuild cannot silently introduce different dependencies. Back up the entire directory, including `.env`, Compose, `data`, `secrets`, `certs`, `health-test.crt` and build files. The registry alone is insufficient.
 
-## Zertifikat erneuern – gleiche IP
+## Renew the certificate at the same address
 
-Nach dem Backup bei gestopptem Dienst:
+After stopping and backing up:
 
 ```sh
 python3 "$SOURCE/scripts/renew-certificate.py" --destination "$INSTANCE"
 docker compose up -d --force-recreate --wait --wait-timeout 120
 ```
 
-Das Werkzeug erzeugt ein neues selbstsigniertes Zertifikat für 365 Tage. Es ersetzt Zertifikat, Schlüssel und `health-test.crt` gemeinsam mit der passenden `.env`; der private Schlüssel bleibt Modus 600 und im Container UID 10001 zugeordnet. Registry, Token, Passwortdaten, Port und Installationsname bleiben erhalten. Zusätzlich entsteht ein privater `.hue2lox-tls-backup-*`-Ordner neben der Installation. Bei einem Schreibfehler wird zurückgerollt; nach einem Stromausfall die vollständige Sicherung wiederherstellen.
+The tool creates a new self-signed certificate valid for 365 days. It replaces the certificate, key and `health-test.crt` along with the matching `.env`. The private key remains mode 600 and owned by container UID 10001. Registry, token, password records, port and installation name are preserved. A private `.hue2lox-tls-backup-*` directory is also retained beside the installation. Write failures roll back; after a power failure restore the complete backup.
 
-## IP-Adresse ändern
+## Change the IP address
 
-Zuerst eine feste Adresse/DHCP-Reservierung auf Server und Router einrichten. Das Werkzeug konfiguriert weder Netzwerk noch Firewall. Die neue Adresse muss dem Server bereits gehören. Nach Stop und Backup **anstelle** der normalen Erneuerung ausführen:
+First configure a fixed address/DHCP reservation on the server/router. The tool does not change networking or firewalls. The new address must already belong to the server. After stopping and backing up, run this **instead of** same-address renewal:
 
 ```sh
 python3 "$SOURCE/scripts/renew-certificate.py" --destination "$INSTANCE" --host 192.168.1.50
 docker compose up -d --force-recreate --wait --wait-timeout 120
 ```
 
-Dabei werden `HUE2LOX_BIND_IP`, `HUE_PUBLIC_URL`, Zertifikat-SAN und Healthcheck-Vertrauen konsistent geändert. Port und Projektname bleiben erhalten. Compose muss den Container neu erstellen; ein einfaches `restart` übernimmt eine geänderte Umgebung nicht.
+This updates `HUE2LOX_BIND_IP`, `HUE_PUBLIC_URL`, certificate SAN and healthcheck trust together, preserving the port and project name. Recreate the container: `restart` alone does not apply environment changes.
 
-## Nachkontrolle und Client-Vertrauen
+## Verify and update client trust
 
-IP/Port im folgenden Beispiel durch die Werte aus `.env` ersetzen:
+Replace the example IP/port with the values from `.env`:
 
 ```sh
 docker compose ps
@@ -56,11 +56,11 @@ openssl x509 -in certs/server.crt -noout -dates -ext subjectAltName
 curl --fail --cacert health-test.crt https://192.168.1.50:18443/health
 ```
 
-Danach im Browser unter der neuen URL anmelden: Bridge-Zuordnung, Lampen/Szenen und Einstellungen prüfen. Das neue selbstsignierte Zertifikat muss in verwendeten Clients erneut bewusst als vertrauenswürdig eingerichtet werden. Nicht mit `curl -k` die Zertifikatsprüfung umgehen. Bei IP-Wechsel auch Loxone-Ausgangsadressen, importierte Befehle und gespeicherte Browser-Links aktualisieren; eine reale Loxone-Schaltung gesondert prüfen. Die mitgelieferte **Hue-CA** betrifft die Verbindung zur Bridge und wird durch diese Wartung weder ersetzt noch entfernt.
+Sign in using the new browser URL and verify bridge associations, lights/scenes and settings. Configure trust for the new self-signed certificate in each client that requires it. Do not bypass certificate verification with `curl -k`. After an IP change, update Loxone output addresses, imported commands and browser bookmarks, then test an actual Loxone action separately. The bundled **Hue CA** verifies bridge connections and is not changed or removed by this procedure.
 
-## Vollständige Wiederherstellung
+## Restore the complete installation
 
-`BACKUP` auf den zuvor ausgegebenen Sicherungsordner setzen. Das Beispiel stellt denselben Zielpfad wieder her und behält den misslungenen Stand zur Untersuchung. Vorher sicherstellen, dass die in der Sicherung gespeicherte IP noch auf dem Server verfügbar ist; andernfalls nach dem Kopieren bei gestopptem Dienst den IP-Wechsel durchführen.
+Set `BACKUP` to the previously printed backup directory. This restores to the same installation path and retains the failed state for investigation. Ensure that the backed-up IP is still assigned to the server; otherwise apply the IP-change procedure after copying and before starting.
 
 ```sh
 cd "$INSTANCE"
@@ -72,8 +72,8 @@ cd "$INSTANCE"
 docker compose up -d --force-recreate --wait --wait-timeout 120
 ```
 
-Anschließend die Nachkontrolle wiederholen. Kein `docker compose down -v`, keine globale Docker-Bereinigung und keine Token-Neugenerierung nötig. Auf einem anderen Rechner dieselbe Architektur bzw. ein passendes gesichertes Image verwenden; Netzwerk und Portbelegung vorher prüfen.
+Repeat verification afterwards. No `docker compose down -v`, global Docker cleanup or token regeneration is needed. On another host, use the same architecture or a compatible retained image, and verify networking and port availability first.
 
-## Nachweis und Grenzen
+## Evidence and limits
 
-Automatische Tests verwenden nur temporäre Installationen: echte Zertifikate, Schreibfehler-Rollback, Ablehnung eines belegten Ports und Erhalt privater Zustandsdateien. Linux-Docker-CI prüft Erneuerung, Wechsel auf eine zweite Loopback-IP, HTTPS/Login und vollständige Wiederherstellung. Das ersetzt nicht die Abnahme mit dem eigenen Browser und Loxone-Miniserver. Laufende Installationen werden von diesen Tests nicht berührt.
+Automated tests use temporary installations only: real certificates, rollback on write failure, occupied-port refusal and preserved private state. Linux Docker CI exercises renewal, a second loopback address, HTTPS/login and complete restoration. This does not replace acceptance testing with your browser and Loxone Miniserver. Tests do not access running installations.

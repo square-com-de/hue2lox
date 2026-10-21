@@ -1,0 +1,27 @@
+[
+  {
+    "path": "supplements/MIT.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.26.0/text/MIT.txt",
+    "sha256": "6d7c9e9d7d12c8d3753bdb24417b84819ba4d6c2f025c37948113d86dc81eef9"
+  },
+  {
+    "path": "supplements/MPL-2.0.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.26.0/text/MPL-2.0.txt",
+    "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172"
+  },
+  {
+    "path": "supplements/GPL-2.0-only.txt",
+    "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.26.0/text/GPL-2.0-only.txt",
+    "sha256": "aaf135472f81c5b4a0dca9367e5bb5e9750032b5bebe5442b36e4c0a47430df3"
+  },
+  {
+    "path": "supplements/python.Dockerfile",
+    "url": "https://raw.githubusercontent.com/docker-library/python/ce73ea7cebf01824125c30c20cd1acbde9b364ec/3.15/alpine3.24/Dockerfile",
+    "sha256": "2958bf1a8c33608008223b4d2011c94bedac7164d99a1dab78c72073a0f81e5c"
+  },
+  {
+    "path": "supplements/python-image.LICENSE",
+    "url": "https://raw.githubusercontent.com/docker-library/python/ce73ea7cebf01824125c30c20cd1acbde9b364ec/LICENSE",
+    "sha256": "0a3ffdfc4f368b76ae1140b5fbe2f2f69ee76ee00a3024e8a09ca9b2e265186f"
+  }
+]

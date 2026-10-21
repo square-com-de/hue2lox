@@ -102,6 +102,14 @@ status_row() {
   if [[ -t 1 && "${TERM:-dumb}" != dumb && -z "${NO_COLOR+x}" ]]; then reset='\033[0m'; else colour=; fi
   printf '  %b[%-7s]%b %-16s %s\n' "$colour" "$marker" "$reset" "$name" "$message"
 }
+welcome_heading() {
+  local colour= reset=
+  if [[ -t 1 && "${TERM:-dumb}" != dumb && -z "${NO_COLOR+x}" ]]; then
+    colour='\033[1;36m'; reset='\033[0m'
+  fi
+  printf '\n\n%b================================================\n  HUE2LOX INSTALLER\n  Willkommen / Welcome\n================================================%b\n\n' "$colour" "$reset"
+  printf '  Bitte Sprache wählen / Please select a language\n\n  [1] Deutsch\n  [2] English\n\n'
+}
 choose_language() {
   local language
   while true; do
@@ -356,12 +364,26 @@ prepare_setup() {
     printf "$(translate 'Ziel %s existiert bereits. Schritt Starten wählen oder unter Fehlerbehebung nachlesen. Nichts überschrieben.\n' 'Destination %s already exists. Choose Start or see Troubleshooting. Nothing was overwritten.\n')" "$DEST"; return 1
   fi
   command -v python3 >/dev/null || { printf "$(translate 'Python fehlt: zuerst Grundpakete auswählen.\n' 'Python is missing: select Base packages first.\n')"; return 1; }
-  command -v openssl >/dev/null || { printf "$(translate 'OpenSSL fehlt: zuerst Grundpakete auswählen.\n' 'OpenSSL is missing: select Base packages first.\n')"; return 1; }
-  local ip port
+  local ip port mode scheme public_url
+  printf '\n%s\n' "$(translate 'VERBINDUNG ZUR WEB-OBERFLÄCHE' 'WEB INTERFACE CONNECTION')"
+  printf '%s\n' "$(translate '1  HTTPS direkt – Zertifikat automatisch erzeugen (Standard)' '1  Direct HTTPS – generate a certificate automatically (default)')"
+  printf '%s\n' "$(translate '2  HTTP – zum Beispiel hinter Traefik / Reverse Proxy' '2  HTTP – for example behind Traefik / a reverse proxy')"
+  while true; do
+    read -r -p "$(translate 'Verbindung [1]: ' 'Connection [1]: ')" mode || return 1
+    case "${mode:-1}" in 1) scheme=https; break;; 2) scheme=http; break;; *) printf '%s\n' "$(translate 'Bitte 1 oder 2 wählen.' 'Please choose 1 or 2.')";; esac
+  done
+  if [[ "$scheme" == http ]]; then
+    feedback info "$(translate 'HTTP zum Backend ist unverschlüsselt. Bei einem Proxy übernimmt dieser HTTPS.' 'HTTP to the backend is unencrypted. With a proxy, the proxy handles HTTPS.')"
+  fi
   choose_server_ip || return
   ip=$SELECTED_IP
   read -r -p "$(translate 'Web-Port [18443]: ' 'Web port [18443]: ')" port
   port=${port:-18443}
+  public_url="$scheme://$ip:$port"
+  if [[ "$scheme" == http ]]; then
+    read -r -p "$(translate "Browser-Adresse, z. B. https://hue.example.org [$public_url]: " "Browser address, e.g. https://hue.example.org [$public_url]: ")" public_url || return 1
+    public_url=${public_url:-http://$ip:$port}
+  fi
   # Validate address ownership and availability before creating files or certificates.
   python3 - "$ip" "$port" <<'PY' || return
 import ipaddress,socket,sys,os
@@ -373,14 +395,14 @@ try:
 except (ValueError,OSError) as error:
     sys.exit(('Address/port unavailable: ' if en else 'Adresse/Port nicht nutzbar: ')+str(error))
 PY
-  confirm "$(translate "Neue Installation in $DEST für https://$ip:$port vorbereiten?" "Prepare a new installation in $DEST for https://$ip:$port?")" || return 0
-  run python3 "$SOURCE/scripts/prepare-install.py" --destination "$DEST" --host "$ip" --port "$port" || return
+  confirm "$(translate "Neue Installation in $DEST für $public_url vorbereiten?" "Prepare a new installation in $DEST for $public_url?")" || return 0
+  run python3 "$SOURCE/scripts/prepare-install.py" --destination "$DEST" --host "$ip" --port "$port" --scheme "$scheme" --public-url "$public_url" || return
   feedback success "$(translate 'Vorbereitung abgeschlossen. Weiter mit Schritt 6.' 'Preparation complete. Continue with step 6.')"
 }
 start_setup() {
   root_required || return
   command -v python3 >/dev/null || { printf "$(translate 'Python fehlt: zuerst Grundpakete auswählen.\n' 'Python is missing: select Base packages first.\n')"; return 1; }
-  confirm "$(translate "Installation in $DEST bauen/starten und HTTPS prüfen?" "Build/start installation in $DEST and check HTTPS?")" || return 0
+  confirm "$(translate "Installation in $DEST bauen/starten und Verbindung prüfen?" "Build/start installation in $DEST and check the connection?")" || return 0
   run python3 "$SOURCE/scripts/start-install.py" --destination "$DEST" || return
 }
 main() {
@@ -389,6 +411,7 @@ main() {
   if [[ "${1:-}" == --check ]]; then status; return; fi
   if [[ -n "${1:-}" ]]; then printf "$(translate 'Aufruf: bash install-assistant.sh [--verbose] [--check]\n' 'Usage: bash install-assistant.sh [--verbose] [--check]\n')"; return 1; fi
   if [[ ! -t 0 ]]; then printf "$(translate 'Bitte interaktiv im Server-Terminal starten, nicht über eine Pipe.\n' 'Run interactively in the server terminal, not through a pipe.\n')"; return 1; fi
+  welcome_heading
   choose_language || return 0
   local choice
   while true; do

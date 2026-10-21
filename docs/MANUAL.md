@@ -1,65 +1,65 @@
-# Hue2Lox – Handbuch
+# Hue2Lox – user manual
 
-[Startseite](../README.md) · [English](MANUAL.en.md) · [Installation](../INSTALL.md)
+[Home](../README.md) · [Deutsch](MANUAL.de.md) · [Installation](../INSTALL.md)
 
-## 1. Zugang und Sprache
+## Access and language
 
-Öffne die HTTPS-Adresse deiner Installation. Bei einer neuen Einrichtung gilt `admin` / `admin`; das Passwort kann im Kopfbereich geändert werden. Die Browserwarnung verschwindet erst, wenn das passende Zertifikat als vertrauenswürdig eingerichtet wurde. Den Fingerabdruck am Server prüfen; eine neue Installation bekommt ihr eigenes Zertifikat. Details: [Zertifikat erneuern, IP wechseln, sichern und wiederherstellen](MAINTENANCE.md).
+Open your installation's HTTPS address. New installations use `admin` / `admin`; change the password in the header. Verify the certificate fingerprint on the server before trusting its public certificate on a client. Every new installation generates its own certificate; see [certificate renewal, IP changes, backup and recovery](MAINTENANCE.md).
 
-Deutsch oder Englisch oben auswählen. Die erste Sprache wird aus dem Browser ermittelt. Ein Wechsel lädt die Seite neu; Anmeldung und gespeicherte Nutzungsarten bleiben erhalten, ungespeicherte Eingaben und temporäre XML-Auswahlen werden zurückgesetzt.
+Select Deutsch or English. The browser's language is used initially. Switching language reloads the page: your login and saved control modes remain, but unsaved form inputs and temporary XML selections reset.
 
-## 2. Bridges und Geräte
+## Bridges and inventory
 
-Unter **Bridges** die Netzwerksuche verwenden oder eine lokale IP und einen Namen eingeben. **Bridge prüfen und hinzufügen** wählen, anschließend **Koppeln**, die Link-Taste an der Bridge drücken und innerhalb des angegebenen Zeitfensters verbinden. Keine Hue-Keys manuell in die Oberfläche kopieren.
+Under **Bridges**, discover a bridge or enter its local IP and a name. Select **Check and add bridge**, then **Pair**, press its physical link button and connect within the displayed time window. Do not paste Hue keys into the interface.
 
-**Lampen & Szenen einlesen** aktualisiert den Bestand. Der Bridge-Name ist zugleich der Filtername – er kann etwa ein Geschoss bezeichnen, muss es aber nicht. Räume und Zonen stammen aus Hue. Eine ausbleibende Netzwerksuche kann an Docker, Firewall oder VLANs liegen; die manuelle IP-Eingabe bleibt möglich.
+**Scan lights & scenes** refreshes inventory. Bridge names also serve as filter names; they may represent floors or any other grouping. Rooms/zones come from Hue. Docker networking, firewalls and VLANs may limit discovery; manual IP entry is available.
 
-## 3. Lampen
+## Lights
 
-Die Karte zeigt Namen, Modell, Typ, Fähigkeiten und den zuletzt gelesenen Zustand. Eine ausgeschaltete Lampe kann weiterhin eine gespeicherte Helligkeit anzeigen. Diese Anzeige ist keine Rückführung in den Loxone-Lichtbaustein.
+Cards show the name, model, type, capabilities and last reported state. A switched-off light may still show stored brightness. This display does not synchronize state back into the Loxone Lighting Controller.
 
-Unter **Nutzung & Verwaltung → Für Loxone nutzen** die gewünschten Steuerungsarten anhaken. Die Vorauswahl richtet sich nach den Bridge-Fähigkeiten. RGB + Weiß nutzt vorzugsweise Lumitech; Tunable White unterstützt Weißtemperatur ohne RGB. Eine Nutzungsart muss aktiv bleiben. Die Auswahl konfiguriert Befehle und XML, sie schaltet keine Lampe.
+Under **Usage & management → Use with Loxone**, check the required control modes. Defaults follow bridge capabilities. Lumitech combines color and white; Tunable White handles white temperature without RGB. At least one mode must remain selected. These choices configure commands and XML; they do not control the light.
 
-- **Befehle:** Kopierfelder öffnen; bei mehreren Nutzungsarten die Vorschau wählen.
-- **XML:** gewählte Nutzungsarten dieser Lampe exportieren.
-- **Ignorieren:** dauerhaft in Hue2Lox ausblenden; über **Ignorierte anzeigen** wiederherstellen.
-- **Entfernen:** nur aus Hue2Lox entfernen; ein neuer Scan kann die Lampe zurückbringen. Keine Löschung auf der Bridge.
+- **Commands:** open copy fields and select a preview if multiple modes are enabled.
+- **XML:** export this light's checked modes.
+- **Ignore:** hide persistently in Hue2Lox; restore via **Show ignored**.
+- **Remove:** remove only from Hue2Lox; scanning may restore it. The bridge is unchanged.
 
-Für mehrere Lampen die Checkboxen verwenden und **Auswahl als XML** wählen. Ein gemeinsamer Import erzeugt einen virtuellen Ausgang mit mehreren Befehlen. Separate Importe legen weitere Ausgänge an. Filter ändern die Ansicht, nicht die bestehende Auswahl.
+For multiple lights, select their checkboxes and **Export selection as XML**. A combined import creates one virtual output with several commands. Separate imports create additional outputs. Changing filters does not clear your selection.
 
-## 4. Szenen
+## Scenes
 
-Szenen in der Hue-App erstellen, bearbeiten und löschen. In Hue2Lox **Szenen einlesen** wählen, um den Bestand abzugleichen. **Befehle** und **XML** funktionieren wie bei Lampen; der Aufruf verwendet einen EIN-Impuls. Verwaltung bietet Ignorieren, Wiederherstellen und Entfernen nur für Hue2Lox.
+Create, edit and delete scenes in the Hue app. Use **Scan scenes** to synchronize inventory. **Commands** and **XML** work as for lights; recall uses an ON pulse. Management allows ignoring, restoring and removing only from Hue2Lox.
 
-Eine Hue-Szene kann auch Lampen schalten, die in Hue2Lox ignoriert oder entfernt wurden. Maßgeblich ist ihre Zusammensetzung in Hue.
+Scenes can still control ignored/removed lights included in their Hue definition.
 
-## 5. Loxone verbinden
+## Loxone
 
-Unter **Loxone-Einstellungen** lässt sich der Miniserver suchen und ein Link zu seiner Weboberfläche speichern. Seine Zugangsdaten werden dabei nicht übernommen. Das Hue2Lox-Zugriffstoken kann kurz angezeigt oder mit dem HTTP-Header kopiert werden; es ist nicht der Hue-Bridge-Key.
+**Loxone settings** discovers the Miniserver and stores a link to its web interface, not its credentials. Reveal the Hue2Lox access token briefly or copy it with the HTTP header. This is not the Hue Bridge key.
 
-Die genaue Einrichtung der virtuellen Ausgänge: [TUTORIAL.md](TUTORIAL.md). Den Header mit sichtbarem `\r\n` exakt übernehmen. Nicht mehrere konkurrierende Ausgänge gleichzeitig an dieselbe Lampe anschließen. XML enthält standardmäßig einen Token-Platzhalter; **Token in XML** muss ausdrücklich gewählt werden.
+Follow the [illustrated guide](TUTORIAL.md) for virtual outputs. Preserve the literal `\r\n` header separator. Do not let competing outputs control the same light. XML uses a token placeholder by default; including real credentials requires **Token in XML**.
 
-## 6. Fehler eingrenzen
+## Troubleshooting
 
-| Symptom | Prüfen |
+| Symptom | Check |
 | --- | --- |
-| Browser meldet Zertifikatsfehler | Serveradresse, Zertifikatsgültigkeit und Fingerabdruck; Vertrauen auf diesem Gerät einrichten |
-| Bridge nicht erreichbar | Lokale IP, Netzwerk, Bridge-Stromversorgung; bei Identitätsfehler nicht einfach die Zertifikatsprüfung abschalten |
-| Lampentyp unerwartet | Bridge erneut einlesen und Fähigkeiten ansehen; Modellkatalog überschreibt die Bridge nicht |
-| HTTP 401 | Hue2Lox-Token im Header |
-| HTTP 403 | Freischaltung der Steuerung; Admin-Anfragen benötigen zusätzlich Sitzung und CSRF |
-| HTTP 400 | Empfangenen bereinigten Body, Zahlentyp, Platzhalter und Headerformat prüfen |
-| HTTP 415 | Content-Type und Header-Trennzeichen prüfen |
-| HTTP 200, aber falsche Wirkung | Aktortyp, Steuerungsart, Helligkeit und tatsächliche Lampe prüfen |
-| Kein Monitoreintrag | Loxone-Ausgang, Zieladresse, Port und TLS; Fehler vor HTTP erscheinen nicht im Monitor |
+| Certificate warning | Address, expiry, fingerprint and client trust |
+| Bridge unreachable | IP, network, power and bridge identity |
+| Unexpected type | Rescan and inspect actual bridge capabilities |
+| HTTP 401 | Hue2Lox authorization token |
+| HTTP 403 | Control flags; admin requests also need a session and CSRF |
+| HTTP 400 | Sanitized body, number type, placeholder and header formatting |
+| HTTP 415 | Content-Type and header separator |
+| HTTP 200 but wrong effect | Actuator type, chosen mode, brightness and physical light |
+| No monitor entry | Loxone output, address, port and TLS; pre-HTTP failures are not recorded |
 
-Unter **HTTP-Monitor** das Testprotokoll starten, dann gezielt einen Loxone-Befehl auslösen. Aufzeichnung maximal zehn Minuten und 200 Einträge im Arbeitsspeicher. Tokens, Keys und unbekannte Freitexte werden nicht protokolliert. Vor Weitergabe auch bereinigte Logs auf persönliche Namen und Adressen prüfen.
+Start the **HTTP monitor**, then trigger one command. Recording lasts at most ten minutes, with 200 in-memory entries. Tokens, keys and unknown free text are excluded. Review even sanitized logs for personal names/addresses before sharing.
 
-## 7. Update, Backup und Wiederherstellung
+## Update, backup and restore
 
-Vor Updates den Dienst kurz stoppen und das **vollständige Installationsverzeichnis** geschützt sichern. Es enthält `.env`, Compose-Dateien, `data/`, `certs/`, `secrets/` und den verwendeten Quellstand. Insbesondere neue Bridge-Keys liegen in `data/bridge-keys/`. Nicht nur das GitHub-Repo sichern: Private Dateien gehören absichtlich nicht hinein.
+Stop the service briefly and back up the **entire installation directory**, preserving permissions. Include `.env`, Compose files, `data/`, `certs/`, `secrets/` and the source version. Paired bridge keys live in `data/bridge-keys/`. A Git clone is not a private-state backup.
 
-Beispiel für die separate Testinstallation aus INSTALL.md, als root; Backup-Ziel außerhalb des Installationsordners wählen:
+For the isolated test instance in INSTALL.md, as root:
 
 ```sh
 cd /opt/hue2lox-test
@@ -70,14 +70,14 @@ tar -czpf /opt/hue2lox-private-backups/test-backup.tar.gz -C /opt hue2lox-test
 docker compose start
 ```
 
-Einen neuen Backup-Dateinamen wählen, um ältere Sicherungen zu behalten. Archive verschlüsselt/offline verwahren und nie auf GitHub hochladen. Ein Dateibackup enthält kein Docker-Image: zusätzlich die verwendete Image-Version bzw. den Digest dokumentieren; für vollständig offline verfügbare Rückkehr das Image separat sichern.
+Choose a new archive filename for each backup. Store archives encrypted/offline, never on GitHub. File backups do not contain Docker images: record the exact image version/digest and save the image separately if offline rollback is needed.
 
-Wiederherstellung zuerst auf einem getrennten Ziel testen: Container stoppen, vorhandenen Stand beiseite sichern, Archiv mit erhaltenen Rechten entpacken, Compose-Pfade/IP/Port prüfen, Eigentümer der privaten Verzeichnisse UID/GID 10001 kontrollieren und erst dann starten. Bei geänderter Adresse ein passendes Zertifikat erzeugen; einen verlorenen privaten Schlüssel nicht aus GitHub erwarten. Health, Anmeldung, Inventar, Token und danach einen kontrollierten Lampentest prüfen. Die vollständige Wiederherstellungsprobe ist noch Teil unserer gemeinsamen Abnahme.
+Rehearse restoration on an isolated target: stop containers, retain the current state separately, restore files with their permissions, check paths/address/port and UID/GID 10001 ownership of private directories, then start. A changed address needs a matching certificate. Verify health, login, inventory, token and finally a deliberate light command. The full restore rehearsal is still pending joint acceptance testing.
 
-Das bestehende Prototyp-Update legt nur eine begrenzte Rückrollkopie an; sie ersetzt kein vollständiges Backup. Ein allgemeiner öffentlicher Update-/Rollback-Mechanismus steht noch aus.
+The prototype updater's limited rollback copy is not a complete backup. A general public updater/rollback mechanism is not released yet.
 
-## 8. Grenzen und Quellen
+## Limits and licensing
 
-Die [Release-Checkliste](../RELEASE.md) nennt offene Prüfungen. Eigener Projektcode und eigene SVG-Symbole stehen unter der [Apache License 2.0](../LICENSE); Drittanbieterbestandteile behalten ihre jeweiligen Bedingungen. [Quellen und Lizenztexte](../THIRD-PARTY-NOTICES.md) sind auch über den Footer erreichbar.
+See [release readiness](../RELEASE.md) and [third-party notices](../THIRD-PARTY-NOTICES.md). Original project code and original SVG icons are licensed under [Apache License 2.0](../LICENSE); third-party materials retain their respective terms.
 
-Unter **Nutzung & Verwaltung → Lampensymbol** kannst du die Form pro Lampe wählen. **Automatisch** verwendet Modell und Bridge-Daten; unbekannte Geräte erhalten ein Glühbirnensymbol. Die Auswahl bleibt bei Neustarts und erneutem Einlesen erhalten und verändert keine Loxone-Befehle.
+Under **Usage & management → Light icon**, choose a shape per light. **Automatic** uses model and bridge metadata; unknown devices receive a bulb symbol. The choice survives restarts and rescans and does not change Loxone commands.

@@ -32,7 +32,7 @@ def parse_request_json(raw):
 
 
 class BoundedHTTPSServer(ThreadingHTTPServer):
-    """Keep TLS negotiation out of accept(), with bounded worker resources."""
+    """Keep TLS negotiation (when a context is given) out of accept(), with bounded worker resources."""
     handshake_timeout = 5
     request_timeout = 5
     max_connections = 32
@@ -55,10 +55,11 @@ class BoundedHTTPSServer(ThreadingHTTPServer):
 
     def process_request_thread(self, request, client_address):
         try:
-            request.settimeout(self.handshake_timeout)
-            request = self.tls_context.wrap_socket(
-                request, server_side=True, do_handshake_on_connect=False)
-            request.do_handshake()
+            if self.tls_context is not None:
+                request.settimeout(self.handshake_timeout)
+                request = self.tls_context.wrap_socket(
+                    request, server_side=True, do_handshake_on_connect=False)
+                request.do_handshake()
             request.settimeout(self.request_timeout)
             # The base implementation handles HTTP errors and closes the socket.
             super().process_request_thread(request, client_address)
@@ -427,7 +428,7 @@ class Handler(BaseHTTPRequestHandler):
                 old_key, _ = admin_auth.session(self.headers.get('Cookie'), touch=False)
                 if old_key:
                     admin_auth.logout(old_key)
-                self.response_cookie = admin_auth.COOKIE + '=' + token + '; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=43200'
+                self.response_cookie = admin_auth.session_cookie(token, 43200)
                 self.send_json(200, {'status':'ok', 'username':entry['username'], 'csrf':entry['csrf']})
                 return
             entry = self.require_admin(csrf=True)
@@ -477,11 +478,11 @@ class Handler(BaseHTTPRequestHandler):
                     status = 429 if result == 'limited' else 403 if result == 'invalid' else 503
                     self.send_json(status, {'status':'error', 'error':'password_' + result})
                     return
-                self.response_cookie = admin_auth.COOKIE + '=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'
+                self.response_cookie = admin_auth.session_cookie('', 0)
                 self.send_json(200, {'status':'ok'})
             elif self.path == '/api/admin/logout':
                 admin_auth.logout(self.session_key)
-                self.response_cookie = admin_auth.COOKIE + '=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0'
+                self.response_cookie = admin_auth.session_cookie('', 0)
                 self.send_json(200, {'status':'ok'})
             elif self.path == '/api/admin/token':
                 self.send_json(200, {'status':'ok', 'token':admin_auth.control_token()})
@@ -540,12 +541,26 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
 
-if __name__ == '__main__':
+def tls_context(environ):
+    """HTTPS context when TLS_CERT and TLS_KEY are both set, None (plain HTTP) when both are absent."""
+    cert, key = environ.get('TLS_CERT'), environ.get('TLS_KEY')
+    if cert is None and key is None:
+        return None
+    if not cert or not key:
+        raise ValueError('TLS_CERT and TLS_KEY must both be set and non-empty for HTTPS; '
+                         'unset both to serve plain HTTP behind a reverse proxy.')
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.minimum_version = ssl.TLSVersion.TLSv1_2
-    context.load_cert_chain(os.environ.get('TLS_CERT', '/certs/server.crt'),
-                            os.environ.get('TLS_KEY', '/certs/server.key'))
+    context.load_cert_chain(cert, key)
+    return context
+
+
+if __name__ == '__main__':
+    try:
+        context = tls_context(os.environ)
+    except ValueError as error:
+        raise SystemExit('Hue2Lox: ' + str(error))
     server = BoundedHTTPSServer((os.environ.get('BIND_HOST', '0.0.0.0'),
                                 int(os.environ.get('PORT', '8443'))), Handler, context)
-    print('Hue2Lox HTTPS health service ready', flush=True)
+    print('Hue2Lox ' + ('HTTPS' if context else 'HTTP') + ' service ready', flush=True)
     server.serve_forever()

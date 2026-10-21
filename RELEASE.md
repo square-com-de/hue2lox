@@ -1,37 +1,65 @@
-# Hue2Lox — Release Candidate 2
+# Hue2Lox — Release Candidate 4
 
-[RC2 release notes and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.2) · [English installation](docs/INSTALL.en.md) · [Deutsche Installation](INSTALL.md)
+[RC4 release and downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4) · [English installation](INSTALL.md) · [Deutsche Installation](INSTALL.de.md)
 
-RC2 (`v1.0.0-rc.2`) packages the updated application, repository layout and direct-download documentation into one fixed source archive. RC1 (`v1.0.0-rc.1`) remains unchanged. The `main` branch can contain newer development work; use the named RC2 asset for normal installation and testing.
+RC4 (`v1.0.0-rc.4`) offers a fixed installer ZIP and the first prebuilt GHCR image
+for AMD64/ARM64. RC1, RC2 and RC3 remain unchanged. Existing installations are not
+updated automatically. `main` remains the separate development version.
 
-RC2 enthält Anwendung, aktuelle Ordnerstruktur und die vereinfachte Direktdownload-Anleitung in einem festen Paket. RC1 bleibt unverändert. Der erneute Test auf einer frischen Debian-VM folgt genau dieser öffentlichen RC2-Anleitung; er ist noch nicht abgeschlossen.
+RC4 bietet ein festes Installer-ZIP und erstmals ein fertiges GHCR-Image für
+AMD64/ARM64. RC1, RC2, RC3 und laufende Installationen bleiben unverändert.
 
 Publisher: **square | com** · [Impressum](https://square-com.de/impressum/)
 License: Apache 2.0 for original project material; see LICENSE, NOTICE and THIRD-PARTY-NOTICES.md.
 
-The authoritative [download mapping](docs/DOWNLOADS.md) records the published candidate, commit, archive root and checksum. Stable is preparation only; no stable asset or checksum is implied.
+## Changes since RC3 / Änderungen seit RC3
 
-## Delivery
+- Installer: choose direct HTTPS with a generated certificate or HTTP, for example behind Traefik. / HTTPS mit eigenem Zertifikat oder HTTP, etwa hinter Traefik, im Installer wählen.
+- Prebuilt image: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4`, persistent data volume and lamp control enabled by default. / Fertiges Image mit persistentem Datenspeicher und standardmäßig freigegebener Lampensteuerung.
+- Python 3.15 container base, pinned by digest; unused pip/ensurepip tooling removed. / Per Digest festgeschriebene Python-3.15-Basis, ungenutzte pip-/ensurepip-Werkzeuge entfernt.
+- AMD64/ARM64 scans, inventories, SPDX SBOMs, corresponding sources and license materials accompany the release. / Scans, Inventare, SPDX-SBOMs sowie Quellen- und Lizenzbeilagen für beide Architekturen.
+- English/German installation choices, direct-download links and checksums aligned. / Deutsche und englische Installationswege, Direktdownloads und Prüfsummen abgeglichen.
 
-This repository starts with a clean source snapshot, without private development history.
-Download the named RC2 ZIP and follow its [INSTALL.md](INSTALL.md); the guide verifies SHA256SUMS.txt before extraction. Cloning main is a separate development path.
-Docker images are built locally from these sources. No prebuilt Hue2Lox images or VM appliances are distributed.
+## Downloads and verification
 
-## Validation and limits
+Follow [DOWNLOADS.md](docs/DOWNLOADS.md) for the fixed ZIP, checksum and archive
+root. The installer builds locally; Docker/Compose users can pull the fixed
+image version instead. `latest` is reserved for stable releases.
 
-On 20 October 2026, a user-run fresh Debian 13 VM installation passed installation, login, bridge discovery/pairing, inventory display and a full VM reboot with the configuration retained. See [docs/TEST-RESULTS.md](docs/TEST-RESULTS.md).
-Automated source, HTTPS and container checks are defined in GitHub Actions; consult the run for the specific commit.
-Isolated CI covers backup/restore, certificate renewal and an IP change. A fresh Debian test of this exact RC2 package and real Loxone/client-trust acceptance remain open. Existing historical live-control tests do not imply every device or distribution is covered.
+The release includes `hue2lox-base-sources.tar.gz`, `container-evidence.tar.gz`,
+`container-release.json` and `SHA256SUMS.txt`. Published image digests are recorded
+in `container-digests.json` with a separate checksum. Keep these materials with
+the corresponding images; see [container sources](docs/CONTAINER-SOURCES.md).
+
+## Validation and limits / Prüfung und Grenzen
+
+Automated source tests, isolated HTTP/HTTPS installation and restart, certificate
+renewal, backup/restore, both platform startup checks and fixable HIGH/CRITICAL
+vulnerability scans gate publication. The release notes record the exact commit,
+ZIP checksum and completed run. Green automated checks are not a substitute for
+real-device acceptance: a fresh RC4 Debian installation and end-to-end Loxone
+control still need user testing before stable.
+
+Automatische Tests prüfen unter anderem HTTP/HTTPS, Neustart, Zertifikatserneuerung,
+Backup/Wiederherstellung und beide Image-Architekturen. Der frische Debian-Test
+mit RC4 und die durchgängige Loxone-Abnahme stehen vor Stable noch aus.
 
 ## Operating notes
 
-- Intended for a trusted local network; do not expose the interface directly to the Internet.
 - Initial login: `admin` / `admin`. Change the password after installation.
-- New installations generate individual control tokens and TLS keys.
-- The installer refuses to overwrite an existing destination. It is not a general upgrade tool. Back up existing configuration and secrets before any manual update; preserve `.env` and the installation name.
-- See [SECURITY.md](SECURITY.md) for reporting vulnerabilities, and GitHub Issues for ordinary bugs (without private data).
+- For a trusted local network; use a TLS reverse proxy or built-in HTTPS where appropriate.
+- The installer refuses to overwrite an existing destination and is not a general updater.
+- Back up credentials, tokens and device state before any manual update.
+- Native Debian/Python installation without Docker remains in preparation (PR #18).
+- Report ordinary problems through Issues; security issues privately via [SECURITY.md](SECURITY.md).
 
 ## Future prebuilt image release gate
+
+Preparation status and per-platform evidence: [Container compliance](docs/IMAGE-COMPLIANCE.md).
+The preparation workflow builds and inventories candidates without pushing to any registry.
+The separate [GHCR release workflow](docs/GHCR-RELEASE.md) runs for a
+published release: tests, both platform scans and source-material checks gate
+publication. Merging it alone does not publish images or change RC3.
 
 Before changing the delivery model, complete and review the following for the
 exact image to be distributed:
@@ -55,6 +83,6 @@ exact image to be distributed:
 - Run image security checks and acceptance tests on the exact release digests.
   Record license review and release approval separately from test results.
 
-Until these checks are complete, continue source-only distribution. A local
+These checks apply to every future image release. A local
 user who later redistributes their built image must assess that distribution's
 obligations separately; the local-build workflow is not a blanket exemption.

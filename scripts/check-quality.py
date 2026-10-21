@@ -23,7 +23,7 @@ for name in [p.relative_to(ROOT).as_posix() for p in ROOT.glob('*.md')] + [p.rel
         if ':' in target or target.startswith('#'):
             continue
         assert (path.parent / target.split('#')[0]).exists(), f'{name}: missing {target}'
-for name in ('README.md', 'README.en.md'):
+for name in ('README.de.md', 'README.md'):
     assert 'src="web/hue2lox-logo.png"' in (ROOT / name).read_text()
 assert (ROOT / 'web/hue2lox-logo.png').is_file()
 print('PASS: Python, JavaScript and shell syntax, translation keys, documentation links and README logo.')

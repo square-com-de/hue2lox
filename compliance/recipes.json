@@ -1,0 +1,1295 @@
+[
+  {
+    "origin": "alpine-base",
+    "commit": "d9d560d5de74ff9a7a73f3c903d6f126a0bf3142",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/d9d560d5de74ff9a7a73f3c903d6f126a0bf3142/main/alpine-base/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "e63c4c38fd02ceeb3bea466139b601706dd299e4",
+        "sha256": "5f3e6446e3e80b20e0f9986760b9f151e47e723e57d32c108bce617846d05b52"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "alpine-baselayout",
+    "commit": "60a7585bbab2fa0f762504eb617dbca90216e31f",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/60a7585bbab2fa0f762504eb617dbca90216e31f/main/alpine-baselayout/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "20locale.sh",
+        "git_blob": "9b9fde51f510e8d4ddb79f3ea0423ec75efb9297",
+        "sha256": "284a6ef56ab97a13a777c6b01ae14f2cc3d2b7a29c19e750e622e70cc3c73186"
+      },
+      {
+        "name": "APKBUILD",
+        "git_blob": "d79c198a0a923f2781242b9553afaecd65d95afc",
+        "sha256": "aef255516b71e39109860b92eb027a0986d90197427fb93ec91ebcd04bf59763"
+      },
+      {
+        "name": "aliases.conf",
+        "git_blob": "b1790179608c46f117fd36073e2316546ca08acd",
+        "sha256": "3ebaba946f213670170c7d69949f690a3854553bd0b1560f1d980cba4c83a942"
+      },
+      {
+        "name": "alpine-baselayout.post-install",
+        "git_blob": "88966d35c3327efc03e5d383fa577782ea256c5d",
+        "sha256": "dd30b63bfbe4f7d8085f57840e15b84015b3518d6f282a3e0924f73a61000016"
+      },
+      {
+        "name": "alpine-baselayout.post-upgrade",
+        "git_blob": "0e73fc07f3bfd966d5ed2e4be2a4838422dab0ed",
+        "sha256": "53f570f015ac2086597ab62accc6ad08600e2994577ac622263f17e9de39d2e2"
+      },
+      {
+        "name": "alpine-baselayout.pre-install",
+        "git_blob": "fc0d0b9f5dab5ce07189ead013e0fb8a6fbc0bc8",
+        "sha256": "28ecff91a36f438ca26bc8cc08d857863378aa94eab399a1f413e52501b86f85"
+      },
+      {
+        "name": "alpine-baselayout.pre-upgrade",
+        "git_blob": "b89ad05a74debf8a6f6001b05526770feb40ee88",
+        "sha256": "3f35fa5402d397389f366e8934ba0f800a017a149f4281dc8c22762419e47e10"
+      },
+      {
+        "name": "blacklist.conf",
+        "git_blob": "f14a1233af1c6160f3ed507283b09853ee8ad5ca",
+        "sha256": "0e9ab848289bfb20b9b066d05c8b1383a7c92b97ff8072a50806054b5d3fd739"
+      },
+      {
+        "name": "color_prompt.sh.disabled",
+        "git_blob": "96e47891b31f72ed8f4073061ff48288a4d3cb7b",
+        "sha256": "ba24425c6864a5d17fa0fdaf914c4d21419e47c4d62080c33830af059fe46617"
+      },
+      {
+        "name": "crontab",
+        "git_blob": "fd8acd8b9a27203f33bd213e9a38d975cbef8dcc",
+        "sha256": "575d810a9fae5f2f0671c9b2c0ce973e46c7207fbe5cb8d1b0d1836a6a0470e3"
+      },
+      {
+        "name": "group",
+        "git_blob": "4a0d291366667f110e5f4d890c585f929fba517e",
+        "sha256": "6fb6ab5a5526e6f4896b70c7e3c350fd475158a1f0d7b5fc0f3f9bd57f1c3be8"
+      },
+      {
+        "name": "hier.7",
+        "git_blob": "7faad97aaf042a21cdf44b33d7aba1d60b512fb4",
+        "sha256": "8a91913d8a05ad57316355ee74d966210a6eae7bd850d46dac53e799d3981cc2"
+      },
+      {
+        "name": "i386.conf",
+        "git_blob": "b89459f1ef675fced8b3fcf97cca1a4ed0e55f01",
+        "sha256": "6c46c4cbfb8b7594f19eb94801a350fa2221ae9ac5239a8819d15555caa76ae8"
+      },
+      {
+        "name": "inittab",
+        "git_blob": "5294b8f53b1c9946e66bf75b37644af6cd94cfb1",
+        "sha256": "7326d8ad56bf5fea63b1ca516a747ff6e6723e25ae84a93c31620b03de6c001d"
+      },
+      {
+        "name": "passwd",
+        "git_blob": "1130fa0b21cc1bf66f41206ffad4748ffe457af1",
+        "sha256": "31a94f06f17bc3b9085fccab1d0fa6ee9e79c4a1e4d91f617fa5de95863be015"
+      },
+      {
+        "name": "profile",
+        "git_blob": "fbc3ba0cd506424c1b67b1a2397aa1097803ad25",
+        "sha256": "87e8643d3ce156de0c09370d4d39446f30bd00d264bea248abc191c4d7b9df3e"
+      },
+      {
+        "name": "usr_merge_nag.sh",
+        "git_blob": "83ad6e5d9b869d17b7ac98f5b4d753fc6fa6d584",
+        "sha256": "ffab41e32add88a13483309172c22da013f50a82bc552b488765254a6e92115c"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "alpine-keys",
+    "commit": "b9f23becced4d7b3ccc0fa0f28530243ccd314a0",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/b9f23becced4d7b3ccc0fa0f28530243ccd314a0/main/alpine-keys/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "ce73c58e12d1687ca50e27c962c159aaf99e6180",
+        "sha256": "cb352e13b9e481b424763bd36d3afdb81ac308e508abed15eb7175530050bd3f"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+        "git_blob": "bb4bdc80fd10d0609f67076f05e17aafdff75415",
+        "sha256": "9c102bcc376af1498d549b77bdbfa815ae86faa1d2d82f040e616b18ef2df2d4"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub",
+        "git_blob": "6cbfad7441d0193d6f2f64dfb47797975bcc54b1",
+        "sha256": "ebf31683b56410ecc4c00acd9f6e2839e237a3b62b5ae7ef686705c7ba0396a9"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+        "git_blob": "1d34c93e37843fc494ae8d685d08665e844fecba",
+        "sha256": "1bb2a846c0ea4ca9d0e7862f970863857fc33c32f5506098c636a62a726a847b"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+        "git_blob": "83f0658e9ca16c4bad20a219318497313a45b7bb",
+        "sha256": "12f899e55a7691225603d6fb3324940fc51cd7f133e7ead788663c2b7eecb00c"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-58199dcc.rsa.pub",
+        "git_blob": "2b99a0d195116f2c7ba081747da873f9b74b07d4",
+        "sha256": "73867d92083f2f8ab899a26ccda7ef63dfaa0032a938620eda605558958a8041"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-58cbb476.rsa.pub",
+        "git_blob": "a9ead55ed05182378d50e40ff94f15eac1b40419",
+        "sha256": "9a4cd858d9710963848e6d5f555325dc199d1c952b01cf6e64da2c15deedbd97"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-58e4f17d.rsa.pub",
+        "git_blob": "8f990949b9e70dd3be886664e5c4a41dc67c1ecb",
+        "sha256": "780b3ed41786772cbc7b68136546fa3f897f28a23b30c72dde6225319c44cfff"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-5e69ca50.rsa.pub",
+        "git_blob": "097740ebd32935ed9b6b2f9e7bd227320fb4dabd",
+        "sha256": "59c01c57b446633249f67c04b115dd6787f4378f183dff2bbf65406df93f176d"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-60ac2099.rsa.pub",
+        "git_blob": "2b8a4a93e060a3c03a2e482a0dc959aa06542282",
+        "sha256": "db0b49163f07ffba64a5ca198bcf1688610b0bd1f0d8d5afeaf78559d73f2278"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+        "git_blob": "f2165aebadab1c1e43798f1278c3897d85f16da1",
+        "sha256": "207e4696d3c05f7cb05966aee557307151f1f00217af4143c1bcaf33b8df733f"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub",
+        "git_blob": "aa63d81d6625e3b16d87db1946b69466f3bd2095",
+        "sha256": "128d34d4aec39b0daedea8163cd8dc24dff36fd3d848630ab97eeb1d3084bbb3"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-616a9724.rsa.pub",
+        "git_blob": "59c330e9f73cc10ae21bf94062711637141cf81b",
+        "sha256": "10877cce0a935e46ad88cb79e174a2491680508eccda08e92bf04fb9bf37fbc1"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-616abc23.rsa.pub",
+        "git_blob": "915bc566b7429b7ee6ca06b0947163c49d496dda",
+        "sha256": "4a095a9daca86da496a3cd9adcd95ee2197fdbeb84638656d469f05a4d740751"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-616ac3bc.rsa.pub",
+        "git_blob": "1e49d246902b76996e4eefb52c7ae61cc09f45f9",
+        "sha256": "0caf5662fde45616d88cfd7021b7bda269a2fcaf311e51c48945a967a609ec0b"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+        "git_blob": "bb15efe96d7c95a0602b243ce0848aa42cf80020",
+        "sha256": "ebe717d228555aa58133c202314a451f81e71f174781fd7ff8d8970d6cfa60da"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-616ae350.rsa.pub",
+        "git_blob": "0ecbccc2e4aea1d7394ace8f9a896b061a821453",
+        "sha256": "d11f6b21c61b4274e182eb888883a8ba8acdbf820dcc7a6d82a7d9fc2fd2836d"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-616db30d.rsa.pub",
+        "git_blob": "ceffa3ace9c4454c8cde399732ecee535a13efac",
+        "sha256": "40a216cbd163f22e5f16a9e0929de7cde221b9cbae8e36aa368b1e128afe0a31"
+      },
+      {
+        "name": "alpine-devel@lists.alpinelinux.org-66ba20fe.rsa.pub",
+        "git_blob": "e8bb47600fed4bdace8a3c366cd3762aec119933",
+        "sha256": "7cf4cb8314e6ccc985b0d7f1aa0c6e0a81e3588f69a41f383af7a63d1ba61793"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "apk-tools",
+    "commit": "4588b452722bd4800efdc6cce4f6e980e02a997f",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/4588b452722bd4800efdc6cce4f6e980e02a997f/main/apk-tools/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "384798fd6db41f33430d07ae7f6959aad6304323",
+        "sha256": "492db5ec3ca2ca6cfd3cc4e5b52a0262ca7bd9c77299344efb4d786c596b7005"
+      },
+      {
+        "name": "repo-hash-sha1.patch",
+        "git_blob": "33ad944259835f90e0f7dd6b28f78f0f2daa1c89",
+        "sha256": "0ef3ecc88a5c627ee9486632bbc26e66dd0073e6a9be0c143b25c6e366162df0"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "busybox",
+    "commit": "c3ef5d10e6ef6528852c51f0564963e2f8c1be19",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/c3ef5d10e6ef6528852c51f0564963e2f8c1be19/main/busybox/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "0001-awk-fix-handling-of-literal-backslashes-in-replaceme.patch",
+        "git_blob": "3ff61ace0646523576ff583ebdcece18c4563c38",
+        "sha256": "522e48b25b320b854885419f3ee3a092bd58ad2ed111da87a57cafbc8420feae"
+      },
+      {
+        "name": "0001-blkdiscard-ship-link-to-sbin-instead-of-usr-bin.patch",
+        "git_blob": "a89dd69b39f0e08c9820b84e1d797c1123674d70",
+        "sha256": "f490ce643412a33dfd3c92aaaeff501a10c0f78662172d1cf55e5d632b7f8033"
+      },
+      {
+        "name": "0001-hexdump-fix-regression-with-n4-e-u.patch",
+        "git_blob": "8b714b2eb4858232ab8e3460d03e534f606ec723",
+        "sha256": "c289b3ed7096557846069f6814e063226b2552e6d26a959c9e35116469dddf35"
+      },
+      {
+        "name": "0001-init-add-support-for-separate-reboot-action.patch",
+        "git_blob": "fccb39f4927f579a93fe340267a17d4ab50de92a",
+        "sha256": "df5b272582ebf19de062341469ade926b1c747278871190855ac0d16c079f519"
+      },
+      {
+        "name": "0001-mount-fix-parsing-proc-mounts-with-long-lines.patch",
+        "git_blob": "85e65967f3c6df4655cbe43faf04a523a21757f9",
+        "sha256": "5971026ad9e4b252370bf4be615f7da6ab146cccc58a7e5cb3f21b92c32ae50d"
+      },
+      {
+        "name": "0001-netstat-sanitize-process-names.patch",
+        "git_blob": "4d7adaf3410747cd0c624ebee46a71cc906d405d",
+        "sha256": "daf4282120acbc4eb1d90721565d2e01c9ddc3eeeabed4c5f5faa04fe3d33dd3"
+      },
+      {
+        "name": "0001-tar-fix-16018-masking-of-potentially-malicious-tar-cpio-content.patch",
+        "git_blob": "9ff81d3fb282e737022f2017b576b635b7ab085b",
+        "sha256": "8b4262ffbaaa721d3c1d6a2b1deb84a794a99252b1b15e974ec76ccb9eb3c517"
+      },
+      {
+        "name": "0001-tar-fix-TOCTOU-symlink-race-condition.patch",
+        "git_blob": "4514d6df2a6d4a9762f312865dd6f2e7c66155c4",
+        "sha256": "1a65d0870075fc83d58d75e91a2e518d1bee1898083086fb950281eb79b7d3a8"
+      },
+      {
+        "name": "0001-tunctl-fix-segfault-on-ioctl-failure.patch",
+        "git_blob": "d2b9e307eacdbc7a7a92e33c73d06e3d8e6ffc07",
+        "sha256": "d8488651d7af4450310dce234bc62cf5737a473478f67e298a1ad50c6205a78c"
+      },
+      {
+        "name": "0001-wget-add-header-Accept.patch",
+        "git_blob": "2b2ee3780a3ee8601581cec8762f60faf0b8e69e",
+        "sha256": "0edc53c34e0b7f82efb4010ac417c42c182890088f83944f1fb557ba5826968b"
+      },
+      {
+        "name": "0002-adduser-default-to-sbin-nologin-as-shell-for-system-.patch",
+        "git_blob": "e6d8f6ace28b4305c85d97f76949f04299d2491f",
+        "sha256": "1f7d95849b0cda0a75d608afca994d782f0a67fe0f1cb47578424ebadeb266c7"
+      },
+      {
+        "name": "0003-ash-add-built-in-BB_ASH_VERSION-variable.patch",
+        "git_blob": "5e397b2401ad2542d46017844159f095412fd1e1",
+        "sha256": "9059fe07e7a872ed16e66f9cb711dbfcf4d5d28308f20dd9a6c36956326911c9"
+      },
+      {
+        "name": "0004-Avoid-redefined-warnings-when-buiding-with-utmps.patch",
+        "git_blob": "c17164c85164405a24995096d7d2d6a42a972fea",
+        "sha256": "8ac54787fe6bfeb42a6c13e49b39ac7c61e839c4cea243d273c71ba10f1b4a2c"
+      },
+      {
+        "name": "0005-libbb-sockaddr2str-ensure-only-printable-characters-.patch",
+        "git_blob": "1d37b08e2ebec463f338a31e984190f6823a643d",
+        "sha256": "3d16e43c11fa3afeb441c64129071168ce9a7a9e584fc78ccc18bbae99feda87"
+      },
+      {
+        "name": "0006-modinfo-add-k-option-for-kernel-version.patch",
+        "git_blob": "30f342cfdfb48c68504be1148cc4cb701610098d",
+        "sha256": "6832669fa413d9a236a22bb4d0519e6cc89771a0ef24abd723afd99ce52e900f"
+      },
+      {
+        "name": "0007-nologin-Install-applet-to-sbin-instead-of-usr-sbin.patch",
+        "git_blob": "c0a1cb5bb43779455c1a07c3fb5551a0aee54e50",
+        "sha256": "3bf06e5cdd1a0d4a0ad541c8a838004fd0c4e46e44ad3af6d146ad2f69967d3b"
+      },
+      {
+        "name": "0008-pgrep-add-support-for-matching-against-UID-and-RUID.patch",
+        "git_blob": "bb362304b4bb8c245a48eb7a6b66386d1b60c8e9",
+        "sha256": "c43b6ede059656adb473481aff2aa29239d232b998f735302e97a324650e77a3"
+      },
+      {
+        "name": "0009-properly-fix-wget-https-support.patch",
+        "git_blob": "849bd15b01fce9004397b03e311ebc0b5b53ba41",
+        "sha256": "4be0a9d28acaa4c117c694a4816fad4a2d3f78e224676dfc2d1407d3ad0dc17a"
+      },
+      {
+        "name": "0010-fsck-resolve-LABEL-.-UUID-.-spec-to-device.patch",
+        "git_blob": "d5dc8b2e44463fddeddf147cf745abca875053a7",
+        "sha256": "f45615c7a985b30465da5d93a3535404636f45a83cbeefafbd0bcb6b0c86371f"
+      },
+      {
+        "name": "0011-nslookup-sanitize-all-printed-strings-with-printable.patch",
+        "git_blob": "3263d61f2a3630875f4a66ee873da4a85edf7df1",
+        "sha256": "a1f28268047e9e268f9760f3f3c9bf53f41eb5a712e0922f105dd23b96c00dc7"
+      },
+      {
+        "name": "0012-ash-exec-busybox.static.patch",
+        "git_blob": "7d49daee94b5b757d1b13cff06a869d8b5bf7329",
+        "sha256": "813555bb69bc9b97ff3d7ec14569eb2763ec16bfd9650bba5f1f08ba5cd4226c"
+      },
+      {
+        "name": "0013-app-location-for-cpio-vi-and-lspci.patch",
+        "git_blob": "b3ee65f19cf1682152bb7009f44cb91510c1edc4",
+        "sha256": "7f083b5705dac1cfa80953e32e83aaa65e4234c41a59f1578bfc403a1abf4eed"
+      },
+      {
+        "name": "0014-udhcpc-set-default-discover-retries-to-5.patch",
+        "git_blob": "bab8bcd15f2c5b3e912974bddbb9e8be274f9b87",
+        "sha256": "3e306b052a2df4134de61012de907893aebeb9cd107e9410e81770d60608c41d"
+      },
+      {
+        "name": "0015-ping-make-ping-work-without-root-privileges.patch",
+        "git_blob": "fc75470021d48c5ad7f723acaf6bef446887fd48",
+        "sha256": "802827589eb1c04f634ba8f69158cf0ba87e41061935ba5047ccc8322bf20f41"
+      },
+      {
+        "name": "0016-fbsplash-support-console-switching.patch",
+        "git_blob": "8bba26a6d8379bf9198a5dc9a493ad75bf1ff35b",
+        "sha256": "4db1b0fe9178c1a04f8ea63a9915db86159120398e8bd619c0231afa303472d4"
+      },
+      {
+        "name": "0017-fbsplash-support-image-and-bar-alignment-and-positio.patch",
+        "git_blob": "bec3e08dd5509eabb974a60a33b1d871169f8149",
+        "sha256": "d128fa633cfad0845d6bd5f0aee634ab9971b2edd6001ad91d99b3c1be8aee91"
+      },
+      {
+        "name": "0018-depmod-support-generating-kmod-binary-index-files.patch",
+        "git_blob": "f37b637af3d94a784c6e1de3d60dd223ef11f59c",
+        "sha256": "6817e14f68dae612a91aa7d75e76b1212a5bba8e9cfdff11336e606bdeed98eb"
+      },
+      {
+        "name": "0019-Add-flag-for-not-following-symlinks-when-recursing.patch",
+        "git_blob": "466bd5646750d677f028356bf0d59b78d4459c3b",
+        "sha256": "a4f0e598874e0229071c6fe59380cd6c739d68ecbc74e1eef2de76e60ea49030"
+      },
+      {
+        "name": "0020-udhcpc-Don-t-background-if-n-is-given.patch",
+        "git_blob": "eb76936fa85c891a7cfa02f6004112641915f25c",
+        "sha256": "3cc2b21429514b57d75e66a48b6e4c2068c931f91e993e8625a8f22d04daad4b"
+      },
+      {
+        "name": "0021-tests-fix-tarball-creation.patch",
+        "git_blob": "57a89693ae9e0c1e1f37dd7c2ea5ab572f0f730b",
+        "sha256": "dd4c10e0d2a1479d2367cf116e05bda09f0f2921636f65af99428d0cff542412"
+      },
+      {
+        "name": "0022-tests-musl-doesn-t-seem-to-recognize-UTC0-as-a-timez.patch",
+        "git_blob": "ee49449e7f362e3955e455c1f282e4af216ef218",
+        "sha256": "ab1f225416915acf048a2cce3571dbbe942ecd7b114492401b9e0634567e633a"
+      },
+      {
+        "name": "0023-Hackfix-to-disable-HW-acceleration-for-MD5-SHA1-on-x.patch",
+        "git_blob": "5bf2387d9352cd6ab3e340a57caa1daa9b652d78",
+        "sha256": "bb9858725f62c1aec9baeeace4a217a4a216ae8488a4a04e92fc225ef4f063c5"
+      },
+      {
+        "name": "0024-umount-Implement-O-option-to-unmount-by-mount-option.patch",
+        "git_blob": "6110c04b29d7468abe4624acfab823a180ed626f",
+        "sha256": "fe1b1ed4983c26960bf9d88062e52f6f1f2735a54d15234361d2b2c53eef14ce"
+      },
+      {
+        "name": "0025-find-fix-xdev-depth-and-delete.patch",
+        "git_blob": "7363ea6df521e46b454018a7ac8027adf13a630f",
+        "sha256": "d88146dbec6996345b825805408a8c855e616decb4ad25555012b37d605c6b62"
+      },
+      {
+        "name": "0026-awk.c-fix-CVE-2023-42366-bug-15874.patch",
+        "git_blob": "1e2bce7c2b142617e8f9c04684f03e1229599d44",
+        "sha256": "34a52455ba3866c43d53558047fa40edba5118218930a3f860d1d343dc7d09a8"
+      },
+      {
+        "name": "0027-awk-Mark-test-for-handling-of-start-of-word-pattern-.patch",
+        "git_blob": "2c2931587f947d3c9d9afbd8a6294f90990adbfc",
+        "sha256": "f478b2c38a12fad318b43839f4aa97c6116087d4c986ed6ce11320e19b8409c1"
+      },
+      {
+        "name": "0028-od-Skip-od-B-on-big-endian.patch",
+        "git_blob": "e2747465cc1bc2a4ce8c4b57225f9694f03e4559",
+        "sha256": "83483a14589224a6f7e7c03883abd8b54d68dc46f00628be59a61ecc68d79067"
+      },
+      {
+        "name": "0029-ash-reject-unknown-long-options.patch",
+        "git_blob": "49b8171bad19780b45bf1b9f66a815e015b04596",
+        "sha256": "4ed1b9592b75abb740878804dc8cc48cffc5e6da6cd6d4319a8c35082b6b1a77"
+      },
+      {
+        "name": "0030-hexdump-Skip-a-single-test-on-big-endian-systems.patch",
+        "git_blob": "f1ba3bd7cc859f1fd4a3d66764a450b177531495",
+        "sha256": "a03e66c5768d4fa5acb2778943019c1ccc96c9f7f5b8b56206df917c9d28967c"
+      },
+      {
+        "name": "0031-syslogd-fix-wrong-OPT_locallog-flag-detection.patch",
+        "git_blob": "efb1410b2280b68f6d39578d1ba9dd18b853bd7a",
+        "sha256": "a4b8e95aefd53ac360bfc898f0f08ca7d86ef5178058a3499783a99e37247412"
+      },
+      {
+        "name": "0032-lineedit-fix-some-tab-completions-written-to-stdout.patch",
+        "git_blob": "c78be1d03cf9d1f1f1082dc328409c46d2ba767b",
+        "sha256": "032a2e416980a21a6dca1b702543b29b675a8ef843998d9c24d31eacb7fc27cb"
+      },
+      {
+        "name": "0033-lineedit-use-stdout-for-shell-history-builtin.patch",
+        "git_blob": "e5238e3e8773c183f34e7126b583c35be6f2e214",
+        "sha256": "61265873d32d0d0b12c429a736de6c949f0dbcd434e1ead1765bf3fd19cfc084"
+      },
+      {
+        "name": "0034-adduser-remove-preconfigured-GECOS-full-name-field.patch",
+        "git_blob": "aeb47b83e248a27fd8450be5517331d525f246f8",
+        "sha256": "b1b62318d5b4550c2a4ae6cad74330bbb9159dacdd8f0617759311d9d977dbbf"
+      },
+      {
+        "name": "0035-cpio-map-F-to-file-long-option.patch",
+        "git_blob": "49e6ed2796c5b511595efa0ab57a5eae029385d2",
+        "sha256": "6a65af49b8497220eb8ef502167d76bf12a30f7cf1a12eb620041e1efd0747b5"
+      },
+      {
+        "name": "APKBUILD",
+        "git_blob": "8b0ce27e089dcabb2b16b78c556ecc65a7c292cb",
+        "sha256": "98f019f62291aff63cb798f046fb59dfd43340885de63ca2f127651fc21d0450"
+      },
+      {
+        "name": "acpid-poweroff.sh",
+        "git_blob": "7836c5a609795cfd99e7181416be5cf5c7f6b6fc",
+        "sha256": "745a5f25dd586f7574f5867fdb3d9b0f7cda97224cadc7a178fc72e26b51b7e7"
+      },
+      {
+        "name": "acpid.initd",
+        "git_blob": "ec31833ad7fa3e81591061d9062c4f160f439e68",
+        "sha256": "e9a57d04084733e20b57c4f17e94e8d277ef42f2836f33d96be1250e9672b2a8"
+      },
+      {
+        "name": "acpid.logrotate",
+        "git_blob": "4cf5fdda97e154c56e55a1d75925fe361a35b2b9",
+        "sha256": "d608a3b7715886b5735def0cc50a6359fd364fac2e0e0a459c588c04be471031"
+      },
+      {
+        "name": "bbsuid.c",
+        "git_blob": "24d0d7d3e3abe077b4cdc0615df066f7ca3b6462",
+        "sha256": "99f6275a53a4005d8f03d87e5361699419b33a52b2b2e2fe1c45e90ab6d51f58"
+      },
+      {
+        "name": "busybox-extras.post-install",
+        "git_blob": "dc663a554fd7a8fc1a3c1e15477fae249a399dee",
+        "sha256": "d9fc2353305920237a46b75c8b184166e6a2f9b6aaba5c96ed80d5234534141c"
+      },
+      {
+        "name": "busybox-extras.pre-deinstall",
+        "git_blob": "2634c6a31cb022233b8e111d3884e9a768c1f9b9",
+        "sha256": "921289ece87e6a645d15dcd7fea4cd96e3c1a3ad393f7a98f6cad03bb7266aea"
+      },
+      {
+        "name": "busybox.post-install",
+        "git_blob": "f575396bb1a66c0a4f07c838ee908fc08201cc2d",
+        "sha256": "13c120a1c714ecafa7fe1fc748406a89dfffc549118ebce324b53d4bbb4ba75f"
+      },
+      {
+        "name": "busybox.post-upgrade",
+        "git_blob": "5e3263c7cb6d1b9c32ce2e00a35efc488c922349",
+        "sha256": "3cf0a22d2d6c6ed34be6b77ed3973b7c0b7434525744026c0159f5a76f827f49"
+      },
+      {
+        "name": "busybox.trigger",
+        "git_blob": "4f80847e37adacf84a2ab7f6087fec4656e94647",
+        "sha256": "c7840b111dd82669de2074ea3c7e345c063928db2bbff650a81289777b3ff98f"
+      },
+      {
+        "name": "busyboxconfig",
+        "git_blob": "f94784573735b83ad7129c92ef37c170a676bf8e",
+        "sha256": "65b29f6085cd79ab5f032d7e4299534a86c3efad240e78c16186a19bf847fcca"
+      },
+      {
+        "name": "busyboxconfig-extras",
+        "git_blob": "2345ed1f3d651132d13c7b5b0df7008d0e5583ec",
+        "sha256": "1d539797a78b17e815acb6afb97e8883fe65d0c094801395c014ac5f7b3a7e98"
+      },
+      {
+        "name": "crond.confd",
+        "git_blob": "542af1ed1d75d417aafbe2b14741ef2ce0b3d645",
+        "sha256": "d058d9ed0824f877b4e88158fe25d71ad76fca4b71542c4c6d7991ee2ecd20f8"
+      },
+      {
+        "name": "crond.initd",
+        "git_blob": "992037210b694e3dd6a849fc2b97fd6351b4c61c",
+        "sha256": "9c7955d5227326ea4a1e55c225606e34d148a831cca3e05b23ad5c58f525c8e0"
+      },
+      {
+        "name": "dad.if-up",
+        "git_blob": "7903822c8fd25941ea82c12b30ec7a90bf5b710b",
+        "sha256": "2fd20d1bc67d9ee711990002b24f156635a73f56b8935b2f76592938817fa4e7"
+      },
+      {
+        "name": "default.script",
+        "git_blob": "9395587148be2bf89e0fc29cd882de485d7c6531",
+        "sha256": "c7b39bba4d7f1ce05dbdeba7d2fd97b96a8c3c0c1ebc0259f641fb8e1c3827d2"
+      },
+      {
+        "name": "dnsd.initd",
+        "git_blob": "42e4a34c13a96091c62ea81f6124125a08bddfb1",
+        "sha256": "4a2b86475c9a3e06729265093cfc71711575089472b68671fe59158999f829c3"
+      },
+      {
+        "name": "httpd.initd",
+        "git_blob": "bf9573052134f1aa6763fb7cb2c04325c4fb5496",
+        "sha256": "834284a025ef92049ffb6b67264591de2da0e61b85226eb48bd2eead52dce860"
+      },
+      {
+        "name": "inetd.initd",
+        "git_blob": "5ef7b395ff9b2b406ea3f081258bbe9b52251d43",
+        "sha256": "bc35f55a9cb9930f5ffbde4cd93037b29a384b155a45a9bd1e1c7ea0a9139138"
+      },
+      {
+        "name": "klogd.confd",
+        "git_blob": "100deedaac53882975ef8f037f91abd5ab44b0b2",
+        "sha256": "f6cd63d6e5f384dcb01a4906c9a0b6c5923794380235dfe0d79b48a686b03c5d"
+      },
+      {
+        "name": "klogd.initd",
+        "git_blob": "274b7d969131d6c6ccc2282d9048d92c8a77a18e",
+        "sha256": "855bf399d4c689dcb8c67a1062e02f1f925297eb18e7ac6942219ab84330a547"
+      },
+      {
+        "name": "loadkmap.confd",
+        "git_blob": "2bdbc0608c2a843dff2c498854b7095e1c4269dc",
+        "sha256": "85de66e8a23c60061d8ddf20075ce89ae3cab368a4b995aa863a6e9ec552a0d0"
+      },
+      {
+        "name": "loadkmap.initd",
+        "git_blob": "8c6746e896230fddd427820a3977d1a592197155",
+        "sha256": "99f679902e7addf649a54a5cea0cf9aec63922aa886100419c11184339eed22d"
+      },
+      {
+        "name": "mdev.initd",
+        "git_blob": "630d83777d61314f47cf2ecdf33c02cc54b23551",
+        "sha256": "754d37775157f138ed8834e041765ee6aed3a14915a783be480d1f34a6d5783d"
+      },
+      {
+        "name": "ntpd.confd",
+        "git_blob": "c5b4c1c1d435f7c360bc047dac623e3469912a13",
+        "sha256": "4224e5c6b5ffeb815c15f3e9f17ddaa169d4e6b7da169dbd0939fe06dbe8914d"
+      },
+      {
+        "name": "ntpd.initd",
+        "git_blob": "17ca150e9e91db826f0080ed507357d307b67d3b",
+        "sha256": "7c64ee24b972bee7397407955198d3d336c71deb83a784c7e2656709802c0040"
+      },
+      {
+        "name": "rdate.confd",
+        "git_blob": "03eadfdb1fbcba276898135d23b6d2da492038fa",
+        "sha256": "521f5171e20a353e68155620ce7c847c53dcfb7c45ab02d7566efd99cff2dbf2"
+      },
+      {
+        "name": "rdate.initd",
+        "git_blob": "708429f17bb025adc6eba9638f182011f6867d71",
+        "sha256": "0c6eb4dc269386472f475cf9c549ba53b73aa33f044fbfb3b6bc6dd2574bb341"
+      },
+      {
+        "name": "securetty",
+        "git_blob": "f33a1c15c821d17233d2813606d69b6f3b523fa7",
+        "sha256": "713fcea5109728883b9147e822429133fcc8b5e253afd3c2a197b10cd0bc3b4d"
+      },
+      {
+        "name": "ssl_client.c",
+        "git_blob": "45c62a5c80b64f3ef212d76d7cdd11a14b3013b1",
+        "sha256": "f36fb83637a12fe0706f828a3e9a4181ac6ed452b59d5d30fcf4dbe1884b8aed"
+      },
+      {
+        "name": "syslog.confd",
+        "git_blob": "2f00667118c696126cdc6266f0a98c9dbd19e6ad",
+        "sha256": "47b6e2ae625578903f8cf78410a981ab3103cb6de156a853034c57363bf39e0a"
+      },
+      {
+        "name": "syslog.initd",
+        "git_blob": "3b20345d7065a89aeca61212f0c9d8f9d5357d59",
+        "sha256": "f5e471c5bf96a706655b043516403f7aabe2c893f9597e345aa625b6a6375a7f"
+      },
+      {
+        "name": "udhcpc.conf",
+        "git_blob": "0407c553ffb5ab4ac52f9a14a4c2bddd1b4365c1",
+        "sha256": "5b372209e01cda07c87b8afa6d1ab3d7e8daf18a1f2332d744203a6dc289eb1a"
+      },
+      {
+        "name": "udhcpd.initd",
+        "git_blob": "e4dabd5b343f0fc717990a8d9372dec4d6846765",
+        "sha256": "5c2d05f2cb2a47847c345881ea41de15afe7d1c10f76f8e3cbbadeb0cba4dc50"
+      },
+      {
+        "name": "watchdog.confd",
+        "git_blob": "5cfd2c2cc40ae9a6d0cd96ac7d993d000b6a8564",
+        "sha256": "77f6f9069afdbb477a7e822aa2c7265d64fd22fdd9338bb3beb0cee901d202ce"
+      },
+      {
+        "name": "watchdog.initd",
+        "git_blob": "d87210044a0d1c73908dc06ee34acc6613bb84a3",
+        "sha256": "8bf9f4caa14f2e0a1ded5f76130bfec07c325e89045e5ba6fc10f890270b5752"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "bzip2",
+    "commit": "33283848034c9885d984c8e8697c645c57324938",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/33283848034c9885d984c8e8697c645c57324938/main/bzip2/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "6e5ba04a7413a8b300d0c40d3528496181c219b6",
+        "sha256": "7e046e9c4b1c265af9791a790049ed864c361c0949b9cd68564a48bc0f672de2"
+      },
+      {
+        "name": "bzip2-1.0.2-progress.patch",
+        "git_blob": "2f389cfac982a8a37636e461520d6bce14551817",
+        "sha256": "a76f6d082a1a1fef2eff111177d7c7568e1d457fb2b98cde71bbbe6ea1c7c787"
+      },
+      {
+        "name": "bzip2-1.0.3-no-test.patch",
+        "git_blob": "fc876d5044ad53174c8ef213cd3e305a0cbd8773",
+        "sha256": "3478e797662d85996c03d3b7612d548d2d377fe7efc3dc190332741a11082ef6"
+      },
+      {
+        "name": "bzip2-1.0.4-makefile-CFLAGS.patch",
+        "git_blob": "6acdc28a10d4f1377d564f2c380ab8be03726a62",
+        "sha256": "f8cc63dcebef734154cc36c3ef963158ff2be6fc2d183cff49b627d570336628"
+      },
+      {
+        "name": "bzip2-1.0.4-man-links.patch",
+        "git_blob": "2427d6a7fb131bb4705529482baaf2af6a5ee6b3",
+        "sha256": "1fc9d91f3f7bd3eecd86149b9c95b3162d9d7956f7de543aa8bc41cbcd04f88b"
+      },
+      {
+        "name": "bzip2.pc.in",
+        "git_blob": "a4dd68259cecce77cdd7fa1eab3b3f95bddf1bdd",
+        "sha256": "eca9d8cd6376df1fb5442667c603032023fb21d8d183684550da0b96ade39654"
+      },
+      {
+        "name": "saneso.patch",
+        "git_blob": "529a0c20fc4f089839192503467c73aaf0884c70",
+        "sha256": "0d6e3221c3db90ccbaec2c3c44afdfdd055093f4650a4e2f1a9b97cf48b69671"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "ca-certificates",
+    "commit": "eb7078df3a16d666e8f7723f94bb92e00d4b9236",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/eb7078df3a16d666e8f7723f94bb92e00d4b9236/main/ca-certificates/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "1dc886bc363ca5418211781ef0c946ea805ccfe0",
+        "sha256": "0c14312c1d5c4a8b7ef74433be9db58517b17eb091bccdf2c8325bc4c9c26480"
+      },
+      {
+        "name": "ca-certificates.post-deinstall",
+        "git_blob": "10d219f03f526641af8a366db975b010b3c260e1",
+        "sha256": "9523860edc396093bd41270c6e33a569a30657e2ffd729829514ee6b6d54d652"
+      },
+      {
+        "name": "ca-certificates.trigger",
+        "git_blob": "0ed2ac4980c97739fb6addfbf41a5700c6d286a1",
+        "sha256": "1bf77c8eae3220b1bd7dd86561d0899315f51d72257c1aeb4066072ed4304fe5"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "gcc",
+    "commit": "423a8ad043d07f2c7546c8ec3e2b0384cda360ae",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/423a8ad043d07f2c7546c8ec3e2b0384cda360ae/main/gcc/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "0001-LoongArch-Only-allow-valid-binary-op-when-optimize-c.patch",
+        "git_blob": "d10f4e51e62b9693797e6172be097286e7366e67",
+        "sha256": "cacd4041f1a0d7fcc74a13323b30b0e0c879adb90bc3642fa43fc53c85e20b5a"
+      },
+      {
+        "name": "0001-posix_memalign.patch",
+        "git_blob": "bbc2db9ca8cf758f088410b60b63c0138abba51b",
+        "sha256": "d7d611f683e53f42b8f4928ec044075f0f04e109fc4236260c9877abc3dbc882"
+      },
+      {
+        "name": "0001-tree-object-size.cc-Fix-assert-constant-offset-in-ch.patch",
+        "git_blob": "cc814d0d465bbb6e6c678cf0dd828a89540292ba",
+        "sha256": "a32d3f77984c4a551e3b6ef95559e85057dd3202906651a76ac1077ff13917f8"
+      },
+      {
+        "name": "0002-gcc-poison-system-directories.patch",
+        "git_blob": "de66b72d0d97f347fd7c140119b2a73c451073b9",
+        "sha256": "8466aa1b19d862e83c7c95b3b3e577139ad302829f4775fde6869fefd13b48f8"
+      },
+      {
+        "name": "0003-specs-turn-on-Wl-z-now-by-default.patch",
+        "git_blob": "be6a3dc60b217b4ddfddbad05ab75d121bbb4e29",
+        "sha256": "465bcd43c44591e19ce4b1aa0e5dd432e550f45542d65d0e99bb5ef1ab1ab66a"
+      },
+      {
+        "name": "0004-Turn-on-D_FORTIFY_SOURCE-2-by-default-for-C-C-ObjC-O.patch",
+        "git_blob": "cf5150f17fe2b8538f404479e23c1b37bd8817a3",
+        "sha256": "2dbb0fe518b6026999992a10781f39cf89ebd277580c1be87df1ed4aebe481bf"
+      },
+      {
+        "name": "0005-On-linux-targets-pass-as-needed-by-default-to-the-li.patch",
+        "git_blob": "630e5f8ada9618b9b06468b24b0a780079a96961",
+        "sha256": "460166779c04872acd684a30e90b0603cc22f96a2315d60f6af8e68feae94d3f"
+      },
+      {
+        "name": "0006-Enable-Wformat-and-Wformat-security-by-default.patch",
+        "git_blob": "501b8de245ab9739ba846bd414e1622bdf6e30a2",
+        "sha256": "a1e5c5b23cc7d4eb7c8e159d7186ecaffb7e1338d76cee22baaa31e6532b7758"
+      },
+      {
+        "name": "0007-Enable-Wtrampolines-by-default.patch",
+        "git_blob": "2179ff434d19e4661791e03183bd2c6ad6950a75",
+        "sha256": "db68b9e21f882ad271865ba619299217c5a8d5b5675d7c9666079eeb0e7638e6"
+      },
+      {
+        "name": "0008-gcc-disable-SSP-on-ffreestanding-nostdlib-and-nodefa.patch",
+        "git_blob": "d947fcc86b91eb2e7c51d7a408889767ac382838",
+        "sha256": "5c8b38c74adcf2d87a5ac2eeee195fe60acdcf766aa50481baf5a96805987ae6"
+      },
+      {
+        "name": "0009-gcc-params-set-default-ssp-buffer-size-to-4.patch",
+        "git_blob": "d0c159df89bb2e1e2c7dfe913fc53c6ab58fd1d6",
+        "sha256": "ef0af1da070b627e6ff3a81f6f1d089645da6c080561a93d7fb47b58e8389eff"
+      },
+      {
+        "name": "0010-Ensure-that-msgfmt-doesn-t-encounter-problems-during.patch",
+        "git_blob": "3ee3ad168a58a9fc1c8d68eb691446a5e1f463da",
+        "sha256": "8a094cbb17e832e7920915540030ac104d928e2ff0cf562883024ad60d42cd68"
+      },
+      {
+        "name": "0011-Don-t-declare-asprintf-if-defined-as-a-macro.patch",
+        "git_blob": "2f12bd585a8a5fbb710d36e005931917c2d499f0",
+        "sha256": "212eddf17bd479babe233f15c20b6379abad2ab8e4001f34ad81b339633e9d8c"
+      },
+      {
+        "name": "0012-libiberty-copy-PIC-objects-during-build-process.patch",
+        "git_blob": "e907d44c12283b9db72a82b5b9e875a6c90cc310",
+        "sha256": "388080f5b65c4799aa475e71d47e301449c09eaff9a75b6cd99f5d8803a9e746"
+      },
+      {
+        "name": "0013-libgcc_s.patch",
+        "git_blob": "7f0987263de74e5831dadf503c6e7571a7f4f5ee",
+        "sha256": "1fb11ba7b4a55517a6f78f44d9de0965d82a6c00c54d61bd27ee8ad5d37977cb"
+      },
+      {
+        "name": "0014-nopie.patch",
+        "git_blob": "303c80d2a6255294d53896062376219bf8ffbe24",
+        "sha256": "de050e328d18f085e50e9b59fecfb18229bbe31bab40335809f20a362e5d51c8"
+      },
+      {
+        "name": "0015-ada-fix-shared-linking.patch",
+        "git_blob": "09fbaa4d7241c0d25eddc726257e9d228ef714e6",
+        "sha256": "4df63c8c0353e717e9f3b27602760c0ce0d9f3e0472f65dc97d62bdfabfdbd14"
+      },
+      {
+        "name": "0016-build-fix-CXXFLAGS_FOR_BUILD-passing.patch",
+        "git_blob": "d7b8b1677efef9c5a0a57c5d1d8180ff213cda83",
+        "sha256": "9fc2ce9a2df8b498819fd4bc650f89c903801aab49a64f3d7c0c00a8d472495a"
+      },
+      {
+        "name": "0017-add-fortify-headers-paths.patch",
+        "git_blob": "12e81eb8172a6051e2ea6716a6f436c99096ffc0",
+        "sha256": "0f378465137aa1c6b2d66a0c89e3a7359ec4125c50e73e0f200cf987b6aaab73"
+      },
+      {
+        "name": "0018-Alpine-musl-package-provides-libssp_nonshared.a.-We-.patch",
+        "git_blob": "21e51a8250bb91e49ebe61c4553de78621f76460",
+        "sha256": "570197543425bf5e348f23179956a82562c3a701c5e7abc823d68f608d68a078"
+      },
+      {
+        "name": "0019-DP-Use-push-state-pop-state-for-gold-as-well-when-li.patch",
+        "git_blob": "a0585d80e5aa7822f3a2a567d63e48973904b863",
+        "sha256": "9e4ddf59a0ba5dd39e06b0864c8b7b71604190be6364ddba1743b89d3d4b1084"
+      },
+      {
+        "name": "0020-aarch64-disable-multilib-support.patch",
+        "git_blob": "5f250f594ae804ca80952f6370e3992538855889",
+        "sha256": "631a4068987630d1ffc053a0eee8c1bdf7ae4d58d6303a38730e6f6db4766721"
+      },
+      {
+        "name": "0021-s390x-disable-multilib-support.patch",
+        "git_blob": "e994c6979d7a0900814b9922de2f654563fcf343",
+        "sha256": "15127f91185858c0ea7994ecd1543037328e4727dcd76f37d1eb3a156dc4a27d"
+      },
+      {
+        "name": "0022-ppc64-le-disable-multilib-support.patch",
+        "git_blob": "229fce89b96303ea5af9879c58f8aa1eb9ff5c92",
+        "sha256": "65eeb0637c8d52b2128e7c05199f2b0752cd503a28d4653ff177dbabe6de12ba"
+      },
+      {
+        "name": "0023-x86_64-disable-multilib-support.patch",
+        "git_blob": "2a56f0cd71c4c0531f9e727c32eb35c41d7c880b",
+        "sha256": "bfcf9bc83f7591e130b404d06ce5cab0903e727968854e9e3f98ff5f7c5b9c90"
+      },
+      {
+        "name": "0024-riscv-disable-multilib-support.patch",
+        "git_blob": "b43715953c8882a4eb108cb77590912987ee51ff",
+        "sha256": "40dff2d834668966111d58e9e817447e07c38e643e0059742bcb2ef6bccef889"
+      },
+      {
+        "name": "0025-always-build-libgcc_eh.a.patch",
+        "git_blob": "4246607270657ffdfd4b5a41edc2c3f61c898c92",
+        "sha256": "0105b6896dc54c33c3b296e42b8fd6409a74f7a27ac0d7d3adc0384fe5d8fac9"
+      },
+      {
+        "name": "0026-ada-libgnarl-remove-use-of-glibc-specific-pthread_rw.patch",
+        "git_blob": "d5f15cbd043b7e642ae59428814a3a26fd4d417a",
+        "sha256": "1b2ad766fdabb2d027ac025923aadd0a3c82c3a6ad33eefd8eff16fd42752b06"
+      },
+      {
+        "name": "0027-ada-libgnarl-use-posix_openpt-instead-of-glibc-speci.patch",
+        "git_blob": "cba042707803698e6a00bd74deb02eab7ad49aa9",
+        "sha256": "49aeaa495d1b9c533979b054d89c977cdfb2a4ae99b51572d63ef3902f81b3f7"
+      },
+      {
+        "name": "0028-ada-libgnarl-adaint-fix-sched.h-inclusion-for-musl.patch",
+        "git_blob": "5dca2c462acfc183f728d99f0ae7bc8a8aea2ccf",
+        "sha256": "2b3e713059e754e008f855985afbc44882bd193a8b43ec53b984d32347c4c732"
+      },
+      {
+        "name": "0029-configure-Add-enable-autolink-libatomic-use-in-LINK_.patch",
+        "git_blob": "ceec7a739375a4c339ff0f86d3cdf30d3e4c4fd8",
+        "sha256": "d4a73c034dd8ccfbbef46c3c5a65eda67673499cbe803a7abf459c9d7d83d6db"
+      },
+      {
+        "name": "0030-configure-fix-detection-of-atomic-builtins-in-libato.patch",
+        "git_blob": "f17da9cdb22b838d1c462e53d6000ffb942806ca",
+        "sha256": "351454d833a3ace7bf46d52529790a8062125d9895aff671665bc0b026528177"
+      },
+      {
+        "name": "0031-libstdc-do-not-throw-exceptions-for-non-C-locales-on.patch",
+        "git_blob": "5c5f63823d9a3e3f8e2370f9261fa3fa2e8ba18f",
+        "sha256": "e338ea3906c22671cbcce334d26edae80ea5fbce416de13dbd9cbe153152ef8b"
+      },
+      {
+        "name": "0032-gdc-unconditionally-link-libgphobos-against-libucont.patch",
+        "git_blob": "51171b4ad057220eddb49b586a74b6c77341284b",
+        "sha256": "de4217bc5b6a357e1c539bb31cc63c7525d32aeb32383fe09f695080501566cc"
+      },
+      {
+        "name": "0033-druntime-link-against-libucontext-on-all-platforms.patch",
+        "git_blob": "d2c608a51a23c4a6083960a4bdc8620784e84297",
+        "sha256": "d4ad893f9fbcf1188725b05f0d74cdd048adc5f7593df08381d1347f3d5243b0"
+      },
+      {
+        "name": "0034-libgnat-time_t-is-always-64-bit-on-musl-libc.patch",
+        "git_blob": "8f21b102951ac067599f244cf4e880c84b50bbac",
+        "sha256": "ac043f2500ad3ec79f11e3efd5f627289d1f64dffb88fbb11ba40d88a73cd807"
+      },
+      {
+        "name": "0035-libphobos-do-not-use-LFS64-symbols.patch",
+        "git_blob": "89fc98ee602949e4807573e9a3e6c1400d3abf64",
+        "sha256": "62cb57a3d33912b1fbc1ab80ce57b1625a93fe8cbcb1c814985d11d8c5384106"
+      },
+      {
+        "name": "0036-libgo-fix-lfs64-use.patch",
+        "git_blob": "f5a64d64473bbfa643b509d238865ff6464f670e",
+        "sha256": "b0650eae7315da9afa11c7e2813ec3991ba07d79f30adf1c8a9c3479e5db7488"
+      },
+      {
+        "name": "0037-loongarch-disable-multilib-support.patch",
+        "git_blob": "f17391cdb249fc8b3e1019933ba32bac72f1890c",
+        "sha256": "e5c508cfdebfc73c19e21979e604f65010692e69e5f90ba06fdf20e8d688d4ff"
+      },
+      {
+        "name": "0038-static-PIE-ensure-static-reaches-the-linker.patch",
+        "git_blob": "09162097520db7bb644728168cb96bdf76253f2a",
+        "sha256": "07d87bb9aea8eecf86c6ea74f0a7d8a89c17afd12ebfea73c2977cbe84af0124"
+      },
+      {
+        "name": "0039-except-Don-t-use-the-cached-value-of-the-gcc_except_.patch",
+        "git_blob": "b8a3620026a0d16d6a13871fa52c6afbe314c9be",
+        "sha256": "f271babf2a4413e2eef9f5922cf53db4b93ff0b89a03375da7874e36d323a0fb"
+      },
+      {
+        "name": "0040-ada-libgnat-use-stub-symbolic-module-name-functions.patch",
+        "git_blob": "901daa7df648aefd7c0dc3c30b6729a573c92dd6",
+        "sha256": "ea960840a7a751e9be4c82c478cf25c1af7ad42b9f80a09a831f038a0dbf6484"
+      },
+      {
+        "name": "0041-ada-libgnat-recognize-linux-musleabi-and-linux-muslg.patch",
+        "git_blob": "617bab5d595947410e9351411ce2788b33363c72",
+        "sha256": "6e9c993a1ccf88762453b4686c7a01eadfdfb4958e796b8c2049e0f05432205c"
+      },
+      {
+        "name": "0042-libsanitizer-struct_sock_fprog_sz.patch",
+        "git_blob": "5b7971d1ef538530a91a05866ff4e4a3d17e484a",
+        "sha256": "de29cfa21663011718cebca12b41d0a24759fb18a3176f513928255c9d26ce74"
+      },
+      {
+        "name": "APKBUILD",
+        "git_blob": "56963453e7d741a190e1c3f249810f1e13959835",
+        "sha256": "71d831dbef88c2b0ff7b36b7422e878a07751419583a44b06cda2e561cdb82d4"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "gdbm",
+    "commit": "1ea03990396db618edfcc8a9a0bc6b72662bac8f",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/1ea03990396db618edfcc8a9a0bc6b72662bac8f/main/gdbm/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "8715fab39c216b658ff5f11f38acdeb6b4304ff3",
+        "sha256": "862f63ae6868bb40b80a3da3c97d6e603af549e05c3051ceadcfa4ad7b135f1b"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "libffi",
+    "commit": "2c2a7bb4a8b16066834e90402567b2c19403a790",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/2c2a7bb4a8b16066834e90402567b2c19403a790/main/libffi/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "fca39a678f2d331ce38ef011e8c9ee2252ab39c9",
+        "sha256": "7dcba5b144b4882426dbd4fcacf10c09d19e3c4347cdd8faa7c1946912b55c1f"
+      },
+      {
+        "name": "fix-tests-fortify.patch",
+        "git_blob": "793a0a36dbb06e17b214ddb9986333526e8f27be",
+        "sha256": "3b4481a269c79b8e8d89bb5b4c85db622691680d7230361e37f1ee842bbcbe8f"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "mpdecimal",
+    "commit": "c0519b85456e9b838e3142e1d233aab0b433b476",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/c0519b85456e9b838e3142e1d233aab0b433b476/main/mpdecimal/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "b6ccc73cf45463586ec9e1cd63352f50886de1fc",
+        "sha256": "3838e02aad7a5984e8c1296c3741ac4f82e643d24bbc1aade02288b600d62bb7"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "musl",
+    "commit": "f5640d3a10f664c9119720c60515265d3d6f6d01",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/f5640d3a10f664c9119720c60515265d3d6f6d01/main/musl/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "0001-add-stub-for-pthread_mutexattr_setprioceiling.patch",
+        "git_blob": "0afb1fbc2e96c3f6a41d02635d64115184b8e614",
+        "sha256": "b2067680c66af9eb9f4fdc1fa5d9337a9fd62bdab2c437b416aa97d79eb884ee"
+      },
+      {
+        "name": "APKBUILD",
+        "git_blob": "dd843d37816a760badde8280e4d338c132159db6",
+        "sha256": "db4e568cdf2b256815fdfdb55704cd2efdffdc0e8ecd0cb935fdc3e89e2140f4"
+      },
+      {
+        "name": "CVE-2026-40200.patch",
+        "git_blob": "88298ca471d38b2c8861f817caf394a591fcdc26",
+        "sha256": "1ee29f64f9ca8e8ad7c349779d661ff6b52126a27575d3586981357a52c406fb"
+      },
+      {
+        "name": "CVE-2026-6042.patch",
+        "git_blob": "4c52c0a3211ec70c5010bc6bce0446c183914380",
+        "sha256": "1d0be2e72b9d5bd16546b923aa8af861d271322f01644716a81823bec4065c99"
+      },
+      {
+        "name": "__stack_chk_fail_local.c",
+        "git_blob": "2b403a6e046fb288af4b3d16eda76980a599aea4",
+        "sha256": "299a7d75a09de3e2e11e7fb4acc3182e4a14e868093d2f30938fce9bfcff13da"
+      },
+      {
+        "name": "fix-loongarch64-zero-len-extcontext.patch",
+        "git_blob": "7955bddd4db379bdf668d80666a141cbf175c986",
+        "sha256": "92c8e965798ed516c15cb2a4e7c4ac45ec1eb68b6abff16c73adff2a3bae1b14"
+      },
+      {
+        "name": "getconf.c",
+        "git_blob": "c4235242b0ef70bb7a99cb210a134d19c15dc0b9",
+        "sha256": "d87d0cbb3690ae2c5d8cc218349fd8278b93855dd625deaf7ae50e320aad247c"
+      },
+      {
+        "name": "getent.c",
+        "git_blob": "bcc8b81c10bef1de5af8db7053dac48547c8e14d",
+        "sha256": "a6171c2db641cdd99c164169d3c5c6ca323617483cedec4cbbe3eb39c5834df0"
+      },
+      {
+        "name": "handle-aux-at_base.patch",
+        "git_blob": "7c9f2dc5fc05abaf82f2e7b59704862b325c0aab",
+        "sha256": "2a65e03b94217063d72fe998e5fb2e25cd01716078a3ba1b0ab574ab205111e6"
+      },
+      {
+        "name": "iconv.c",
+        "git_blob": "f5d5ce2aa730461df126cdf8bc8b084b4ebb881c",
+        "sha256": "f79a2930a2e5bb0624321589edf8b889d1e9b603e01e6b7ae214616605b3fdd7"
+      },
+      {
+        "name": "ldconfig",
+        "git_blob": "9a6c05978d1bfae6871fb96a862dfd3e7bb9c326",
+        "sha256": "7065021e04a5060957b5c6907af671a7028230d91927fb0c25892cadd9312b7c"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "ncurses",
+    "commit": "2cee8a7328d061418336ad327b512d96bcd7bc5e",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/2cee8a7328d061418336ad327b512d96bcd7bc5e/main/ncurses/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "53b403e3af9628225c186eb39f70f5c251c89172",
+        "sha256": "9801a0e262437b470ddfd6c35e55c231a79b6903262fe68df8a547845d095d6a"
+      },
+      {
+        "name": "cleanup-pkgconfig-ldflags.patch",
+        "git_blob": "64f4ccfaa7580a961096fed96a30245c51b7f29b",
+        "sha256": "c19b803b176a950935893aaa78e6330044ad4e953c2061ecc884857a0cd8b8a8"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "openssl",
+    "commit": "29b9ec24b1b5b39aeef51fa2a044210e2ec5258e",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/29b9ec24b1b5b39aeef51fa2a044210e2ec5258e/main/openssl/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "6c7ac59fec9063a925a6ecac2b61d45cbe659f5b",
+        "sha256": "ea459c051ee8d846c06f1d47d09d0f737778502c01de88c9696e96a208de5943"
+      },
+      {
+        "name": "auxv.patch",
+        "git_blob": "7803ef811cc802650a1a3b3808899fb8202c7b34",
+        "sha256": "0b3a36c0f1b3d8e0adcf02c251374ce4d2578b0c9f4b88207bf85c5c1b58c7d8"
+      },
+      {
+        "name": "openssl-fips.post-install",
+        "git_blob": "463f0efbb085bea4fe893e7826f1a0fbf1da90b3",
+        "sha256": "441311401af66e9f1b4b38730827ade609669196f91c56b82351a7226b903755"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "pax-utils",
+    "commit": "c61801eeacb3ffcd9c2025b09e402153bb93fb39",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/c61801eeacb3ffcd9c2025b09e402153bb93fb39/main/pax-utils/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "5834ca11b5e341ffd4940624e7be1e9e6822ace7",
+        "sha256": "f33df75f467601dcd73038b4e15029de60338a5f3f7d9a37574475a723b07c20"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "readline",
+    "commit": "a854c03acdac188901fb012f7acbee70a36e8041",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/a854c03acdac188901fb012f7acbee70a36e8041/main/readline/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "4e3e8299678264484b5650e7fd2fc18d0f83e2de",
+        "sha256": "d6ea7771ae1475b0f0843ed543664beba1beea893a99000dbb34ef20878cf4e9"
+      },
+      {
+        "name": "fix-ncurses-underlinking.patch",
+        "git_blob": "582e08f858de7b7125f3c4f119d80474c5afab33",
+        "sha256": "4f004abcc9193aea80b4415918120e9dd830c2de99c91bc6a8fd829213df1af0"
+      },
+      {
+        "name": "inputrc",
+        "git_blob": "d3da98595c90bfe8ef9fc3e4f3c3556f6b181f23",
+        "sha256": "1372f6d69c3638d63724c6daecf339c82bb9520a77ead2d497cb66e7114e62bb"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "sqlite",
+    "commit": "a9c3ba8b9129ec0f294d0a9bf538c2f1632bb016",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/a9c3ba8b9129ec0f294d0a9bf538c2f1632bb016/main/sqlite/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "715a0c42b11a70c0e9be931482daae8f6debb310",
+        "sha256": "8e0cdc5e9d36fa52760c2b89b538e0125552ee0b53451a0712c33b7dcdd609dd"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "tzdata",
+    "commit": "faa135a1a22c90309bf381766a7cc47490dea786",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/faa135a1a22c90309bf381766a7cc47490dea786/main/tzdata/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "0001-posixtz-ensure-the-file-offset-we-pass-to-lseek-is-o.patch",
+        "git_blob": "c4ae70b0755cfa062e3fa22c793a4e43ffc2d9bd",
+        "sha256": "c5f840eb16cb7f59cdc516b4c5f36cb8e1d8d3499d766ea38a8679f7ad45da51"
+      },
+      {
+        "name": "0002-fix-implicit-declaration-warnings-by-including-strin.patch",
+        "git_blob": "6f61b25b2d2cb7a75e8bb7d8088af2dcc72411d6",
+        "sha256": "a5e4036f9a46a89c6b7db7ce2bbfbc06dcc98c43635e18cab162e795e8880b20"
+      },
+      {
+        "name": "APKBUILD",
+        "git_blob": "3b9758351e18b1881d99fd76859f5d71dac1b80e",
+        "sha256": "5752b55671903e735f429367a0dc4673cf78562ef4cf5d358838f56de286a7c8"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "util-linux",
+    "commit": "d98c55af59055e6ca60fbe36e171546918709965",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/d98c55af59055e6ca60fbe36e171546918709965/main/util-linux/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "0001-libblkid-minix-don-t-detect-erofs-images-as-minix.patch",
+        "git_blob": "794c15b951ccd171c2c0490c4f4311878438fce9",
+        "sha256": "ef2f71793fd76ce3500ea8df37ada9d0b70958502a24173600667064bd0f7c7b"
+      },
+      {
+        "name": "APKBUILD",
+        "git_blob": "350c9c0ef36e7b0d603048b4ac4704cda5824d90",
+        "sha256": "5347f9d386c8684e7f5cc160ae8595c5c3d3cfedcfdc758f5e022a46e560b944"
+      },
+      {
+        "name": "CVE-2026-78408.patch",
+        "git_blob": "f2a2d4a1b43edb7aaadf15574c337a0ef2a89553",
+        "sha256": "bd5b45db9dbfb340622250e92a9f35dbfd9a3574045c4e89e3d034e2391f7697"
+      },
+      {
+        "name": "PATCH-test_enosys-Handle-musl-libc-error-strings.patch",
+        "git_blob": "0903a8a197eac9e0980826084541f7a1fdc1b998",
+        "sha256": "062b4ce8fb648f1a1394a21e5183c538711f701ac39bb12e8617194bf2bf722a"
+      },
+      {
+        "name": "fix-login.c.patch",
+        "git_blob": "83feb7f52b08043197fff1d51ed936a5309d41da",
+        "sha256": "e59c771511890f74e2fcd2de8c716fdc0e2d538f6a3dda1a9d54439e57185cda"
+      },
+      {
+        "name": "fix-nsenter.c.patch",
+        "git_blob": "3d69b721366f149d0fba3599f2ddd6c093db0b7e",
+        "sha256": "2de9f2ab0cde675ff79e260749a703e0da2372d256d68e2fa346833d2468c848"
+      },
+      {
+        "name": "libmount-include.patch",
+        "git_blob": "00a8c1857a40c95f647c9529715d331bc6c52ece",
+        "sha256": "8eb0b8970bdc6de9f924264444d07f93c500a9f1f602784056928229ec541461"
+      },
+      {
+        "name": "rfkill.confd",
+        "git_blob": "29e9c9800c07d855fa428938cc14f9a76af19a15",
+        "sha256": "d34e754f2ea29b6377a06ca1d4c31a85767f08995b9bbe777b85c023c88d3343"
+      },
+      {
+        "name": "rfkill.initd",
+        "git_blob": "fc0c800d4f72bbe79e449e39741997ad6b483bab",
+        "sha256": "59637f63f66df13539d651166c33a9122c6de93ef0f102da471e97bdaff4fb04"
+      },
+      {
+        "name": "su-l.pamd",
+        "git_blob": "2bcc9b2f64e34c3daa8b5fa17dbf95b49bc75eba",
+        "sha256": "e498158ef3a93838eaf24e7c6672178fa2e0f8602de799bfc18807fd729bc855"
+      },
+      {
+        "name": "ttydefaults.h",
+        "git_blob": "0004b66a8ae0671de9612bd2636008b9356140d2",
+        "sha256": "46faf1198bd884d12c5d45019a5fec8dfdefeae6721d8c9f3da89921acdb2a6d"
+      },
+      {
+        "name": "util-linux-misc.post-upgrade",
+        "git_blob": "aa911c41e0320301f4efe9feb1ceac48c61e8f2d",
+        "sha256": "ca26b40f191f935ab7bd9cf31bb1e521cbd7e7a8e5ece9f88986d2e067e042cd"
+      },
+      {
+        "name": "utmps.patch",
+        "git_blob": "529bb2ac95eabb10ab15513766e3aef004806291",
+        "sha256": "127c8a4bf9613bed2cec361a5e7f2d77db560a561d771f47e27c008c8eb2d722"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "xz",
+    "commit": "0c088d609f9fe69eedd6b4c7f4b99cdad847c20a",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/0c088d609f9fe69eedd6b4c7f4b99cdad847c20a/main/xz/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "b2d6af2e7b824108755dba06fc4ff1fa47211fa9",
+        "sha256": "e66901db8f5fe99356c3ccda131290c2639a940238c998fec2ce30d7c06982c3"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "zlib",
+    "commit": "0afa2da0e8c8051c6f8f64a7a388e5a259904245",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/0afa2da0e8c8051c6f8f64a7a388e5a259904245/main/zlib/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "b920acf55a1aa727b97cec465152f1c42cf6bdad",
+        "sha256": "c9348892bf3857602fe74fcc1d411e263b408b7d70344170396f5993a62bbe26"
+      },
+      {
+        "name": "CVE-2026-85091.patch",
+        "git_blob": "49f6b63108c2345f2a473705331cf901e367d585",
+        "sha256": "110ff14375733173d8aa54574473424fbd7dfe4b81f1ca34a759c6fe14b15b14"
+      }
+    ],
+    "directory_complete": true
+  },
+  {
+    "origin": "zstd",
+    "commit": "3c6e2ee2b16f403d53eab39c4426eb61f003c322",
+    "url": "https://raw.githubusercontent.com/alpinelinux/aports/3c6e2ee2b16f403d53eab39c4426eb61f003c322/main/zstd/APKBUILD",
+    "status": "downloaded",
+    "recipe_files": [
+      {
+        "name": "APKBUILD",
+        "git_blob": "657287adeb5ca5ee98e07728de5ea07020b472fb",
+        "sha256": "635134417b866a71fc0684bfbc1f8b5ff660c3edcd68f1b0b1335f04963ef5c1"
+      }
+    ],
+    "directory_complete": true
+  }
+]

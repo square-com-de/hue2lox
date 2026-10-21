@@ -51,6 +51,15 @@ class AdminTests(unittest.TestCase):
         code,_,b=self.request('/api/admin/lights');self.assertEqual(code,200);self.assertNotIn(b't'*48,b);self.assertNotIn(b'key_file',b)
         self.assertEqual(self.request('/api/admin/logout',{})[0],200)
         self.assertEqual(self.request('/api/admin/token',{})[0],401)
+    def test_plain_http_public_url_uses_cookie_browsers_accept(self):
+        with patch.dict(os.environ,{'HUE_PUBLIC_URL':'http://hue2lox.test:8443'}):
+            self.cookie=None
+            code,h,_=self.request('/api/admin/login',{'username':'admin','password':self.password})
+            self.assertEqual(code,200);cookie=h['Set-Cookie']
+            self.assertTrue(cookie.startswith('hue2lox_session='));self.assertNotIn('Secure',cookie)
+            for flag in ['HttpOnly','SameSite=Strict','Path=/']:self.assertIn(flag,cookie)
+            self.cookie=cookie.split(';')[0];self.csrf=None
+            self.assertEqual(self.request('/api/admin/lights')[0],200)
     def test_rate_limit_and_expiration(self):
         for _ in range(5):self.assertEqual(self.request('/api/admin/login',{'username':'admin','password':'incorrect'})[0],401)
         self.assertEqual(self.request('/api/admin/login',{'username':'admin','password':self.password})[0],429)

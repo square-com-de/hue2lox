@@ -1,0 +1,14 @@
+[
+  {
+    "name": "python",
+    "version": "3.15.0",
+    "url": "https://www.python.org/ftp/python/3.15.0/Python-3.15.0.tar.xz",
+    "sha256": "ba4bed1ba346b916890b76d9e320451420aa69f6408997d33c66482eeae3d575"
+  },
+  {
+    "name": "pip",
+    "version": "26.2.1",
+    "url": "https://files.pythonhosted.org/packages/ae/15/4500e320e6b101ec3b719ae85b697d9940b6cda672bc555bd6016fc60c6f/pip-26.2.1.tar.gz",
+    "sha256": "f6ad667e89a1fe78046c8f13232b247200f5258d7828f3f7883d660878e0813f"
+  }
+]

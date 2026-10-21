@@ -13,7 +13,7 @@ import tarfile
 ROOT = Path(__file__).resolve().parent.parent
 TREES = ('src', 'web', 'catalog', 'trust', 'config', 'deployment/native')
 FILES = ('LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md', 'scripts/prepare-state.py',
-         'docs/INSTALL-NATIVE.md', 'docs/INSTALL-NATIVE.en.md')
+         'docs/INSTALL-NATIVE.md', 'docs/INSTALL-NATIVE.en.md', 'docs/NATIVE-VM-ACCEPTANCE.md')
 
 
 def build(version, output):

@@ -21,7 +21,7 @@ Eine Debian-13-Neuinstallation mit Kopplung und Neustart ist vom Nutzer bestäti
 
 ## 3 — Neuinstallation auf einem frischen Zielsystem
 
-- [ ] Öffentlichen Quellstand mit dokumentierter Version herunterladen oder klonen; Anleitung ausschließlich aus [INSTALL.md](../INSTALL.md) befolgen.
+- [ ] Öffentlichen Quellstand mit dokumentierter Version herunterladen oder klonen; Anleitung ausschließlich aus [INSTALL.md](../INSTALL.de.md) befolgen.
 - [ ] KI-Installationsprompt mit Voraussetzungen erproben; tatsächlichen Assistenten/Zugriffsmodus und Abweichungen protokollieren.
 - [ ] Keine privaten Dateien der bisherigen Installation übernehmen.
 - [ ] Leere Testinstallation mit eigenem Verzeichnis, Compose-Projekt und freiem Port vorbereiten.

@@ -1,88 +1,110 @@
-<p align="center"><a href="README.md">Deutsch</a> | <a href="README.en.md">English</a></p>
+<p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
 <p align="center">
-  <img src="web/hue2lox-logo.png" width="360" alt="Hue2Lox – unser Oktopus hält den Schriftzug">
+  <img src="web/hue2lox-logo.png" width="360" alt="Hue2Lox – our octopus holding the wordmark">
 </p>
-<h1 align="center">Hue im Griff. Mit Hue2Lox.</h1>
-<p align="center">Philips Hue mit Loxone verbinden – lokal, übersichtlich und mit acht helfenden Armen.</p>
-<p align="center"><a href="docs/MANUAL.md">Handbuch</a> · <a href="INSTALL.md">Installation</a></p>
+<h1 align="center">Get a grip on Hue. With Hue2Lox.</h1>
+<p align="center">Connect Philips Hue to Loxone – locally, clearly, with eight helping arms.</p>
+<p align="center"><a href="docs/MANUAL.md">Manual</a> · <a href="INSTALL.md">Installation</a></p>
 
-**Deine Hue-Lampen in Loxone. Einfach eingebunden. Komfortabel gesteuert.**
+**Your Hue lights in Loxone. Easy to connect. Simple to control.**
 
-Bringe deine Philips-Hue-Lampen und Szenen in deine Loxone-Steuerung – ohne Programmierung und mit automatisch erzeugten Vorlagen für Loxone Config.
+Bring your Philips Hue lights and scenes into your Loxone setup – without programming, using automatically generated templates for Loxone Config.
 
-Hue2Lox liest die Lampen und Szenen deiner Bridges ein und bietet die passenden Steuerungsarten an: Schalten, Dimmen, Farbe und Weißtemperatur. Wähle deine Geräte aus und übernimm die fertigen Befehle per Kopieren oder XML-Import in Loxone Config.
+Hue2Lox discovers the lights and scenes on your bridges and offers the controls they support: switching, dimming, color and white temperature. Select your devices and copy the ready-made commands or import them into Loxone Config as XML.
 
-Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer Oberfläche. Hue2Lox läuft lokal auf deinem Linux-Server, lässt sich auf Deutsch oder Englisch bedienen und benötigt im laufenden Betrieb kein Cloudkonto.
+Keep everything in view: multiple bridges, your lights and scenes in one interface. Hue2Lox runs locally on your Linux server, supports German and English, and needs no cloud account during normal operation.
 
-## Was Hue2Lox kann
+## Features
 
-- Mehrere Hue Bridges koppeln und Lampen sowie Hue-Szenen einlesen.
-- Ein/Aus, Dimmen, RGB und Weißtemperatur passend zu den Lampenfähigkeiten anbieten.
-- Lampen und Szenen nach Bridge und Raum filtern, ignorieren und wieder einblenden.
-- Loxone-HTTP-Befehle kopieren oder eine Auswahl als XML exportieren.
-- Loxone-Anfragen mit einem zeitlich begrenzten, bereinigten HTTP-Monitor prüfen.
-- Lokal über HTTPS verwalten – ohne Cloudkonto für den laufenden Betrieb.
+- Pair multiple Hue Bridges and discover lights and Hue scenes.
+- Use switching, dimming, RGB and white temperature according to light capabilities.
+- Filter by bridge and room; ignore and restore lights or scenes.
+- Copy Loxone HTTP commands or export a selection as XML.
+- Inspect incoming requests in a temporary, sanitized HTTP monitor.
+- Manage locally over HTTPS without a cloud account for normal operation.
 
-## So sieht es aus
+## Preview
 
-![Befehle für Loxone im Hue2Lox-Webinterface](web/tutorial-commands.png)
+![Loxone command fields in Hue2Lox](web/tutorial-commands.png)
 
-*Beispielansicht mit Testdaten; die aktuelle Oberfläche ist kompakter. Weitere Abbildungen stehen in der [Loxone-Anleitung](docs/TUTORIAL.md).*
+*Example with test data and German labels; the current layout is more compact. More illustrations are in the [Loxone guide](docs/TUTORIAL.md).*
 
-## Installieren und loslegen
+## Install and get started
 
-Du brauchst einen Linux-Server, eine VM oder einen Raspberry Pi mit unterstütztem 64-Bit-Betriebssystem, eine Hue Bridge und einen Loxone Miniserver für die Steuerung. Dein Mac oder Windows-PC begleitet dich bei der Einrichtung.
+Choose the installation method that suits you:
 
-1. **Installer starten:** Die [Installationsanleitung](INSTALL.md) führt dich durch Anmeldung am Server, direkten RC2-Download mit Prüfsumme und Start des Installers.
-2. **Hue2Lox einrichten:** Der Installer prüft dein System und kann fehlende Pakete und Docker installieren. Vorhandene funktionierende Docker-Installationen werden weiterverwendet.
-3. **Bridge koppeln:** Öffne die angezeigte HTTPS-Adresse, prüfe das Zertifikat und melde dich mit `admin` / `admin` an. Das Passwort kannst du in der Oberfläche ändern.
-4. **Mit Loxone verbinden:** Wähle Lampen oder Szenen aus und folge der [bebilderten Anleitung](docs/TUTORIAL.md), um Befehle zu kopieren oder XML in Loxone Config zu importieren.
+| Installation method | Who is it for? | Status and guide |
+| --- | --- | --- |
+| **Installer with Docker** | A guided setup for beginners. The assistant prepares Docker and builds Hue2Lox on your server. | **Available in RC4** · [Installation guide](INSTALL.md) |
+| **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC4** · [Container guide](docs/DOCKER.md) |
+| **Python installer, without Docker** | For running Hue2Lox directly as a service on Debian. | **Development / PR #18** · [Native test guide](docs/INSTALL-NATIVE.en.md). No published native package or hardware approval. |
 
-**[Zur Installationsanleitung](INSTALL.md) · [RC2 als ZIP herunterladen](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.2/hue2lox-v1.0.0-rc.2.zip) · [Download prüfen](docs/DOWNLOADS.md)**
+Choose the guided installer or use the versioned GHCR image directly. The native Python installer is available for development testing on Debian 13 amd64; it is not part of RC4. The Docker installer builds its image locally.
 
-Lieber mit KI-Begleitung? Nutze den [Installationsprompt für ChatGPT oder Claude](docs/AI-INSTALL.md). Er führt dich bis zum selben interaktiven Installer.
+### Get started with the Docker installer (RC4)
 
-**Zusätzlicher Entwicklungsweg auf main:** Die [native Linux-Installation](docs/INSTALL-NATIVE.md) betreibt dieselbe Anwendung ohne Docker. Sie ist zunächst für isolierte Debian-13-Tests auf amd64 vorgesehen; es gibt dafür noch kein veröffentlichtes Paket und keine Hardwarefreigabe. Der oben beschriebene Dockerweg bleibt bestehen.
+You need a Linux server, VM or Raspberry Pi with a supported 64-bit OS, a Hue Bridge and a Loxone Miniserver for control. Use your Mac or Windows PC to follow the setup guide.
 
-## Release-Status und technische Hinweise
+1. **Start the installer:** the [English installation guide](INSTALL.md) takes you through connecting to the server, downloading RC4 directly with its checksum and starting the installer.
+2. **Set up Hue2Lox:** the installer checks your system and can install missing packages and Docker. Existing working Docker installations are reused.
+3. **Pair your bridge:** open the displayed web address (verify the certificate when using direct HTTPS) and sign in with `admin` / `admin`. You can change the password in the interface.
+4. **Connect to Loxone:** choose lights or scenes and follow the [illustrated guide](docs/TUTORIAL.md) to copy commands or import XML into Loxone Config.
 
-**Release Candidate 2.** Deutsch und Englisch sind verfügbar. Eine frühere frische Debian-13-Installation mit Bridge-Kopplung, Lampenanzeige und Neustart wurde erfolgreich getestet. Der erneute Debian-Test des RC2-Pakets und der durchgängige Funktionstest mit einem Loxone Miniserver stehen noch aus. Der eigene Projektcode steht unter Apache 2.0.
+**[Open the installation guide](INSTALL.md) · [Download RC4 ZIP](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/hue2lox-v1.0.0-rc.4.zip) · [Verify the download](docs/DOWNLOADS.md)**
 
-Der öffentliche Download enthält den **Quellcode samt Installer und Dockerfile**. Der Installer baut das Hue2Lox-Image auf deinem Linux-Rechner; ein fertiges Hue2Lox-Image bieten wir vorerst nicht an.
+Prefer guidance from an AI assistant? Use the [ChatGPT or Claude installation prompt](docs/AI-INSTALL.md). It guides you to the same interactive installer.
 
-RC2 ist ein unveränderter Versionsstand. [Version, Commit und Prüfsumme](docs/DOWNLOADS.md) prüfen. `main` ist der getrennte Entwicklungsstand.
+## Feedback & contact
 
-Szenen erstellst du weiterhin in der Hue-App. Hue2Lox ruft sie über Loxone ab. Eine Synchronisierung des tatsächlichen Lampenzustands zurück in den Loxone-Lichtsteuerungsbaustein ist nicht vorgesehen.
+Have you tried Hue2Lox? I'd love to hear your feedback – including what works well!
 
-**Bestehende Installationen:** Ein allgemeiner Release-Updater ist noch nicht verfügbar. Zugangsdaten und gespeicherte Geräte erhalten; eine vorhandene Installation nicht mit einer Neuinstallation überschreiben.
+- **By email, no GitHub account needed:** [hue2lox@square-com.de](mailto:hue2lox@square-com.de)
+- **Feedback or questions on GitHub:** [Open feedback / question](https://github.com/square-com-de/hue2lox/issues/new?template=feedback_question.md) (GitHub account required).
+- **Bugs or improvement ideas:** [Choose an issue template](https://github.com/square-com-de/hue2lox/issues/new/choose).
 
-Details stehen in den [Release-Hinweisen](RELEASE.md) und den [dokumentierten Testergebnissen](docs/TEST-RESULTS.md).
+For problems, include your Hue2Lox version, a short description and, if useful, a screenshot or error message. Please omit passwords and tokens. Report security issues privately – see [security reporting](SECURITY.md).
 
-## Dokumentation
+## Release status and technical notes
 
-| Thema | Einstieg |
+**Release Candidate 4.** German and English are available. An earlier fresh Debian 13 installation, bridge pairing, light display and restart have passed a user-run test. A fresh Debian test of the RC4 package and end-to-end testing with a Loxone Miniserver are still pending. Original project code is licensed under Apache 2.0.
+
+RC4 offers **source code with the installer** and a **prebuilt GHCR image for AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4`. The installer continues to build locally. Source and license materials accompany the [release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4). There is no `latest` tag before a stable release.
+
+RC4 is an immutable version. Verify its [commit and checksum](docs/DOWNLOADS.md). `main` is the separate development version.
+
+Create and edit scenes in the Hue app; recall them through Loxone. Synchronizing actual Hue light state back into the Loxone Lighting Controller is not part of this project.
+
+**Existing installations:** a general release updater is not yet available. Preserve credentials and device state; do not overwrite an existing installation with fresh setup.
+
+See [release notes](RELEASE.md) and [documented test results](docs/TEST-RESULTS.md) for details.
+
+## Documentation
+
+| Topic | Start here |
 | --- | --- |
-| Bedienung, Fehlerbehebung, Backup | [Handbuch](docs/MANUAL.md) |
-| Neue Docker-Testinstallation | [Installation](INSTALL.md) |
-| Native Installation ohne Docker (Entwicklung) | [Native Anleitung](docs/INSTALL-NATIVE.md) |
-| HTTP-Ausgänge und XML in Loxone | [Bebilderte Anleitung](docs/TUTORIAL.md) |
-| Architektur und Container | [Technik](docs/CONTAINER.md) |
-| Qualitätsprüfungen und Mitarbeit | [Entwicklung](CONTRIBUTING.md) |
-| Was wir gemeinsam testen | [Abnahmeplan](docs/ACCEPTANCE.md) |
-| Quellen, Icons und Lizenzstatus | [Drittanbieterhinweise](THIRD-PARTY-NOTICES.md) |
-| Release-Stand und Grenzen | [Release-Hinweise](RELEASE.md) |
+| Usage, troubleshooting and backup | [Manual](docs/MANUAL.md) |
+| Fresh test installation | [Installation](INSTALL.md) |
+| Native service without Docker (development) | [Native guide](docs/INSTALL-NATIVE.en.md) |
+| Native VM test evidence and remaining checks | [VM acceptance](docs/NATIVE-VM-ACCEPTANCE.md) |
+| Prebuilt Docker image (AMD64/ARM64) | [Container guide](docs/DOCKER.md) |
+| Loxone HTTP outputs and XML | [Illustrated guide](docs/TUTORIAL.md) |
+| Architecture and container | [Technical reference (German)](docs/CONTAINER.md) |
+| Quality checks and contributing | [Development](CONTRIBUTING.md) |
+| Joint hardware tests | [Acceptance plan](docs/ACCEPTANCE.md) |
+| Sources, icons and licensing | [Third-party notices](THIRD-PARTY-NOTICES.md) |
+| Release status and limits | [Release notes](RELEASE.md) |
 
-## Tests und Sicherheit
+## Quality and security
 
-[Automatische Prüfungen auf GitHub](https://github.com/square-com-de/hue2lox/actions/workflows/quality.yml) prüfen Quellcode, Übersetzungen, lokale HTTPS-Installation und einen isolierten Container. Ein grüner Lauf bestätigt nur diese Prüfungen, nicht den Betrieb mit jeder Hue-Lampe oder jedem Miniserver.
+[GitHub checks](https://github.com/square-com-de/hue2lox/actions/workflows/quality.yml) cover source, translations, local HTTPS startup and an isolated container. Passing checks do not prove compatibility with every light or Miniserver.
 
-Keine Tokens, privaten Schlüssel, Zertifikats-Backups oder XML-Dateien mit echtem Token in Issues oder Pull Requests hochladen. Siehe [Sicherheit](SECURITY.md).
+Do not submit tokens, private keys, private backups or token-bearing XML in issues or pull requests. See [security reporting](SECURITY.md).
 
-## Lizenzstatus
+## License status
 
-Hue2Lox steht unter der [Apache License 2.0](LICENSE). Sie erlaubt auch kommerzielle Nutzung und Weitergabe unter ihren Bedingungen. Eigener Code, Dokumentation und eigene Projektgrafiken sind einbezogen, soweit entsprechende Rechte bestehen. Drittanbieterbestandteile behalten ihre eigenen Bedingungen: [Lizenzen und Quellen](THIRD-PARTY-NOTICES.md) · [NOTICE](NOTICE).
+Hue2Lox uses the [Apache License 2.0](LICENSE), which permits commercial use and redistribution under its terms. Original code, documentation and project artwork are included to the extent applicable rights exist. Third-party materials retain their own terms: [notices](THIRD-PARTY-NOTICES.md) · [NOTICE](NOTICE).
 
-Unabhängiges Projekt; keine offizielle Verbindung zu Philips Hue oder Loxone.
+Independent project; not officially affiliated with Philips Hue or Loxone.
 
 <p align="center"><strong>by <a href="https://square-com.de/">square | com</a></strong> · <a href="https://square-com.de/impressum/">Impressum / Legal notice</a></p>

@@ -19,14 +19,16 @@ def local_address(host):
 
 
 def initialize(state_directory, certificate_directory, secret_directory, host, uid=None, gid=None):
-    """Create three NEW private directories; caller selects ownership explicitly.
+    """Create NEW private directories; certificate_directory=None skips TLS; caller selects ownership explicitly.
 
     Existing state is never initialized/reset. This function is usable by Docker,
     native and future plugin adapters, without installing services or packages.
     """
     host = local_address(host)
-    targets = [Path(p) for p in (state_directory, certificate_directory, secret_directory)]
-    if len({str(p.absolute()) for p in targets}) != 3:
+    state, secrets_dir = Path(state_directory), Path(secret_directory)
+    certs = Path(certificate_directory) if certificate_directory is not None else None
+    targets = [state, secrets_dir] + ([certs] if certs is not None else [])
+    if len({str(p.absolute()) for p in targets}) != len(targets):
         raise ValueError('State, certificates and secrets need separate directories')
     if (uid is None) != (gid is None):
         raise ValueError('Specify both uid and gid, or neither')
@@ -38,7 +40,6 @@ def initialize(state_directory, certificate_directory, secret_directory, host, u
         for path in targets:
             path.mkdir(mode=0o700)
             created.append(path)
-        state, certs, secrets_dir = targets
         for name, document in [('registry.json', {'schema_version': 1, 'bridges': []}),
                                ('admin_auth.json', create_credentials('admin', 'admin'))]:
             path = state / name
@@ -47,19 +48,20 @@ def initialize(state_directory, certificate_directory, secret_directory, host, u
         token = secrets_dir / 'control_token'
         token.write_text(secrets.token_hex(32) + '\n')
         token.chmod(0o400)
-        # OpenSSL must never briefly create a world-readable private key.
-        with tempfile.TemporaryDirectory(prefix='.certificate-', dir=certs) as directory:
-            tmp = Path(directory)
-            san = ','.join(dict.fromkeys([f'IP:{host}', 'IP:127.0.0.1', 'DNS:localhost']))
-            subprocess.run(['openssl', 'req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes',
-                            '-days', '365', '-keyout', str(tmp / 'server.key'),
-                            '-out', str(tmp / 'server.crt'), '-subj', '/CN=hue2lox.local',
-                            '-addext', 'subjectAltName=' + san, '-addext', 'extendedKeyUsage=serverAuth'],
-                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            (tmp / 'server.key').chmod(0o600)
-            (tmp / 'server.key').replace(certs / 'server.key')
-            (tmp / 'server.crt').replace(certs / 'server.crt')
-        (certs / 'server.crt').chmod(0o644)
+        if certs is not None:
+            # OpenSSL must never briefly create a world-readable private key.
+            with tempfile.TemporaryDirectory(prefix='.certificate-', dir=certs) as directory:
+                tmp = Path(directory)
+                san = ','.join(dict.fromkeys([f'IP:{host}', 'IP:127.0.0.1', 'DNS:localhost']))
+                subprocess.run(['openssl', 'req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes',
+                                '-days', '365', '-keyout', str(tmp / 'server.key'),
+                                '-out', str(tmp / 'server.crt'), '-subj', '/CN=hue2lox.local',
+                                '-addext', 'subjectAltName=' + san, '-addext', 'extendedKeyUsage=serverAuth'],
+                               check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                (tmp / 'server.key').chmod(0o600)
+                (tmp / 'server.key').replace(certs / 'server.key')
+                (tmp / 'server.crt').replace(certs / 'server.crt')
+            (certs / 'server.crt').chmod(0o644)
         if uid is not None:
             for directory in targets:
                 os.chown(directory, uid, gid)

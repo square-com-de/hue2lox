@@ -10,7 +10,20 @@ import threading
 import time
 import tempfile
 
-COOKIE = '__Host-hue2lox_session'
+
+
+def secure_cookies():
+    """Secure cookies need an HTTPS public URL (built-in TLS or a reverse proxy); plain HTTP gets plain cookies."""
+    return os.environ.get('HUE_PUBLIC_URL', 'https://').lower().startswith('https://')
+
+
+def cookie_name():
+    # Browsers only accept the __Host- prefix together with Secure.
+    return '__Host-hue2lox_session' if secure_cookies() else 'hue2lox_session'
+
+
+def session_cookie(value, max_age):
+    return cookie_name() + '=' + value + '; Path=/; HttpOnly' + ('; Secure' if secure_cookies() else '') + '; SameSite=Strict; Max-Age=' + str(max_age)
 LOCK = threading.Lock()
 CREDENTIAL_LOCK = threading.RLock()
 SESSIONS = {}
@@ -104,7 +117,7 @@ def session(cookie, touch=True):
     from http.cookies import SimpleCookie, CookieError
     try:
         parsed = SimpleCookie(); parsed.load(cookie or '')
-        token = parsed[COOKIE].value
+        token = parsed[cookie_name()].value
         if len(token) > 128:
             return None, None
     except (KeyError, CookieError):

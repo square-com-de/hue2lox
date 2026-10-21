@@ -1,6 +1,6 @@
 # Native Linux installation without Docker
 
-[Deutsch](INSTALL-NATIVE.md) · [Docker installation](INSTALL.en.md)
+[Deutsch](INSTALL-NATIVE.md) · [Docker installation](../INSTALL.md)
 
 This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. No native release package has been published. **Debian 13 on amd64 is the initial target, not a completed hardware acceptance.** Other distributions and architectures are not approved.
 
@@ -155,3 +155,5 @@ Credentials, certificates and registry are not initialized again. Regular update
 Local tests and CI establish only their documented checks. Real Debian startup, systemd permissions and restoration require a disposable target instance. Discovery, pairing, bridge TLS, Loxone HTTPS/XML and actual light behaviour remain separate hardware acceptance. Untested platforms are not supported.
 
 A future LoxBerry plugin can reuse the application and state preparation. Its directories, service integration and update hooks are a separate work package.
+
+[Manual VM acceptance and remaining evidence](NATIVE-VM-ACCEPTANCE.md).

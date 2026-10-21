@@ -4,21 +4,22 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  workflow_call:
 permissions:
   contents: read
 concurrency:
-  group: quality-${{ github.ref }}
+  group: quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   source:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.12'
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+          python-version: '3.15'
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
       - run: python scripts/check-quality.py
@@ -32,7 +33,7 @@ jobs:
           python tools/build_tutorial.py --english
           git diff --exit-code -- web/locales web/tutorial.html web/tutorial-en.html
       - name: Scan source for secrets (private report, no matched text in logs)
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -44,11 +45,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Build and test isolated empty installation
         run: sudo env CI=true sh scripts/ci-container.sh
       - name: Scan image for fixable high and critical vulnerabilities
-        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # 0.35.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
         with:
           image-ref: hue2lox-ci:check
           scanners: vuln
@@ -57,11 +58,19 @@ jobs:
           format: json
           output: ${{ runner.temp }}/hue2lox-image-report.json
           exit-code: '1'
+      - name: Preserve image vulnerability report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: image-vulnerability-report
+          path: ${{ runner.temp }}/hue2lox-image-report.json
+          if-no-files-found: warn
+          retention-days: 90
   native:
     name: Native Debian 13 amd64 (isolated systemd container)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Build native packages and test offline lifecycle
         run: sudo env CI=true sh scripts/ci-native.sh

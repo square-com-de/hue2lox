@@ -1,12 +1,12 @@
 # Development and quality checks / Entwicklung
 
-Hue2Lox is publicly available as Release Candidate 2. End-to-end testing with a Loxone Miniserver is still in progress. The main branch can contain changes newer than the published release. Original project code is licensed under [Apache License 2.0](LICENSE). Contributions intended for inclusion are submitted under that license unless explicitly stated otherwise. Third-party terms are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+Hue2Lox is publicly available as Release Candidate 4. End-to-end testing with a Loxone Miniserver is still in progress. The main branch can contain changes newer than the published release. Original project code is licensed under [Apache License 2.0](LICENSE). Contributions intended for inclusion are submitted under that license unless explicitly stated otherwise. Third-party terms are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ## Work from a clean clone
 
 Clone `https://github.com/square-com-de/hue2lox.git` into a separate development directory. Record the commit being tested. Do not copy production `.env`, keys, credentials, certificates or runtime data into the clone. Never run the prototype installation scripts on an unrelated installation.
 
-Use Python 3.12, Node.js 22 (JavaScript syntax and helper tests), OpenSSL and, for container testing, Linux with Docker Engine and Compose v2. The application uses the Python standard library; there is no pip dependency installation.
+CI and the container use Python 3.15. The initial native Debian 13 target uses the OS Python (3.13); its separate offline systemd job tests that runtime. For local development use a compatible Python version, Node.js 22 (JavaScript syntax and helper tests), OpenSSL and, for container testing, Linux with Docker Engine and Compose v2. The application uses the Python standard library; there is no pip dependency installation.
 
 ```sh
 python3 scripts/check-quality.py
@@ -38,7 +38,7 @@ The container script requires root and `CI=true` and is intended only for a disp
 
 Keep changes focused, describe the user-visible result and record which checks actually ran. Use synthetic device names and addresses in fixtures and screenshots. Never commit or log authorization headers, Hue application keys, session cookies, passwords or private TLS keys. Review staged changes and scan history before public release. A green automated run does not replace real-device acceptance.
 
-Deutsch: Hue2Lox ist als Release Candidate 2 öffentlich verfügbar. Der durchgängige Funktionstest mit einem Loxone Miniserver ist noch nicht abgeschlossen. Änderungen in einem getrennten Klon testen; keine produktiven Zugangsdaten übernehmen. Eine Debian-13-Neuinstallation mit Kopplung und Neustart wurde bestätigt. Fehlerberichte bitte ohne Tokens, Keys oder unbereinigte Protokolle.
+Deutsch: Hue2Lox ist als Release Candidate 4 öffentlich verfügbar. Der durchgängige Funktionstest mit einem Loxone Miniserver ist noch nicht abgeschlossen. Änderungen in einem getrennten Klon testen; keine produktiven Zugangsdaten übernehmen. Eine Debian-13-Neuinstallation mit Kopplung und Neustart wurde bestätigt. Fehlerberichte bitte ohne Tokens, Keys oder unbereinigte Protokolle.
 
 ## Repository layout
 
