@@ -127,3 +127,6 @@ body[data-page="scenes"] #notice:not(.error){display:none}
 .discovery-help pre{max-height:20rem;max-width:100%;overflow:auto;padding:1rem;background:#142f27;color:#f5f7f1;border-radius:8px;font-size:.8rem;white-space:pre;tab-size:4}
 .discovery-help [role=status]:empty{display:none}
 .discovery-help pre code{background:transparent;color:inherit;padding:0;border:0}
+
+/* Iconoir sidebar icons: fixed geometry, inherited navigation state colors. */
+nav .sidebar-icon{width:22px;height:22px;flex:0 0 22px;display:block;pointer-events:none}nav button{gap:14px}nav button>span{min-width:0;overflow-wrap:anywhere}

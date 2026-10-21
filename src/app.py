@@ -135,6 +135,8 @@ class Handler(BaseHTTPRequestHandler):
                   '/assets/tutorial-commands.png': ('tutorial-commands.png','image/png'),
                   '/assets/tutorial-monitor.png': ('tutorial-monitor.png','image/png'),
                   '/assets/app.css': ('app.css','text/css; charset=utf-8'),
+                  '/assets/sidebar-icons.svg': ('sidebar-icons.svg','image/svg+xml'),
+                  '/assets/sidebar-icons-license.txt': ('sidebar-icons-LICENSE.txt','text/plain; charset=utf-8'),
                   '/assets/monitor.js': ('monitor.js','text/javascript; charset=utf-8'),
                   '/assets/discovery-help.js': ('discovery-help.js','text/javascript; charset=utf-8'),
                   '/assets/discovery.js': ('discovery.js','text/javascript; charset=utf-8'),

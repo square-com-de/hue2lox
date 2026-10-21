@@ -63,7 +63,7 @@ def check_login(password):
     code, _, body = request('/api/overview', headers=auth)
     assert code == 200 and json.loads(body)['bridges'] == []
     assert request('/api/admin/token', {}, {'Cookie': auth['Cookie']})[0] == 403
-    for path in ('/', '/assets/locales/en.js', '/assets/discovery-help.js', '/tutorial/en', '/licenses'):
+    for path in ('/', '/assets/locales/en.js', '/assets/discovery-help.js', '/assets/sidebar-icons.svg', '/assets/sidebar-icons-license.txt', '/tutorial/en', '/licenses'):
         assert request(path)[0] == 200
     return auth
 

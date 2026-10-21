@@ -2,6 +2,14 @@
 
 Reviewed: 20 October 2026. Original Hue2Lox code, documentation and project assets are licensed under Apache License 2.0, to the extent applicable rights exist. See LICENSE and NOTICE. Third-party components retain their own licenses; the project license does not replace the terms below.
 
+## Sidebar navigation icons – Iconoir
+
+Six Regular icons from Iconoir v7.12.1: dashboard, light-bulb, sparks, network, activity and settings. Original geometry is combined into the local SVG symbol sprite `web/sidebar-icons.svg`; no CDN, font or JavaScript dependency is used. These navigation icons are separate from the original Hue2Lox lamp-shape icons below.
+
+- Source: https://github.com/iconoir-icons/iconoir/tree/v7.12.1/icons/regular
+- Copyright (c) 2021 Luca Burgio. License: MIT. The complete original notice is retained in `web/sidebar-icons-LICENSE.txt` and served at `/assets/sidebar-icons-license.txt`.
+- Upstream license: https://github.com/iconoir-icons/iconoir/blob/v7.12.1/LICENSE
+
 ## Original light icons
 
 The current lamp icons are original geometric SVG drawings created for Hue2Lox, approved on 19 October 2026. See docs/ICONS.md and `web/lamp-icons/`. The former third-party icon bundle is no longer shipped in the current source or new builds. Historical releases/commits and existing backups retain their original license obligations; they are not retroactively relicensed. Original project assets are covered by Apache License 2.0 to the extent applicable rights exist.

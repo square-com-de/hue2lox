@@ -121,10 +121,12 @@ def main():
                     expected = snapshot()
                 code, _, body = request('/api/overview', headers=auth)
                 assert code == 200 and json.loads(body)['bridges'] == []
-                for path in ('/', '/assets/i18n.js', '/assets/locales/de.js', '/assets/locales/en.js', '/assets/discovery-help.js', '/tutorial/en', '/licenses'):
+                for path in ('/', '/assets/i18n.js', '/assets/locales/de.js', '/assets/locales/en.js', '/assets/discovery-help.js', '/assets/sidebar-icons.svg', '/assets/sidebar-icons-license.txt', '/tutorial/en', '/licenses'):
                     assert request(path)[0] == 200, path
                 assert request('/assets/discovery-help.js')[2] == (runtime / 'web/discovery-help.js').read_bytes()
                 assert b'discovery-help-platforms' in request('/')[2]
+                assert request('/assets/sidebar-icons.svg')[2] == (runtime / 'web/sidebar-icons.svg').read_bytes()
+                assert request('/assets/sidebar-icons-license.txt')[2] == (runtime / 'web/sidebar-icons-LICENSE.txt').read_bytes()
                 assert request('/api/admin/token', {}, {'Cookie': auth['Cookie']})[0] == 403
                 code, _, body = request('/api/admin/token', {}, auth)
                 assert code == 200 and json.loads(body)['token'].encode() == (secrets / 'control_token').read_bytes().strip()
