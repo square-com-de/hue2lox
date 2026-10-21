@@ -1,0 +1,100 @@
+name: Publish release images
+on:
+  release:
+    types: [published]
+permissions:
+  contents: read
+# Serialize releases so an older run cannot overwrite newer publication work.
+concurrency:
+  group: ghcr-release
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - run: python3 scripts/release-image.py validate
+  quality:
+    needs: validate
+    uses: ./.github/workflows/quality.yml
+  materials:
+    needs: validate
+    uses: ./.github/workflows/publish-image.yml
+  publish:
+    needs: [quality, materials]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: container-source-materials
+          path: materials
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: image-evidence-amd64
+          path: evidence/amd64
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: image-evidence-arm64
+          path: evidence/arm64
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-image-amd64
+          path: images/amd64
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-image-arm64
+          path: images/arm64
+      - run: python3 scripts/release-image.py prepare
+      - name: Authenticate to GHCR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_ACTOR: ${{ github.actor }}
+        run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+      - name: Publish verified assets and exact candidate images
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/release-image.py publish
+      - name: Log out
+        if: always()
+        run: docker logout ghcr.io
+  verify-public:
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: image-evidence-amd64
+          path: evidence/amd64
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: image-evidence-arm64
+          path: evidence/arm64
+      - name: Authenticate for stable promotion only
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_ACTOR: ${{ github.actor }}
+        run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+      - name: Verify anonymous pulls, record digests and promote stable only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/release-image.py verify-public
+      - name: Log out
+        if: always()
+        run: docker logout ghcr.io
