@@ -4,7 +4,7 @@ Reviewed: 20 October 2026. Original Hue2Lox code, documentation and project asse
 
 ## Original light icons
 
-The current lamp icons are original geometric SVG drawings created for Hue2Lox, approved on 19 October 2026. See ICONS.md and `web/lamp-icons/`. The former third-party icon bundle is no longer shipped in the current source or new builds. Historical releases/commits and existing backups retain their original license obligations; they are not retroactively relicensed. Original project assets are covered by Apache License 2.0 to the extent applicable rights exist.
+The current lamp icons are original geometric SVG drawings created for Hue2Lox, approved on 19 October 2026. See docs/ICONS.md and `web/lamp-icons/`. The former third-party icon bundle is no longer shipped in the current source or new builds. Historical releases/commits and existing backups retain their original license obligations; they are not retroactively relicensed. Original project assets are covered by Apache License 2.0 to the extent applicable rights exist.
 
 ## Model catalog – zigbee-herdsman-converters
 
@@ -22,7 +22,7 @@ This is a public trust certificate, not a private key. Source provenance is reco
 
 ## Container/runtime dependencies
 
-The image uses the official `python:3.12-alpine` base image. Python and its standard library have the PSF license and additional notices: https://docs.python.org/3.12/license.html . Alpine packages, OpenSSL and other runtime components retain their respective licenses. Hue2Lox installs no additional pip packages, but the base image can include pip and its vendored libraries. These and all transitive runtime components must be included in any image inventory.
+The image uses the official `python:3.12-alpine` base image, pinned by digest in both Dockerfiles. Candidate package/source inventories are recorded under `compliance/`; see [image preparation status](docs/IMAGE-COMPLIANCE.md). These preparation records do not yet constitute full image-distribution approval. Python and its standard library have the PSF license and additional notices: https://docs.python.org/3.12/license.html . Alpine packages, OpenSSL and other runtime components retain their respective licenses. Hue2Lox installs no additional pip packages, but the base image can include pip and its vendored libraries. These and all transitive runtime components must be included in any image inventory.
 
 The planned release distributes source code, installer and Dockerfiles only. Users build locally and obtain the base image directly from its upstream provider. No prebuilt Hue2Lox images, image archives or VM/appliance images are currently offered. This does not remove the license obligations for third-party materials actually bundled in our source archive, including the catalog and certificate bundle.
 
@@ -30,7 +30,7 @@ Before distributing a built image: pin and record the actual base-image digest, 
 
 ## Branding and screenshots
 
-The octopus assets were generated with Imagegen for this project; provenance is in LOGO.md. No third-party lamp manufacturer endorsement is implied. Hue/Philips Hue and Loxone names identify compatible products; this is an independent project. Verify naming/branding and screenshot publication rights before a public release. Tutorial screenshots currently show German UI.
+The octopus assets were generated with Imagegen for this project; provenance is in docs/LOGO.md. No third-party lamp manufacturer endorsement is implied. Hue/Philips Hue and Loxone names identify compatible products; this is an independent project. Verify naming/branding and screenshot publication rights before a public release. Tutorial screenshots currently show German UI.
 
 ## Deutsch: Status vor Veröffentlichung
 

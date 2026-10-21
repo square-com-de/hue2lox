@@ -1,16 +1,16 @@
 # Development and quality checks / Entwicklung
 
-Hue2Lox is being prepared for testing. The repository remains private while release preparation continues. Original project code is licensed under [Apache License 2.0](LICENSE). Contributions intended for inclusion are submitted under that license unless explicitly stated otherwise. Third-party terms are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+Hue2Lox is publicly available as Release Candidate 3. End-to-end testing with a Loxone Miniserver is still in progress. The main branch can contain changes newer than the published release. Original project code is licensed under [Apache License 2.0](LICENSE). Contributions intended for inclusion are submitted under that license unless explicitly stated otherwise. Third-party terms are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ## Work from a clean clone
 
-With repository access, clone `https://github.com/square-com-de/hue2lox.git` into a separate development directory. Record the commit being tested. Do not copy production `.env`, keys, credentials, certificates or runtime data into the clone. Never run the prototype installation scripts on an unrelated installation.
+Clone `https://github.com/square-com-de/hue2lox.git` into a separate development directory. Record the commit being tested. Do not copy production `.env`, keys, credentials, certificates or runtime data into the clone. Never run the prototype installation scripts on an unrelated installation.
 
 Use Python 3.12, Node.js 22 (JavaScript syntax and helper tests), OpenSSL and, for container testing, Linux with Docker Engine and Compose v2. The application uses the Python standard library; there is no pip dependency installation.
 
 ```sh
 python3 scripts/check-quality.py
-python3 -m unittest discover -s . -p 'test_*.py'
+python3 -m unittest discover -s tests -t . -p 'test_*.py'
 python3 scripts/smoke-install.py
 ```
 
@@ -38,4 +38,14 @@ The container script requires root and `CI=true` and is intended only for a disp
 
 Keep changes focused, describe the user-visible result and record which checks actually ran. Use synthetic device names and addresses in fixtures and screenshots. Never commit or log authorization headers, Hue application keys, session cookies, passwords or private TLS keys. Review staged changes and scan history before public release. A green automated run does not replace real-device acceptance.
 
-Deutsch: Änderungen in einem getrennten Klon testen; keine produktiven Zugangsdaten übernehmen. Die echte Neuinstallation und Loxone-Abnahme machen wir anschließend gemeinsam. Fehlerberichte bitte ohne Tokens, Keys oder unbereinigte Protokolle.
+Deutsch: Hue2Lox ist als Release Candidate 3 öffentlich verfügbar. Der durchgängige Funktionstest mit einem Loxone Miniserver ist noch nicht abgeschlossen. Änderungen in einem getrennten Klon testen; keine produktiven Zugangsdaten übernehmen. Eine Debian-13-Neuinstallation mit Kopplung und Neustart wurde bestätigt. Fehlerberichte bitte ohne Tokens, Keys oder unbereinigte Protokolle.
+
+## Repository layout
+
+- `src/`: Python application modules; run locally with `python3 src/app.py`.
+- `docker/`: Compose variants and the installer Dockerfile. Compose overrides are combined with the root `compose.yaml`; keep the repository root as the project directory.
+- `config/registry.json`: empty source template, separate from live `data/registry.json`.
+- `scripts/`: installation helpers and historical prototype update scripts. The interactive entry point remains `install-assistant.sh` at the root.
+- `tests/`, `docs/`, `web/`: automated tests, detailed guides and browser assets.
+
+The prototype update scripts require the complete source tree in their explicitly configured staging directory, including `scripts/copy-runtime.sh`. They are not a general updater for RC1 installations.

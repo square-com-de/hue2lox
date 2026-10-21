@@ -1,18 +1,27 @@
 ---
 name: Bug report / Fehler melden
-about: Report a reproducible problem without credentials
+about: Report a reproducible problem / Einen nachvollziehbaren Fehler melden
+title: ''
+labels: ''
+assignees: ''
 ---
 
-**Problem / Erwartetes und tatsächliches Verhalten**
+<!-- Deutsch oder English. Never include tokens, passwords, private keys or unredacted logs/XML. Security issues: see SECURITY.md instead of posting publicly. -->
 
-**Steps / Schritte zum Nachstellen**
+### Problem / Fehler
+What happened, and what did you expect? / Was passiert, was war erwartet?
 
-**Environment / Umgebung**
-- Hue2Lox commit/version:
-- OS / CPU / Docker / Compose:
-- Browser / language:
-- Loxone Config / Miniserver (if relevant):
-- Lamp/bridge model (if relevant):
+### Reproduce / Nachstellen
+1.
+2.
+3.
 
-**Sanitized evidence / Bereinigte Nachweise**
-No tokens, passwords, authorization headers, cookies, Hue keys, private TLS keys or private backups. Review screenshots and logs before attaching them. Report security vulnerabilities privately; see SECURITY.md.
+### Environment / Umgebung
+- Hue2Lox release or commit:
+- OS, version and architecture:
+- Docker / Compose version:
+- Fresh install or existing installation? / Neuinstallation oder bestehende Einrichtung?
+- Relevant bridge/light model and Loxone version (if applicable):
+
+### Evidence / Nachweis
+Sanitized error or screenshot, and installer step if relevant. Remove credentials and personal device names/addresses before posting.
