@@ -166,6 +166,22 @@ class ReleaseTests(unittest.TestCase):
             finally:
                 os.chdir(previous)
 
+    def test_evidence_archive_survives_different_artifact_extraction_times(self):
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path.cwd()
+            os.chdir(directory)
+            try:
+                Path('evidence/arm64').mkdir(parents=True)
+                record = Path('evidence/arm64/record.json')
+                record.write_text('{"same": "evidence"}')
+                m.archive_evidence(Path('first.tar.gz'))
+                os.utime(record, (100, 100))
+                os.chmod(record, 0o600)
+                m.archive_evidence(Path('second.tar.gz'))
+                self.assertEqual(Path('first.tar.gz').read_bytes(), Path('second.tar.gz').read_bytes())
+            finally:
+                os.chdir(previous)
+
     def test_stable_promotion_requires_github_latest_and_public_verification(self):
         info = m.plan(event('v1.0.0', False), 'release', m.REPO, SHA)
         manifests = [{'Descriptor': {'platform': {'architecture': a}, 'digest': 'sha256:' + a}}

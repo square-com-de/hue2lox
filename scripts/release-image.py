@@ -5,6 +5,7 @@ GitHub release, downloaded artifacts from this run, and explicit job tokens.
 """
 import argparse
 import hashlib
+import gzip
 import json
 import os
 from pathlib import Path
@@ -76,6 +77,28 @@ def verify_inventory(evidence, commit, arch):
     return image['Id']
 
 
+def archive_evidence(destination):
+    """Keep retry uploads identical despite artifact extraction timestamps."""
+    with destination.open('wb') as raw:
+        with gzip.GzipFile(fileobj=raw, mode='wb', filename='', mtime=0) as compressed:
+            with tarfile.open(fileobj=compressed, mode='w') as archive:
+                paths = [Path('evidence'), *sorted(Path('evidence').rglob('*'))]
+                for path in paths:
+                    if path.is_symlink():
+                        raise ValueError('Evidence must not contain symbolic links')
+                    entry = archive.gettarinfo(str(path), arcname=path.as_posix())
+                    entry.mtime = entry.uid = entry.gid = 0
+                    entry.uname = entry.gname = ''
+                    entry.mode = 0o755 if path.is_dir() else 0o644
+                    if path.is_file():
+                        with path.open('rb') as stream:
+                            archive.addfile(entry, stream)
+                    elif path.is_dir():
+                        archive.addfile(entry)
+                    else:
+                        raise ValueError('Evidence must contain regular files/directories')
+
+
 def prepare(info):
     """Build recipient assets after all quality and material jobs succeeded."""
     assets = Path('release-assets')
@@ -91,8 +114,7 @@ def prepare(info):
         evidence = Path('evidence') / arch
         subprocess.run(['sha256sum', '--check', 'SHA256SUMS.txt'], cwd=evidence, check=True)
         records[arch] = verify_inventory(evidence, info['commit'], arch)
-    with tarfile.open(assets / 'container-evidence.tar.gz', 'w:gz') as archive:
-        archive.add('evidence', arcname='evidence')
+    archive_evidence(assets / 'container-evidence.tar.gz')
     info['platform_image_ids'] = records
     (assets / 'container-release.json').write_text(json.dumps(info, indent=2) + '\n')
     paths = sorted(assets.iterdir())

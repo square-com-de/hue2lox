@@ -10,7 +10,9 @@ RC3 download remains unchanged.
 
 1. Merge the reviewed installer and publication changes. Choose the exact commit
    on `main` intended for the release; finish the real-device acceptance and
-   review the [container compliance evidence](IMAGE-COMPLIANCE.md).
+   review the [container compliance evidence](IMAGE-COMPLIANCE.md). Prepare the
+   version-specific installation/Compose references in that commit before tagging;
+   the release ZIP preserves that exact source and cannot be corrected afterward.
 2. Create a new tag, for example `v1.0.0-rc.4`, at that commit. Never move an
    existing release tag. Create a draft GitHub release with short release notes.
    For an RC, select **Set as a pre-release**; for `v1.0.0`, leave that unchecked.
@@ -60,7 +62,7 @@ podman pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
 
 These commands are examples for the future release, **not available downloads
 until that release has actually passed publication**. Docker selects AMD64 or
-ARM64 automatically. Update user-facing download/Compose links only when those
+ARM64 automatically. Announce the new download/Compose links only when those
 assets and anonymous pulls work. Existing installations do not update themselves.
 
 ### A failed run
@@ -92,6 +94,8 @@ Installationen.
 
 1. Geprüfte Änderungen zusammenführen, den vorgesehenen Commit auf `main`
    auswählen und die Abnahme mit echten Geräten sowie die Lizenzbeilagen prüfen.
+   Versionsbezogene Installations-/Compose-Verweise vor dem Tag im Quellstand
+   vorbereiten: Das Release-ZIP enthält exakt diesen Stand.
 2. Einen neuen Tag wie `v1.0.0-rc.4` an diesem Commit und einen Release-Entwurf
    anlegen. Beim RC **Set as a pre-release** aktivieren. Bestehende Tags bleiben
    unverändert. ZIP und Prüfsummen werden vom Workflow erzeugt.
@@ -110,8 +114,8 @@ Installationen.
 
 RC4 erhält `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4`. `latest` wird ausschließlich
 für ein stabiles Release aktualisiert, das auch GitHub als aktuelles stabiles
-Release führt. Erst nach erfolgreicher Veröffentlichung werden Downloadlinks
-und Compose-Beispiele umgestellt. Laufende Installationen ändern sich dadurch
+Release führt. Die neuen Downloads und Compose-Beispiele erst nach erfolgreicher
+Veröffentlichung als verfügbar ankündigen. Laufende Installationen ändern sich dadurch
 nicht automatisch.
 
 Bei Abbrüchen können bereits einzelne Dateien oder Architektur-Tags vorhanden
