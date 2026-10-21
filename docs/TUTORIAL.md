@@ -1,139 +1,84 @@
-# Hue2Lox: HTTP-Ausgänge in Loxone Config
+# Hue2Lox: HTTP outputs in Loxone Config
 
-Beispiel für Loxone Config 17.2. Hue2Lox und die eingelesene Lampe müssen vom
-Miniserver erreichbar sein. Lade dessen aktuellen Programmstand und sichere ihn
-vor der Änderung. Die Bilder enthalten keine echten Zugangsdaten.
+For Loxone Config 17.2. The Miniserver must be able to reach Hue2Lox and its configured bridge. Load and back up the current Miniserver program before editing. Screenshots show the German interface and contain no real credentials. Field labels may differ between Config languages and versions.
 
-## 1. Steuerungsart wählen
+## 1. Choose a control mode
 
-Unter **Lampen** stehen Produkt-/Modellname, Lampentyp und Fähigkeits-Badges aus
-der Hue Bridge: Ein/Aus, Dimmer, Tunable White und RGB. Ein lokaler Modellkatalog
-kann den Produktnamen ergänzen; er überschreibt keine erkannten Fähigkeiten.
+Under **Lights**, open **Usage & management**. Type and capability badges come from the Hue Bridge: On/off, Dimmer, Tunable White and RGB. The local model catalog can supplement product names; it never overrides bridge capabilities.
 
-Unter **Für Loxone nutzen** die gewünschten Nutzungsarten anhaken. Die Auswahl
-wird dauerhaft gespeichert und bleibt nach erneutem Einlesen der Bridge erhalten.
-Standardmäßig ist eine passende Variante gewählt:
+Under **Use with Loxone**, check the modes you need. Your choices are saved and survive a bridge scan. A suitable mode is selected by default:
 
-| Lampenfunktionen | Vorauswahl |
+| Light capabilities | Default |
 | --- | --- |
-| Farbe und Weißtemperatur | Lumitech RGB + Weiß |
-| Farbe | RGB |
-| Weißtemperatur ohne Farbe | Tunable White |
-| Helligkeit ohne Weißtemperatur | Dimmen |
-| Nur schaltbar | Ein/Aus |
+| Color and white temperature | Lumitech RGB + White |
+| Color | RGB |
+| White temperature without color | Tunable White |
+| Brightness only | Dimming |
+| Switching only | On/off |
 
-**XML enthält alle angehakten Varianten.** Unter **Befehlsvorschau** eine davon
-zum Kopieren anzeigen; gemeinsame Felder werden dabei nur einmal dargestellt.
-Mindestens eine Nutzungsart muss aktiv bleiben. Die Auswahl ändert keine Lampe
-und bestehende Loxone-Befehle bleiben unverändert.
+**XML includes all checked modes.** Open **Commands** and select a **Command preview** to copy one variant. Shared fields appear once. At least one mode must remain selected. This does not control the light or update existing Loxone commands.
 
-Es werden nur erkannte und auf dem Server freigeschaltete Varianten angeboten.
-Für Tunable White in Loxone **Lumitech** verwenden und **Weiße Lichtfarbe**
-wählen. Für einen sichtbaren Weißtest die Helligkeit über 0 % einstellen.
-Der Body lautet auch hier `{"loxone_lumitech":<v>}`. Lumitech RGB + Weiß nutzt
- denselben Body, unterstützt zusätzlich Farbauswahl.
+Only detected modes enabled on the server are offered. For Tunable White, use **Lumitech** in Loxone, select white light and set brightness above 0% to test it. Both Tunable White and Lumitech RGB + White use `{"loxone_lumitech":<v>}`; the latter also supports color.
 
-![Steuerungsart und zu kopierende Felder in Hue2Lox](../web/tutorial-commands.png)
+![Control mode and copy fields in Hue2Lox (German interface)](../web/tutorial-commands.png)
 
-## 2. Virtuellen Ausgang anlegen
+## 2. Create a virtual output
 
-1. In Loxone Config **Virtuelle Ausgänge** markieren und einen **Virtuellen Ausgang** anlegen, etwa `Hue2Lox`.
-2. Als Adresse die Hue2Lox-Basisadresse eintragen, beispielsweise `https://192.0.2.96:8443`.
-3. Darunter einen **Virtuellen Ausgang Befehl** anlegen.
+1. Select **Virtual Outputs** in Loxone Config and create a **Virtual Output**, named for example `Hue2Lox`.
+2. Enter your Hue2Lox base address, for example `https://192.0.2.96:8443`.
+3. Add a **Virtual Output Command** beneath it.
 
-Die Adresse gehört zum Hue2Lox-Server. Lampenpfad und `/health` gehören nicht in
-diese Basisadresse.
+Use the address of your own Hue2Lox server. Do not add a light path or `/health` to this base address.
 
-## 3. Felder aus Hue2Lox übernehmen
+## 3. Copy the command fields
 
-Die Kopierfelder stehen in der Reihenfolge der Loxone-Eigenschaften:
+Copy these fields in the order shown in Hue2Lox:
 
-| Hue2Lox | Loxone Config |
-| --- | --- |
-| Name des Ausgangsbefehls | Name des Befehls |
-| Befehl bei EIN | Befehl bei EIN |
-| HTTP header bei EIN | HTTP header bei EIN |
-| HTTP body bei EIN | HTTP body bei EIN |
-| HTTP Methode bei EIN | HTTP Methode bei EIN: PUT |
+1. Output command name
+2. Command for ON
+3. HTTP header for ON
+4. HTTP body for ON
+5. HTTP method for ON: PUT
 
-**Header mit Token kopieren** kopiert den fertigen Header einschließlich
-Berechtigung und `Content-Type`. Der Header ist eine einzige Zeile mit der
-sichtbaren Zeichenfolge `\r\n` zwischen den beiden Feldern. Diese Zeichen genau
-so übernehmen; nicht durch Enter ersetzen und keine Leerzeile am Ende ergänzen.
+**Copy header with token** copies the authorization and Content-Type header. It is one line containing the literal characters `\r\n` between the two headers. Keep these characters exactly as copied. Do not replace them with Enter or add a blank line at the end.
 
 ```text
 Authorization: Bearer DEIN_HUE2LOX_TOKEN\r\nContent-Type: application/json
 ```
 
-Nach einem Update bestehende EIN-Header (und bei Ein/Aus auch AUS-Header) vollständig
-durch die neue Kopie ersetzen. Ein Update ändert vorhandene Loxone-Befehle nicht.
-XML-Exporte verwenden dasselbe Format. Zum Korrigieren bestehender Ausgänge ist
-kein neuer Import nötig; nur deren Header austauschen.
+Replace the placeholder with your token; never use it as an actual token. `<v>` in the body must remain unquoted: Loxone replaces it with the output value.
 
- Den Platzhalter `DEIN_HUE2LOX_TOKEN` nicht als
-echtes Token verwenden. `<v>` im Body unverändert und ohne Anführungszeichen
-übernehmen: Loxone ersetzt es durch den Ausgangswert.
+For existing commands, replace the entire ON header, and the OFF header for On/off commands. Updating Hue2Lox does not alter your Miniserver program. XML uses the same header format; you do not need to reimport a template just to correct a header.
 
-- **Ein/Aus:** Digitalausgang aktivieren und die angezeigten AUS-Felder ebenfalls übernehmen.
-- **Dimmen, Tunable White, RGB, Lumitech:** Einheit auf `<v>` setzen. Digitalausgang deaktivieren, AUS-Felder leer lassen. Wert 0 schaltet aus. Dimmen verwendet 0–100 %; RGB bzw. Lumitech benötigt den entsprechenden Aktortyp am Lichtsteuerungsbaustein.
+- **On/off:** enable digital output and also copy the OFF fields.
+- **Dimming, Tunable White, RGB, Lumitech:** set Unit to `<v>`, disable digital output and leave OFF fields empty. Value 0 switches off. Dimming uses 0–100%; RGB and Lumitech require the matching actuator type on the Lighting Controller.
 
-![Eigenschaften eines virtuellen Ausgangsbefehls in Loxone Config](../web/tutorial-config.png)
+![Virtual output command properties in Loxone Config (German interface)](../web/tutorial-config.png)
 
-## Alternative: XML importieren
+## Alternative: import XML
 
-**Empfehlung:** Mehrere Lampen markieren und gemeinsam über **Auswahl als XML**
-exportieren. Beim Import entsteht ein virtueller Ausgang mit den Befehlen aller
-ausgewählten Lampen. Jeder separate XML-Import legt einen weiteren Ausgang an;
-ein bereits vorhandener Ausgang wird nicht automatisch ergänzt. Für spätere
-Ergänzungen kannst du einen Befehl am bestehenden Ausgang manuell anlegen und
-die Felder aus Hue2Lox kopieren.
+Select multiple lights and use **Export selection as XML** to create one virtual output with all selected commands. Each separate import creates another output; an existing output is not automatically extended. For later additions, you can create a command manually under the existing output and copy the fields from Hue2Lox.
 
-**XML** lädt alle angehakten Nutzungsarten dieser Lampe herunter. Für mehrere
-Lampen die gewünschten Einträge markieren und den gemeinsamen XML-Export nutzen.
-Jede angehakte Nutzungsart erhält einen eigenen Befehl; ohne Änderung gilt die
-Empfehlung. Nicht mehrere parallel verbundene Ausgänge auf dieselbe Lampe wirken lassen. Filter grenzen die sichtbare Liste ein.
+The **XML** button on a light exports its checked control modes. Each mode gets its own command. Do not connect multiple competing outputs to the same light. Filters limit the visible list; selections remain when filters change.
 
-Die Vorlage in Loxone Config bei den virtuellen Ausgängen importieren, anschließend
-Basisadresse, Token und Aktortyp prüfen. Standardmäßig enthält XML einen
-Token-Platzhalter. Der Export mit echtem Token muss ausdrücklich gewählt werden;
-diese Datei enthält Zugangsdaten und gehört nicht in öffentliche Ablagen.
+Import the template under Virtual Outputs in Loxone Config, then check the base address, token and actuator type. By default, XML contains a token placeholder. Including the actual token requires selecting **Token in XML**. That file contains credentials and must not be shared publicly.
 
-## 4. Vom Miniserver testen
+## 4. Test from the Miniserver
 
-Den Befehl mit einem passenden Testausgang verbinden, das Programm im Miniserver
-speichern und gezielt auslösen. Im **HTTP-Monitor** die Antwort kontrollieren:
-HTTP 200 bestätigt einen erfolgreichen Aufruf. Erst die sichtbare Reaktion der
-Lampe bestätigt die gewünschte Wirkung.
+Connect the command to a suitable test output, save the program to the Miniserver and trigger it deliberately. Start the **HTTP monitor** to inspect the response. HTTP 200 confirms that Hue accepted the request; verify the effect on the light itself.
 
-![Beispiel einer erfolgreichen Antwort im HTTP-Monitor](../web/tutorial-monitor.png)
+![Successful response in the HTTP monitor (German interface)](../web/tutorial-monitor.png)
 
-Bei 401 Token prüfen, bei 403 Freischaltung der Steuerung. Bei **HTTP 400** den
-**HTTP-Monitor** in Hue2Lox starten und den Befehl erneut auslösen. Unter
-**Body (bereinigt)** den tatsächlich empfangenen Wert prüfen: Zahl statt
-Zeichenkette, ersetztes `<v>` und passende Steuerungsart (RGB oder Lumitech).
-Bei ungültigem JSON zeigt der Monitor Zeile und Spalte des Fehlers.
+For HTTP 401 check the token; for 403 check whether control is enabled. For **HTTP 400**, start recording, trigger the command again and inspect **Body (sanitized)**: a numeric value rather than a string, a resolved `<v>` and the matching RGB/Lumitech format. Invalid JSON reports its line and column.
 
-`<v.1>` ist als Ursache des bisherigen Fehlers nicht bestätigt. Der RGB-/Lumitech-
-Parser akzeptiert auch ganzzahlige JSON-Zahlen wie `84013.0`; Werte mit echtem
-Nachkommaanteil werden abgelehnt. Deshalb den empfangenen Body prüfen, statt aus
-der Anzeigeformatierung allein auf die Ursache zu schließen.
+`<v.1>` was not confirmed as the cause of the earlier failure. Integer-valued JSON numbers such as `84013.0` are accepted; fractional values are rejected. Inspect the actual body rather than inferring the cause from display formatting alone.
 
- Bei Verbindungsproblemen Adresse, tatsächlich konfigurierten Port (Installer-Vorgabe 18443) und Zertifikat prüfen.
-Die temporäre Logfunktion unter **HTTP-Monitor** zeigt eingegangene
-Befehle ohne Tokens. Ein Browser-Zertifikatsvertrauen gilt nicht automatisch für
-den Miniserver; dessen HTTPS-Aufruf muss separat funktionieren.
+For connection failures, check the address, port and certificate. Trusting a certificate in your browser does not automatically make the Miniserver trust it. Its HTTPS request must work separately.
 
-## Szenen
+## Scenes
 
-Szenen werden in der Hue App erstellt und geändert. Unter **Szenen** die Liste
-synchronisieren und den angezeigten Abrufbefehl oder XML verwenden. Eine Szene
-wird per EIN-Impuls abgerufen; AUS-Felder bleiben leer.
+Create and edit scenes in the Hue app. Under **Scenes**, scan the list and use the command or XML. Trigger a scene using an ON pulse; leave OFF fields empty. Ignored or removed lights can still be controlled by a scene that includes them in Hue.
 
-## Kurze Lampenpfade
+## Short light paths
 
-Den Befehlspfad direkt aus der Lampenkarte kopieren. GUI und XML verwenden
-`/<bridge>/<lampe>/state` mit höchstens acht Zeichen je Name. Die Namen bleiben
-nach Umbenennen oder erneutem Einlesen stabil. Alte lange Pfade und der bisherige
-Hue-Go-Pfad funktionieren weiterhin. Vorhandene Loxone-Befehle werden nicht
-automatisch geändert; zum Vergleich nur den Pfad ersetzen, Header und Body
-unverändert lassen. Ob damit das CR/LF-Problem verschwindet, muss der Test zeigen.
+Copy the path from the light card. GUI and XML use `/<bridge>/<light>/state`, with at most eight characters per name. Aliases stay stable across renaming and scanning. Legacy long paths and the Hue Go path remain supported. Existing Loxone commands are not changed automatically. Shortening a path alone is not a proven general fix for malformed HTTP framing; use the documented header format and inspect the monitor.

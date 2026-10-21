@@ -123,7 +123,7 @@ Header. Es wird nicht automatisch in der Ansicht ausgegeben.
 Der Footer-Link **Anleitung: Loxone-Ausgänge** öffnet `/tutorial` mit der
 Schritt-für-Schritt-Anleitung einschließlich drei Bildern. Sie umfasst manuelle
 Einrichtung, Ein/Aus, Dimmen, RGB/Lumitech, Hue-Szenen, XML-Import und Fehlersuche.
-Die Repository-Fassung liegt in [TUTORIAL.md](TUTORIAL.md). Die Hilfeseite ist
+Die Repository-Fassung liegt in [TUTORIAL.de.md](TUTORIAL.de.md). Die Hilfeseite ist
 statisch, enthält keine Zugangsdaten und ist auch ohne Anmeldung lesbar.
 
 ## Lampentyp, Fähigkeiten und Nutzungsarten

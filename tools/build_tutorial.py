@@ -16,7 +16,7 @@ def inline(text):
         return '<a href="'+url+'" target="_blank" rel="noopener noreferrer">'+label+'</a>' if url.startswith('https://') else label
     return re.sub(r'\[([^]]+)\]\(([^)]+)\)',link,text)
 
-lines=(ROOT/'docs'/('TUTORIAL.en.md' if LANG=='en' else 'TUTORIAL.md')).read_text().splitlines();body=[];i=0
+lines=(ROOT/'docs'/('TUTORIAL.md' if LANG=='en' else 'TUTORIAL.de.md')).read_text().splitlines();body=[];i=0
 while i<len(lines):
     line=lines[i]
     if not line.strip():i+=1;continue

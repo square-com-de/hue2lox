@@ -2,7 +2,7 @@
 
 ## Historische, zielgebundene Prototypwartung
 
-Dieser Abschnitt ist kein RC1-Updater und keine Neuinstallation. Reguläre Nutzer beginnen mit [INSTALL.md](../INSTALL.md). Nur für den damaligen LoxBerry-Prototyp: vollständigen geprüften Quellbaum einschließlich `scripts/copy-runtime.sh`, `src/`, `docker/`, `config/` und Assets unter dem Staging-Pfad bereitstellen, Ziel und Sicherung prüfen. `HUE_PUBLIC_URL` muss der tatsächlichen bestehenden HTTPS-Adresse entsprechen; das Beispiel unten ist anzupassen. Nicht auf andere Installationen anwenden.
+Dieser Abschnitt ist kein RC1-Updater und keine Neuinstallation. Reguläre Nutzer beginnen mit [INSTALL.md](../INSTALL.de.md). Nur für den damaligen LoxBerry-Prototyp: vollständigen geprüften Quellbaum einschließlich `scripts/copy-runtime.sh`, `src/`, `docker/`, `config/` und Assets unter dem Staging-Pfad bereitstellen, Ziel und Sicherung prüfen. `HUE_PUBLIC_URL` muss der tatsächlichen bestehenden HTTPS-Adresse entsprechen; das Beispiel unten ist anzupassen. Nicht auf andere Installationen anwenden.
 
 Im bestehenden Root-Terminal auf LoxBerry:
 

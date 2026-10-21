@@ -174,7 +174,7 @@ docker compose exec -T hue2lox cat /etc/alpine-release
 
 ## Weiterführende Dateien
 
-- [README.md](../README.md): Einstieg und Betrieb.
+- [README.de.md](../README.de.md): Einstieg und Betrieb.
 - [ADMIN.md](ADMIN.md): Einrichtung des Logins, Tokenanzeige und XML-Export.
 - [WEB.md](WEB.md): Oberfläche und Bridge-/Lampenmodell.
 - [BRIDGES.md](BRIDGES.md): Bridge-Kopplung, Inventur und Migration auf persistenten Speicher.

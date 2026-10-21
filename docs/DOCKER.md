@@ -1,6 +1,6 @@
 # Running the container image
 
-For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.en.md](INSTALL.en.md)).
+For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
 Image distribution is being prepared; existing RC1–RC3 releases remain ZIP-only. Do not use the pull commands below until an image release explicitly announces availability. License/source materials and per-platform acceptance are tracked in [IMAGE-COMPLIANCE.md](IMAGE-COMPLIANCE.md).
 

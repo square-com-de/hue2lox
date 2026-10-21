@@ -12,7 +12,7 @@ Für die normale Installation verwenden Deutsch, Englisch und der KI-Prompt dass
 
 ## Direkt auf dem Server installieren / Install directly on the server
 
-[Deutsche Anleitung](../INSTALL.md#option-1-einfach-und-komfortabel--der-installer) · [English guide](INSTALL.en.md)
+[Deutsche Anleitung](../INSTALL.de.md#option-1-einfach-und-komfortabel--der-installer) · [English guide](../INSTALL.md)
 
 Beide Anleitungen laden das ZIP und seine Prüfsumme mit `curl` direkt auf den Linux-Server. Erst nach erfolgreichem `sha256sum --check SHA256SUMS.txt` wird entpackt und gestartet. Ein vorheriger Download auf Mac/PC oder Kopieren per `scp` ist nicht nötig. / Both guides use `curl` to download the ZIP and checksum directly to the Linux server. Extraction and startup happen only after successful verification. No prior download on your Mac/PC or transfer with `scp` is needed.
 

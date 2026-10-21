@@ -1,6 +1,6 @@
 # Hue2Lox — Release Candidate 3
 
-[RC3 release notes and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.3) · [English installation](docs/INSTALL.en.md) · [Deutsche Installation](INSTALL.md)
+[RC3 release notes and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.3) · [English installation](INSTALL.md) · [Deutsche Installation](INSTALL.de.md)
 
 RC3 (`v1.0.0-rc.3`) packages the updated application, repository layout and direct-download documentation into one fixed source archive. RC1 (`v1.0.0-rc.1`) and RC2 (`v1.0.0-rc.2`) remain unchanged. The `main` branch can contain newer development work; use the named RC3 asset for normal installation and testing.
 
