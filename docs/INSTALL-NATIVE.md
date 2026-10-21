@@ -2,11 +2,40 @@
 
 [English](INSTALL-NATIVE.en.md) · [Dockerinstallation](../INSTALL.de.md)
 
-Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Es gibt noch kein veröffentlichtes natives Releasepaket. **Debian 13 auf amd64 ist die erste Zielplattform, keine bereits bestätigte Hardwarefreigabe.** Andere Distributionen und Architekturen sind nicht freigegeben.
+Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Es gibt noch kein veröffentlichtes natives Releasepaket. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
+
+## Gemeinsamer interaktiver Installer (Entwicklung)
+
+RC5 bleibt unverändert und enthält diesen nativen Installer nicht. Verwende einen sauberen, geprüften Git-Checkout von PR #18 und notiere die genaue Commit-ID. Kein veränderlicher main-Download gilt als freigegebenes natives Paket. Den vorhandenen Assistenten als root starten (`su -`, auf Ubuntu gegebenenfalls `sudo -i`):
+
+```sh
+bash /absoluter/pfad/zu/hue2lox/install-assistant.sh
+```
+
+Nach der Sprachwahl **Mit Docker** oder **Nativ, ohne Docker** wählen. Der Dockerweg behält seine vorhandene HTTP-/HTTPS- und Proxy-Auswahl. Das native Menü bietet:
+
+1. Plattform und Voraussetzungen nur lesend anzeigen.
+2. SSH bei Bedarf einrichten.
+3. Grundpakete ausdrücklich installieren (kein Docker-Repository und keine Docker-Installation).
+4. Entwicklungspaket lokal aus dem sauberen Git-Checkout vorbereiten. Der Assistent erfasst den Commit, berechnet und prüft die Paketprüfsumme und entfernt sein temporäres Paketverzeichnis beim Beenden.
+5. Nach IP-/HTTPS-Port-Auswahl und Bestätigung nativ installieren. Für direkten Browserzugriff die LAN-Adresse des Servers verwenden; Loopback ist über die manuelle Adresseingabe möglich. Ein Tunnel ist nur für Fernzugriff auf einen Loopback-Listener erforderlich.
+6. HTTPS des vorhandenen nativen Dienstes mit Zertifikatsprüfung testen (keine Gerätekopplung).
+7. Wartung: Update mit Sicherung, Wiederinstallation mit Datenerhalt, ausdrückliches Rollback oder Deinstallation mit Datenerhalt. Rollback stellt auch den früheren Passwortstand wieder her. Das Menü bietet keine vollständige Datenlöschung an.
+
+Für ein separat erhaltenes natives Archiv dessen unabhängig geprüfte SHA-256 übergeben:
+
+```sh
+bash /absoluter/pfad/zu/hue2lox/install-assistant.sh --deployment native \
+  --native-package /absoluter/pfad/native.tar.gz --native-sha256 GEPRUEFTER_SHA256
+```
+
+Ein Quell-ZIP ohne Git-Identität erfindet keinen Commit und lädt kein main nach. Der native Paketschritt fragt stattdessen nach einem geprüften Archiv und dessen SHA-256. Es gibt noch kein veröffentlichtes natives Release-Asset. Ein vorbereitetes Entwicklungspaket heißt `0.0.0-dev.<commit>`; es ist kein Release. Bei einem Codeupdate den Assistenten aus dem neu geprüften Checkout neu starten. Wiederinstallation benötigt dieselbe Paketidentität wie der erhaltene Datenstand; gegebenenfalls das frühere geprüfte Archiv verwenden. Native Datenpfade bleiben fest und sind unabhängig vom Docker-Installationsordner.
+
+Die optionale Auswahl `--check --deployment native` ist nur lesend. Backend-Auswahl und Statusanzeige allein ändern keine Installation. Echte Ubuntu-/DietPi-VM-Abnahmen und native Hardwaretests bleiben offen; Plattform-Fixtures und systemd-Container-CI ersetzen sie nicht.
 
 ## Voraussetzungen und Grenzen
 
-Verwende zunächst eine frische, isolierte Debian-13-Testinstanz mit systemd, Python 3.13 und OpenSSL sowie Rootzugriff. Python und OpenSSL kommen vom Betriebssystem; eine virtuelle Python-Umgebung ersetzt keine passende TLS-Laufzeit. Die Anwendung benötigt keine pip-Pakete. Der Installer prüft Voraussetzungen, führt aber kein Betriebssystemupgrade aus.
+Verwende eine frische, isolierte Testinstanz mit systemd, System-Python ab 3.11, OpenSSL und Rootzugriff. Native Testziele: Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, nur amd64. Ubuntu 22.04, unbekannte Ableitungen, Raspberry Pi OS, ARM und 32-Bit-Systeme werden nativ derzeit abgelehnt. Für Docker gilt weiterhin dessen eigene Plattformliste. Python und OpenSSL kommen vom Betriebssystem; eine virtuelle Python-Umgebung ersetzt keine passende TLS-Laufzeit. Die Anwendung benötigt keine pip-Pakete. Der Installer prüft Voraussetzungen, führt aber kein Betriebssystemupgrade aus.
 
 Der native Installer richtet einen Systemdienst und Systemverzeichnisse ein. Nicht auf einem Arbeitsplatzrechner oder einer produktiven Installation ausprobieren. Docker wird weder benötigt noch verändert. Bestehende Dockerdaten werden nicht automatisch übernommen. Paralleler Betrieb erfordert getrennte Daten, Namen und Ports; verwende beispielsweise Port 18443 für den nativen Test.
 

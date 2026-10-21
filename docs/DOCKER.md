@@ -2,20 +2,21 @@
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-RC4 provides the image `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4` for
-`linux/amd64` and `linux/arm64`. RC1–RC3 remain unchanged and ZIP-only.
-[RC4 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4).
+RC5 provides identical images at `docker.io/dubctrl/hue2lox:1.0.0-rc.5` and
+`ghcr.io/square-com-de/hue2lox:1.0.0-rc.5` for
+`linux/amd64` and `linux/arm64`. RC4 remains unchanged on GHCR; RC1–RC3 remain unchanged and ZIP-only.
+[RC5 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5).
 
 ## Image tags
 
-Use the exact version `1.0.0-rc.4` for this candidate. There are no floating `rc`
+Use the exact version `1.0.0-rc.5` for this candidate. There are no floating `rc`
 or minor-version tags. `latest` is reserved for a future stable release and is
 not created by an RC.
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
-# Alternatively:
-podman pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.5
+# Alternatively, from Docker Hub:
+podman pull docker.io/dubctrl/square-com-de/hue2lox:1.0.0-rc.5
 ```
 
 The release workflow publishes only after a GitHub release is published and all
@@ -43,13 +44,44 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy the [RC4 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.4/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
+Copy the [RC5 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.5/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
 
 ```sh
 docker compose up -d
 ```
 
-Host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
+On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
+
+The Compose example uses GHCR. To use Docker Hub, change only its `image` value
+to `docker.io/dubctrl/hue2lox:1.0.0-rc.5`; both registries contain the same images.
+
+## Podman Desktop on macOS
+
+Pulling the image and pressing Play alone does not configure the browser address.
+For a new local test, run this in the Mac terminal (choose another container and
+volume name if these already exist):
+
+```sh
+podman run -d --name hue2lox-rc5-test \
+  -p 127.0.0.1:18443:8443 \
+  -e PORT=8443 \
+  -e HUE_PUBLIC_URL=http://localhost:18443 \
+  -v hue2lox-rc5-data:/data \
+  --read-only --tmpfs /tmp --cap-drop=ALL \
+  --security-opt=no-new-privileges \
+  docker.io/dubctrl/hue2lox:1.0.0-rc.5
+```
+
+Open **http://localhost:18443** exactly. Initial login is `admin` / `admin`
+for a fresh data volume; change the password after login. Keep `HUE_PUBLIC_URL`
+aligned with the URL used in the browser. A mismatch can currently appear as an
+incorrect-password error even with valid credentials.
+
+Podman Desktop runs containers in a Linux VM on macOS. LAN multicast discovery
+may not reach Hue bridges. If the search finds nothing, enter the bridge's LAN IP
+in **Add Hue Bridge / Hue Bridge hinzufügen** below the search and pair it using
+the bridge button. The bridge must be reachable from the VM. This localhost-only
+example is for testing on the Mac, not for Loxone access from another machine.
 
 ## Unraid (Compose Manager)
 

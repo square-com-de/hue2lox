@@ -13,14 +13,15 @@ import tarfile
 ROOT = Path(__file__).resolve().parent.parent
 TREES = ('src', 'web', 'catalog', 'trust', 'config', 'deployment/native')
 FILES = ('LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md', 'scripts/prepare-state.py',
-         'docs/INSTALL-NATIVE.md', 'docs/INSTALL-NATIVE.en.md', 'docs/NATIVE-VM-ACCEPTANCE.md')
+         'docs/INSTALL-NATIVE.md', 'docs/INSTALL-NATIVE.en.md', 'docs/NATIVE-VM-ACCEPTANCE.md', 'install-assistant.sh',
+         'scripts/native-assistant.py', 'scripts/native-menu.sh', 'scripts/installer_progress.py', 'scripts/installer_bootstrap.sh')
 
 
 def build(version, output):
     if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9][A-Za-z0-9.-]*)?', version):
         raise ValueError('Version must be a safe version such as 1.2.3 or 1.2.3-rc.1')
-    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
-    dirty = bool(subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT))
+    commit = subprocess.check_output(['git', '-c', 'safe.directory=' + str(ROOT), 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    dirty = bool(subprocess.check_output(['git', '-c', 'safe.directory=' + str(ROOT), 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT))
     paths = []
     for name in TREES:
         base = ROOT / name

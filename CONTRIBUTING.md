@@ -6,7 +6,7 @@ Hue2Lox is publicly available as Release Candidate 4. End-to-end testing with a 
 
 Clone `https://github.com/square-com-de/hue2lox.git` into a separate development directory. Record the commit being tested. Do not copy production `.env`, keys, credentials, certificates or runtime data into the clone. Never run the prototype installation scripts on an unrelated installation.
 
-CI and the container use Python 3.15. The initial native Debian 13 target uses the OS Python (3.13); its separate offline systemd job tests that runtime. For local development use a compatible Python version, Node.js 22 (JavaScript syntax and helper tests), OpenSSL and, for container testing, Linux with Docker Engine and Compose v2. The application uses the Python standard library; there is no pip dependency installation.
+CI and the container use Python 3.15. Native experimental targets use OS Python >=3.11. Separate offline systemd jobs cover Debian 12/13 and Ubuntu 24.04/26.04 amd64; DietPi recognition has fixtures and still needs real VM acceptance. For local development use a compatible Python version, Node.js 22 (JavaScript syntax and helper tests), OpenSSL and, for container testing, Linux with Docker Engine and Compose v2. The application uses the Python standard library; there is no pip dependency installation.
 
 ```sh
 python3 scripts/check-quality.py
@@ -62,3 +62,5 @@ python3 scripts/build-native-package.py --version VERSION --output /tmp/hue2lox-
 Use a disposable Debian 13 amd64 system for installation and systemd lifecycle tests. The installer requires root and changes system paths; never run it on a developer workstation or an existing installation. Obtain and verify the package SHA-256 independently before installation. Do not distribute packages containing unreviewed working-tree changes as a tagged release.
 
 Native and Docker deployment share the application and state preparation; changes must preserve existing Docker defaults. Native state initialization must accept explicit directories, have no fixed UID and make no systemd changes. Keep native lifecycle tests separate from application and Docker tests. No automated check establishes Hue/Loxone hardware acceptance. A future LoxBerry package can reuse state preparation while providing its own paths, service integration and update hooks.
+
+The shared installer routes Docker and native paths separately. Test both languages, declined actions, dirty-source refusal and native umask 077. Native local package preparation must never download main or require Docker. RC1 and RC5 are immutable.

@@ -30,7 +30,12 @@ assert len(packages) == 2
 installer = '/source/deployment/native/install.sh'
 updater = '/source/deployment/native/update.sh'
 uninstaller = '/source/deployment/native/uninstall.sh'
-run('sh', installer, '--package', str(packages[0]), '--sha256', digest(packages[0]), '--host', '127.0.0.1', '--port', '18443')
+# The common assistant prepares a native package from this clean checkout locally.
+run('python3', '/source/scripts/native-assistant.py', 'build', '--output', '/tmp/assistant-package')
+assert json.loads(Path('/tmp/assistant-package/package.json').read_text())['version'].startswith('0.0.0-dev.')
+# Exercise the common shell adapter with no Docker commands and loopback only.
+assistant = 'source /source/install-assistant.sh; DEPLOYMENT=native; NATIVE_PACKAGE=$1; NATIVE_SHA256=$2; native_prepare_package; choose_server_ip(){ SELECTED_IP=127.0.0.1; }; confirm(){ return 0; }; prepare_setup'
+run('bash', '-c', assistant + ' <<< 18443', 'native-ci', str(packages[0]), digest(packages[0]))
 settings = dict(line.split('=', 1) for line in Path('/etc/hue2lox/settings.env').read_text().splitlines() if line and not line.startswith('#') and '=' in line)
 base = settings['HUE_PUBLIC_URL']
 cert = Path(settings['TLS_CERT'])
@@ -149,7 +154,7 @@ assert Path('/var/backups/hue2lox').is_dir()
 # Reproduce a root shell that retained umask 077 after preparing a private backup.
 previous_umask = os.umask(0o077)
 try:
-    run('sh', installer, '--keep-data', '--package', str(packages[1]), '--sha256', digest(packages[1]), '--host', '127.0.0.1', '--port', '18443')
+    run('bash', '-c', 'source /source/install-assistant.sh; DEPLOYMENT=native; NATIVE_PACKAGE=$1; NATIVE_SHA256=$2; confirm(){ return 0; }; native_maintenance <<< 2', 'native-ci', str(packages[1]), digest(packages[1]))
 finally:
     os.umask(previous_umask)
 for directory in ('/opt/hue2lox', '/opt/hue2lox/releases'):

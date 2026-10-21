@@ -67,10 +67,14 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
   native:
-    name: Native Debian 13 amd64 (isolated systemd container)
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["debian:12", "debian:13", "ubuntu:24.04", "ubuntu:26.04"]
+    name: Native ${{ matrix.os }} amd64 (isolated systemd)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Build native packages and test offline lifecycle
-        run: sudo env CI=true sh scripts/ci-native.sh
+        run: sudo env CI=true sh scripts/ci-native.sh "${{ matrix.os }}"

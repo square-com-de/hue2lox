@@ -42,7 +42,7 @@ class NativePackageTests(unittest.TestCase):
 
     @staticmethod
     def git_output(command, **kwargs):
-        return ('a' * 40 + '\n') if command[1] == 'rev-parse' else b' M src/example.txt\n'
+        return ('a' * 40 + '\n') if 'rev-parse' in command else b' M src/example.txt\n'
 
     def build(self):
         with patch('sys.stdout', new=io.StringIO()):

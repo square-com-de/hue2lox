@@ -1,11 +1,13 @@
 # Hue2Lox auf Linux installieren
 
-[English installation guide](INSTALL.md) · [RC4-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4)
+**Entwicklung / PR #18:** Der gemeinsame Installer ergänzt die Auswahl Docker/nativ. Der native Weg ist experimentell und gehört nicht zum unveränderten RC5-Release. Siehe [native Entwicklungsanleitung](docs/INSTALL-NATIVE.md).
+
+[English installation guide](INSTALL.md) · [RC5-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5)
 
 - [Option 1: Einfach und komfortabel – der Installer](#option-1-einfach-und-komfortabel--der-installer)
 - [Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt](#option-2-entwicklungsstand-main--manuelle-installation-schritt-für-schritt)
 
-Option 1 installiert **RC4** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den normalen Einstieg Option 1 verwenden.
+Option 1 installiert **RC5** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den normalen Einstieg Option 1 verwenden.
 
 Hue2Lox ist für **Linux-Systeme mit Docker Engine und Docker Compose** vorgesehen – auf einem eigenen Rechner, in einer virtuellen Maschine oder auf einem Raspberry Pi. Als Plattformen kommen beispielsweise Ubuntu, Debian, DietPi oder Raspberry Pi OS (früher Raspbian) infrage, sofern Betriebssystemversion und CPU-Architektur die benötigten Pakete und Container unterstützen.
 
@@ -57,26 +59,26 @@ apt install -y --no-install-recommends ca-certificates curl unzip
 
 Das gilt für die oben genannten Ubuntu-/Debian-basierten Systeme. Auf anderen Systemen diese drei Werkzeuge mit dem dortigen Paketmanager bereitstellen. Bei einem Fehler stoppen; bei „Not live until“ zuerst die Uhrzeit prüfen.
 
-### C. RC4 direkt herunterladen, prüfen und starten
+### C. RC5 direkt herunterladen, prüfen und starten
 
-**Weiterhin auf dem Server als Root.** Diesen Block vollständig kopieren. Er erstellt einen neuen Downloadordner, lädt das feste RC4-Paket samt SHA-256-Prüfsumme, prüft und entpackt es und startet danach den Installer. Bestehende Ordner werden nicht überschrieben.
+**Weiterhin auf dem Server als Root.** Diesen Block vollständig kopieren. Er erstellt einen neuen Downloadordner, lädt das feste RC5-Paket samt SHA-256-Prüfsumme, prüft und entpackt es und startet danach den Installer. Bestehende Ordner werden nicht überschrieben.
 
 ```sh
-HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc4-XXXXXXXX") &&
+HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc5-XXXXXXXX") &&
 cd "$HUE2LOX_DOWNLOAD_DIR" &&
-curl --fail --location --output hue2lox-v1.0.0-rc.4.zip \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/hue2lox-v1.0.0-rc.4.zip &&
+curl --fail --location --output hue2lox-v1.0.0-rc.5.zip \
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/hue2lox-v1.0.0-rc.5.zip &&
 curl --fail --location --output SHA256SUMS.txt \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/SHA256SUMS.txt &&
-(grep '  hue2lox-v1.0.0-rc.4.zip$' SHA256SUMS.txt | sha256sum --check -) &&
-unzip -tq hue2lox-v1.0.0-rc.4.zip &&
-unzip -q hue2lox-v1.0.0-rc.4.zip &&
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.4/install-assistant.sh"
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/SHA256SUMS.txt &&
+(grep '  hue2lox-v1.0.0-rc.5.zip$' SHA256SUMS.txt | sha256sum --check -) &&
+unzip -tq hue2lox-v1.0.0-rc.5.zip &&
+unzip -q hue2lox-v1.0.0-rc.5.zip &&
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.5/install-assistant.sh"
 ```
 
 Nur bei erfolgreicher Prüfung geht es weiter. Bei `FAILED`, Downloadfehler oder Entpackfehler stoppen; den Installer nicht separat starten. Die Prüfsumme gehört zum ZIP aus demselben Release. `Code → Download ZIP` lädt dagegen den Entwicklungsstand.
 
-**Erneut öffnen:** In derselben Root-Sitzung kannst du den letzten `bash`-Befehl wiederholen. Nach einer neuen Anmeldung den tatsächlich erstellten Downloadordner verwenden; `ls -d /root/hue2lox-rc4-*` zeigt die Standardpfade. Der Entpackordner ist nicht das spätere Installationsziel, etwa `/opt/hue2lox-test`.
+**Erneut öffnen:** In derselben Root-Sitzung kannst du den letzten `bash`-Befehl wiederholen. Nach einer neuen Anmeldung den tatsächlich erstellten Downloadordner verwenden; `ls -d /root/hue2lox-rc5-*` zeigt die Standardpfade. Der Entpackordner ist nicht das spätere Installationsziel, etwa `/opt/hue2lox-test`.
 
 ### D. Im Installer weiter
 
@@ -90,7 +92,7 @@ wie „Not live until“ zuerst Datum und Zeitsynchronisation des Servers prüfe
 Für die vollständige direkte Ausgabe in derselben Root-Sitzung:
 
 ```sh
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.4/install-assistant.sh" --verbose
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.5/install-assistant.sh" --verbose
 ```
 
 Die kompakten Protokolle filtern erkennbare Zugangsdaten; vor dem Teilen trotzdem
@@ -116,7 +118,7 @@ Beim Start **Deutsch oder English** auswählen. Jeder verändernde Schritt fragt
 
 ### HTTP oder HTTPS im Installer
 
-RC4 enthält diese Auswahl. Das ältere RC3-ZIP bleibt unverändert.
+RC5 enthält diese Auswahl. Das ältere RC3-ZIP bleibt unverändert.
 In Schritt 5 wählst du:
 
 1. **HTTPS direkt (Standard):** Der Installer erzeugt ein selbstsigniertes Zertifikat
@@ -269,7 +271,7 @@ sudo docker compose version
 
 Erwartet: `Hello from Docker!` und eine Compose-Versionsnummer. Wir verwenden stets `sudo docker compose` mit Leerzeichen, nicht das alte `docker-compose`.
 
-> **Nur Entwicklung:** Die folgenden manuellen Downloads und Dateipfade gelten für `main`, nicht für RC4. Für einen veröffentlichten Kandidaten Option 1 und [DOWNLOADS](docs/DOWNLOADS.md) verwenden.
+> **Nur Entwicklung:** Die folgenden manuellen Downloads und Dateipfade gelten für `main`, nicht für RC5. Für einen veröffentlichten Kandidaten Option 1 und [DOWNLOADS](docs/DOWNLOADS.md) verwenden.
 
 ## 5. Hue2Lox herunterladen
 

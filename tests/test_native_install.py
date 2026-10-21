@@ -474,3 +474,27 @@ class SystemdFailureResetTests(unittest.TestCase):
         import subprocess
         with patch.object(native.subprocess, 'run', return_value=subprocess.CompletedProcess([], 2)):
             with self.assertRaises(subprocess.CalledProcessError): native.reset_failure()
+
+
+class NativeTargetTests(unittest.TestCase):
+    def test_explicit_linux_test_targets(self):
+        for distro, version, options, label in [
+            ('debian', '12', {}, 'Debian 12'), ('debian', '13', {}, 'Debian 13'),
+            ('ubuntu', '24.04', {}, 'Ubuntu 24.04'), ('ubuntu', '26.04', {}, 'Ubuntu 26.04'),
+            ('debian', '13', {'dietpi': True}, 'DietPi'),
+            ('dietpi', '10.7', {'debian_version': '12.12'}, 'DietPi')]:
+            with self.subTest(distro=distro, version=version):
+                self.assertIn(label, native.native_os_target({'ID': distro, 'VERSION_ID': version}, 'x86_64', 64, **options))
+
+    def test_unknown_old_and_non_amd64_systems_are_not_silently_allowed(self):
+        for release, machine, bits, options in [
+            ({'ID': 'ubuntu', 'VERSION_ID': '22.04'}, 'x86_64', 64, {}),
+            ({'ID': 'ubuntu', 'VERSION_ID': '24.10'}, 'x86_64', 64, {}),
+            ({'ID': 'debian', 'VERSION_ID': '11'}, 'x86_64', 64, {}),
+            ({'ID': 'linuxmint', 'ID_LIKE': 'ubuntu', 'VERSION_ID': '24.04'}, 'x86_64', 64, {}),
+            ({'ID': 'dietpi', 'VERSION_ID': '10'}, 'x86_64', 64, {}),
+            ({'ID': 'debian', 'VERSION_ID': '13'}, 'aarch64', 64, {}),
+            ({'ID': 'debian', 'VERSION_ID': '13'}, 'x86_64', 32, {}),
+            ({'ID': 'debian', 'VERSION_ID': '13'}, 'x86_64', 64, {'raspberry': True})]:
+            with self.subTest(release=release, machine=machine, bits=bits):
+                with self.assertRaises(ValueError): native.native_os_target(release, machine, bits, **options)

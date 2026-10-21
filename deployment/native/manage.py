@@ -146,14 +146,31 @@ def verify_package(package, sha256, destination):
     return manifest
 
 
+def native_os_target(release, machine, bits, *, dietpi=False, debian_version='', raspberry=False):
+    """Explicit experimental targets; no ID_LIKE guesses or CPU-only 64-bit checks."""
+    if machine != 'x86_64' or bits <= 32 or raspberry:
+        raise ValueError('Native experimental targets currently require amd64 and a 64-bit OS')
+    distro = release.get('ID', '').strip('"')
+    version = release.get('VERSION_ID', '').strip('"')
+    if distro == 'ubuntu' and not dietpi and version in ('24.04', '26.04'):
+        return 'Ubuntu ' + version + ' amd64'
+    if distro in ('debian', 'dietpi'):
+        base = debian_version.split('.')[0] if distro == 'dietpi' else version.split('.')[0]
+        if base in ('12', '13'):
+            return ('DietPi (Debian ' + base + ')' if dietpi or distro == 'dietpi' else 'Debian ' + base) + ' amd64'
+    raise ValueError('Native experimental targets: Debian 12/13, Ubuntu 24.04/26.04, DietPi on Debian 12/13; amd64 only')
+
+
 def platform_check():
     if sys.platform != 'linux' or os.geteuid() != 0:
-        raise ValueError('Run with sudo on the local Debian 13 amd64 server')
+        raise ValueError('Run as root on the local Linux test server (su - or sudo -i)')
     release = dict(line.split('=', 1) for line in Path('/etc/os-release').read_text().splitlines() if '=' in line)
-    if release.get('ID', '').strip('"') != 'debian' or release.get('VERSION_ID', '').strip('"') != '13' or platform.machine() != 'x86_64' or sys.maxsize <= 2**32:
-        raise ValueError('Initial native target: Debian 13 amd64 only; other systems are not qualified')
+    native_os_target(release, platform.machine(), 64 if sys.maxsize > 2**32 else 32,
+                     dietpi=Path('/boot/dietpi/.version').is_file(),
+                     debian_version=Path('/etc/debian_version').read_text().strip() if Path('/etc/debian_version').is_file() else '',
+                     raspberry=Path('/etc/rpi-issue').exists())
     if sys.version_info < (3, 11) or not ssl.create_default_context().hostname_checks_common_name:
-        raise ValueError('Python/OpenSSL lacks required TLS capabilities')
+        raise ValueError('Python >=3.11 and required OpenSSL/TLS capabilities are needed')
     for command in ('openssl', 'systemctl', 'useradd', 'groupadd'):
         if not shutil.which(command):
             raise ValueError('Missing prerequisite: ' + command + '. Install prerequisites explicitly first.')
@@ -644,6 +661,7 @@ def main():
             sub.add_argument('--keep-data', action='store_true', help='Reinstall the same package using retained private data')
             sub.add_argument('--host', required=True)
             sub.add_argument('--port', type=int, default=18443)
+    commands.add_parser('check', help='Read-only native platform and prerequisite check')
     sub = commands.add_parser('rollback')
     sub.add_argument('--backup', required=True, type=Path, help='Complete managed backup; restores its code AND private data')
     sub = commands.add_parser('uninstall')
@@ -651,6 +669,9 @@ def main():
     args = parser.parse_args()
     try:
         platform_check()
+        if args.action == 'check':
+            print('Native experimental platform and prerequisites ready; no installation changed.')
+            return
         with operation_lock():
             {'install': install, 'update': update, 'uninstall': uninstall, 'rollback': rollback}[args.action](args, Layout())
     except (ValueError, OSError, subprocess.SubprocessError, tarfile.TarError, KeyError) as error:

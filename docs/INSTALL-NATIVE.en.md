@@ -2,11 +2,40 @@
 
 [Deutsch](INSTALL-NATIVE.md) · [Docker installation](../INSTALL.md)
 
-This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. No native release package has been published. **Debian 13 on amd64 is the initial target, not a completed hardware acceptance.** Other distributions and architectures are not approved.
+This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. No native release package has been published. **The native path is experimental.** Explicit test targets are Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, currently amd64 only. This is not hardware approval.
+
+## Shared interactive installer (development)
+
+RC5 remains unchanged and does not include this native installer. Use a clean, reviewed checkout of PR #18 and record its exact commit. Do not use a mutable main download as a released native package. Start the existing assistant as root (`su -`, or `sudo -i` on Ubuntu):
+
+```sh
+bash /absolute/path/to/hue2lox/install-assistant.sh
+```
+
+After language selection choose **With Docker** or **Native, without Docker**. The Docker menu retains its existing HTTP/HTTPS and proxy options. The native menu provides:
+
+1. Read-only platform/prerequisite status.
+2. Optional SSH setup.
+3. Explicit base-package installation (no Docker repository or Docker installation).
+4. Local preparation of a development package from the clean Git checkout. The assistant records the commit, computes and verifies the package checksum and removes its temporary package directory when it exits.
+5. Native installation after IP/HTTPS-port selection and explicit confirmation. Use the server's LAN address for direct browser access; loopback is also available via manual address entry. A tunnel is required only for remote access to a loopback listener.
+6. Verified HTTPS check of the existing native service (does not pair devices).
+7. Maintenance: update with backup, reinstall retaining data, explicit rollback, or uninstall retaining data. Rollback restores the historical private data including passwords. There is no purge option in the menu.
+
+For a separately obtained native archive, pass its independently checked SHA-256:
+
+```sh
+bash /absolute/path/to/hue2lox/install-assistant.sh --deployment native \
+  --native-package /absolute/path/native.tar.gz --native-sha256 VERIFIED_SHA256
+```
+
+A source ZIP without Git identity does not fabricate a source commit or download main. The native package step instead asks for a verified archive and its SHA-256. No native release asset is published yet. A prepared development package uses `0.0.0-dev.<commit>`; it is not a release. Restart the assistant from the newly reviewed checkout when updating code. Reinstall requires the same package identity as the retained data; use the old verified archive when necessary. Native data paths remain fixed and are independent of the Docker installation directory.
+
+The optional `--check --deployment native` is read-only. No installation changes occur merely by selecting a backend or viewing status. Real Ubuntu/DietPi VM acceptance and native hardware tests remain open; platform fixtures and systemd-container CI do not replace them.
 
 ## Requirements and limits
 
-Initially use a fresh, isolated Debian 13 test instance with systemd, Python 3.13, OpenSSL and root access. Python/OpenSSL come from the operating system; a virtual environment does not replace the TLS runtime. No application pip packages are required. Prerequisites are checked, but the installer does not upgrade the operating system.
+Use a fresh, isolated test instance with systemd, OS Python 3.11 or newer, OpenSSL and root access. Native targets: Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, amd64 only. Ubuntu 22.04, unknown derivatives, Raspberry Pi OS, ARM and 32-bit operating systems are currently rejected by the native adapter. Docker retains its separate platform support. Python/OpenSSL come from the operating system; a virtual environment does not replace the TLS runtime. No application pip packages are required. Prerequisites are checked, but the installer does not upgrade the operating system.
 
 The installer creates a system service and system directories. Do not try it on a workstation or production installation. Docker is neither required nor modified. Docker state is not migrated automatically. Parallel operation requires separate state, names and ports; for example, reserve port 18443 for the native test.
 
