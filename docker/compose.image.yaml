@@ -4,10 +4,8 @@
 # Host networking lets Hue2Lox discover bridges on the LAN; it listens on PORT.
 services:
   hue2lox:
-    # Channels: ":rc" = newest release candidate, ":latest" = newest stable release,
-    # exact version tags pin one release. This template is for the planned image distribution;
-    # no image is promised by the existing ZIP-only RC releases.
-    image: ghcr.io/square-com-de/hue2lox:rc
+    # Pin the tested release candidate. No floating rc/latest tag is needed.
+    image: ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
     container_name: hue2lox
     restart: unless-stopped
     network_mode: host

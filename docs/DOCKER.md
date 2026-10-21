@@ -2,20 +2,25 @@
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-Image distribution is being prepared; existing RC1–RC3 releases remain ZIP-only. Do not use the pull commands below until an image release explicitly announces availability. License/source materials and per-platform acceptance are tracked in [IMAGE-COMPLIANCE.md](IMAGE-COMPLIANCE.md).
-
-The planned images will be published to `ghcr.io/square-com-de/hue2lox` for `linux/amd64` and `linux/arm64` when a release tag is pushed.
+RC4 provides the image `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4` for
+`linux/amd64` and `linux/arm64`. RC1–RC3 remain unchanged and ZIP-only.
+[RC4 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4).
 
 ## Image tags
 
-| Tag | Meaning |
-| --- | --- |
-| `rc` | Newest release candidate. Available once the first container release candidate is published. |
-| `latest` | Newest **stable** release. It does not exist until the first stable release and never points at a release candidate. |
-| `1.0.0-rc.4`, `1.0.0` | One exact version. Pin one of these for reproducible updates. |
-| `1.0` | Newest stable release of that minor version. |
+Use the exact version `1.0.0-rc.4` for this candidate. There are no floating `rc`
+or minor-version tags. `latest` is reserved for a future stable release and is
+not created by an RC.
 
-The image workflow currently builds and inventories both architectures without publishing. Registry publication remains disabled until the image release gate is complete.
+```sh
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
+# Alternatively:
+podman pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
+```
+
+The release workflow publishes only after a GitHub release is published and all
+tests, scans and source-material checks pass. Pushing a branch/tag alone cannot
+publish images. See [GHCR-RELEASE.md](GHCR-RELEASE.md).
 
 ## HTTP and HTTPS
 
@@ -38,7 +43,7 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy [`docker/compose.image.yaml`](../docker/compose.image.yaml), set `PORT` and `HUE_PUBLIC_URL`, then:
+Copy the [RC4 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.4/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
 
 ```sh
 docker compose up -d
