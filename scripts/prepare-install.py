@@ -31,7 +31,19 @@ def validate_public_url(value):
     return value
 
 
-def prepare(destination,host,port=8443,scheme='https',public_url=None):
+def release_image(registry='dockerhub'):
+    repositories = {'dockerhub': 'docker.io/dubctrl/hue2lox',
+                    'ghcr': 'ghcr.io/square-com-de/hue2lox'}
+    if registry not in repositories: raise ValueError('Choose dockerhub or ghcr')
+    version = json.loads((SOURCE/'install/release-image.json').read_text()).get('version')
+    if not isinstance(version, str) or not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-rc\.[1-9]\d*)?', version):
+        raise ValueError('Installer image must use a fixed release version')
+    return repositories[registry] + ':' + version
+
+
+def prepare(destination,host,port=8443,scheme='https',public_url=None,source='image',registry='dockerhub'):
+    if source not in ('image', 'build'): raise ValueError('Choose image or build')
+    image = release_image(registry) if source == 'image' else None
     address=ipaddress.IPv4Address(host)
     if address.is_unspecified or address.is_multicast or not (address.is_private or address.is_loopback):
         raise ValueError('Use a local unicast IPv4 address')
@@ -54,13 +66,21 @@ def prepare(destination,host,port=8443,scheme='https',public_url=None):
             shutil.copytree(SOURCE/directory,work/directory)
             for path in (work/directory).rglob('*'):path.chmod(0o755 if path.is_dir() else 0o644)
             (work/directory).chmod(0o755)
-        shutil.copyfile(SOURCE/'docker/compose.install.yaml',work/'compose.yaml')
+        compose = (SOURCE/'docker/compose.install.yaml').read_text()
+        if image:
+            start = compose.index('    build:\n')
+            end = compose.index('    restart:', start)
+            compose = compose[:start] + '    image: ' + image + '\n' + compose[end:]
+        (work/'compose.yaml').write_text(compose)
         for directory in ('data','secrets') + (('certs',) if scheme == 'https' else ()):(work/directory).mkdir(mode=0o700)
         for path,value in [('data/registry.json',{'schema_version':1,'bridges':[]}),('data/admin_auth.json',auth.create_credentials('admin','admin'))]:
             (work/path).write_text(json.dumps(value));(work/path).chmod(0o600)
         (work/'secrets/control_token').write_text(secrets.token_hex(32)+'\n');(work/'secrets/control_token').chmod(0o400)
         name = installation_name()
         (work/'.env').write_text(f'COMPOSE_PROJECT_NAME={name}\nHUE2LOX_CONTAINER_NAME={name}-1\nHUE2LOX_BIND_IP={address}\nHUE2LOX_PORT={port}\nHUE2LOX_SCHEME={scheme}\nHUE_PUBLIC_URL={public_url}\nHUE_WRITES_ENABLED=0\nHUE_COLOR_ENABLED=0\nHUE_WHITE_ENABLED=0\n');(work/'.env').chmod(0o600)
+        with (work/'.env').open('a') as settings:
+            settings.write(f'HUE2LOX_SOURCE={source}\n')
+            if image: settings.write(f'HUE2LOX_IMAGE={image}\n')
         if scheme == 'https':
             san=','.join(dict.fromkeys([f'IP:{address}','IP:127.0.0.1','DNS:localhost']))
             subprocess.run(['openssl','req','-x509','-newkey','rsa:2048','-sha256','-nodes','-days','365',
@@ -93,8 +113,10 @@ if __name__=='__main__':
     parser.add_argument('--port',type=int,default=8443)
     parser.add_argument('--scheme',choices=('http','https'),default='https')
     parser.add_argument('--public-url')
+    parser.add_argument('--source', choices=('image', 'build'), default='image')
+    parser.add_argument('--registry', choices=('dockerhub', 'ghcr'), default='dockerhub')
     args=parser.parse_args()
-    try:dest=prepare(args.destination,args.host,args.port,args.scheme,args.public_url)
+    try:dest=prepare(args.destination,args.host,args.port,args.scheme,args.public_url,args.source,args.registry)
     except (ValueError,OSError,subprocess.SubprocessError) as error:parser.exit(1,'Setup failed: '+str(error)+'\n')
     print('Fresh installation prepared at '+str(dest))
     print('No container started; no Hue requests sent. Control is disabled by default.')

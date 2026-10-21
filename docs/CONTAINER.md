@@ -225,7 +225,7 @@ Installationsdaten. Keine zusätzliche Bibliothek, kein neuer Container oder Por
 
 ### Vorbereitete Neuinstallation – 19.10.2026
 
-`docker/compose.install.yaml` ist ein separater Ausgangspunkt für neue Testinstallationen. `scripts/prepare-install.py` erstellt ein neues Zielverzeichnis und kopiert diese Datei als dessen `compose.yaml`. Eigene Zertifikate/Token, leere Registry, UID 10001 auf Linux/root, keine Legacy-Hue-Go-Endpunkte oder vorhandenen Bridge-Keys. docker/Dockerfile.status akzeptiert `REGISTRY_SOURCE` (Standard `config/registry.json`, frische Installation `install/registry.empty.json`). Steuerung ist zunächst gesperrt. Keine neue Python-/Node-Laufzeitabhängigkeit; Sprachdateien sind statische Assets. Siehe INSTALL.md für Test und Grenzen.
+`docker/compose.install.yaml` ist ein separater Ausgangspunkt für neue Testinstallationen. `scripts/prepare-install.py` erstellt ein neues Zielverzeichnis und verwendet diese Datei als Vorlage für dessen `compose.yaml`. Im Entwicklungsstand wird standardmäßig ein festes Release-Image eingetragen; `--source build` behält den lokalen Build bei. Siehe [Image-Auswahl](INSTALLER-IMAGES.md#deutsch). Eigene Zertifikate/Token, leere Registry, UID 10001 auf Linux/root, keine Legacy-Hue-Go-Endpunkte oder vorhandenen Bridge-Keys. docker/Dockerfile.status akzeptiert `REGISTRY_SOURCE` (Standard `config/registry.json`, frische Installation `install/registry.empty.json`). Steuerung ist zunächst gesperrt. Keine neue Python-/Node-Laufzeitabhängigkeit; Sprachdateien sind statische Assets. Siehe INSTALL.md für Test und Grenzen.
 
 ## Standard-Dockerfile
 
