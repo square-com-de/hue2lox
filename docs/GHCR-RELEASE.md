@@ -3,8 +3,8 @@
 ## English
 
 This is a maintainer runbook for a **future** release. Merging this workflow does
-not publish RC4, modify RC3, push an image or update an installation. The current
-RC3 download remains unchanged.
+not push an image or update an installation. RC1–RC4 releases, tags and assets
+remain unchanged. Docker Hub publication starts with the next release (RC5 or later).
 
 ### Before publishing
 
@@ -13,11 +13,11 @@ RC3 download remains unchanged.
    review the [container compliance evidence](IMAGE-COMPLIANCE.md). Prepare the
    version-specific installation/Compose references in that commit before tagging;
    the release ZIP preserves that exact source and cannot be corrected afterward.
-2. Create a new tag, for example `v1.0.0-rc.4`, at that commit. Never move an
+2. Create a new tag, for example `v1.0.0-rc.5`, at that commit. Never move an
    existing release tag. Create a draft GitHub release with short release notes.
    For an RC, select **Set as a pre-release**; for `v1.0.0`, leave that unchecked.
 3. In the notes, link the installation guide and explain that the same version
-   will be available as an installer ZIP and a multi-platform GHCR image. Link
+   will be available as an installer ZIP and a multi-platform image in GHCR and Docker Hub. Link
    the release assets for corresponding sources, notices and platform evidence.
    Do not pre-upload a separately generated ZIP or checksum list: this workflow
    creates them from the tag and refuses to replace different existing files.
@@ -26,6 +26,17 @@ RC3 download remains unchanged.
    package's visibility to **Public** in its package settings after the first
    upload. A public repository alone does not guarantee a public package.
 
+### Docker Hub setup
+
+Create the **public** `dubctrl/hue2lox` repository. In this GitHub repository's
+Settings → Secrets and variables → Actions, store `DOCKERHUB_USERNAME` (`dubctrl`)
+and `DOCKERHUB_TOKEN` (a Docker Hub token with Read & Write, no Delete).
+These credentials are used only by the release publisher and verification job;
+PR tests never log in or push. GHCR continues to use the scoped `GITHUB_TOKEN`.
+Missing/invalid credentials fail publication; they never silently skip Docker Hub.
+The first real release validates write permissions; mocked PR tests cannot do so.
+Never run the historical RC4 workflow to backfill Docker Hub.
+
 ### What publishing the release does
 
 Clicking **Publish release** starts **Publish release images**. Merely pushing a
@@ -33,7 +44,7 @@ branch/tag, opening a PR, saving a draft or manually running the preparation
 workflow cannot publish an image.
 
 The workflow checks the tag, source commit and prerelease flag, and rejects the
-historical RC1–RC3 tags. It runs the source tests, installer smoke tests and
+historical RC1–RC4 tags. It runs the source tests, installer smoke tests and
 HTTP/HTTPS container tests. Independently, it builds AMD64 and ARM64 candidates,
 boots each, inventories them, creates SPDX SBOMs, and blocks on fixable high or
 critical vulnerabilities. The source-material job compares both inventories
@@ -47,17 +58,21 @@ Only after every gate passes does the publisher:
 - Load and verify the **same images** that were inventoried and scanned. There
   is no untested rebuild in the publishing job.
 - Push architecture tags and the combined version tag to
-  `ghcr.io/square-com-de/hue2lox`.
-- Pull both published platform digests anonymously and compare their image IDs
-  with the candidate evidence; attach `container-digests.json` to the release.
+  `ghcr.io/square-com-de/hue2lox` and `docker.io/dubctrl/hue2lox`.
+- Pull both published platform digests from **each registry** anonymously and compare their image IDs
+  with the candidate evidence; attach `container-digests.json` and its checksum
+  to the release. Its `registries` field records both destinations; `platforms`
+  retains the GHCR entries for compatibility. Both registries must pass before
+  any stable promotion. Cross-registry uploads are not atomic: a partial failure
+  may leave one registry published; retry the failed job with the original artifacts.
 - For a stable release only, move `latest` if this is also GitHub's latest stable
   release. **An RC never creates or changes `latest`.**
 
-For the example RC4, the version tag is `1.0.0-rc.4` (without the leading `v`):
+For the example RC5, the version tag is `1.0.0-rc.5` (without the leading `v`):
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
-podman pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.4
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.5
+podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.5
 ```
 
 These commands are examples for the future release, **not available downloads
@@ -82,21 +97,33 @@ prepare a new version if necessary.
 
 Retain the release assets and a separate backup as long as the corresponding
 images are offered. CI artifacts are temporary and are not the source-delivery
-channel. Link this runbook and the matching release from the GHCR package page.
+channel. Link this runbook and the matching release from both registry descriptions.
+Docker Hub and GHCR distribute the same binaries and corresponding source/license
+assets; keep those links available in both places.
 Record the first end-to-end publication result in the release notes; a PR test
 cannot prove registry write permissions or package visibility.
 
 ## Deutsch
 
 Dieser Ablauf ist für ein **künftiges** Release vorbereitet. Das Zusammenführen
-des PR veröffentlicht weder RC4 noch Images und ändert weder RC3 noch laufende
-Installationen.
+des PR veröffentlicht keine Images und ändert weder RC1–RC4 noch laufende
+Installationen. Docker Hub kommt erst ab einem neuen Release (RC5 oder später) hinzu.
+
+Vorher das öffentliche Docker-Hub-Repository `dubctrl/hue2lox` anlegen und im
+GitHub-Repository unter Settings → Secrets and variables → Actions die Secrets
+`DOCKERHUB_USERNAME` (`dubctrl`) und `DOCKERHUB_TOKEN` (Read & Write, ohne Delete)
+hinterlegen. Nur Release-Jobs verwenden sie; PR-Tests melden sich nicht an und
+veröffentlichen nichts. GHCR verwendet weiterhin `GITHUB_TOKEN`. Fehlende oder
+ungültige Zugangsdaten stoppen den Ablauf. Schreibrechte lassen sich erst beim
+nächsten echten Release bestätigen. Den alten RC4-Workflow nicht zum Nachliefern
+nach Docker Hub starten. Beide Registry-Beschreibungen sollen auf die passenden
+Release-, Quellen- und Lizenzbeilagen verweisen.
 
 1. Geprüfte Änderungen zusammenführen, den vorgesehenen Commit auf `main`
    auswählen und die Abnahme mit echten Geräten sowie die Lizenzbeilagen prüfen.
    Versionsbezogene Installations-/Compose-Verweise vor dem Tag im Quellstand
    vorbereiten: Das Release-ZIP enthält exakt diesen Stand.
-2. Einen neuen Tag wie `v1.0.0-rc.4` an diesem Commit und einen Release-Entwurf
+2. Einen neuen Tag wie `v1.0.0-rc.5` an diesem Commit und einen Release-Entwurf
    anlegen. Beim RC **Set as a pre-release** aktivieren. Bestehende Tags bleiben
    unverändert. ZIP und Prüfsummen werden vom Workflow erzeugt.
 3. Erst **Publish release** startet die Veröffentlichung. PRs, normale Pushes,
@@ -105,14 +132,18 @@ Installationen.
    und Quellenabgleich müssen erfolgreich sein. Anschließend werden Quellen,
    vollständige Lizenzbeilagen, Inventare, SBOMs und Prüfsummen dauerhaft am
    Release hinterlegt und ohne Anmeldung heruntergeladen und geprüft.
-5. Die exakt geprüften Images werden zu GHCR übertragen. Beide Architekturen
-   werden danach ohne Anmeldung geladen und mit den Prüfnachweisen verglichen.
+5. Die exakt geprüften Images werden zu GHCR und Docker Hub übertragen. Beide Architekturen
+   werden danach aus beiden Registries ohne Anmeldung geladen und mit den Prüfnachweisen verglichen.
    `container-digests.json` dokumentiert die veröffentlichten Versionen.
 6. Das erste GHCR-Paket kann zunächst privat sein. In seinen Einstellungen auf
    **Public** stellen und bei fehlgeschlagener öffentlicher Prüfung **Re-run
    failed jobs** wählen. Den gesamten Build dafür nicht erneut starten.
 
-RC4 erhält `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4`. `latest` wird ausschließlich
+Das nächste RC5 erhält `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5` und
+`docker.io/dubctrl/hue2lox:1.0.0-rc.5`. Beide Registries müssen vor einer
+Stable-Promotion erfolgreich geprüft sein. Uploads in zwei Registries sind nicht
+atomar; bei Teilfehlern bleiben vorhandene Ergebnisse bestehen und der
+fehlgeschlagene Job wird mit denselben Artefakten wiederholt. `latest` wird ausschließlich
 für ein stabiles Release aktualisiert, das auch GitHub als aktuelles stabiles
 Release führt. Die neuen Downloads und Compose-Beispiele erst nach erfolgreicher
 Veröffentlichung als verfügbar ankündigen. Laufende Installationen ändern sich dadurch

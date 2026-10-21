@@ -6,7 +6,7 @@ permissions:
   contents: read
 # Serialize releases so an older run cannot overwrite newer publication work.
 concurrency:
-  group: ghcr-release
+  group: ghcr-release # Keep serialization with earlier GHCR-only workflows.
   cancel-in-progress: false
 jobs:
   validate:
@@ -60,13 +60,22 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_ACTOR: ${{ github.actor }}
         run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+      - name: Authenticate to Docker Hub
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          test -n "$DOCKERHUB_USERNAME" && test -n "$DOCKERHUB_TOKEN"
+          printf '%s' "$DOCKERHUB_TOKEN" | docker login docker.io -u "$DOCKERHUB_USERNAME" --password-stdin
       - name: Publish verified assets and exact candidate images
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/release-image.py publish
       - name: Log out
         if: always()
-        run: docker logout ghcr.io
+        run: |
+          docker logout ghcr.io
+          docker logout docker.io
   verify-public:
     needs: publish
     runs-on: ubuntu-latest
@@ -91,10 +100,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_ACTOR: ${{ github.actor }}
         run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u "$GH_ACTOR" --password-stdin
+      - name: Authenticate to Docker Hub
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          test -n "$DOCKERHUB_USERNAME" && test -n "$DOCKERHUB_TOKEN"
+          printf '%s' "$DOCKERHUB_TOKEN" | docker login docker.io -u "$DOCKERHUB_USERNAME" --password-stdin
       - name: Verify anonymous pulls, record digests and promote stable only
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/release-image.py verify-public
       - name: Log out
         if: always()
-        run: docker logout ghcr.io
+        run: |
+          docker logout ghcr.io
+          docker logout docker.io

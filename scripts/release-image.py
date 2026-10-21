@@ -1,4 +1,4 @@
-"""Release-only GHCR publication; never invoked by the installer.
+"""Release-only GHCR and Docker Hub publication; never invoked by the installer.
 
 The validate subcommand is offline. prepare and publish require a published
 GitHub release, downloaded artifacts from this run, and explicit job tokens.
@@ -17,6 +17,7 @@ import urllib.request
 
 REPO = 'square-com-de/hue2lox'
 IMAGE = 'ghcr.io/' + REPO
+IMAGES = (IMAGE, 'docker.io/dubctrl/hue2lox')
 ARCHES = ('amd64', 'arm64')
 
 
@@ -34,8 +35,8 @@ def plan(event, event_name, repository, commit):
         raise ValueError('Unexpected repository, draft or unsupported version tag')
     version = tuple(int(n) for n in match.groups()[:3])
     rc = match.group(4)
-    if version < (1, 0, 0) or (version == (1, 0, 0) and rc and int(rc) < 4):
-        raise ValueError('Historical RC1, RC2 and RC3 must remain unchanged')
+    if version < (1, 0, 0) or (version == (1, 0, 0) and rc and int(rc) < 5):
+        raise ValueError('Historical RC1, RC2, RC3 and RC4 must remain unchanged')
     if release.get('prerelease') is not bool(rc):
         raise ValueError('RC tags must be prereleases; stable tags must not be prereleases')
     if not re.fullmatch(r'[0-9a-f]{40}', commit):
@@ -43,7 +44,7 @@ def plan(event, event_name, repository, commit):
     if not isinstance(release.get('id'), int):
         raise ValueError('Missing release identity')
     return {'tag': tag, 'version': tag[1:], 'prerelease': bool(rc),
-            'commit': commit, 'release_id': release['id'], 'image': IMAGE}
+            'commit': commit, 'release_id': release['id'], 'image': IMAGE, 'images': list(IMAGES)}
 
 
 def current_plan():
@@ -156,6 +157,11 @@ def publish(info):
     assets = Path('release-assets')
     for path in sorted(assets.iterdir()):
         ensure_asset(info, path)
+    for image in IMAGES:
+        publish_registry(info, image)
+
+
+def publish_registry(info, image):
     references = []
     for arch in ARCHES:
         folder = Path('images') / arch
@@ -165,14 +171,14 @@ def publish(info):
         actual = run('docker', 'image', 'inspect', '--format', '{{.Id}}', 'hue2lox-candidate:inventory')
         if actual != expected:
             raise ValueError('Loaded image does not match the inventoried and scanned image')
-        reference = IMAGE + ':' + info['version'] + '-' + arch
+        reference = image + ':' + info['version'] + '-' + arch
         existing = remote_manifest(reference)
         if existing is not None and existing.get('config', {}).get('digest') != expected:
             raise ValueError('Refusing to replace a different published platform image')
         subprocess.run(['docker', 'tag', actual, reference], check=True)
         subprocess.run(['docker', 'push', reference], check=True)
         references.append(reference)
-    reference = IMAGE + ':' + info['version']
+    reference = image + ':' + info['version']
     existing = remote_manifest(reference)
     if existing is not None:
         # Compare registry platform manifests before touching an immutable version.
@@ -188,11 +194,10 @@ def publish(info):
         subprocess.run(['docker', 'manifest', 'push', reference], check=True)
     # The package may default to private on first publication. A separate job
     # checks public pulls before promoting a stable release to latest.
-    (Path('published-reference.txt')).write_text(reference + '\n')
 
 
-def verify_public(info):
-    reference = IMAGE + ':' + info['version']
+def verify_registry(info, image):
+    reference = image + ':' + info['version']
     digests = {}
     # Empty Docker configuration: no stored registry credentials.
     with tempfile.TemporaryDirectory() as config:
@@ -200,15 +205,21 @@ def verify_public(info):
         manifest = json.loads(run('docker', 'manifest', 'inspect', '--verbose', reference, env=env))
         for arch in ARCHES:
             entry = next(m for m in manifest if m['Descriptor']['platform']['architecture'] == arch)
-            immutable = IMAGE + '@' + entry['Descriptor']['digest']
+            immutable = image + '@' + entry['Descriptor']['digest']
             subprocess.run(['docker', 'pull', '--platform=linux/' + arch, immutable], env=env, check=True)
             expected = verify_inventory(Path('evidence') / arch, info['commit'], arch)
             actual = run('docker', 'image', 'inspect', '--format', '{{.Id}}', immutable, env=env)
             if actual != expected:
                 raise ValueError('Public image differs from tested candidate')
             digests[arch] = immutable
+    return digests
+
+
+def verify_public(info):
+    # Verify BOTH registries before recording completion or moving ANY latest tag.
+    registries = {image: verify_registry(info, image) for image in IMAGES}
     path = Path('container-digests.json')
-    path.write_text(json.dumps({'tag': info['tag'], 'commit': info['commit'], 'platforms': digests}, indent=2) + '\n')
+    path.write_text(json.dumps({'tag': info['tag'], 'commit': info['commit'], 'platforms': registries[IMAGE], 'registries': registries}, indent=2) + '\n')
     ensure_asset(info, path)
     checksum = Path('container-digests.json.sha256')
     checksum.write_text(digest(path) + '  ' + path.name + '\n')
@@ -216,8 +227,9 @@ def verify_public(info):
     if not info['prerelease']:
         latest = json.loads(run('gh', 'api', f'repos/{REPO}/releases/latest'))
         if latest['tag_name'] == info['tag']:
-            subprocess.run(['docker', 'manifest', 'create', IMAGE + ':latest', *digests.values()], check=True)
-            subprocess.run(['docker', 'manifest', 'push', IMAGE + ':latest'], check=True)
+            for image, digests in registries.items():
+                subprocess.run(['docker', 'manifest', 'create', '--amend', image + ':latest', *digests.values()], check=True)
+                subprocess.run(['docker', 'manifest', 'push', image + ':latest'], check=True)
         else:
             print('Stable release is not GitHub latest; leaving the latest image unchanged.')
 
