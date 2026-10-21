@@ -17,14 +17,14 @@ spec.loader.exec_module(m)
 SHA = 'a' * 40
 
 
-def event(tag='v1.0.0-rc.4', prerelease=True):
+def event(tag='v1.0.0-rc.5', prerelease=True):
     return {'action': 'published', 'release': {'id': 42, 'tag_name': tag,
             'draft': False, 'prerelease': prerelease}}
 
 
 class ReleaseTests(unittest.TestCase):
     def test_rc_and_stable_get_explicit_versions(self):
-        for tag, rc in [('v1.0.0-rc.4', True), ('v1.0.0', False), ('v2.1.0-rc.1', True)]:
+        for tag, rc in [('v1.0.0-rc.5', True), ('v1.0.0', False), ('v2.1.0-rc.1', True)]:
             with self.subTest(tag=tag):
                 result = m.plan(event(tag, rc), 'release', m.REPO, SHA)
                 self.assertEqual(result['version'], tag[1:])
@@ -35,7 +35,7 @@ class ReleaseTests(unittest.TestCase):
         for name in ('workflow_dispatch', 'push', 'pull_request'):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 m.plan(event(), name, m.REPO, SHA)
-        for tag in ('main', 'v1.0.0-rc.1', 'v1.0.0-rc.2', 'v1.0.0-rc.3',
+        for tag in ('main', 'v1.0.0-rc.1', 'v1.0.0-rc.2', 'v1.0.0-rc.3', 'v1.0.0-rc.4',
                     'v0.9.0', 'v01.0.0', 'v1.0.0-rc.0', 'v1.0.0; echo bad'):
             with self.subTest(tag=tag), self.assertRaises(ValueError):
                 m.plan(event(tag), 'release', m.REPO, SHA)
@@ -118,7 +118,7 @@ class ReleaseTests(unittest.TestCase):
         manifests = [{'Descriptor': {'platform': {'architecture': a}, 'digest': 'sha256:' + a}}
                      for a in m.ARCHES]
         with tempfile.TemporaryDirectory() as directory, \
-             patch.object(m, 'run', side_effect=[json.dumps(manifests), 'image-id', 'image-id']) as reads, \
+             patch.object(m, 'run', side_effect=[json.dumps(manifests), 'image-id', 'image-id'] * 2) as reads, \
              patch.object(m.subprocess, 'run') as commands, \
              patch.object(m, 'verify_inventory', return_value='image-id'), \
              patch.object(m, 'ensure_asset') as asset, \
@@ -157,8 +157,8 @@ class ReleaseTests(unittest.TestCase):
                 with patch.object(m.subprocess, 'run', side_effect=command), \
                      patch.object(m, 'verify_inventory', return_value='image-id'):
                     assets = m.prepare(info)
-                with zipfile.ZipFile(assets / 'hue2lox-v1.0.0-rc.4.zip') as archive:
-                    self.assertEqual(archive.read('hue2lox-v1.0.0-rc.4/README.md'), b'committed source')
+                with zipfile.ZipFile(assets / 'hue2lox-v1.0.0-rc.5.zip') as archive:
+                    self.assertEqual(archive.read('hue2lox-v1.0.0-rc.5/README.md'), b'committed source')
                     self.assertFalse(any('private-untracked' in name for name in archive.namelist()))
                 for line in (assets / 'SHA256SUMS.txt').read_text().splitlines():
                     expected, name = line.split('  ')
@@ -188,20 +188,82 @@ class ReleaseTests(unittest.TestCase):
                      for a in m.ARCHES]
         for latest in ('v1.0.0', 'v1.1.0'):
             with self.subTest(latest=latest), tempfile.TemporaryDirectory() as directory, \
-                 patch.object(m, 'run', side_effect=[json.dumps(manifests), 'image-id', 'image-id',
-                                                    json.dumps({'tag_name': latest})]), \
+                 patch.object(m, 'run', side_effect=[json.dumps(manifests), 'image-id', 'image-id'] * 2 +
+                                                   [json.dumps({'tag_name': latest})]), \
                  patch.object(m.subprocess, 'run') as commands, \
                  patch.object(m, 'verify_inventory', return_value='image-id'), \
                  patch.object(m, 'ensure_asset'), \
                  patch.object(m, 'Path', side_effect=lambda name: Path(directory) / name):
                 m.verify_public(info)
                 pushes = [c.args[0] for c in commands.call_args_list if 'push' in c.args[0]]
-                self.assertEqual(bool(pushes), latest == 'v1.0.0')
+                self.assertEqual(len(pushes), 2 if latest == 'v1.0.0' else 0)
         with patch.object(m, 'run', side_effect=RuntimeError('anonymous access denied')), \
              patch.object(m.subprocess, 'run') as commands:
             with self.assertRaises(RuntimeError):
                 m.verify_public(info)
             commands.assert_not_called()
+
+    def test_both_registries_receive_same_candidates_and_retry_existing_version(self):
+        info = m.plan(event(), 'release', m.REPO, SHA)
+        for existing in (False, True):
+            def read(*args, **kwargs):
+                if args[:3] == ('docker', 'image', 'inspect'):
+                    return 'image-id'
+                return json.dumps({'Descriptor': {'digest': 'sha256:platform'}})
+
+            def manifest(ref):
+                if not existing:
+                    return None
+                if ref.endswith(('-amd64', '-arm64')):
+                    return {'config': {'digest': 'image-id'}}
+                return {'manifests': [{'digest': 'sha256:platform'}]}
+
+            with self.subTest(existing=existing), \
+                 patch.object(m.Path, 'iterdir', return_value=iter([])), \
+                 patch.object(m, 'run', side_effect=read), \
+                 patch.object(m, 'remote_manifest', side_effect=manifest), \
+                 patch.object(m, 'verify_inventory', return_value='image-id'), \
+                 patch.object(m.subprocess, 'run') as commands:
+                m.publish(info)
+                tags = [c.args[0] for c in commands.call_args_list if c.args[0][:2] == ['docker', 'tag']]
+                self.assertEqual(len(tags), 4)
+                self.assertEqual({t[2] for t in tags}, {'image-id'})
+                self.assertEqual({t[3] for t in tags},
+                                 {image + ':1.0.0-rc.5-' + arch for image in m.IMAGES for arch in m.ARCHES})
+                creations = [c for c in commands.call_args_list if c.args[0][:3] == ['docker', 'manifest', 'create']]
+                self.assertEqual(len(creations), 0 if existing else 2)
+
+    def test_existing_different_image_in_either_registry_is_not_overwritten(self):
+        info = m.plan(event(), 'release', m.REPO, SHA)
+        for image in m.IMAGES:
+            with self.subTest(image=image), patch.object(m.subprocess, 'run') as commands, \
+                 patch.object(m, 'run', return_value='image-id'), \
+                 patch.object(m, 'verify_inventory', return_value='image-id'), \
+                 patch.object(m, 'remote_manifest', return_value={'config': {'digest': 'other-id'}}):
+                with self.assertRaisesRegex(ValueError, 'Refusing to replace'):
+                    m.publish_registry(info, image)
+                self.assertFalse(any('push' in c.args[0] for c in commands.call_args_list))
+
+    def test_second_registry_failure_prevents_all_stable_promotion(self):
+        info = m.plan(event('v1.0.0', False), 'release', m.REPO, SHA)
+        with patch.object(m, 'verify_registry', side_effect=[{'amd64': 'digest'}, RuntimeError('Docker Hub unavailable')]), \
+             patch.object(m, 'ensure_asset') as assets, \
+             patch.object(m.subprocess, 'run') as commands:
+            with self.assertRaisesRegex(RuntimeError, 'Docker Hub unavailable'):
+                m.verify_public(info)
+            assets.assert_not_called()
+            commands.assert_not_called()
+
+    def test_public_image_mismatch_in_either_registry_fails(self):
+        info = m.plan(event(), 'release', m.REPO, SHA)
+        manifests = [{'Descriptor': {'platform': {'architecture': a}, 'digest': 'sha256:' + a}}
+                     for a in m.ARCHES]
+        for image in m.IMAGES:
+            with self.subTest(image=image), patch.object(m, 'run', side_effect=[json.dumps(manifests), 'wrong-id']), \
+                 patch.object(m, 'verify_inventory', return_value='expected-id'), \
+                 patch.object(m.subprocess, 'run'):
+                with self.assertRaisesRegex(ValueError, 'Public image differs'):
+                    m.verify_registry(info, image)
 
     def test_workflow_has_no_manual_publishing_path(self):
         text = (ROOT / '.github/workflows/release-image.yml').read_text()
