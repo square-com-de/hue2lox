@@ -5,8 +5,8 @@
 services:
   hue2lox:
     # Channels: ":rc" = newest release candidate, ":latest" = newest stable release,
-    # ":1.0.0-rc.3"-style tags = one exact version. Only the first RC is published so far,
-    # so this example uses the rc channel; pin an exact version for reproducible updates.
+    # exact version tags pin one release. This template is for the planned image distribution;
+    # no image is promised by the existing ZIP-only RC releases.
     image: ghcr.io/square-com-de/hue2lox:rc
     container_name: hue2lox
     restart: unless-stopped
@@ -18,7 +18,8 @@ services:
       # Optional initial admin password (default: admin). Only used on first start.
       # HUE2LOX_ADMIN_PASSWORD: "change-me"
       # Lamp control is on by default (control token: see the admin interface).
-      # Set any of these to "0" for read-only: commands then answer 403 writes_disabled.
+      # Set HUE_WRITES_ENABLED to "0" to block all control (403 writes_disabled).
+      # COLOR/WHITE individually disable only the corresponding capability.
       # HUE_WRITES_ENABLED: "0"   # switching and dimming (needed for all control)
       # HUE_COLOR_ENABLED: "0"    # RGB
       # HUE_WHITE_ENABLED: "0"    # tunable white

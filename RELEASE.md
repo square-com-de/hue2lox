@@ -39,6 +39,9 @@ Isolated CI covers backup/restore, certificate renewal and an IP change. A fresh
 
 ## Future prebuilt image release gate
 
+Preparation status and per-platform evidence: [Container compliance](docs/IMAGE-COMPLIANCE.md).
+The image workflow currently builds and inventories candidates without pushing to any registry.
+
 Before changing the delivery model, complete and review the following for the
 exact image to be distributed:
 

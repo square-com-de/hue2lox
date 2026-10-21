@@ -22,7 +22,7 @@ This is a public trust certificate, not a private key. Source provenance is reco
 
 ## Container/runtime dependencies
 
-The image uses the official `python:3.12-alpine` base image. Python and its standard library have the PSF license and additional notices: https://docs.python.org/3.12/license.html . Alpine packages, OpenSSL and other runtime components retain their respective licenses. Hue2Lox installs no additional pip packages, but the base image can include pip and its vendored libraries. These and all transitive runtime components must be included in any image inventory.
+The image uses the official `python:3.12-alpine` base image, pinned by digest in both Dockerfiles. Candidate package/source inventories are recorded under `compliance/`; see [image preparation status](docs/IMAGE-COMPLIANCE.md). These preparation records do not yet constitute full image-distribution approval. Python and its standard library have the PSF license and additional notices: https://docs.python.org/3.12/license.html . Alpine packages, OpenSSL and other runtime components retain their respective licenses. Hue2Lox installs no additional pip packages, but the base image can include pip and its vendored libraries. These and all transitive runtime components must be included in any image inventory.
 
 The planned release distributes source code, installer and Dockerfiles only. Users build locally and obtain the base image directly from its upstream provider. No prebuilt Hue2Lox images, image archives or VM/appliance images are currently offered. This does not remove the license obligations for third-party materials actually bundled in our source archive, including the catalog and certificate bundle.
 

@@ -2,18 +2,20 @@
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-Images are published to `ghcr.io/square-com-de/hue2lox` for `linux/amd64` and `linux/arm64` when a release tag is pushed.
+Image distribution is being prepared; existing RC1–RC3 releases remain ZIP-only. Do not use the pull commands below until an image release explicitly announces availability. License/source materials and per-platform acceptance are tracked in [IMAGE-COMPLIANCE.md](IMAGE-COMPLIANCE.md).
+
+The planned images will be published to `ghcr.io/square-com-de/hue2lox` for `linux/amd64` and `linux/arm64` when a release tag is pushed.
 
 ## Image tags
 
 | Tag | Meaning |
 | --- | --- |
-| `rc` | Newest release candidate. Only release candidates exist so far, so use this channel for now. |
+| `rc` | Newest release candidate. Available once the first container release candidate is published. |
 | `latest` | Newest **stable** release. It does not exist until the first stable release and never points at a release candidate. |
-| `1.0.0-rc.3`, `1.0.0` | One exact version. Pin one of these for reproducible updates. |
+| `1.0.0-rc.4`, `1.0.0` | One exact version. Pin one of these for reproducible updates. |
 | `1.0` | Newest stable release of that minor version. |
 
-Pushes to branches and manual workflow runs never publish an image.
+The image workflow currently builds and inventories both architectures without publishing. Registry publication remains disabled until the image release gate is complete.
 
 ## HTTP and HTTPS
 
@@ -58,7 +60,7 @@ No source checkout or local build is needed.
 
 Lamp control is **on by default**: switching, dimming, RGB and tunable white all work once a bridge is paired. Control requests must carry the control token as `Authorization: Bearer ...`. The container creates the token on first start; the admin interface shows it and the Loxone export includes it. Without TLS or a reverse proxy the token crosses your network unencrypted, so only use it on a network you trust.
 
-To run read-only (commands answer `403 writes_disabled` and nothing is sent to your bridges), set the variables to `0`:
+To run read-only (commands answer `403 writes_disabled` and nothing is sent to your bridges), set `HUE_WRITES_ENABLED=0`. The other two flags disable only RGB or tunable-white commands, respectively:
 
 | Variable | Default | Controls |
 | --- | --- | --- |
