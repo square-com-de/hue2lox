@@ -146,7 +146,15 @@ assert snapshot() == before
 assert not Path('/etc/systemd/system/hue2lox.service').exists()
 assert Path('/var/backups/hue2lox').is_dir()
 # Explicit reinstall of retained data must preserve changed credentials and flags.
-run('sh', installer, '--keep-data', '--package', str(packages[1]), '--sha256', digest(packages[1]), '--host', '127.0.0.1', '--port', '18443')
+# Reproduce a root shell that retained umask 077 after preparing a private backup.
+previous_umask = os.umask(0o077)
+try:
+    run('sh', installer, '--keep-data', '--package', str(packages[1]), '--sha256', digest(packages[1]), '--host', '127.0.0.1', '--port', '18443')
+finally:
+    os.umask(previous_umask)
+for directory in ('/opt/hue2lox', '/opt/hue2lox/releases'):
+    assert Path(directory).stat().st_mode & 0o777 == 0o755
+run('runuser', '-u', uid, '--', 'test', '-x', '/opt/hue2lox/current/src')
 check_login(password)
 assert snapshot() == before
 run('systemctl', 'is-enabled', 'hue2lox.service')

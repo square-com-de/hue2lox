@@ -397,6 +397,26 @@ class NativeLifecycleTests(unittest.TestCase):
             native.rollback(self.args, self.layout)
         self.assertEqual(before, self.protected_snapshot())
 
+    def test_reinstall_with_umask_077_keeps_code_accessible_and_private_state_protected(self):
+        import os
+        self.install()
+        before = self.protected_snapshot()
+        native.uninstall(self.args, self.layout)
+        self.args.keep_data = True
+        previous_umask = os.umask(0o077)
+        try:
+            self.install()
+        finally:
+            os.umask(previous_umask)
+        active = self.layout.current.resolve()
+        for directory in (self.layout.app, self.layout.app / 'releases', active, active / 'src'):
+            self.assertEqual(directory.stat().st_mode & 0o777, 0o755, str(directory))
+        for name, value in before.items():
+            if not name.endswith('/install.json'):
+                self.assertEqual(self.protected_snapshot()[name], value)
+        self.assertEqual(self.layout.state.stat().st_mode & 0o777, 0o700)
+        self.assertEqual(self.layout.config.stat().st_mode & 0o777, 0o750)
+
     def test_reinstall_failure_before_record_keeps_data_and_allows_retry(self):
         self.install()
         self.changed_user_state()

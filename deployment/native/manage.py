@@ -428,7 +428,10 @@ def reinstall(args, layout):
             raise ValueError('Reinstall requires the retained package identity; update afterwards')
         uid, gid = ensure_account()
         layout.app.mkdir(parents=True, mode=0o755)
+        # mkdir modes are filtered by the caller's umask, including root's 077.
+        layout.app.chmod(0o755)
         (layout.app / 'releases').mkdir(mode=0o755)
+        (layout.app / 'releases').chmod(0o755)
         destination = layout.app / 'releases' / ('restored-' + secrets.token_hex(8))
         try:
             shutil.copytree(runtime, destination)
