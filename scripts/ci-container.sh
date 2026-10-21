@@ -53,3 +53,16 @@ compose up -d --wait --wait-timeout 120
 python3 "$repo/scripts/check-ci-http.py" "$test_root/instance"
 echo 'PASS: certificate renewal, changed bind IP and complete offline restore; state preserved.'
 echo 'PASS: fresh Docker build, health, non-root user, read-only application, HTTPS, login and restart.'
+
+# Prepare a separate HTTP backend without certificate files or TLS variables.
+compose down
+python3 "$repo/scripts/prepare-install.py" --destination "$test_root/http" --host 127.0.0.1 --port 18444 --scheme http --public-url https://hue.example.org
+# Reuse the tested image through the generated HTTP Compose file.
+http_compose() { docker compose --project-directory "$test_root/http" -p "$project-http" -f "$test_root/http/compose.yaml" -f "$test_root/image.yaml" "$@"; }
+trap 'http_compose down --remove-orphans >/dev/null 2>&1 || true; cleanup' EXIT HUP INT TERM
+http_compose config --quiet
+http_compose up -d --no-build --wait --wait-timeout 120
+python3 "$repo/scripts/check-ci-http.py" "$test_root/http"
+http_compose restart
+http_compose up -d --no-build --wait --wait-timeout 120
+python3 "$repo/scripts/check-ci-http.py" "$test_root/http"
