@@ -36,22 +36,22 @@ Choose the installation method that suits you:
 
 | Installation method | Who is it for? | Status and guide |
 | --- | --- | --- |
-| **Installer with Docker** | A guided setup for beginners. The assistant prepares Docker and builds Hue2Lox on your server. | **Available in RC4** · [Installation guide](INSTALL.md) |
-| **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC4** · [Container guide](docs/DOCKER.md) |
+| **Installer with Docker** | A guided setup for beginners. The assistant prepares Docker and builds Hue2Lox on your server. | **Available in RC5** · [Installation guide](INSTALL.md) |
+| **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC5** · [Container guide](docs/DOCKER.md) |
 | **Python installer, without Docker** | For running Hue2Lox directly as a service on Debian. | **In preparation** · Installation guide to follow. |
 
-Choose the guided installer or use the versioned GHCR image directly. The native Python installer is still in preparation. The Docker installer builds its image locally.
+Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The native Python installer is still in preparation. The Docker installer builds its image locally.
 
-### Get started with the Docker installer (RC4)
+### Get started with the Docker installer (RC5)
 
 You need a Linux server, VM or Raspberry Pi with a supported 64-bit OS, a Hue Bridge and a Loxone Miniserver for control. Use your Mac or Windows PC to follow the setup guide.
 
-1. **Start the installer:** the [English installation guide](INSTALL.md) takes you through connecting to the server, downloading RC4 directly with its checksum and starting the installer.
+1. **Start the installer:** the [English installation guide](INSTALL.md) takes you through connecting to the server, downloading RC5 directly with its checksum and starting the installer.
 2. **Set up Hue2Lox:** the installer checks your system and can install missing packages and Docker. Existing working Docker installations are reused.
 3. **Pair your bridge:** open the displayed web address (verify the certificate when using direct HTTPS) and sign in with `admin` / `admin`. You can change the password in the interface.
 4. **Connect to Loxone:** choose lights or scenes and follow the [illustrated guide](docs/TUTORIAL.md) to copy commands or import XML into Loxone Config.
 
-**[Open the installation guide](INSTALL.md) · [Download RC4 ZIP](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/hue2lox-v1.0.0-rc.4.zip) · [Verify the download](docs/DOWNLOADS.md)**
+**[Open the installation guide](INSTALL.md) · [Download RC5 ZIP](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/hue2lox-v1.0.0-rc.5.zip) · [Verify the download](docs/DOWNLOADS.md)**
 
 Prefer guidance from an AI assistant? Use the [ChatGPT or Claude installation prompt](docs/AI-INSTALL.md). It guides you to the same interactive installer.
 
@@ -67,11 +67,11 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Release Candidate 4.** German and English are available. An earlier fresh Debian 13 installation, bridge pairing, light display and restart have passed a user-run test. A fresh Debian test of the RC4 package and end-to-end testing with a Loxone Miniserver are still pending. Original project code is licensed under Apache 2.0.
+**Release Candidate 5.** German and English are available. An earlier fresh Debian 13 installation, bridge pairing, light display and restart have passed a user-run test. A fresh Debian test of the RC5 package and end-to-end testing with a Loxone Miniserver are still pending. Original project code is licensed under Apache 2.0.
 
-RC4 offers **source code with the installer** and a **prebuilt GHCR image for AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4`. The installer continues to build locally. Source and license materials accompany the [release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4). There is no `latest` tag before a stable release.
+RC5 offers **source code with the installer** and a **prebuilt Docker Hub/GHCR image for AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5`. The installer continues to build locally. Source and license materials accompany the [release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). There is no `latest` tag before a stable release.
 
-RC4 is an immutable version. Verify its [commit and checksum](docs/DOWNLOADS.md). `main` is the separate development version.
+RC5 is an immutable version. Verify its [commit and checksum](docs/DOWNLOADS.md). `main` is the separate development version.
 
 Create and edit scenes in the Hue app; recall them through Loxone. Synchronizing actual Hue light state back into the Loxone Lighting Controller is not part of this project.
 

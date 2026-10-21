@@ -4,15 +4,15 @@ Stand: 18.10.2026. Diese Übersicht beschreibt den aktuellen Quellstand des Repo
 
 ## Veröffentlichungsweg
 
-RC4 bietet Quellcode samt Installer sowie ein fertiges GHCR-Image für AMD64/ARM64.
+RC5 bietet Quellcode samt Installer sowie ein fertiges Docker-Hub-/GHCR-Image für AMD64/ARM64.
 Der Installer baut weiterhin lokal; für den direkten Container-Betrieb siehe
 [aktuelle Container-Anleitung](DOCKER.md). Quellen- und Lizenzbeilagen sowie
 plattformbezogene Prüfberichte stehen beim
-[RC4-Release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4).
+[RC5-Release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5).
 RC1–RC3 und bestehende Installationen bleiben unverändert.
 
 Die folgenden Detailangaben dokumentieren teilweise den historischen Betrieb
-vom 18./19.10.2026. Für die RC4-Konfiguration gelten [DOCKER.md](DOCKER.md) und
+vom 18./19.10.2026. Für die RC5-Konfiguration gelten [DOCKER.md](DOCKER.md) und
 [INSTALL.de.md](../INSTALL.de.md); die festgeschriebene aktuelle Basis und
 Inventare beschreibt [IMAGE-COMPLIANCE.md](IMAGE-COMPLIANCE.md).
 

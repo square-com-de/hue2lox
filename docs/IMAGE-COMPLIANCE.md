@@ -47,10 +47,10 @@ verify startup/downloads for the actual published image. CI artifacts expire and
 are not the recipient-facing download. Keep the source assets while their images
 are offered and retain an archived copy.
 
-RC4 uses the gated release workflow and permanent assets on its
-[release page](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4).
+RC5 uses the gated release workflow and permanent assets on its
+[release page](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5).
 Only stable version tags may receive `latest`; RCs and branch builds must not.
-RC4 is published to GHCR; Docker Hub remains a future option. RC1–RC3 and running installations
+RC5 targets GHCR and Docker Hub with the same verified images. RC1–RC4 and running installations
 remain unchanged. See [RELEASE.md](../RELEASE.md) for application acceptance.
 
 ## Deutsch
@@ -65,8 +65,8 @@ fehlende Urheberangaben werden nicht erfunden.
 [CONTAINER-SOURCES.md](CONTAINER-SOURCES.md) beschreibt Inhalt und Archivbau.
 Beim ersten öffentlichen Image-Release müssen Archiv und Prüfsumme als dauerhafte
 Downloads neben dem passenden Anwendungsquellcode angehängt und von der Registry
-verlinkt werden. Der RC4-Release-Workflow prüft diese Downloads vor dem
-Upload zu GHCR. Docker Hub bleibt eine spätere Option.
+verlinkt werden. Der RC5-Release-Workflow prüft diese Downloads vor dem
+Upload zu GHCR und Docker Hub. Beide Registries erhalten dieselben geprüften Images.
 CI-Artefakte ersetzen diesen dauerhaften Download nicht. RC3 und laufende
 Installationen bleiben unverändert; die Hue-CA bleibt wie vereinbart enthalten.
 
