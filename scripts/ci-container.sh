@@ -30,6 +30,8 @@ python3 "$repo/scripts/check-ci-http.py" "$test_root/instance"
 compose restart
 compose up -d --wait --wait-timeout 120
 python3 "$repo/scripts/check-ci-http.py" "$test_root/instance"
+# Package tooling and all of its bundled dependencies must be absent.
+compose exec -T hue2lox python -c 'import importlib.util, importlib.metadata; assert importlib.util.find_spec("pip") is None; assert importlib.util.find_spec("ensurepip") is None; assert list(importlib.metadata.distributions()) == []'
 # Offline maintenance and restore on this disposable, bridge-free installation.
 compose down
 cp -a "$test_root/instance" "$test_root/backup"

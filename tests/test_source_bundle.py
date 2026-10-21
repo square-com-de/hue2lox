@@ -58,3 +58,18 @@ class SourceBundleTests(unittest.TestCase):
         with patch.object(bundle, 'read', return_value={'image': 'python:wrong', 'index_digest': 'sha256:wrong'}):
             with self.assertRaisesRegex(ValueError, 'Docker base differs'):
                 bundle.validate_base()
+
+    def test_removed_package_tooling_must_not_reappear_in_runtime(self):
+        records = [{'name': 'python', 'version': '3.15.0'},
+                   {'name': 'pip', 'version': '26.2.1', 'runtime': False},
+                   {'name': 'msgpack', 'version': '1.1.2', 'kind': 'pip-vendored', 'runtime': False}]
+        inventory = {'apk_packages': [], 'vendored_packages': [],
+                     'python_packages': [], 'python_version': '3.15.0'}
+        bundle.verify_inventory(records, inventory, 'amd64')
+        inventory['python_packages'] = [{'name': 'pip', 'version': '26.2.1'}]
+        with self.assertRaisesRegex(ValueError, 'Python package inventory differs'):
+            bundle.verify_inventory(records, inventory, 'amd64')
+        inventory['python_packages'] = []
+        inventory['vendored_packages'] = [{'name': 'msgpack', 'version': '1.1.2'}]
+        with self.assertRaisesRegex(ValueError, 'vendored inventory differs'):
+            bundle.verify_inventory(records, inventory, 'amd64')

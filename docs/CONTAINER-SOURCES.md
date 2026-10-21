@@ -58,3 +58,16 @@ Die Beilage ist noch keine Image-Veröffentlichung. Beim ersten Image-Release
 werden Archiv und Prüfsumme dauerhaft neben dem passenden Hue2Lox-Quellcode
 veröffentlicht und von der Registry aus verlinkt. Befristete CI-Artefakte ersetzen
 diesen Download nicht. RC3 und laufende Installationen bleiben unverändert.
+
+## Runtime package tooling / Paketwerkzeuge im Laufzeitimage
+
+Hue2Lox requires only Python's standard library. The final image removes pip and
+ensurepip (including bundled wheels). The base-image pip sources and notices
+remain in this bundle for provenance, marked `runtime: false`, along with pip's
+vendored dependencies. They must not appear in the final runtime inventory.
+No vulnerability exclusions are used.
+
+Hue2Lox benötigt nur die Python-Standardbibliothek. Im fertigen Image werden pip
+und ensurepip samt eingebetteten Paketen entfernt. Ihre Quellen und Lizenztexte
+bleiben zur Dokumentation der Basis enthalten (`runtime: false`), dürfen aber
+nicht im Inventar des fertigen Images erscheinen. Es gibt keine Scan-Ausnahmen.
