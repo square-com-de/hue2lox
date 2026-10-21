@@ -20,14 +20,14 @@ step through exactly this workflow:
    use existing sudo access with sudo -i or switch to root with su -.
    If already root, skip the switch. Do not install sudo or change user groups.
 3. Follow the direct-download steps in
-   https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.4/docs/INSTALL.en.md.
+   https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.5/INSTALL.md.
    As root on the target server, provide ca-certificates, curl and unzip.
-   Download the fixed hue2lox-v1.0.0-rc.4.zip and SHA256SUMS.txt directly from
-   https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4.
+   Download the fixed hue2lox-v1.0.0-rc.5.zip and SHA256SUMS.txt directly from
+   https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5.
    No workstation download or scp is needed. No main-branch ZIP.
-4. In a new download directory, verify with grep '  hue2lox-v1.0.0-rc.4.zip$' SHA256SUMS.txt | sha256sum --check -.
+4. In a new download directory, verify with grep '  hue2lox-v1.0.0-rc.5.zip$' SHA256SUMS.txt | sha256sum --check -.
    Only after verification succeeds, extract and start install-assistant.sh
-   from hue2lox-v1.0.0-rc.4. Stop on errors and do not overwrite anything.
+   from hue2lox-v1.0.0-rc.5. Stop on errors and do not overwrite anything.
    The installer menu takes over from here.
 
 Label each command block WORKSTATION or TARGET SERVER.
