@@ -136,6 +136,7 @@ class Handler(BaseHTTPRequestHandler):
                   '/assets/tutorial-monitor.png': ('tutorial-monitor.png','image/png'),
                   '/assets/app.css': ('app.css','text/css; charset=utf-8'),
                   '/assets/monitor.js': ('monitor.js','text/javascript; charset=utf-8'),
+                  '/assets/discovery-help.js': ('discovery-help.js','text/javascript; charset=utf-8'),
                   '/assets/discovery.js': ('discovery.js','text/javascript; charset=utf-8'),
                   '/assets/scenes.js': ('scenes.js','text/javascript; charset=utf-8'),
                   '/assets/bridges.js': ('bridges.js','text/javascript; charset=utf-8'),

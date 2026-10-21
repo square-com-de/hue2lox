@@ -119,3 +119,11 @@ body[data-page="scenes"] #notice:not(.error){display:none}
 #page-lights .lamp-command-area>.lamp-actions>button[aria-expanded="true"]{background:#edf3e5;border-color:#9cad8b}
 #page-lights .lamp-command-area>.lamp-actions>button:disabled{cursor:default;opacity:.45}
 #page-lights .lamp-options[hidden]{display:none}
+
+/* Optional host-side discovery instructions; keep long scripts inside their panel. */
+.discovery-help{margin-top:1.5rem;border-top:1px solid var(--line,#dbe2d4);padding-top:1rem;min-width:0}
+.discovery-help summary{cursor:pointer;font-weight:650;padding:.6rem 0}
+.discovery-help details{margin-top:.75rem;border:1px solid var(--line,#dbe2d4);border-radius:12px;padding:.75rem 1rem;min-width:0}
+.discovery-help pre{max-height:20rem;max-width:100%;overflow:auto;padding:1rem;background:#142f27;color:#f5f7f1;border-radius:8px;font-size:.8rem;white-space:pre;tab-size:4}
+.discovery-help [role=status]:empty{display:none}
+.discovery-help pre code{background:transparent;color:inherit;padding:0;border:0}

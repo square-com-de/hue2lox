@@ -27,10 +27,11 @@ jobs:
       - run: python scripts/smoke-install.py
       - name: Check generated translations and tutorials
         run: |
+          python tools/build_discovery_help.py
           python tools/build_locales.py
           python tools/build_tutorial.py
           python tools/build_tutorial.py --english
-          git diff --exit-code -- web/locales web/tutorial.html web/tutorial-en.html
+          git diff --exit-code -- web/discovery-help.js web/locales web/tutorial.html web/tutorial-en.html
       - name: Scan source for secrets (private report, no matched text in logs)
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
         with:
@@ -65,3 +66,11 @@ jobs:
           path: ${{ runner.temp }}/hue2lox-image-report.json
           if-no-files-found: warn
           retention-days: 90
+  windows-discovery:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Test local discovery parser on Windows PowerShell 5.1
+        shell: powershell
+        run: ./tests/discovery-windows.ps1
