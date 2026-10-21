@@ -1,4 +1,8 @@
-FROM python:3.12-alpine@sha256:1b668429b3511ab407d8e00648891631b0b1a4d7e15e3ca70f38ab5b91ad4ab4
+FROM python:3.15-alpine@sha256:2699b90f4d562a22e2dd076c82f964032f64814204bff36d271a54ba4cc2c7e2
+# Hue2Lox uses only the standard library. Remove unused package tooling and
+# ensurepip's bundled wheels instead of shipping vulnerable vendored libraries.
+RUN python -m pip uninstall --yes pip \
+    && python -c "import pathlib, shutil, sysconfig; shutil.rmtree(pathlib.Path(sysconfig.get_path('stdlib')) / 'ensurepip')"
 WORKDIR /app/src
 COPY LICENSE NOTICE THIRD-PARTY-NOTICES.md /app/
 COPY src/ /app/src/

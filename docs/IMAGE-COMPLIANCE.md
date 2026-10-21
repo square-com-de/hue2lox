@@ -11,12 +11,11 @@ checksum. It does **not** log into or push to a registry.
 
 ### Completed source and notice collection
 
-- 38 APK records per platform, including the virtual `.python-rundeps` record.
-- Complete build/install recipe directories for 27 Alpine package origins.
-- 181 Alpine source/patch inputs checked against the exact APKBUILD SHA512 values.
-  Inline checksum declarations are checked too; this catches the previously
-  omitted `libverto` archive.
-- Python 3.12.15, pip 25.0.1 and typing_extensions 4.12.2 sources, hash-checked.
+- 33 APK records per platform, including the virtual `.python-rundeps` record.
+- Complete build/install recipe directories for 22 Alpine package origins.
+- 211 Alpine source/patch inputs checked against the exact APKBUILD SHA512 values.
+  Inline checksum declarations are checked too.
+- Python 3.15.0 and pip 26.2.1 sources, hash-checked.
 - All 18 pip-vendored library entries mapped to original notices and sources,
   including indented entries in pip's vendor manifest.
 - Original notice texts and source-header notices, including CA-package headers;
@@ -24,7 +23,7 @@ checksum. It does **not** log into or push to a registry.
 - Alpine generated data/configuration and public-key packages retain their exact
   upstream recipes and files. No copyright holder is inferred from a maintainer.
 - The exact official Python image Dockerfile and its license are included.
-- 97 component records in total (both platform inventories, Python/pip/supplement,
+- 86 component records in total (both platform inventories, Python/pip,
   and the 18 vendored entries). Every mapped path is verified to exist.
 
 The base digest is pinned in both Dockerfiles and recorded in
@@ -56,8 +55,8 @@ remain unchanged. See [RELEASE.md](../RELEASE.md) for application acceptance.
 
 Die Lizenz- und Quellenbeilage wird jetzt automatisch aus festgeschriebenen,
 prüfsummengeprüften Originalquellen gebaut und mit beiden Container-Architekturen
-abgeglichen. Erfasst sind 27 Alpine-Paketursprünge mit vollständigen Rezepten,
-181 Quellen/Patches, Python, pip und alle 18 darin enthaltenen Bibliotheken.
+abgeglichen. Erfasst sind 22 Alpine-Paketursprünge mit vollständigen Rezepten,
+211 Quellen/Patches, Python, pip und alle 18 darin enthaltenen Bibliotheken.
 Lizenztexte, Copyrightangaben und Hinweise in Quelldateien bleiben erhalten;
 fehlende Urheberangaben werden nicht erfunden.
 
@@ -67,3 +66,16 @@ Downloads neben dem passenden Anwendungsquellcode angehängt und von der Registr
 verlinkt werden. Erst dann wird die Veröffentlichung der Images aktiviert.
 CI-Artefakte ersetzen diesen dauerhaften Download nicht. RC3 und laufende
 Installationen bleiben unverändert; die Hue-CA bleibt wie vereinbart enthalten.
+
+## Runtime package tooling / Paketwerkzeuge im Laufzeitimage
+
+Hue2Lox requires only Python's standard library. The final image removes pip and
+ensurepip (including bundled wheels). The base-image pip sources and notices
+remain in this bundle for provenance, marked `runtime: false`, along with pip's
+vendored dependencies. They must not appear in the final runtime inventory.
+No vulnerability exclusions are used.
+
+Hue2Lox benötigt nur die Python-Standardbibliothek. Im fertigen Image werden pip
+und ensurepip samt eingebetteten Paketen entfernt. Ihre Quellen und Lizenztexte
+bleiben zur Dokumentation der Basis enthalten (`runtime: false`), dürfen aber
+nicht im Inventar des fertigen Images erscheinen. Es gibt keine Scan-Ausnahmen.

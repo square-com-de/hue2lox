@@ -16,12 +16,12 @@
   },
   {
     "path": "supplements/python.Dockerfile",
-    "url": "https://raw.githubusercontent.com/docker-library/python/2a3b794c223ab067d122719541cdd54a068732a5/3.12/alpine3.24/Dockerfile",
-    "sha256": "8a4bc6c9d4b52da1a3545ab5f254fce52ea909dd500e7f4189112f29816a2fa5"
+    "url": "https://raw.githubusercontent.com/docker-library/python/ce73ea7cebf01824125c30c20cd1acbde9b364ec/3.15/alpine3.24/Dockerfile",
+    "sha256": "2958bf1a8c33608008223b4d2011c94bedac7164d99a1dab78c72073a0f81e5c"
   },
   {
     "path": "supplements/python-image.LICENSE",
-    "url": "https://raw.githubusercontent.com/docker-library/python/2a3b794c223ab067d122719541cdd54a068732a5/LICENSE",
+    "url": "https://raw.githubusercontent.com/docker-library/python/ce73ea7cebf01824125c30c20cd1acbde9b364ec/LICENSE",
     "sha256": "0a3ffdfc4f368b76ae1140b5fbe2f2f69ee76ee00a3024e8a09ca9b2e265186f"
   }
 ]

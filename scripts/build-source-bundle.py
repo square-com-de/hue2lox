@@ -104,10 +104,10 @@ def verify_inventory(records, inventory, arch):
     expected = [r for r in records if r.get('platform') == 'linux/' + arch]
     if pairs(expected) != pairs(inventory['apk_packages']):
         raise ValueError('Runtime APK inventory differs from source bundle: ' + arch)
-    expected_vendor = [r for r in records if r.get('kind') == 'pip-vendored']
+    expected_vendor = [r for r in records if r.get('kind') == 'pip-vendored' and r.get('runtime', True)]
     if pairs(expected_vendor) != pairs(inventory['vendored_packages']):
         raise ValueError('Runtime vendored inventory differs from source bundle: ' + arch)
-    expected_pip = [r for r in records if r['name'] == 'pip']
+    expected_pip = [r for r in records if r['name'] == 'pip' and r.get('runtime', True)]
     if pairs(expected_pip) != pairs(inventory['python_packages']):
         raise ValueError('Runtime Python package inventory differs: ' + arch)
     version = next(r['version'] for r in records if r['name'] == 'python')
@@ -139,21 +139,22 @@ def component_map(output, notices):
                 if not row['source_files'] or not row['license_files']:
                     raise ValueError('Unmapped runtime package: ' + row['name'])
             records.append(row)
-    for name, version in (('python', '3.12.15'), ('pip', '25.0.1'), ('typing_extensions', '4.12.2')):
-        records.append(dict(name=name, version=version, platforms=['linux/amd64', 'linux/arm64'],
+    for source in read('python-sources.json'):
+        name, version = source['name'], source['version']
+        records.append(dict(name=name, version=version, runtime=name != 'pip', platforms=['linux/amd64', 'linux/arm64'],
                             source_files=[p.relative_to(output).as_posix() for p in (output / 'sources' / name).glob('*')],
                             license_files=notices[name]))
     pip_archive = next((output / 'sources/pip').glob('*.tar.gz'))
     with tarfile.open(pip_archive) as tf:
         manifest = next(m for m in tf if m.name.endswith('/pip/_vendor/vendor.txt'))
         text = tf.extractfile(manifest).read().decode()
-    aliases = {'pyproject-hooks': 'pyproject_hooks', 'setuptools': 'pkg_resources'}
+    aliases = {'pyproject-hooks': 'pyproject_hooks', 'setuptools': 'pkg_resources', 'tomli-w': 'tomli_w'}
     for name, version in parse_vendors(text):
         directory = aliases.get(name.lower(), name.lower())
         paths = notices['typing_extensions'] if directory == 'typing_extensions' else [p for p in notices['pip'] if '/_vendor/' + directory + '/' in p]
         if not paths:
             raise ValueError('Missing vendored notice: ' + name)
-        records.append(dict(name=name, version=version, kind='pip-vendored', source_files=[pip_archive.relative_to(output).as_posix()], license_files=paths))
+        records.append(dict(name=name, version=version, kind='pip-vendored', runtime=False, source_files=[pip_archive.relative_to(output).as_posix()], license_files=paths))
     for row in records:
         for name in row['source_files'] + row['license_files']:
             if not (output / safe_path(name)).is_file():
@@ -161,7 +162,16 @@ def component_map(output, notices):
     return records
 
 
+def validate_base():
+    base = read('base-image.json')
+    expected = 'FROM ' + base['image'] + '@' + base['index_digest']
+    for name in ('Dockerfile', 'docker/Dockerfile.status'):
+        if (ROOT / name).read_text().splitlines()[0] != expected:
+            raise ValueError('Docker base differs from source locks: ' + name)
+
+
 def assemble(output, cache=None, evidence=None):
+    validate_base()
     output.mkdir(parents=True, exist_ok=False)
     with ThreadPoolExecutor(max_workers=6) as pool:
         list(pool.map(lambda job: fetch(job, output, cache), source_jobs()))
@@ -178,7 +188,7 @@ def assemble(output, cache=None, evidence=None):
     shutil.copyfile(ROOT / 'docs/CONTAINER-SOURCES.md', output / 'README.md')
     index = ['# Runtime component and notice index', '', 'Original license/copyright texts are retained at the listed paths. Complete source archives preserve notices in source headers as well.', '']
     for row in records:
-        index += [f"## {row['name']} {row['version']} ({row.get('platform', row.get('kind', 'both platforms'))})", '', row.get('note', ''), '', 'Sources/build recipes:']
+        index += [f"## {row['name']} {row['version']} ({row.get('platform', row.get('kind', 'both platforms'))})", '', row.get('note', ''), 'Present in final runtime: ' + str(row.get('runtime', True)), '', 'Sources/build recipes:']
         index += ['- ' + p for p in row['source_files']]
         index += ['', 'License and copyright texts:'] + ['- ' + p for p in row['license_files']] + ['']
     (output / 'NOTICES.md').write_text('\n'.join(index))

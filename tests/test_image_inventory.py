@@ -33,3 +33,12 @@ class InventoryTests(unittest.TestCase):
         expected = 'FROM ' + lock['image'] + '@' + lock['index_digest']
         for path in ('Dockerfile', 'docker/Dockerfile.status'):
             self.assertEqual((ROOT/path).read_text().splitlines()[0], expected)
+
+    def test_python_library_roots_follow_interpreter_configuration(self):
+        from unittest.mock import patch
+        paths = {'stdlib': '/usr/local/lib/python3.15',
+                 'purelib': '/usr/local/lib/python3.15/site-packages',
+                 'platlib': '/usr/local/lib/python3.15/site-packages'}
+        with patch.object(module.sysconfig, 'get_path', side_effect=paths.__getitem__):
+            self.assertEqual(module.python_library_roots(),
+                             [Path('/usr/local/lib/python3.15'), Path('/usr/local/lib/python3.15/site-packages')])

@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.12'
+          python-version: '3.15'
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '22'
@@ -56,3 +56,11 @@ jobs:
           format: json
           output: ${{ runner.temp }}/hue2lox-image-report.json
           exit-code: '1'
+      - name: Preserve image vulnerability report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: image-vulnerability-report
+          path: ${{ runner.temp }}/hue2lox-image-report.json
+          if-no-files-found: warn
+          retention-days: 90
