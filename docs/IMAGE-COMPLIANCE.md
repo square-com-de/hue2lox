@@ -7,7 +7,8 @@
 The source/notice bundle is assembled by `scripts/build-source-bundle.py` from
 checksum-locked upstream inputs. The workflow builds AMD64 and ARM64 images,
 compares their runtime inventories with the bundle, then saves the archive and
-checksum. It does **not** log into or push to a registry.
+checksum. This preparation workflow does **not** log into or push to a registry; the separate
+[release workflow](GHCR-RELEASE.md) publishes only after these checks pass.
 
 ### Completed source and notice collection
 
@@ -46,9 +47,10 @@ verify startup/downloads for the actual published image. CI artifacts expire and
 are not the recipient-facing download. Keep the source assets while their images
 are offered and retain an archived copy.
 
-Publishing remains disabled until that release step is implemented and tested.
+RC4 uses the gated release workflow and permanent assets on its
+[release page](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4).
 Only stable version tags may receive `latest`; RCs and branch builds must not.
-Intended registries are GHCR and Docker Hub. RC1–RC3 and running installations
+RC4 is published to GHCR; Docker Hub remains a future option. RC1–RC3 and running installations
 remain unchanged. See [RELEASE.md](../RELEASE.md) for application acceptance.
 
 ## Deutsch
@@ -63,7 +65,8 @@ fehlende Urheberangaben werden nicht erfunden.
 [CONTAINER-SOURCES.md](CONTAINER-SOURCES.md) beschreibt Inhalt und Archivbau.
 Beim ersten öffentlichen Image-Release müssen Archiv und Prüfsumme als dauerhafte
 Downloads neben dem passenden Anwendungsquellcode angehängt und von der Registry
-verlinkt werden. Erst dann wird die Veröffentlichung der Images aktiviert.
+verlinkt werden. Der RC4-Release-Workflow prüft diese Downloads vor dem
+Upload zu GHCR. Docker Hub bleibt eine spätere Option.
 CI-Artefakte ersetzen diesen dauerhaften Download nicht. RC3 und laufende
 Installationen bleiben unverändert; die Hue-CA bleibt wie vereinbart enthalten.
 

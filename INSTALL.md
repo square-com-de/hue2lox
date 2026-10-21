@@ -1,12 +1,12 @@
 # Install Hue2Lox on Linux
 
-[Deutsch](INSTALL.de.md) · [RC3 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.3) · [English manual](docs/MANUAL.md)
+[Deutsch](INSTALL.de.md) · [RC4 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4) · [English manual](docs/MANUAL.md)
 
-This guide installs **RC3** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
+This guide installs **RC4** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
 
-## HTTP or HTTPS in the development installer
+## HTTP or HTTPS in the installer
 
-This choice is available in the current `main` installer, **not in the unchanged RC3 ZIP**.
+RC4 includes this choice. The older RC3 ZIP remains unchanged.
 In step 5 choose:
 
 1. **Direct HTTPS (default):** the installer creates a self-signed certificate and key.
@@ -49,7 +49,7 @@ You need a Linux server or VM, its address and user account, root or sudo access
 | DietPi based on Debian 12 / 13 | amd64, arm64 | Detection tested automatically; full platform acceptance pending |
 | Other Linux distributions | Install prerequisites manually; existing Docker and Compose can be reused | No general compatibility claim |
 
-A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. Images are built locally from source; no prebuilt Hue2Lox image is distributed.
+A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. This installer builds images locally from source. For the prebuilt RC4 image, use the separate [container guide](docs/DOCKER.md).
 
 ## 1. Connect to the server
 
@@ -77,26 +77,26 @@ apt install -y --no-install-recommends ca-certificates curl unzip
 
 This applies to the Ubuntu/Debian-based systems above. On other systems, provide these three tools using their package manager. Stop on errors; if you see “Not live until”, check the server clock first.
 
-## 3. Download RC3, verify and start
+## 3. Download RC4, verify and start
 
-**Still on the server as root.** Copy the whole block. It creates a new download directory, downloads the fixed RC3 package and SHA-256 checksum, verifies and extracts it, then starts the installer. Existing directories are not overwritten.
+**Still on the server as root.** Copy the whole block. It creates a new download directory, downloads the fixed RC4 package and SHA-256 checksum, verifies and extracts it, then starts the installer. Existing directories are not overwritten.
 
 ```sh
-HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc3-XXXXXXXX") &&
+HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc4-XXXXXXXX") &&
 cd "$HUE2LOX_DOWNLOAD_DIR" &&
-curl --fail --location --output hue2lox-v1.0.0-rc.3.zip \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.3/hue2lox-v1.0.0-rc.3.zip &&
+curl --fail --location --output hue2lox-v1.0.0-rc.4.zip \
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/hue2lox-v1.0.0-rc.4.zip &&
 curl --fail --location --output SHA256SUMS.txt \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.3/SHA256SUMS.txt &&
-sha256sum --check SHA256SUMS.txt &&
-unzip -tq hue2lox-v1.0.0-rc.3.zip &&
-unzip -q hue2lox-v1.0.0-rc.3.zip &&
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.3/install-assistant.sh"
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/SHA256SUMS.txt &&
+(grep '  hue2lox-v1.0.0-rc.4.zip$' SHA256SUMS.txt | sha256sum --check -) &&
+unzip -tq hue2lox-v1.0.0-rc.4.zip &&
+unzip -q hue2lox-v1.0.0-rc.4.zip &&
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.4/install-assistant.sh"
 ```
 
 Continue only when verification succeeds. On `FAILED`, download or extraction errors, stop; do not start the installer separately. The checksum must come from the same release as the ZIP. `Code → Download ZIP` downloads the development branch instead.
 
-**Open again:** repeat the final `bash` command in the same root session. After reconnecting, use the actual download directory; `ls -d /root/hue2lox-rc3-*` lists the default paths. This extraction directory is separate from the eventual installation directory, such as `/opt/hue2lox-test`.
+**Open again:** repeat the final `bash` command in the same root session. After reconnecting, use the actual download directory; `ls -d /root/hue2lox-rc4-*` lists the default paths. This extraction directory is separate from the eventual installation directory, such as `/opt/hue2lox-test`.
 
 ## 4. Continue in the installer
 

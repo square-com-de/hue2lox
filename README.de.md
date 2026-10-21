@@ -36,22 +36,22 @@ Wähle den Installationsweg, der zu dir passt:
 
 | Installationsweg | Für wen? | Status und Anleitung |
 | --- | --- | --- |
-| **Installer mit Docker** | Für Einsteiger: Der Assistent richtet Docker ein und baut Hue2Lox auf deinem Server. | **In RC3 verfügbar** · [Installationsanleitung](INSTALL.de.md) |
-| **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In Vorbereitung** · [Container-Anleitung (Vorschau, Englisch)](docs/DOCKER.md) |
+| **Installer mit Docker** | Für Einsteiger: Der Assistent richtet Docker ein und baut Hue2Lox auf deinem Server. | **In RC4 verfügbar** · [Installationsanleitung](INSTALL.de.md) |
+| **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In RC4 verfügbar** · [Container-Anleitung (Englisch)](docs/DOCKER.md) |
 | **Python-Installer, ohne Docker** | Um Hue2Lox direkt als Dienst auf Debian zu betreiben. | **In Vorbereitung** · Anleitung folgt. |
 
-Das fertige GHCR-Image und der native Python-Installer sind noch nicht als veröffentlichte Installationswege verfügbar. Nutze vorerst den Docker-Installer unten: Er baut das Image lokal und benötigt kein fertiges Hue2Lox-Image.
+Wähle den geführten Installer oder nutze direkt das versionierte GHCR-Image. Der native Python-Installer ist noch in Vorbereitung. Der Docker-Installer baut sein Image weiterhin lokal.
 
-### Mit dem Docker-Installer loslegen (RC3)
+### Mit dem Docker-Installer loslegen (RC4)
 
 Du brauchst einen Linux-Server, eine VM oder einen Raspberry Pi mit unterstütztem 64-Bit-Betriebssystem, eine Hue Bridge und einen Loxone Miniserver für die Steuerung. Dein Mac oder Windows-PC begleitet dich bei der Einrichtung.
 
-1. **Installer starten:** Die [Installationsanleitung](INSTALL.de.md) führt dich durch Anmeldung am Server, direkten RC3-Download mit Prüfsumme und Start des Installers.
+1. **Installer starten:** Die [Installationsanleitung](INSTALL.de.md) führt dich durch Anmeldung am Server, direkten RC4-Download mit Prüfsumme und Start des Installers.
 2. **Hue2Lox einrichten:** Der Installer prüft dein System und kann fehlende Pakete und Docker installieren. Vorhandene funktionierende Docker-Installationen werden weiterverwendet.
-3. **Bridge koppeln:** Öffne die angezeigte HTTPS-Adresse, prüfe das Zertifikat und melde dich mit `admin` / `admin` an. Das Passwort kannst du in der Oberfläche ändern.
+3. **Bridge koppeln:** Öffne die angezeigte Webadresse (bei direktem HTTPS das Zertifikat prüfen) und melde dich mit `admin` / `admin` an. Das Passwort kannst du in der Oberfläche ändern.
 4. **Mit Loxone verbinden:** Wähle Lampen oder Szenen aus und folge der [bebilderten Anleitung](docs/TUTORIAL.de.md), um Befehle zu kopieren oder XML in Loxone Config zu importieren.
 
-**[Zur Installationsanleitung](INSTALL.de.md) · [RC3 als ZIP herunterladen](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.3/hue2lox-v1.0.0-rc.3.zip) · [Download prüfen](docs/DOWNLOADS.md)**
+**[Zur Installationsanleitung](INSTALL.de.md) · [RC4 als ZIP herunterladen](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.4/hue2lox-v1.0.0-rc.4.zip) · [Download prüfen](docs/DOWNLOADS.md)**
 
 Lieber mit KI-Begleitung? Nutze den [Installationsprompt für ChatGPT oder Claude](docs/AI-INSTALL.de.md). Er führt dich bis zum selben interaktiven Installer.
 
@@ -67,11 +67,11 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Release Candidate 3.** Deutsch und Englisch sind verfügbar. Eine frühere frische Debian-13-Installation mit Bridge-Kopplung, Lampenanzeige und Neustart wurde erfolgreich getestet. Der erneute Debian-Test des RC3-Pakets und der durchgängige Funktionstest mit einem Loxone Miniserver stehen noch aus. Der eigene Projektcode steht unter Apache 2.0.
+**Release Candidate 4.** Deutsch und Englisch sind verfügbar. Eine frühere frische Debian-13-Installation mit Bridge-Kopplung, Lampenanzeige und Neustart wurde erfolgreich getestet. Der erneute Debian-Test des RC4-Pakets und der durchgängige Funktionstest mit einem Loxone Miniserver stehen noch aus. Der eigene Projektcode steht unter Apache 2.0.
 
-Der öffentliche Download enthält den **Quellcode samt Installer und Dockerfile**. Der Installer baut das Hue2Lox-Image auf deinem Linux-Rechner; ein fertiges Hue2Lox-Image bieten wir vorerst nicht an.
+RC4 bietet **Quellcode samt Installer** und ein **fertiges GHCR-Image für AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.4`. Der Installer baut weiterhin lokal. Quellen- und Lizenzbeilagen stehen beim [Release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.4). Vor einem stabilen Release gibt es keinen `latest`-Tag.
 
-RC3 ist ein unveränderter Versionsstand. [Version, Commit und Prüfsumme](docs/DOWNLOADS.md) prüfen. `main` ist der getrennte Entwicklungsstand.
+RC4 ist ein unveränderter Versionsstand. [Version, Commit und Prüfsumme](docs/DOWNLOADS.md) prüfen. `main` ist der getrennte Entwicklungsstand.
 
 Szenen erstellst du weiterhin in der Hue-App. Hue2Lox ruft sie über Loxone ab. Eine Synchronisierung des tatsächlichen Lampenzustands zurück in den Loxone-Lichtsteuerungsbaustein ist nicht vorgesehen.
 
@@ -85,7 +85,7 @@ Details stehen in den [Release-Hinweisen](RELEASE.md) und den [dokumentierten Te
 | --- | --- |
 | Bedienung, Fehlerbehebung, Backup | [Handbuch](docs/MANUAL.de.md) |
 | Neue Testinstallation | [Installation](INSTALL.de.md) |
-| Fertiges Docker-Image — in Vorbereitung | [Container-Anleitung (Vorschau, Englisch)](docs/DOCKER.md) |
+| Fertiges Docker-Image (AMD64/ARM64) | [Container-Anleitung (Englisch)](docs/DOCKER.md) |
 | HTTP-Ausgänge und XML in Loxone | [Bebilderte Anleitung](docs/TUTORIAL.de.md) |
 | Architektur und Container | [Technik](docs/CONTAINER.md) |
 | Qualitätsprüfungen und Mitarbeit | [Entwicklung](CONTRIBUTING.md) |
