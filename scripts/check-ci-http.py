@@ -7,7 +7,8 @@ import urllib.error
 import urllib.request
 
 root = Path(sys.argv[1])
-base = 'https://127.0.0.1:18443'
+env = dict(line.split('=', 1) for line in (root / '.env').read_text().splitlines() if '=' in line and not line.startswith('#'))
+base = env['HUE_PUBLIC_URL']
 context = ssl.create_default_context(cafile=str(root / 'health-test.crt'))
 def request(path, body=None, headers=None):
     headers = dict(headers or {})

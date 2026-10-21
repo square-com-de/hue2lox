@@ -2,12 +2,12 @@
 
 Status: **offen**. Diese Liste ist ein Prüfplan, kein Nachweis bestandener Tests.
 
-Die Neuinstallation (Punkt 3) und die echten Loxone-Tests (Punkt 5) erfolgen gemeinsam im Anschluss. Automatische Tests ersetzen diese Abnahme nicht. Eine Testinstallation bleibt von der funktionierenden Installation getrennt; dieselbe Lampe nicht gleichzeitig von beiden Instanzen steuern lassen.
+Eine Debian-13-Neuinstallation mit Kopplung und Neustart ist vom Nutzer bestätigt. Die folgenden Punkte bilden den Abnahmeplan für den jeweils konkret protokollierten Release-Kandidaten; sie gelten nicht automatisch als bestanden. Automatische Tests ersetzen diese Abnahme nicht. Eine Testinstallation bleibt von der funktionierenden Installation getrennt; dieselbe Lampe nicht gleichzeitig von beiden Instanzen steuern lassen.
 
 ## Bisherige Rückmeldungen
 
-- **19.10.2026, Debian 13 in einer frischen Proxmox-VM:** Nutzer bestätigt erfolgreiche Installation und gefundene Bridges. Sudo musste zunächst installiert und dem normalen Benutzer die Berechtigung erteilt werden; die Anleitung wurde entsprechend ergänzt.
-- **Auf dieser Debian-VM nicht getestet:** Bridge-Kopplung und Erhalt der Einrichtung nach einem Neustart. Genaue Commit-/Image-ID, Architektur und Paketversionen wurden für diesen Durchlauf nicht protokolliert. Die Rückmeldung ist keine vollständige Abnahme und gilt nicht automatisch für andere Debian-Versionen oder ARM-Geräte.
+- **20.10.2026, Debian 13 in Proxmox:** Installation, Login, Bridge-Suche und Kopplung, Inventar sowie VM-Neustart mit erhaltener Einrichtung vom Nutzer bestätigt. Siehe [Testprotokoll](TEST-RESULTS.md).
+- Die genaue Commit-/Image-ID dieses Benutzertests wurde nicht protokolliert. Vollständige Loxone-Abnahme, Passwortwechsel mit erneuter Anmeldung und Wiederherstellungsprobe bleiben offen; andere Plattformen sind dadurch nicht abgenommen.
 
 ## Prüfprotokoll
 
@@ -21,7 +21,7 @@ Die Neuinstallation (Punkt 3) und die echten Loxone-Tests (Punkt 5) erfolgen gem
 
 ## 3 — Neuinstallation auf einem frischen Zielsystem
 
-- [ ] Privates Repository frisch klonen; Anleitung ausschließlich aus [INSTALL.md](../INSTALL.md) befolgen.
+- [ ] Öffentlichen Quellstand mit dokumentierter Version herunterladen oder klonen; Anleitung ausschließlich aus [INSTALL.md](../INSTALL.de.md) befolgen.
 - [ ] KI-Installationsprompt mit Voraussetzungen erproben; tatsächlichen Assistenten/Zugriffsmodus und Abweichungen protokollieren.
 - [ ] Keine privaten Dateien der bisherigen Installation übernehmen.
 - [ ] Leere Testinstallation mit eigenem Verzeichnis, Compose-Projekt und freiem Port vorbereiten.
@@ -51,9 +51,9 @@ Die Neuinstallation (Punkt 3) und die echten Loxone-Tests (Punkt 5) erfolgen gem
 - [ ] Abgezogene/unerreichbare Bridge und ungültige Befehle führen zu verständlichen Fehlern.
 - [ ] Testkonfiguration sichern; erst danach die gewünschte produktive Übernahme planen.
 
-## Vor Veröffentlichung
+## Vor Stable
 
-- [ ] Eigene Code-Lizenz bewusst entscheiden; derzeit nicht festgelegt.
+- [x] Eigene Code-Lizenz: Apache 2.0; LICENSE und NOTICE liegen bei.
 - [ ] Rechte und Hinweise für Icons, Logo und sonstige Fremdinhalte prüfen.
 - [ ] Aktuelle Dateien **und Git-Historie** auf private Daten/Schlüssel prüfen.
 - [ ] Automatische GitHub-Prüfungen am vorgesehenen Release-Commit erfolgreich.

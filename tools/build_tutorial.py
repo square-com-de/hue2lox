@@ -16,7 +16,7 @@ def inline(text):
         return '<a href="'+url+'" target="_blank" rel="noopener noreferrer">'+label+'</a>' if url.startswith('https://') else label
     return re.sub(r'\[([^]]+)\]\(([^)]+)\)',link,text)
 
-lines=(ROOT/('TUTORIAL.en.md' if LANG=='en' else 'TUTORIAL.md')).read_text().splitlines();body=[];i=0
+lines=(ROOT/'docs'/('TUTORIAL.md' if LANG=='en' else 'TUTORIAL.de.md')).read_text().splitlines();body=[];i=0
 while i<len(lines):
     line=lines[i]
     if not line.strip():i+=1;continue
@@ -27,7 +27,7 @@ while i<len(lines):
     if line.startswith('#'):
         heading,text=line.split(' ',1);level=len(heading)
         body.append(f'<h{level}>'+inline(text)+f'</h{level}>');i+=1;continue
-    image=re.fullmatch(r'!\[([^]]+)\]\(web/(tutorial-[a-z]+\.png)\)',line)
+    image=re.fullmatch(r'!\[([^]]+)\]\(\.\./web/(tutorial-[a-z]+\.png)\)',line)
     if image:
         alt,file=image.groups();body.append('<figure><a href="/assets/'+file+'" target="_blank" rel="noopener"><img src="/assets/'+file+'" alt="'+html.escape(alt)+'" loading="lazy"></a><figcaption>'+html.escape(alt)+' · Anklicken zum Vergrößern</figcaption></figure>');i+=1;continue
     if line.startswith('|'):

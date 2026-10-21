@@ -30,7 +30,7 @@ def main():
                 with urllib.request.urlopen(req,context=ctx,timeout=2) as response:return response.status,response.headers,response.read()
             except urllib.error.HTTPError as response:return response.code,response.headers,response.read()
         for run in range(2):
-            proc=subprocess.Popen([sys.executable,'app.py'],cwd=root,env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+            proc=subprocess.Popen([sys.executable,'src/app.py'],cwd=root,env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
             try:
                 for _ in range(60):
                     try:
