@@ -67,8 +67,9 @@ run(){ printf 'ARG:%s\\n' "$@"; }
 prepare_setup
 '''
                     result=subprocess.run(['bash','-c',shell,'test',str(script),str(Path(tmp)/'new')],
-                        input=mode+'\n'+str(port)+'\n'+('https://hue.example.org\n' if mode=='2' else ''),
+                        input='\n'+mode+'\n'+str(port)+'\n'+('https://hue.example.org\n' if mode=='2' else ''),
                         text=True,capture_output=True,env={**os.environ,'HUE2LOX_INSTALL_LANG':lang},timeout=10)
                     self.assertEqual(result.returncode,0,result.stderr)
                     self.assertIn('ARG:--scheme\nARG:'+scheme,result.stdout)
+                    self.assertIn('ARG:--source\nARG:image\nARG:--registry\nARG:dockerhub',result.stdout)
                     if mode=='2': self.assertIn('ARG:--public-url\nARG:https://hue.example.org',result.stdout)

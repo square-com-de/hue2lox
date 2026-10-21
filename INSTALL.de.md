@@ -13,7 +13,7 @@ Hue2Lox ist für **Linux-Systeme mit Docker Engine und Docker Compose** vorgeseh
 
 **Für den einfachen Einstieg empfehlen wir Option 1: den Installer.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
 
-Du lädst die Hue2Lox-Quelldateien herunter. Der Installer lädt das benötigte Basisimage und baut daraus das Hue2Lox-Image direkt auf deinem Server. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
+Beim unveränderten RC5-Paket lädst du die Hue2Lox-Quelldateien herunter. Der RC5-Installer lädt das benötigte Basisimage und baut daraus das Hue2Lox-Image direkt auf deinem Server. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
 
 | System (64 Bit) | Automatische Einrichtung | Praktischer Teststatus |
 |---|---|---|
@@ -28,6 +28,10 @@ Du lädst die Hue2Lox-Quelldateien herunter. Der Installer lädt das benötigte 
 Paketquellen nach den offiziellen Anleitungen für [Ubuntu](https://docs.docker.com/engine/install/ubuntu/), [Debian](https://docs.docker.com/engine/install/debian/) und [Raspberry Pi OS 64 Bit](https://docs.docker.com/engine/install/raspberry-pi-os/). DietPi wird über seine Systemdateien erkannt und nur einer unterstützten Debian-Basis zugeordnet.
 
 Alle Schritte der Reihe nach ausführen. Bei einem Fehler zunächst stoppen und die Ursache klären. Die alten `install-*.sh`-Dateien sind Prototyp-Updater und **nicht für diese Neuinstallation** geeignet.
+
+## Neuer Installer im Entwicklungsstand: fertige Images
+
+Der Entwicklungsinstaller lädt standardmäßig eine feste Release-Version von Docker Hub. GHCR und lokales Bauen stehen als Alternativen zur Auswahl. **Diese Änderung ist noch nicht im unten verlinkten RC5-ZIP.** Der Entwicklungsinstaller verwendet derzeit das veröffentlichte Image `1.0.0-rc.5`; neue Änderungen aus `main` testest du mit **lokal bauen**. Details: [Image-Auswahl und Vorbereitung per Befehl](docs/INSTALLER-IMAGES.md#deutsch).
 
 # Option 1: Einfach und komfortabel – der Installer
 
@@ -356,7 +360,7 @@ printf 'Neue Installation für https://%s:18443 anlegen? (ja/nein): ' "$HUE2LOX_
 read -r HUE2LOX_CONFIRM
 if [ "$HUE2LOX_CONFIRM" = ja ] && [ -n "$HUE2LOX_TEST_IP" ]; then
     sudo mkdir -p /opt
-    sudo python3 scripts/prepare-install.py --destination /opt/hue2lox-test --host "$HUE2LOX_TEST_IP" --port 18443
+    sudo python3 scripts/prepare-install.py --source build --destination /opt/hue2lox-test --host "$HUE2LOX_TEST_IP" --port 18443
 else
     printf 'Abgebrochen. Keine Installation angelegt.\n'
 fi

@@ -57,6 +57,27 @@ def preflight(destination):
     return dest, url, context
 
 
+def installation_source(dest):
+    values = dict(line.split('=', 1) for line in (dest/'.env').read_text().splitlines()
+                  if '=' in line and not line.lstrip().startswith('#'))
+    # Old prepared installations remain local-build installations.
+    source = values.get('HUE2LOX_SOURCE', 'build')
+    compose = (dest/'compose.yaml').read_text()
+    if source == 'image':
+        image = values.get('HUE2LOX_IMAGE', '')
+        if not re.fullmatch(r'(?:docker\.io/dubctrl|ghcr\.io/square-com-de)/hue2lox:'
+                            r'(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-rc\.[1-9]\d*)?', image):
+            raise ValueError('Expected a fixed Hue2Lox release image from Docker Hub or GHCR')
+        if ('    image: ' + image) not in compose.splitlines() or re.search(r'^\s+build:', compose, re.M):
+            raise ValueError('Saved image and Compose file disagree; nothing started')
+    elif source == 'build':
+        if '    build:' not in compose.splitlines():
+            raise ValueError('Saved build mode and Compose file disagree; nothing started')
+    else:
+        raise ValueError('Invalid saved installation source')
+    return source, values.get('HUE2LOX_IMAGE', '')
+
+
 def print_success(url):
     en = os.environ.get("HUE2LOX_INSTALL_LANG") == "en"
     def text(de, english):
@@ -122,6 +143,7 @@ def start(destination):
     if os.geteuid() != 0:
         raise ValueError('Run this command with sudo on Linux.')
     dest, url, context = preflight(destination)
+    source, image = installation_source(dest)
     if not shutil.which('docker'):
         raise ValueError('Docker is missing. Complete the Docker installation first.')
     name = project_name(dest)
@@ -132,10 +154,16 @@ def start(destination):
     if name != 'hue2lox-test':
         check_project_owner(dest, name)
     print('Installation: ' + name, flush=True)
-    build = command + ['up', '-d', '--build']
+    print('Image: ' + image if source == 'image' else 'Source: local build', flush=True)
+    build = command + (['up', '-d', '--no-build', '--pull', 'missing'] if source == 'image'
+                       else ['up', '-d', '--build'])
     if os.environ.get('HUE2LOX_INSTALL_COMPACT') == '1':
         label = ('Building and starting Hue2Lox' if os.environ.get('HUE2LOX_INSTALL_LANG') == 'en'
                  else 'Hue2Lox bauen und starten')
+        if source == 'image':
+            label = ('Downloading and starting the Hue2Lox release image'
+                     if os.environ.get('HUE2LOX_INSTALL_LANG') == 'en'
+                     else 'Hue2Lox Release-Image laden und starten')
         code = subprocess.run([sys.executable, str(Path(__file__).with_name('installer_progress.py')),
                                label, *build], cwd=dest).returncode
         if code:

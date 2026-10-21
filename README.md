@@ -40,7 +40,7 @@ Choose the installation method that suits you:
 | **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC5** · [Container guide](docs/DOCKER.md) |
 | **Python installer, without Docker** | For experimental direct service installation on explicitly supported Linux test targets. | **Experimental / PR #18** · [Shared installer and native guide](docs/INSTALL-NATIVE.en.md). Not included in RC5. |
 
-Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The development installer offers Docker or native operation; the native path is experimental and is not part of RC5. The Docker installer builds its image locally.
+Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The development installer offers Docker or native operation; the native path is experimental and is not part of RC5. For Docker, the development installer offers a pinned release image or a local build. Choose the local build to test the new app features, including discovery help; published RC5 images remain unchanged.
 
 ### Get started with the Docker installer (RC5)
 

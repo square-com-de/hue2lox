@@ -40,7 +40,7 @@ Wähle den Installationsweg, der zu dir passt:
 | **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In RC5 verfügbar** · [Container-Anleitung (Englisch)](docs/DOCKER.md) |
 | **Python-Installer, ohne Docker** | Für experimentellen direkten Dienstbetrieb auf ausdrücklich unterstützten Linux-Testsystemen. | **Experimentell / PR #18** · [Gemeinsamer Installer und native Anleitung](docs/INSTALL-NATIVE.md). Nicht in RC5 enthalten. |
 
-Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der Entwicklungsinstaller bietet Docker oder nativen Betrieb; der native Weg ist experimentell und gehört nicht zu RC5. Der Docker-Installer baut sein Image weiterhin lokal.
+Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der Entwicklungsinstaller bietet Docker oder nativen Betrieb; der native Weg ist experimentell und gehört nicht zu RC5. Für Docker bietet der Entwicklungsinstaller ein festes Release-Image oder einen lokalen Build. Neue App-Funktionen einschließlich Discovery-Hilfe werden mit dem lokalen Build getestet; veröffentlichte RC5-Images bleiben unverändert.
 
 ### Mit dem Docker-Installer loslegen (RC5)
 

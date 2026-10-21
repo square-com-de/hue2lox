@@ -6,6 +6,10 @@
 
 This guide installs **RC5** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
 
+## Upcoming installer: prebuilt release images
+
+The development installer now defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. **This is not in the RC5 ZIP linked below.** The development installer currently selects the published `1.0.0-rc.5` image; choose **local build** to test code changes from `main`. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
+
 ## HTTP or HTTPS in the installer
 
 RC5 includes this choice. The older RC3 ZIP remains unchanged.
@@ -51,7 +55,7 @@ You need a Linux server or VM, its address and user account, root or sudo access
 | DietPi based on Debian 12 / 13 | amd64, arm64 | Detection tested automatically; full platform acceptance pending |
 | Other Linux distributions | Install prerequisites manually; existing Docker and Compose can be reused | No general compatibility claim |
 
-A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. This installer builds images locally from source. For the prebuilt RC5 image, use the separate [container guide](docs/DOCKER.md).
+A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. The unchanged RC5 installer builds images locally from source. For the prebuilt RC5 image, use the separate [container guide](docs/DOCKER.md).
 
 ## 1. Connect to the server
 

@@ -35,6 +35,8 @@ assert request('/api/admin/token', {}, {'Cookie': cookie})[0] == 403
 code, _, body = request('/api/admin/token', {}, auth)
 assert code == 200
 assert json.loads(body)['token'] == (root / 'secrets/control_token').read_text().strip()
-for path in ('/', '/assets/locales/en.js', '/tutorial/en', '/licenses'):
+for path in ('/', '/assets/locales/en.js', '/assets/discovery-help.js', '/tutorial/en', '/licenses'):
     assert request(path)[0] == 200
+assert request('/assets/discovery-help.js')[2] == (root / 'web/discovery-help.js').read_bytes()
+assert b'discovery-help-platforms' in request('/')[2]
 print('PASS: CI HTTP(S)/API checks; no bridge configured and no secrets printed.')

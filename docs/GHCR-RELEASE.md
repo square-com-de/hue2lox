@@ -156,3 +156,9 @@ Ablauf. Abweichende vorhandene Release-Dateien und Versions-Images werden nicht
 ändern; dann untersuchen und gegebenenfalls eine neue Version veröffentlichen.
 Die Beilagen dauerhaft beim Release und zusätzlich als Sicherung aufbewahren;
 befristete CI-Artefakte ersetzen diese Downloads nicht.
+
+## Installer version for the next release / Installer-Version
+
+Before creating a new release tag, set `install/release-image.json` to the same version without the leading `v` (for example, tag `v1.0.0-rc.6` → version `1.0.0-rc.6`). Release publication refuses a mismatch so a new ZIP cannot silently install the previous release image. Do not retag or replace RC5. During development, the file continues to name the last published version; select local build to test `main`.
+
+Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version ohne führendes `v` enthalten. Die Veröffentlichung stoppt bei Abweichungen, damit ein neues ZIP nicht unbemerkt das vorherige Image installiert. RC5 nicht neu taggen oder ersetzen. Während der Entwicklung bleibt die letzte veröffentlichte Version eingetragen; Änderungen aus `main` mit lokalem Build testen.

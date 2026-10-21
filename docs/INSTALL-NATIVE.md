@@ -1,5 +1,7 @@
 # Native Linux-Installation ohne Docker
 
+Die Web-App enthält auch die optionale lokale Discovery-Hilfe für macOS, Windows und Linux. Sie ist in nativen Paketen und lokalen Docker-Builds dieses Entwicklungsstands enthalten. Ein über den Assistenten ausgewähltes veröffentlichtes RC5-Image enthält diese neue Hilfe noch nicht. Die Hilfsbefehle werden bewusst auf dem Rechner im lokalen Netz ausgeführt; der Installer startet keine Gerätesuche.
+
 [English](INSTALL-NATIVE.en.md) · [Dockerinstallation](../INSTALL.de.md)
 
 Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Es gibt noch kein veröffentlichtes natives Releasepaket. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
