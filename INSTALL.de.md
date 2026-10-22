@@ -575,3 +575,5 @@ verwenden; keinen festen Projektnamen mit `-p` darüberlegen.
 ## Maintenance / Wartung
 
 [Certificate renewal, IP change, backup and restore / Zertifikat, IP-Wechsel und Sicherung](docs/MAINTENANCE.de.md)
+
+Für Updates bestehender Installationen des Entwicklungsinstallers gilt der separate [Docker-Update- und Rollback-Ablauf](docs/UPDATE-DOCKER.de.md). Das Neuinstallationsmenü überschreibt keine vorhandene Installation.

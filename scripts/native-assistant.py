@@ -17,7 +17,9 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'src'))
 sys.dont_write_bytecode = True
+from installer_messages import message, localized_print as print
 
 
 def load(name, path):
@@ -90,7 +92,7 @@ def main():
                 native.health(layout)
                 print('Verified native HTTPS healthcheck passed.')
     except (ValueError, OSError, subprocess.SubprocessError, tarfile.TarError, KeyError) as error:
-        parser.exit(1, 'Native assistant stopped: ' + str(error) + '\n')
+        parser.exit(1, message('Native assistant stopped: ' + str(error)) + '\n')
 
 
 if __name__ == '__main__':

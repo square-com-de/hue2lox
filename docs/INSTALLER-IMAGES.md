@@ -67,3 +67,7 @@ python3 scripts/prepare-install.py --destination /opt/hue2lox-dev \
 **Ein** Beispiel wählen, IP, Verzeichnis und Port anpassen. Anschließend das gewählte Verzeichnis mit `python3 scripts/start-install.py --destination /opt/hue2lox-neu` starten (Pfad anpassen).
 
 Die Auswahl wird in `.env` und der erzeugten `compose.yaml` gespeichert. Quelldateien bleiben vorhanden, werden im Image-Modus aber weder gebaut noch ausgeführt. Linux-Hostnetzwerk, HTTP/HTTPS-Einrichtung, Hue-CA-Prüfung, Zugangsdaten, Steuerungseinstellungen und Neustartverhalten bleiben erhalten. Die Änderung betrifft den Installationsweg, nicht die bisherige Voreinstellung zur Lampensteuerung. Vorhandene Verzeichnisse werden niemals überschrieben. Alte vorbereitete Installationen ohne die neue Quellenauswahl behalten ihren lokalen Build; dies ist kein Update-/Migrationsbefehl.
+
+## Update / Aktualisierung
+
+For existing installer deployments, use the complete [update and rollback procedure](UPDATE-DOCKER.md). Für vorhandene Installer-Installationen gilt der vollständige [Update- und Rollback-Ablauf](UPDATE-DOCKER.de.md).

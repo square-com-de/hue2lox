@@ -107,11 +107,9 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 
 ## Updating
 
-```sh
-docker compose pull && docker compose up -d
-```
+**Installer-created deployments:** use the complete [update/rollback guide](UPDATE-DOCKER.md) / [deutsche Anleitung](UPDATE-DOCKER.de.md), including a cold backup and the exact previous image. It covers local builds and pinned release images.
 
-`/data` is kept across upgrades and existing files are never overwritten by the container. Back up `/data` first: the data format is not yet versioned for compatibility between release candidates.
+**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged RC5 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
 
 ## Settings
 

@@ -4,6 +4,8 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'src'))
+sys.dont_write_bytecode = True
+from installer_messages import message, localized_print as print
 from install_state import initialize
 
 if __name__ == '__main__':
@@ -19,5 +21,5 @@ if __name__ == '__main__':
         initialize(args.state_directory, args.certificate_directory, args.secret_directory,
                    args.host, args.uid, args.gid)
     except (ValueError, OSError) as error:
-        parser.exit(1, 'Preparation failed: ' + str(error) + '\n')
+        parser.exit(1, message('Preparation failed: ' + str(error)) + '\n')
     print('Fresh private state prepared. No service started; no bridge requests sent.')

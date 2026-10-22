@@ -188,3 +188,5 @@ Local tests and CI establish only their documented checks. Real Debian startup, 
 A future LoxBerry plugin can reuse the application and state preparation. Its directories, service integration and update hooks are a separate work package.
 
 [Manual VM acceptance and remaining evidence](NATIVE-VM-ACCEPTANCE.md).
+
+The language selected in the shared assistant also applies to its own Python helper status and error messages. Direct CLI calls can use `export HUE2LOX_INSTALL_LANG=en` or `de`. Output from external tools (apt, Docker, systemd) and their original logs is not rewritten.

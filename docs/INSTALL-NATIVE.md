@@ -188,3 +188,5 @@ Lokale Tests und CI gelten nur für die jeweils dokumentierten Prüfungen. Ein e
 Das spätere LoxBerry-Plugin kann gemeinsame Zustandsvorbereitung und Anwendung verwenden. Seine Verzeichnisse, Dienstintegration und Update-Hooks sind ein eigenes Arbeitspaket.
 
 [Manuelle VM-Abnahme und offene Nachweise](NATIVE-VM-ACCEPTANCE.md).
+
+Die im gemeinsamen Installer gewählte Sprache gilt auch für die eigenen Python-Helfermeldungen und Fehlermeldungen. Für direkte Aufrufe kann `export HUE2LOX_INSTALL_LANG=de` gesetzt werden; mit `en` erscheinen englische Meldungen. Ausgaben externer Werkzeuge (apt, Docker, systemd) und deren Originalprotokolle werden nicht umgeschrieben.

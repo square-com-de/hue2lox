@@ -30,6 +30,10 @@ import tempfile
 import time
 import urllib.request
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'src'))
+sys.dont_write_bytecode = True
+from installer_messages import message, localized_print as print
+
 SERVICE = 'hue2lox.service'
 USER = 'hue2lox'
 VERSION = re.compile(r'[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9][A-Za-z0-9.-]*)?\Z')
@@ -675,7 +679,7 @@ def main():
         with operation_lock():
             {'install': install, 'update': update, 'uninstall': uninstall, 'rollback': rollback}[args.action](args, Layout())
     except (ValueError, OSError, subprocess.SubprocessError, tarfile.TarError, KeyError) as error:
-        parser.exit(1, 'Native operation stopped: ' + str(error) + '\n')
+        parser.exit(1, message('Native operation stopped: ' + str(error)) + '\n')
 
 
 if __name__ == '__main__':

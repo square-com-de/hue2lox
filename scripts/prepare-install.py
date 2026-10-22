@@ -14,6 +14,8 @@ import sys
 
 SOURCE=Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(SOURCE / 'src'))
+sys.dont_write_bytecode = True
+from installer_messages import message, localized_print as print
 from install_state import initialize
 CODE=('.dockerignore','LICENSE','NOTICE','THIRD-PARTY-NOTICES.md','INSTALL.md','RELEASE.md')
 
@@ -107,6 +109,6 @@ if __name__=='__main__':
     parser.add_argument('--registry', choices=('dockerhub', 'ghcr'), default='dockerhub')
     args=parser.parse_args()
     try:dest=prepare(args.destination,args.host,args.port,args.scheme,args.public_url,args.source,args.registry)
-    except (ValueError,OSError,subprocess.SubprocessError) as error:parser.exit(1,'Setup failed: '+str(error)+'\n')
+    except (ValueError,OSError,subprocess.SubprocessError) as error:parser.exit(1,message('Setup failed: '+str(error))+'\n')
     print('Fresh installation prepared at '+str(dest))
     print('No container started; no Hue requests sent. Control is disabled by default.')

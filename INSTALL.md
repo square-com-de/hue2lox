@@ -154,3 +154,5 @@ The installer is for fresh installations, not a general updater. Preserve the wh
 ## Maintenance / Wartung
 
 [Certificate renewal, IP change, backup and restore / Zertifikat, IP-Wechsel und Sicherung](docs/MAINTENANCE.md)
+
+For updates of deployments created by the development installer, follow [Docker update and rollback](docs/UPDATE-DOCKER.md). This adds a separate reviewed staging workflow; the fresh-install menu does not overwrite installations.
