@@ -1,3 +1,11 @@
+# Release status / Release-Stand — 23.10.2026
+
+**Published / Veröffentlicht: RC5. RC6: unpublished preparation / unveröffentlichte Vorbereitung.** PR #18 is merged into main; [current deployment acceptance / aktuelle Deployment-Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) passed. See [changelog](CHANGELOG.md) and [RC6 draft and release gates / RC6-Entwurf und Freigabepunkte](docs/RC6-PREPARATION.md). No RC6 tag, release or image is advertised as available. / Kein RC6-Tag, Release oder Image wird als verfügbar dargestellt.
+
+The RC5 description below is historical and describes RC5 only, including its then-open tests. RC1/RC5 tags, releases and assets remain unchanged. / Der folgende RC5-Text ist historisch und gilt einschließlich damaliger offener Tests nur für RC5. RC1/RC5-Tags, Releases und Assets bleiben unverändert.
+
+---
+
 # Hue2Lox — Release Candidate 5
 
 [RC5 release and downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5) · [English installation](INSTALL.md) · [Deutsche Installation](INSTALL.de.md)

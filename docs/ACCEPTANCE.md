@@ -1,6 +1,8 @@
 # Gemeinsame Abnahme / Joint acceptance
 
-Status: **offen**. Diese Liste ist ein Prüfplan, kein Nachweis bestandener Tests.
+Status 23.10.2026: **Deployment-Abnahme des integrierten main-Stands bestanden; Hardwareabnahme offen.** Die [aktuelle Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) dokumentiert 30 Prüfgruppen am exakten PR-Head. Die offenen Kästchen unten sind die verbleibende Hardware-/Releasepaket-Abnahme, keine Behauptung, dass der Deployment-Lebenszyklus ungeprüft sei.
+
+English: deployment acceptance of merged main passed; hardware acceptance remains open. The linked report records 30 test groups on the exact PR head. Unchecked items below remain hardware/final-release-package gates; they do not invalidate the recorded lifecycle results.
 
 Eine Debian-13-Neuinstallation mit Kopplung und Neustart ist vom Nutzer bestätigt. Die folgenden Punkte bilden den Abnahmeplan für den jeweils konkret protokollierten Release-Kandidaten; sie gelten nicht automatisch als bestanden. Automatische Tests ersetzen diese Abnahme nicht. Eine Testinstallation bleibt von der funktionierenden Installation getrennt; dieselbe Lampe nicht gleichzeitig von beiden Instanzen steuern lassen.
 
@@ -8,6 +10,12 @@ Eine Debian-13-Neuinstallation mit Kopplung und Neustart ist vom Nutzer bestäti
 
 - **20.10.2026, Debian 13 in Proxmox:** Installation, Login, Bridge-Suche und Kopplung, Inventar sowie VM-Neustart mit erhaltener Einrichtung vom Nutzer bestätigt. Siehe [Testprotokoll](TEST-RESULTS.md).
 - Die genaue Commit-/Image-ID dieses Benutzertests wurde nicht protokolliert. Vollständige Loxone-Abnahme, Passwortwechsel mit erneuter Anmeldung und Wiederherstellungsprobe bleiben offen; andere Plattformen sind dadurch nicht abgenommen.
+
+## Bereits belegt / Already evidenced
+
+Ubuntu 26.04/DietPi 13 amd64, jeweils Docker und nativ: Installation, echter Codewechsel, exaktes Code-/Daten-Rollback, persönliche Passwortprüfungen und Neustarts, Daten/Zertifikate/Token/Rechte sowie DE/EN-Oberfläche und Kopierhilfen. Details und Grenzen stehen ausschließlich in der [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md). Die folgenden Tests müssen dem endgültigen Kandidaten zugeordnet werden; frühere Erfolge nicht ungeprüft übertragen.
+
+English: installation, actual code changes, exact code/data rollback, personal password checks/reboots, private-state preservation and bilingual UI/copy controls passed on the named VMs. The linked report defines scope and limits. Assign the checks below to the final candidate; do not transfer earlier results without verification.
 
 ## Prüfprotokoll
 
@@ -19,7 +27,7 @@ Eine Debian-13-Neuinstallation mit Kopplung und Neustart ist vom Nutzer bestäti
 - Loxone Config- und Miniserver-Version:
 - Ergebnis je Schritt: bestanden, fehlgeschlagen oder nicht getestet; bereinigter Nachweis:
 
-## 3 — Neuinstallation auf einem frischen Zielsystem
+## 3 — Endgültiges Releasepaket auf einem frischen Zielsystem
 
 - [ ] Öffentlichen Quellstand mit dokumentierter Version herunterladen oder klonen; Anleitung ausschließlich aus [INSTALL.md](../INSTALL.de.md) befolgen.
 - [ ] KI-Installationsprompt mit Voraussetzungen erproben; tatsächlichen Assistenten/Zugriffsmodus und Abweichungen protokollieren.
@@ -60,4 +68,4 @@ Eine Debian-13-Neuinstallation mit Kopplung und Neustart ist vom Nutzer bestäti
 - [ ] Unterstützte Zielsysteme und bekannte Einschränkungen anhand echter Ergebnisse benennen.
 - [ ] Versionsnummer, Änderungsnotizen und reproduzierbares Installationspaket festlegen.
 
-English: record the exact source and environment, test a clean isolated installation first, then verify real Loxone imports and physical lamp behaviour together. All boxes remain pending until observed; do not interpret a CI pass as hardware or release approval.
+English: record the exact source and environment, verify the final package in isolation, then test real Loxone imports and physical lamp behaviour. Earlier main deployment acceptance is recorded separately; all unchecked final-package/hardware gates remain pending until observed. A CI pass is not hardware or release approval.

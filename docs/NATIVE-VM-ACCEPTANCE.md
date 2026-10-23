@@ -1,3 +1,5 @@
+> **Historischer Bericht / Historical report:** Die folgenden Ergebnisse und offenen Punkte gelten für die Stände vom 21.10.2026. Für den integrierten Stand aus PR #18 gilt die spätere [Deployment-Abnahme vom 23.10.2026](https://github.com/square-com-de/hue2lox/blob/main/docs/DEPLOYMENT-ACCEPTANCE.md). / Results and pending evidence below apply to the 21 October revisions; see the later acceptance for the merged PR #18 code.
+
 # Native VM-Abnahme / Native VM acceptance — 21.10.2026
 
 ## Prüfstand und Herkunft

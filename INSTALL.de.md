@@ -1,6 +1,6 @@
 # Hue2Lox auf Linux installieren
 
-**Entwicklung / PR #18:** Der gemeinsame Installer ergänzt die Auswahl Docker/nativ. Der native Weg ist experimentell und gehört nicht zum unveränderten RC5-Release. Siehe [native Entwicklungsanleitung](docs/INSTALL-NATIVE.md).
+**Aktueller main:** PR #18 ist integriert; der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [RC6 in Vorbereitung](docs/RC6-PREPARATION.md), noch nicht veröffentlicht. Der native Weg bleibt experimentell und gehört nicht zu RC5. Siehe [native Entwicklungsanleitung](docs/INSTALL-NATIVE.md).
 
 [English installation guide](INSTALL.md) · [RC5-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5)
 
@@ -17,11 +17,13 @@ Beim unveränderten RC5-Paket lädst du die Hue2Lox-Quelldateien herunter. Der R
 
 | System (64 Bit) | Automatische Einrichtung | Praktischer Teststatus |
 |---|---|---|
-| Ubuntu 22.04 / 24.04 / 26.04 LTS | amd64 und arm64 | Ubuntu 26.04 amd64: Installer bis HTTPS-Healthcheck erfolgreich; übrige Varianten noch offen |
+| Ubuntu 22.04 / 24.04 / 26.04 LTS | amd64 und arm64 | Main: Ubuntu 26.04 amd64 Docker/nativ mit echtem Update/Rollback und Neustart abgenommen; übrige Varianten separat |
 | Debian 12 Bookworm / 13 Trixie | amd64 und arm64 | Debian 13 in Proxmox: Installation, Login, Bridge-Kopplung, Inventar und VM-Neustart vom Nutzer bestätigt (20.10.2026); Debian 12 und ARM noch offen |
 | Raspberry Pi OS auf Debian 12 / 13 | arm64; Debian-Paketquelle | Erkennung automatisiert geprüft; Raspberry-Pi-Test noch offen |
-| DietPi auf Debian 12 / 13 | amd64 und arm64; Debian-Basis automatisch erkannt | Erkennung automatisiert geprüft; DietPi-Test noch offen |
+| DietPi auf Debian 12 / 13 | amd64 und arm64; Debian-Basis automatisch erkannt | Main: DietPi 13 amd64 Docker/nativ mit echtem Update/Rollback und Neustart abgenommen; DietPi 12/ARM separat |
 | Andere Linux-Systeme | Voraussetzungen manuell; vorhandenes Docker + Compose nutzbar | Kein allgemeines Funktionsversprechen |
+
+Die Tabelle unterscheidet automatische Plattformunterstützung von realen Tests. Neue VM-Nachweise gelten für den in der [Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) genannten main-Stand, nicht rückwirkend für das RC5-ZIP.
 
 **64 Bit bezieht sich auf das installierte Betriebssystem**, nicht nur auf den Prozessor. 32-Bit-Systeme und unbekannte Versionen werden bei der automatischen Paketinstallation abgelehnt. Der Installer ersetzt keine unvollständige Docker-Installation und entfernt keine vorhandenen Pakete. Läuft Docker mit Compose bereits, überspringt er die Docker-Installation auch auf anderen Distributionen. Für Hue2Lox muss Docker lokal auf dem Linux-Server laufen.
 
@@ -29,7 +31,7 @@ Paketquellen nach den offiziellen Anleitungen für [Ubuntu](https://docs.docker.
 
 Alle Schritte der Reihe nach ausführen. Bei einem Fehler zunächst stoppen und die Ursache klären. Die alten `install-*.sh`-Dateien sind Prototyp-Updater und **nicht für diese Neuinstallation** geeignet.
 
-## Neuer Installer im Entwicklungsstand: fertige Images
+## Installer auf main: Docker/nativ und fertige Images
 
 Der Entwicklungsinstaller lädt standardmäßig eine feste Release-Version von Docker Hub. GHCR und lokales Bauen stehen als Alternativen zur Auswahl. **Diese Änderung ist noch nicht im unten verlinkten RC5-ZIP.** Der Entwicklungsinstaller verwendet derzeit das veröffentlichte Image `1.0.0-rc.5`; neue Änderungen aus `main` testest du mit **lokal bauen**. Details: [Image-Auswahl und Vorbereitung per Befehl](docs/INSTALLER-IMAGES.md#deutsch).
 

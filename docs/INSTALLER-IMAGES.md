@@ -1,3 +1,5 @@
+**Stand / Status:** PR #18 is merged into main. Real Ubuntu/DietPi Docker and native lifecycle acceptance passed; [evidence / Nachweise](DEPLOYMENT-ACCEPTANCE.md). RC6 is [unpublished preparation / unveröffentlichte Vorbereitung](RC6-PREPARATION.md). The image pin stays RC5 until a new image actually exists; local builds use current source. / Der Image-Pin bleibt bis zur tatsächlichen Verfügbarkeit eines neuen Images auf RC5; lokale Builds verwenden den aktuellen Quellstand.
+
 # Installer image selection
 
 [English](#english) | [Deutsch](#deutsch)

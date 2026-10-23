@@ -1,3 +1,5 @@
+**Aktueller Downloadstatus / Current downloads:** RC5 bleibt die veröffentlichte Version. RC6 ist [in Vorbereitung](RC6-PREPARATION.md), ohne veröffentlichten Download oder Image-Tag. Die [neue Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) gilt für main, nicht rückwirkend für das RC5-Paket. / RC5 remains the published version. RC6 is being prepared, without published downloads or image tags; new deployment evidence applies to main, not retroactively to RC5.
+
 # RC5: Download und Prüfsumme / Download and checksum
 
 Für die normale Installation verwenden Deutsch, Englisch und der KI-Prompt dasselbe **RC5-Paket**. / The German, English and AI guides use the same **RC5 package** for normal installation.
