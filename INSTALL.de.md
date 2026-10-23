@@ -1,19 +1,23 @@
+> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
+
+> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
+
 # Hue2Lox auf Linux installieren
 
-**Aktueller main:** PR #18 ist integriert; der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [RC6 in Vorbereitung](docs/RC6-PREPARATION.md), noch nicht veröffentlicht. Der native Weg bleibt experimentell und gehört nicht zu RC5. Siehe [native Entwicklungsanleitung](docs/INSTALL-NATIVE.md).
+**Aktueller main:** PR #18 ist integriert; der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [RC6-Release-Hinweise](docs/RELEASE-NOTES-RC6.md). Der native Weg bleibt experimentell und ist in diesem RC6-Kandidaten enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Entwicklungsanleitung](docs/INSTALL-NATIVE.md).
 
-[English installation guide](INSTALL.md) · [RC5-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5)
+[English installation guide](INSTALL.md) · [RC6-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6)
 
 - [Option 1: Einfach und komfortabel – der Installer](#option-1-einfach-und-komfortabel--der-installer)
 - [Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt](#option-2-entwicklungsstand-main--manuelle-installation-schritt-für-schritt)
 
-Option 1 installiert **RC5** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den normalen Einstieg Option 1 verwenden.
+Option 1 installiert **RC6** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den normalen Einstieg Option 1 verwenden.
 
 Hue2Lox ist für **Linux-Systeme mit Docker Engine und Docker Compose** vorgesehen – auf einem eigenen Rechner, in einer virtuellen Maschine oder auf einem Raspberry Pi. Als Plattformen kommen beispielsweise Ubuntu, Debian, DietPi oder Raspberry Pi OS (früher Raspbian) infrage, sofern Betriebssystemversion und CPU-Architektur die benötigten Pakete und Container unterstützen.
 
 **Für den einfachen Einstieg empfehlen wir Option 1: den Installer.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
 
-Beim unveränderten RC5-Paket lädst du die Hue2Lox-Quelldateien herunter. Der RC5-Installer lädt das benötigte Basisimage und baut daraus das Hue2Lox-Image direkt auf deinem Server. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
+Beim vorbereiteten RC6-Paket lädst du die Hue2Lox-Quelldateien herunter. Der RC6-Installer bietet das feste RC6-Image oder einen lokalen Build aus dem Quell-ZIP an. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
 
 | System (64 Bit) | Automatische Einrichtung | Praktischer Teststatus |
 |---|---|---|
@@ -23,7 +27,7 @@ Beim unveränderten RC5-Paket lädst du die Hue2Lox-Quelldateien herunter. Der R
 | DietPi auf Debian 12 / 13 | amd64 und arm64; Debian-Basis automatisch erkannt | Main: DietPi 13 amd64 Docker/nativ mit echtem Update/Rollback und Neustart abgenommen; DietPi 12/ARM separat |
 | Andere Linux-Systeme | Voraussetzungen manuell; vorhandenes Docker + Compose nutzbar | Kein allgemeines Funktionsversprechen |
 
-Die Tabelle unterscheidet automatische Plattformunterstützung von realen Tests. Neue VM-Nachweise gelten für den in der [Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) genannten main-Stand, nicht rückwirkend für das RC5-ZIP.
+Die Tabelle unterscheidet automatische Plattformunterstützung von realen Tests. Neue VM-Nachweise gelten für den in der [Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) genannten main-Stand, nicht rückwirkend für das RC6-ZIP.
 
 **64 Bit bezieht sich auf das installierte Betriebssystem**, nicht nur auf den Prozessor. 32-Bit-Systeme und unbekannte Versionen werden bei der automatischen Paketinstallation abgelehnt. Der Installer ersetzt keine unvollständige Docker-Installation und entfernt keine vorhandenen Pakete. Läuft Docker mit Compose bereits, überspringt er die Docker-Installation auch auf anderen Distributionen. Für Hue2Lox muss Docker lokal auf dem Linux-Server laufen.
 
@@ -33,11 +37,11 @@ Alle Schritte der Reihe nach ausführen. Bei einem Fehler zunächst stoppen und 
 
 ## Installer auf main: Docker/nativ und fertige Images
 
-Der Entwicklungsinstaller lädt standardmäßig eine feste Release-Version von Docker Hub. GHCR und lokales Bauen stehen als Alternativen zur Auswahl. **Diese Änderung ist noch nicht im unten verlinkten RC5-ZIP.** Der Entwicklungsinstaller verwendet derzeit das veröffentlichte Image `1.0.0-rc.5`; neue Änderungen aus `main` testest du mit **lokal bauen**. Details: [Image-Auswahl und Vorbereitung per Befehl](docs/INSTALLER-IMAGES.md#deutsch).
+Der Entwicklungsinstaller lädt standardmäßig eine feste Release-Version von Docker Hub. GHCR und lokales Bauen stehen als Alternativen zur Auswahl. Diese Auswahl ist im vorbereiteten RC6-Quell-ZIP enthalten. Dieses Release bindet `1.0.0-rc.6`; für die normale Installation das feste Image verwenden, geprüfte Änderungen aus `main` mit **lokal bauen** testen. Details: [Image-Auswahl und Vorbereitung per Befehl](docs/INSTALLER-IMAGES.md#deutsch).
 
 # Option 1: Einfach und komfortabel – der Installer
 
-Der Installer führt dich über ein Menü durch die Einrichtung. Er prüft vorhandene Software und kann fehlende Pakete installieren. **Du brauchst einen Linux-Server, seinen Benutzernamen und seine IP-Adresse sowie Root-Zugang oder vorhandene sudo-Rechte.** Der Installer erkennt die Systeme aus der Tabelle oben, zeigt die erkannte Basis an und wählt die passende Docker-Paketquelle. Mit einem Root-Konto kannst du die Befehle ohne `sudo` ausführen.
+Nach der Sprachwahl bietet der Installer **Docker** oder **nativ**. Die folgenden Schritte erklären Docker; für nativ die [RC6-Archivübergabe](docs/INSTALL-NATIVE.md#rc6-quell-zip-und-natives-archiv) verwenden. Der Installer führt dich über ein Menü durch die Einrichtung. Er prüft vorhandene Software und kann fehlende Pakete installieren. **Du brauchst einen Linux-Server, seinen Benutzernamen und seine IP-Adresse sowie Root-Zugang oder vorhandene sudo-Rechte.** Der Installer erkennt die Systeme aus der Tabelle oben, zeigt die erkannte Basis an und wählt die passende Docker-Paketquelle. Mit einem Root-Konto kannst du die Befehle ohne `sudo` ausführen.
 
 ### A. Am Server anmelden
 
@@ -65,26 +69,26 @@ apt install -y --no-install-recommends ca-certificates curl unzip
 
 Das gilt für die oben genannten Ubuntu-/Debian-basierten Systeme. Auf anderen Systemen diese drei Werkzeuge mit dem dortigen Paketmanager bereitstellen. Bei einem Fehler stoppen; bei „Not live until“ zuerst die Uhrzeit prüfen.
 
-### C. RC5 direkt herunterladen, prüfen und starten
+### C. RC6 direkt herunterladen, prüfen und starten
 
-**Weiterhin auf dem Server als Root.** Diesen Block vollständig kopieren. Er erstellt einen neuen Downloadordner, lädt das feste RC5-Paket samt SHA-256-Prüfsumme, prüft und entpackt es und startet danach den Installer. Bestehende Ordner werden nicht überschrieben.
+**Weiterhin auf dem Server als Root.** Diesen Block vollständig kopieren. Er erstellt einen neuen Downloadordner, lädt das feste RC6-Paket samt SHA-256-Prüfsumme, prüft und entpackt es und startet danach den Installer. Bestehende Ordner werden nicht überschrieben.
 
 ```sh
-HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc5-XXXXXXXX") &&
+HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc6-XXXXXXXX") &&
 cd "$HUE2LOX_DOWNLOAD_DIR" &&
-curl --fail --location --output hue2lox-v1.0.0-rc.5.zip \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/hue2lox-v1.0.0-rc.5.zip &&
+curl --fail --location --output hue2lox-v1.0.0-rc.6.zip \
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.6/hue2lox-v1.0.0-rc.6.zip &&
 curl --fail --location --output SHA256SUMS.txt \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/SHA256SUMS.txt &&
-(grep '  hue2lox-v1.0.0-rc.5.zip$' SHA256SUMS.txt | sha256sum --check -) &&
-unzip -tq hue2lox-v1.0.0-rc.5.zip &&
-unzip -q hue2lox-v1.0.0-rc.5.zip &&
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.5/install-assistant.sh"
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.6/SHA256SUMS.txt &&
+(grep '  hue2lox-v1.0.0-rc.6.zip$' SHA256SUMS.txt | sha256sum --check -) &&
+unzip -tq hue2lox-v1.0.0-rc.6.zip &&
+unzip -q hue2lox-v1.0.0-rc.6.zip &&
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.6/install-assistant.sh"
 ```
 
 Nur bei erfolgreicher Prüfung geht es weiter. Bei `FAILED`, Downloadfehler oder Entpackfehler stoppen; den Installer nicht separat starten. Die Prüfsumme gehört zum ZIP aus demselben Release. `Code → Download ZIP` lädt dagegen den Entwicklungsstand.
 
-**Erneut öffnen:** In derselben Root-Sitzung kannst du den letzten `bash`-Befehl wiederholen. Nach einer neuen Anmeldung den tatsächlich erstellten Downloadordner verwenden; `ls -d /root/hue2lox-rc5-*` zeigt die Standardpfade. Der Entpackordner ist nicht das spätere Installationsziel, etwa `/opt/hue2lox-test`.
+**Erneut öffnen:** In derselben Root-Sitzung kannst du den letzten `bash`-Befehl wiederholen. Nach einer neuen Anmeldung den tatsächlich erstellten Downloadordner verwenden; `ls -d /root/hue2lox-rc6-*` zeigt die Standardpfade. Der Entpackordner ist nicht das spätere Installationsziel, etwa `/opt/hue2lox-test`.
 
 ### D. Im Installer weiter
 
@@ -98,7 +102,7 @@ wie „Not live until“ zuerst Datum und Zeitsynchronisation des Servers prüfe
 Für die vollständige direkte Ausgabe in derselben Root-Sitzung:
 
 ```sh
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.5/install-assistant.sh" --verbose
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.6/install-assistant.sh" --verbose
 ```
 
 Die kompakten Protokolle filtern erkennbare Zugangsdaten; vor dem Teilen trotzdem
@@ -124,7 +128,7 @@ Beim Start **Deutsch oder English** auswählen. Jeder verändernde Schritt fragt
 
 ### HTTP oder HTTPS im Installer
 
-RC5 enthält diese Auswahl. Das ältere RC3-ZIP bleibt unverändert.
+RC6 enthält diese Auswahl. Das ältere RC3-ZIP bleibt unverändert.
 In Schritt 5 wählst du:
 
 1. **HTTPS direkt (Standard):** Der Installer erzeugt ein selbstsigniertes Zertifikat
@@ -277,7 +281,7 @@ sudo docker compose version
 
 Erwartet: `Hello from Docker!` und eine Compose-Versionsnummer. Wir verwenden stets `sudo docker compose` mit Leerzeichen, nicht das alte `docker-compose`.
 
-> **Nur Entwicklung:** Die folgenden manuellen Downloads und Dateipfade gelten für `main`, nicht für RC5. Für einen veröffentlichten Kandidaten Option 1 und [DOWNLOADS](docs/DOWNLOADS.md) verwenden.
+> **Nur Entwicklung:** Die folgenden manuellen Downloads und Dateipfade gelten für `main`, nicht für RC6. Für einen veröffentlichten Kandidaten Option 1 und [DOWNLOADS](docs/DOWNLOADS.md) verwenden.
 
 ## 5. Hue2Lox herunterladen
 
@@ -372,7 +376,7 @@ fi
 
 Erwartet: `Fresh installation prepared at /opt/hue2lox-test`.
 
-Das Skript erzeugt eigene Schlüssel, einen zufälligen Loxone-Token, Login `admin` / `admin` und eine leere Bridge-Liste. Keine alten Konfigurationen oder Schlüssel kopieren. Noch läuft kein Container und die Lampensteuerung ist deaktiviert.
+Das Skript erzeugt eigene Schlüssel, einen zufälligen Loxone-Token, Login `admin` / `admin` und eine leere Bridge-Liste. Keine alten Konfigurationen oder Schlüssel kopieren. Noch läuft kein Container. Steuerung, RGB und Lumitech sind für unterstützte Lampen bereits aktiviert; der Installer sendet keine Lampenbefehle.
 
 ## 8. Starten und prüfen
 
@@ -411,26 +415,7 @@ Beim ersten Öffnen kann eine Zertifikatswarnung erscheinen. Hilfe dazu findest 
 
 1. Bridge im Webinterface suchen oder per IP hinzufügen, Link-Taste drücken und koppeln. Falls Discovery trotz Host-Netzwerk nicht funktioniert, LAN/VLAN und Firewall prüfen oder die IP manuell verwenden.
 2. Inventar, Fähigkeiten und Icons prüfen. Einlesen allein schaltet keine Lampe.
-3. Erst für einen gewollten Steuerungstest auf dem SERVER öffnen:
-
-```sh
-sudo nano /opt/hue2lox-test/.env
-```
-
-Diese vorhandenen Zeilen von `0` auf `1` ändern:
-
-```text
-HUE_WRITES_ENABLED=1
-HUE_COLOR_ENABLED=1
-HUE_WHITE_ENABLED=1
-```
-
-In nano: **Ctrl+O**, Enter zum Speichern; **Ctrl+X** zum Schließen. Anschließend:
-
-```sh
-sudo docker compose --project-directory /opt/hue2lox-test --env-file /opt/hue2lox-test/.env -f /opt/hue2lox-test/compose.yaml up -d
-```
-
+3. Steuerung, RGB und Lumitech stehen für unterstützte Lampen direkt bereit. Steuerungsbefehle benötigen weiterhin den Loxone-Token. Updates und Wiederinstallationen mit Datenerhalt übernehmen vorhandene Einstellungen unverändert.
 4. Eine Testlampe auswählen; gleichzeitige Steuerung durch die bestehende Anlage vermeiden. Befehle/XML nach der [Loxone-Anleitung](docs/TUTORIAL.de.md) einrichten.
 5. Mit `sudo docker compose --project-directory /opt/hue2lox-test --env-file /opt/hue2lox-test/.env -f /opt/hue2lox-test/compose.yaml restart` neu starten. Kopplung, geändertes Passwort und gespeicherte Einstellungen müssen erhalten bleiben. Erneute Anmeldung kann nötig sein.
 
@@ -579,3 +564,5 @@ verwenden; keinen festen Projektnamen mit `-p` darüberlegen.
 [Certificate renewal, IP change, backup and restore / Zertifikat, IP-Wechsel und Sicherung](docs/MAINTENANCE.de.md)
 
 Für Updates bestehender Installationen des Entwicklungsinstallers gilt der separate [Docker-Update- und Rollback-Ablauf](docs/UPDATE-DOCKER.de.md). Das Neuinstallationsmenü überschreibt keine vorhandene Installation.
+
+Bereits installiert? Den [RC5→RC6-Weg mit ausdrücklicher Steuerungsfreigabe und Rollback](docs/RECOVERY-CONTROL.de.md).

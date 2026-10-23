@@ -4,7 +4,7 @@ Die Web-App enthält auch die optionale lokale Discovery-Hilfe für macOS, Windo
 
 [English](INSTALL-NATIVE.en.md) · [Dockerinstallation](../INSTALL.de.md)
 
-Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Es gibt noch kein veröffentlichtes natives Releasepaket. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
+Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Für RC6 das versionierte native Archiv samt Prüfsumme zusätzlich zum Quell-ZIP verwenden; Details im RC6-Abschnitt unten. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
 
 ## Gemeinsamer interaktiver Installer (Entwicklung)
 
@@ -72,7 +72,7 @@ sudo bash deployment/native/install.sh \
 
 `192.168.1.50` ist nur eine Beispieladresse, nicht automatisch die Adresse deines Servers. Verwende dessen feste LAN-IP. Der Installer akzeptiert derzeit nur lokale IPv4-Adressen und Ports ab 1024. Er verweigert eine Neuinitialisierung vorhandener Daten. Er erstellt eigene Zugangsdaten und ein Zertifikat, startet den Dienst und prüft HTTPS mit Zertifikatsprüfung. Er sucht keine Bridge und schaltet keine Lampen. Schlägt der erste HTTPS-Test fehl, bleiben Dateien zur Diagnose erhalten; die Installation gilt dann nicht als erfolgreich. Nicht erneut initialisieren, sondern Ursache beheben oder ausdrücklich deinstallieren.
 
-Nach erfolgreicher Einrichtung die ausgegebene HTTPS-Adresse öffnen, Zertifikatsfingerabdruck über einen vertrauenswürdigen Weg prüfen und mit `admin` / `admin` anmelden. Passwort in der Oberfläche ändern. Schreib-, Farb- und Weißsteuerung sind bei Neuinstallation zunächst deaktiviert. Pairing und Loxone-Einrichtung gehören zu einer separat freigegebenen Hardwareabnahme, siehe [Abnahmeplan](ACCEPTANCE.md).
+Nach erfolgreicher Einrichtung die ausgegebene HTTPS-Adresse öffnen, Zertifikatsfingerabdruck über einen vertrauenswürdigen Weg prüfen und mit `admin` / `admin` anmelden. Passwort in der Oberfläche ändern. Steuerung, RGB und Lumitech sind bei Neuinstallationen für unterstützte Lampen direkt aktiviert. Ein vorhandenes Token bleibt für Steuerungsbefehle erforderlich. Updates und Wiederinstallationen mit Datenerhalt übernehmen die bisherigen Einstellungen unverändert. Pairing und Loxone-Einrichtung gehören zu einer separat freigegebenen Hardwareabnahme, siehe [Abnahmeplan](ACCEPTANCE.md).
 
 ## Dateien und Betrieb
 
@@ -190,3 +190,17 @@ Das spätere LoxBerry-Plugin kann gemeinsame Zustandsvorbereitung und Anwendung 
 [Manuelle VM-Abnahme und offene Nachweise](NATIVE-VM-ACCEPTANCE.md).
 
 Die im gemeinsamen Installer gewählte Sprache gilt auch für die eigenen Python-Helfermeldungen und Fehlermeldungen. Für direkte Aufrufe kann `export HUE2LOX_INSTALL_LANG=de` gesetzt werden; mit `en` erscheinen englische Meldungen. Ausgaben externer Werkzeuge (apt, Docker, systemd) und deren Originalprotokolle werden nicht umgeschrieben.
+
+## RC6-Quell-ZIP und natives Archiv
+
+**Natives RC6-Archiv.** Zusätzlich zum `hue2lox-v1.0.0-rc.6.zip` wird `hue2lox-1.0.0-rc.6-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; die versionierten Release-Dateien nach erfolgreichem Veröffentlichungsabschluss verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
+
+```sh
+bash install-assistant.sh --deployment native \
+  --native-package /absoluter/pfad/hue2lox-1.0.0-rc.6-native.tar.gz \
+  --native-sha256 GEPRUEFTER_SHA256
+```
+
+Der Assistent prüft das Archiv; Git wird dafür nicht benötigt. Das native Archiv ist versionsgebunden und enthält Manifest/Anwendung/Wartungswerkzeuge. Veröffentlichung und Hardwarefreigabe bleiben separat.
+
+Bestehende native Entwicklungsinstallation? Den [separaten nativen Korrektur-/Rollbackweg](RECOVERY-CONTROL.de.md).

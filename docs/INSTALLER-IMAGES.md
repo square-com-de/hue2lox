@@ -1,4 +1,8 @@
-**Stand / Status:** PR #18 is merged into main. Real Ubuntu/DietPi Docker and native lifecycle acceptance passed; [evidence / Nachweise](DEPLOYMENT-ACCEPTANCE.md). RC6 is [unpublished preparation / unveröffentlichte Vorbereitung](RC6-PREPARATION.md). The image pin stays RC5 until a new image actually exists; local builds use current source. / Der Image-Pin bleibt bis zur tatsächlichen Verfügbarkeit eines neuen Images auf RC5; lokale Builds verwenden den aktuellen Quellstand.
+> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
+
+> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
+
+**Release version / Release-Version:** The RC6 source ZIP pins `1.0.0-rc.6` in both registry selections. Verify release publication before using prebuilt images. Local builds remain an explicit alternative. / Das RC6-Quell-ZIP bindet bei beiden Registries `1.0.0-rc.6`. Vor Verwendung fertiger Images den erfolgreichen Release-Abschluss prüfen. Lokale Builds bleiben eine ausdrückliche Alternative.
 
 # Installer image selection
 
@@ -6,7 +10,7 @@
 
 ## English
 
-This describes the development installer, not the unchanged RC5 ZIP. The development installer currently selects the published image `1.0.0-rc.5`. The next release will pin its own version before publication.
+This describes the shared RC6 candidate installer. Its fixed image reference is `1.0.0-rc.6`; it becomes usable only after successful publication. Local builds use the supplied candidate source.
 
 In **step 5**, choose:
 
@@ -39,7 +43,7 @@ The choice is recorded in `.env` and the generated `compose.yaml`. Source files 
 
 ## Deutsch
 
-Dies beschreibt den Entwicklungsinstaller, nicht das unveränderte RC5-ZIP. Der Entwicklungsinstaller verwendet aktuell das veröffentlichte Image `1.0.0-rc.5`. Vor der nächsten Veröffentlichung wird deren eigene feste Version eingetragen.
+Dies beschreibt den gemeinsamen RC6-Kandidateninstaller. Seine feste Image-Referenz ist `1.0.0-rc.6`; sie wird erst nach erfolgreicher Veröffentlichung nutzbar. Lokale Builds verwenden den bereitgestellten Kandidatenquellstand.
 
 In **Schritt 5** auswählen:
 

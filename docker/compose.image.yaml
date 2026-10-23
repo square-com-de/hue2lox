@@ -1,3 +1,4 @@
+# RC6 PREPARATION ONLY: image is unavailable until a separately approved publication.
 # Run the published image: no source checkout, no build, one data volume.
 # Works with plain `docker compose up -d` and with the Unraid Compose Manager.
 # Serves plain HTTP; put a reverse proxy in front for HTTPS.
@@ -5,7 +6,7 @@
 services:
   hue2lox:
     # Pin the tested release candidate. No floating rc/latest tag is needed.
-    image: ghcr.io/square-com-de/hue2lox:1.0.0-rc.5
+    image: ghcr.io/square-com-de/hue2lox:1.0.0-rc.6
     container_name: hue2lox
     restart: unless-stopped
     network_mode: host

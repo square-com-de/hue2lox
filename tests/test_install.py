@@ -22,7 +22,7 @@ class FreshInstallTests(unittest.TestCase):
                 self.assertEqual((a/directory).stat().st_mode & 0o777,0o700)
             self.assertEqual((a/'.env').stat().st_mode & 0o777,0o600)
             context=ssl.create_default_context(cafile=str(a/'certs/server.crt'));context.load_cert_chain(a/'certs/server.crt',a/'certs/server.key')
-            env=(a/'.env').read_text();self.assertIn('HUE_WRITES_ENABLED=0',env);self.assertIn('https://127.0.0.1:18443',env)
+            env=(a/'.env').read_text();self.assertIn('HUE_WRITES_ENABLED=1',env);self.assertIn('https://127.0.0.1:18443',env)
             self.assertFalse((a/'secrets/hue_key').exists())
             self.assertIn('HUE_LEGACY_ENABLED: "0"',(a/'compose.yaml').read_text())
             compose=(a/'compose.yaml').read_text()
@@ -50,3 +50,11 @@ class FreshInstallTests(unittest.TestCase):
             for host,port in [('10.200.0.5\nBAD=1',8443),('0.0.0.0',8443),('224.0.0.1',8443),('127.0.0.1',1)]:
                 with self.assertRaises(ValueError):setup.prepare(dest,host,port)
                 self.assertFalse(dest.exists())
+
+    def test_fresh_build_and_both_registries_enable_authenticated_control(self):
+        from tests.control_defaults import assert_ready
+        for source, registry in (('build', 'dockerhub'), ('image', 'dockerhub'), ('image', 'ghcr')):
+            with self.subTest(source=source, registry=registry), tempfile.TemporaryDirectory() as root:
+                destination = setup.prepare(Path(root)/'new', '127.0.0.1', source=source, registry=registry)
+                values = dict(line.split('=', 1) for line in (destination/'.env').read_text().splitlines())
+                assert_ready(self, values)

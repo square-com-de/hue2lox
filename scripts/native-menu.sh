@@ -78,7 +78,7 @@ prepare_native_setup() {
   local ip=$SELECTED_IP port
   read -r -p "$(translate 'HTTPS-Port [18443]: ' 'HTTPS port [18443]: ')" port || return 1
   port=${port:-18443}
-  confirm "$(translate "Nativ unter https://$ip:$port installieren? systemd-Dienst und feste Systemverzeichnisse werden angelegt. Steuerung bleibt aus." "Install natively at https://$ip:$port? Creates a systemd service and fixed system directories. Control stays disabled.")" || return 0
+  confirm "$(translate "Nativ unter https://$ip:$port installieren? systemd-Dienst und feste Systemverzeichnisse werden angelegt. Steuerung, RGB und Lumitech werden für unterstützte Lampen aktiviert." "Install natively at https://$ip:$port? Creates a systemd service and fixed system directories. Control, RGB and Lumitech will be enabled for supported lights.")" || return 0
   run python3 "$SOURCE/deployment/native/manage.py" install --package "$NATIVE_PACKAGE" --sha256 "$NATIVE_SHA256" --host "$ip" --port "$port"
 }
 native_health() {

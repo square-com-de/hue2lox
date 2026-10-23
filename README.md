@@ -1,3 +1,5 @@
+> **RC6 — Release Candidate:** [Release and downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6). Verify successful publication and checksums before installing. Native remains experimental. [RC5→RC6 and control opt-in](docs/RECOVERY-CONTROL.md).
+
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
 <p align="center">
@@ -23,7 +25,7 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 - Copy Loxone HTTP commands or export a selection as XML.
 - Inspect incoming requests in a temporary, sanitized HTTP monitor.
 - Manage locally over HTTPS without a cloud account for normal operation.
-- On main: shared Docker/native installer and local discovery copy helpers; RC6 is not yet published.
+- On main: shared Docker/native installer and local discovery copy helpers; included in RC6.
 
 ## Preview
 
@@ -33,28 +35,22 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
-Choose the installation method that suits you:
+The shared **RC6 installer** offers Docker or native operation. The installation guides use the versioned RC6 source ZIP and fixed images; verify checksums and successful release publication.
 
-| Installation method | Who is it for? | Status and guide |
+| Installation method | Who is it for? | Guide |
 | --- | --- | --- |
-| **Installer with Docker** | Guided setup: RC5 builds locally; main offers a fixed image or local build. | **Available in RC5** · [Installation guide](INSTALL.md) |
-| **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC5** · [Container guide](docs/DOCKER.md) |
-| **Python installer, without Docker** | For experimental direct service installation on explicitly supported Linux test targets. | **Experimental on main** · [Shared installer and native guide](docs/INSTALL-NATIVE.en.md). Not included in RC5. |
+| **Installer with Docker** | Guided setup; fixed release image after publication or local build. | [Installation guide](INSTALL.md). Choose **local build** for source tests. |
+| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed RC6 image. |
+| **Native without Docker** | Experimental systemd operation on explicitly tested amd64 Linux targets. | [Native guide](docs/INSTALL-NATIVE.en.md). Source ZIP and native archive required. |
 
-Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The development installer offers Docker or native operation; the native path is experimental and is not part of RC5. For Docker, the development installer offers a pinned release image or a local build. Choose the local build to test the new app features, including discovery help; published RC5 images remain unchanged.
+1. **Start the installer:** the [guide](INSTALL.md) covers prerequisites, package verification and deployment selection. Use your Mac or Windows PC to operate the Linux server.
+2. **Set up Hue2Lox:** the installer checks prerequisites and reuses working Docker installations. Fresh installations enable the control features each light supports.
+3. **Sign in:** open the displayed web address and verify its certificate for direct HTTPS. Initial login `admin/admin`; change the password afterwards. Pair hardware only during the separate hardware acceptance.
+4. **Connect Loxone:** for later hardware testing, the [illustrated guide](docs/TUTORIAL.md) explains commands and XML for Loxone Config.
 
-### Get started with the Docker installer (RC5)
+**[Installation guide](INSTALL.md) · [RC6 packages and checksums](docs/DOWNLOADS.md) · [RC6 release notes](docs/RELEASE-NOTES-RC6.md)**
 
-You need a Linux server, VM or Raspberry Pi with a supported 64-bit OS, a Hue Bridge and a Loxone Miniserver for control. Use your Mac or Windows PC to follow the setup guide.
-
-1. **Start the installer:** the [English installation guide](INSTALL.md) takes you through connecting to the server, downloading RC5 directly with its checksum and starting the installer.
-2. **Set up Hue2Lox:** the installer checks your system and can install missing packages and Docker. Existing working Docker installations are reused.
-3. **Pair your bridge:** open the displayed web address (verify the certificate when using direct HTTPS) and sign in with `admin` / `admin`. You can change the password in the interface.
-4. **Connect to Loxone:** choose lights or scenes and follow the [illustrated guide](docs/TUTORIAL.md) to copy commands or import XML into Loxone Config.
-
-**[Open the installation guide](INSTALL.md) · [Download RC5 ZIP](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/hue2lox-v1.0.0-rc.5.zip) · [Verify the download](docs/DOWNLOADS.md)**
-
-Prefer guidance from an AI assistant? Use the [ChatGPT or Claude installation prompt](docs/AI-INSTALL.md). It guides you to the same interactive installer.
+**Already installed?** Follow the [backed-up RC5→RC6 procedure with explicit control opt-in](docs/RECOVERY-CONTROL.md). Updating never overrides intentionally disabled controls. AI guidance is available through the [installation prompt](docs/AI-INSTALL.md).
 
 ## Feedback & contact
 
@@ -68,17 +64,15 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Published: RC5. Preparing: RC6, not yet released.** PR #18 is merged into main. Real Ubuntu 26.04/DietPi 13 acceptance of the shared installer, Docker/native lifecycle, update/rollback and retained state passed. See [acceptance and limits](docs/DEPLOYMENT-ACCEPTANCE.md). Hue/Loxone hardware tests and final RC6 package checks remain separately open. Original project code is licensed under Apache 2.0.
+**Release candidate: RC6. Not a stable release.** PR #18 is merged into main. Real Ubuntu 26.04/DietPi 13 acceptance of the shared installer, Docker/native lifecycle, update/rollback and retained state passed. See [acceptance and limits](docs/DEPLOYMENT-ACCEPTANCE.md). User acceptance confirms TV-strip Lumitech color, warm/cold white, dimming, off, scene activation and state retained after reboot; this does not qualify every device. Original project code is licensed under Apache 2.0.
 
-RC5 offers **source code with the installer** and a **prebuilt Docker Hub/GHCR image for AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5`. The installer continues to build locally. Source and license materials accompany the [release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). There is no `latest` tag before a stable release.
-
-RC5 is an immutable version. Verify its [commit and checksum](docs/DOWNLOADS.md). `main` is the separate development version.
+Target version: `1.0.0-rc.6`, with source ZIP, native archive and eventual Docker Hub/GHCR images for AMD64/ARM64. All materials must identify the same reviewed source. Use versioned downloads and images only after successful publication. No `latest` before stable. RC1 and RC5 remain unchanged during preparation; earlier release evidence does not qualify RC6.
 
 Create and edit scenes in the Hue app; recall them through Loxone. Synchronizing actual Hue light state back into the Loxone Lighting Controller is not part of this project.
 
 **Existing installations:** use the [backup/update/rollback procedure](docs/UPDATE-DOCKER.md) for standard Docker deployments or [native maintenance](docs/INSTALL-NATIVE.en.md). Inspect custom Compose/prototype installations separately. Fresh setup is not a general updater.
 
-See the [changelog](CHANGELOG.md), [unpublished RC6 preparation](docs/RC6-PREPARATION.md) and [release overview](RELEASE.md).
+See the [changelog](CHANGELOG.md), [historical RC6 preparation](docs/RC6-PREPARATION.md) and [release overview](RELEASE.md).
 
 ## Documentation
 

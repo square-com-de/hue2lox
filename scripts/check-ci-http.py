@@ -31,6 +31,7 @@ cookie = headers['Set-Cookie'].split(';')[0]
 auth = {'Cookie': cookie, 'X-CSRF-Token': json.loads(body)['csrf'], 'Origin': public}
 code, _, body = request('/api/overview', headers=auth)
 assert code == 200 and json.loads(body)['bridges'] == []
+assert json.loads(body)['features'] == {'control': True, 'rgb': True, 'white': True}
 assert request('/api/admin/token', {}, {'Cookie': cookie})[0] == 403
 code, _, body = request('/api/admin/token', {}, auth)
 assert code == 200

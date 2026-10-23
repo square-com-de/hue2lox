@@ -4,7 +4,7 @@
 
 Dieser Ablauf gilt für **Standardinstallationen des gemeinsamen Installers**, sowohl lokaler Build als auch festes Release-Image. Native Installationen verwenden die [native Wartung](INSTALL-NATIVE.md). Eigenständige Compose-/Portainer-Installationen mit `/data` verwenden ihren eigenen Stack und vollständige Volume-Sicherungen; das Vorbereitungswerkzeug unten ist dafür nicht geeignet.
 
-RC1 und RC5 werden nicht verändert. Das Werkzeug ist seit dem Merge von PR #18 auf main enthalten; die [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) ist bestanden. RC6 ist noch unveröffentlicht. Ein erneutes `pull` desselben Versions-Tags ist **kein Versionswechsel**. Ein veröffentlichtes RC5-Image enthält auch nach diesem Vorgang keine Änderungen des PRs. Updates zwischen inkompatiblen Datenschemata werden hier nicht zugesichert; Release-Hinweise prüfen.
+RC1 und RC5 werden nicht verändert. Das Werkzeug ist seit dem Merge von PR #18 auf main enthalten; die [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) ist bestanden. Die RC6-Version ist fest im geprüften Quellpaket gebunden; den erfolgreichen Release-Abschluss vor einem Image-Update prüfen. Ein erneutes `pull` desselben Versions-Tags ist **kein Versionswechsel**. Ein veröffentlichtes RC5-Image enthält auch nach diesem Vorgang keine Änderungen des PRs. Updates zwischen inkompatiblen Datenschemata werden hier nicht zugesichert; Release-Hinweise prüfen.
 
 ## Voraussetzungen und Zielstand
 
@@ -48,7 +48,7 @@ Erst weitergehen, wenn **alle** Befehle erfolgreich waren. Die Sicherung enthäl
 
 ## 2. Genau einen Updateweg wählen
 
-**Lokaler Build** – neuer Code aus dem geprüften Checkout, z. B. für die noch unveröffentlichten RC6-Funktionen:
+**Lokaler Build** – neuer Code aus dem geprüften Checkout, z. B. für ausdrücklich geprüfte Quelländerungen:
 
 ```sh
 python3 "$SOURCE/scripts/prepare-docker-update.py" \
@@ -126,3 +126,5 @@ Die Zusatzdatei erzwingt genau das gesicherte Image – ohne Neubau und ohne Dow
 ## Abnahmekriterien
 
 Neuer Anwendungscode bzw. neue Image-ID tatsächlich aktiv; unveränderte Registry, Token, bestehendes Passwort, Zertifikat, Browseradresse, Schaltfreigaben, Eigentümer und Modi nach Update. Nach Rollback exakt altes Image UND alter Datenstand. Ein bewusst nicht startfähiger Testkandidat darf keinen Erfolg melden; vollständige Rückkehr zur Sicherung muss funktionieren. Das sind Deployment-Prüfungen, keine allgemeine Migrationsfreigabe und keine Hardwareabnahme.
+
+Für RC5→RC6 und ausdrückliche Steuerungsfreigabe die [konkrete Korrekturanleitung](RECOVERY-CONTROL.de.md).

@@ -1,6 +1,12 @@
-# Release status / Release-Stand — 23.10.2026
+# RC6 — Release Candidate / Release-Kandidat
 
-**Published / Veröffentlicht: RC5. RC6: unpublished preparation / unveröffentlichte Vorbereitung.** PR #18 is merged into main; [current deployment acceptance / aktuelle Deployment-Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) passed. See [changelog](CHANGELOG.md) and [RC6 draft and release gates / RC6-Entwurf und Freigabepunkte](docs/RC6-PREPARATION.md). No RC6 tag, release or image is advertised as available. / Kein RC6-Tag, Release oder Image wird als verfügbar dargestellt.
+Version `1.0.0-rc.6`. The release workflow binds source/native archives, checksums, corresponding sources/licenses and AMD64/ARM64 Docker Hub/GHCR images to one exact source commit. Wait for its successful public verification before installing. This is not Stable 1.0. / Der Release-Workflow bindet Archive, Prüfsummen, Quellen/Lizenzen und Images an einen exakten Commit. Vor Installation die erfolgreiche öffentliche Prüfung abwarten. Kein Stable-Release.
+
+[RC6 release and downloads / Release und Downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6) · [DE/EN release notes / Hinweise](docs/RELEASE-NOTES-RC6.md) · [Installation](INSTALL.de.md) · [RC5→RC6](docs/RECOVERY-CONTROL.de.md)
+
+Human acceptance confirms login/password change, bridge/light inventory, macOS discovery, reboot persistence, TV-strip Lumitech color/white/dimming/off and scene activation. Other device/platform combinations are not generally qualified. Scenes remain recall-only with no scene OFF or Lighting Controller feedback. The future digital scene/group ON/OFF feature is tracked in [issue #42](https://github.com/square-com-de/hue2lox/issues/42), outside RC6. / Die Nutzerabnahme bestätigt die genannten Funktionen; keine pauschale Gerätefreigabe. Szenen bleiben Aktivierungsbefehle. Issue #42 ist nicht Teil von RC6.
+
+## Historical RC5 / Historischer RC5-Stand
 
 The RC5 description below is historical and describes RC5 only, including its then-open tests. RC1/RC5 tags, releases and assets remain unchanged. / Der folgende RC5-Text ist historisch und gilt einschließlich damaliger offener Tests nur für RC5. RC1/RC5-Tags, Releases und Assets bleiben unverändert.
 

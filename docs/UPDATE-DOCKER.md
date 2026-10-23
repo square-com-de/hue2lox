@@ -2,7 +2,7 @@
 
 [Deutsch](UPDATE-DOCKER.de.md)
 
-For **standard deployments created by the shared installer**, with either local builds or pinned release images. Native deployments use [native maintenance](INSTALL-NATIVE.en.md). Standalone Compose/Portainer stacks using `/data` need their own stack and complete volume backup; the staging tool below does not manage them. RC1 and RC5 remain unchanged. This tool is merged into main from PR #18; [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) passed, and RC6 is not yet published; pulling the same pinned tag is not a version upgrade. Published RC5 images do not acquire PR features. Review release compatibility before changing versions; arbitrary data-schema migrations are not guaranteed.
+For **standard deployments created by the shared installer**, with either local builds or pinned release images. Native deployments use [native maintenance](INSTALL-NATIVE.en.md). Standalone Compose/Portainer stacks using `/data` need their own stack and complete volume backup; the staging tool below does not manage them. RC1 and RC5 remain unchanged. This tool is merged into main from PR #18; [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) passed, and RC6 uses a fixed version; pulling the same pinned tag is not a version upgrade. Published RC5 images do not acquire PR features. Review release compatibility before changing versions; arbitrary data-schema migrations are not guaranteed.
 
 ## Select a reviewed target and stop the existing deployment
 
@@ -119,3 +119,5 @@ The override forces the exact saved image without rebuilding/downloading, includ
 ## Acceptance criteria
 
 Demonstrate different target code/image, retained registry/token/password/certificate/public URL/feature flags/owners/modes after update, and exact old image plus old data after rollback. A deliberately broken isolated candidate must fail startup and be recoverable. A version label change alone is not a code migration. These are deployment tests, not a general schema-migration or hardware qualification.
+
+For an actual RC5→RC6 transition and explicit control opt-in, follow the [specific recovery guide](RECOVERY-CONTROL.md).

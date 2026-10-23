@@ -1,18 +1,22 @@
+> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
+
+> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
+
 # Install Hue2Lox on Linux
 
-**Current main:** PR #18 is merged; the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [RC6 is being prepared](docs/RC6-PREPARATION.md), not yet released. Native operation remains experimental and is not included in RC5. See the [native development guide](docs/INSTALL-NATIVE.en.md).
+**Current main:** PR #18 is merged; the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [RC6 release notes](docs/RELEASE-NOTES-RC6.md). Native operation remains experimental and is included in this RC6 candidate; use the separate native archive with the source-ZIP assistant. See the [native development guide](docs/INSTALL-NATIVE.en.md).
 
-[Deutsch](INSTALL.de.md) · [RC5 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5) · [English manual](docs/MANUAL.md)
+[Deutsch](INSTALL.de.md) · [RC6 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6) · [English manual](docs/MANUAL.md)
 
-This guide installs **RC5** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
+This guide installs **RC6** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
 
 ## Installer on main: Docker/native and prebuilt images
 
-The development installer now defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. **This is not in the RC5 ZIP linked below.** The development installer currently selects the published `1.0.0-rc.5` image; choose **local build** to test code changes from `main`. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
+The development installer now defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. This choice is included in the prepared RC6 source ZIP. This release pins `1.0.0-rc.6`; use the fixed image for normal installation, or **local build** to test a reviewed source checkout. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
 
 ## HTTP or HTTPS in the installer
 
-RC5 includes this choice. The older RC3 ZIP remains unchanged.
+RC6 includes this choice. The older RC3 ZIP remains unchanged.
 In step 5 choose:
 
 1. **Direct HTTPS (default):** the installer creates a self-signed certificate and key.
@@ -55,9 +59,9 @@ You need a Linux server or VM, its address and user account, root or sudo access
 | DietPi based on Debian 12 / 13 | amd64, arm64 | Main: DietPi 13 amd64 Docker/native update, rollback and reboot accepted; DietPi 12/ARM separate |
 | Other Linux distributions | Install prerequisites manually; existing Docker and Compose can be reused | No general compatibility claim |
 
-The table separates automatic platform support from real testing. New VM evidence applies to the main commit in the [acceptance report](docs/DEPLOYMENT-ACCEPTANCE.md), not retroactively to the RC5 ZIP.
+The table separates automatic platform support from real testing. New VM evidence applies to the main commit in the [acceptance report](docs/DEPLOYMENT-ACCEPTANCE.md), not retroactively to the RC6 ZIP.
 
-A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. The unchanged RC5 installer builds images locally from source. For the prebuilt RC5 image, use the separate [container guide](docs/DOCKER.md).
+A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. The RC6 installer offers a fixed release image or a local build. For the prebuilt RC6 image, use the separate [container guide](docs/DOCKER.md).
 
 ## 1. Connect to the server
 
@@ -85,30 +89,30 @@ apt install -y --no-install-recommends ca-certificates curl unzip
 
 This applies to the Ubuntu/Debian-based systems above. On other systems, provide these three tools using their package manager. Stop on errors; if you see “Not live until”, check the server clock first.
 
-## 3. Download RC5, verify and start
+## 3. Download RC6, verify and start
 
-**Still on the server as root.** Copy the whole block. It creates a new download directory, downloads the fixed RC5 package and SHA-256 checksum, verifies and extracts it, then starts the installer. Existing directories are not overwritten.
+**Still on the server as root.** Copy the whole block. It creates a new download directory, downloads the fixed RC6 package and SHA-256 checksum, verifies and extracts it, then starts the installer. Existing directories are not overwritten.
 
 ```sh
-HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc5-XXXXXXXX") &&
+HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc6-XXXXXXXX") &&
 cd "$HUE2LOX_DOWNLOAD_DIR" &&
-curl --fail --location --output hue2lox-v1.0.0-rc.5.zip \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/hue2lox-v1.0.0-rc.5.zip &&
+curl --fail --location --output hue2lox-v1.0.0-rc.6.zip \
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.6/hue2lox-v1.0.0-rc.6.zip &&
 curl --fail --location --output SHA256SUMS.txt \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/SHA256SUMS.txt &&
-(grep '  hue2lox-v1.0.0-rc.5.zip$' SHA256SUMS.txt | sha256sum --check -) &&
-unzip -tq hue2lox-v1.0.0-rc.5.zip &&
-unzip -q hue2lox-v1.0.0-rc.5.zip &&
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.5/install-assistant.sh"
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.6/SHA256SUMS.txt &&
+(grep '  hue2lox-v1.0.0-rc.6.zip$' SHA256SUMS.txt | sha256sum --check -) &&
+unzip -tq hue2lox-v1.0.0-rc.6.zip &&
+unzip -q hue2lox-v1.0.0-rc.6.zip &&
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0-rc.6/install-assistant.sh"
 ```
 
 Continue only when verification succeeds. On `FAILED`, download or extraction errors, stop; do not start the installer separately. The checksum must come from the same release as the ZIP. `Code → Download ZIP` downloads the development branch instead.
 
-**Open again:** repeat the final `bash` command in the same root session. After reconnecting, use the actual download directory; `ls -d /root/hue2lox-rc5-*` lists the default paths. This extraction directory is separate from the eventual installation directory, such as `/opt/hue2lox-test`.
+**Open again:** repeat the final `bash` command in the same root session. After reconnecting, use the actual download directory; `ls -d /root/hue2lox-rc6-*` lists the default paths. This extraction directory is separate from the eventual installation directory, such as `/opt/hue2lox-test`.
 
 ## 4. Continue in the installer
 
-Select English when prompted. The menu offers:
+Select English, then **Docker** for the steps below. For **native, without Docker**, follow the [native RC6 handoff](docs/INSTALL-NATIVE.en.md#rc6-source-zip-and-native-archive). The Docker menu offers:
 
 1. Check the system and prerequisites without changes.
 2. Check/configure SSH (optional; skip if already active).
@@ -131,6 +135,8 @@ Open the HTTPS address printed by the installer, for example `https://192.0.2.50
 ```sh
 openssl x509 -in /opt/hue2lox-test/certs/server.crt -noout -fingerprint -sha256
 ```
+
+Fresh installations enable control, RGB and Lumitech for supported lights immediately. Control commands still require a valid token. Updates and reinstalls retaining data preserve existing settings unchanged. The installer itself does not send light commands.
 
 Initial login is **admin / admin**. You can change the password in the interface. Pair a bridge via **Bridges**, pressing its physical button when instructed. Check the inventory, then follow the [English Loxone tutorial](docs/TUTORIAL.md). Scenes are created in the Hue app. Actual Hue state is not synchronized back into the Loxone Lighting Controller.
 
@@ -158,3 +164,5 @@ The installer is for fresh installations, not a general updater. Preserve the wh
 [Certificate renewal, IP change, backup and restore / Zertifikat, IP-Wechsel und Sicherung](docs/MAINTENANCE.md)
 
 For updates of deployments created by the development installer, follow [Docker update and rollback](docs/UPDATE-DOCKER.md). This adds a separate reviewed staging workflow; the fresh-install menu does not overwrite installations.
+
+Existing installation? Use the [RC5→RC6 update, explicit control opt-in and rollback guide](docs/RECOVERY-CONTROL.md).
