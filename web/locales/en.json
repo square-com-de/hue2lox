@@ -271,7 +271,7 @@
   "Szenen und Lampen werden von den gekoppelten Bridges eingelesen …": "Scanning scenes and lights from paired bridges …",
   "Szenenexport fehlgeschlagen. Anmeldung und Auswahl prüfen.": "Scene export failed. Check sign-in and selection.",
   "Szenenliste konnte nicht geladen werden. Bitte erneut einlesen.": "Could not load scenes. Please scan again.",
-  "TLS zur Bridge wird geprüft · keine Cloud-Verbindung": "TLS to bridge verified · no cloud connection",
+  "TLS zur Bridge wird geprüft · keine Cloud-Verbindung": "Bridge TLS verification enabled · no cloud connection",
   "Testprotokoll starten · 10 Minuten": "Start test log · 10 minutes",
   "Token anzeigen": "Show token",
   "Token fehlt oder ungültig": "Token missing or invalid",
