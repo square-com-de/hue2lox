@@ -3,8 +3,8 @@
 ## English
 
 This is a maintainer runbook for a **future** release. Merging this workflow does
-not push an image or update an installation. RC1–RC4 releases, tags and assets
-remain unchanged. Docker Hub publication starts with the next release (RC5 or later).
+not push an image or update an installation. RC1–RC5 releases, tags and assets
+remain unchanged. RC5 is already published on Docker Hub and GHCR; the next planned release is RC6. See [unpublished RC6 preparation](RC6-PREPARATION.md).
 
 ### Before publishing
 
@@ -13,7 +13,7 @@ remain unchanged. Docker Hub publication starts with the next release (RC5 or la
    review the [container compliance evidence](IMAGE-COMPLIANCE.md). Prepare the
    version-specific installation/Compose references in that commit before tagging;
    the release ZIP preserves that exact source and cannot be corrected afterward.
-2. Create a new tag, for example `v1.0.0-rc.5`, at that commit. Never move an
+2. Create a new tag, for example `v1.0.0-rc.6`, at that commit. Never move an
    existing release tag. Create a draft GitHub release with short release notes.
    For an RC, select **Set as a pre-release**; for `v1.0.0`, leave that unchecked.
 3. In the notes, link the installation guide and explain that the same version
@@ -34,7 +34,7 @@ and `DOCKERHUB_TOKEN` (a Docker Hub token with Read & Write, no Delete).
 These credentials are used only by the release publisher and verification job;
 PR tests never log in or push. GHCR continues to use the scoped `GITHUB_TOKEN`.
 Missing/invalid credentials fail publication; they never silently skip Docker Hub.
-The first real release validates write permissions; mocked PR tests cannot do so.
+RC5 publication supplies historical registry evidence; verify permissions again for the new release. Mocked PR tests cannot prove current registry access.
 Never run the historical RC4 workflow to backfill Docker Hub.
 
 ### What publishing the release does
@@ -68,11 +68,11 @@ Only after every gate passes does the publisher:
 - For a stable release only, move `latest` if this is also GitHub's latest stable
   release. **An RC never creates or changes `latest`.**
 
-For the example RC5, the version tag is `1.0.0-rc.5` (without the leading `v`):
+For the future RC6 example, the version tag is `1.0.0-rc.6` (without the leading `v`):
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.5
-podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.5
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.6
+podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.6
 ```
 
 These commands are examples for the future release, **not available downloads
@@ -106,16 +106,16 @@ cannot prove registry write permissions or package visibility.
 ## Deutsch
 
 Dieser Ablauf ist für ein **künftiges** Release vorbereitet. Das Zusammenführen
-des PR veröffentlicht keine Images und ändert weder RC1–RC4 noch laufende
-Installationen. Docker Hub kommt erst ab einem neuen Release (RC5 oder später) hinzu.
+des PR veröffentlicht keine Images und ändert weder RC1–RC5 noch laufende
+Installationen. RC5 ist bereits auf Docker Hub und GHCR veröffentlicht. Als Nächstes ist RC6 geplant; siehe [unveröffentlichte Vorbereitung](RC6-PREPARATION.md).
 
 Vorher das öffentliche Docker-Hub-Repository `dubctrl/hue2lox` anlegen und im
 GitHub-Repository unter Settings → Secrets and variables → Actions die Secrets
 `DOCKERHUB_USERNAME` (`dubctrl`) und `DOCKERHUB_TOKEN` (Read & Write, ohne Delete)
 hinterlegen. Nur Release-Jobs verwenden sie; PR-Tests melden sich nicht an und
 veröffentlichen nichts. GHCR verwendet weiterhin `GITHUB_TOKEN`. Fehlende oder
-ungültige Zugangsdaten stoppen den Ablauf. Schreibrechte lassen sich erst beim
-nächsten echten Release bestätigen. Den alten RC4-Workflow nicht zum Nachliefern
+ungültige Zugangsdaten stoppen den Ablauf. RC5 liefert historische Veröffentlichungsnachweise; aktuelle Schreibrechte beim
+nächsten Release erneut bestätigen. Den alten RC4-Workflow nicht zum Nachliefern
 nach Docker Hub starten. Beide Registry-Beschreibungen sollen auf die passenden
 Release-, Quellen- und Lizenzbeilagen verweisen.
 
@@ -123,7 +123,7 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    auswählen und die Abnahme mit echten Geräten sowie die Lizenzbeilagen prüfen.
    Versionsbezogene Installations-/Compose-Verweise vor dem Tag im Quellstand
    vorbereiten: Das Release-ZIP enthält exakt diesen Stand.
-2. Einen neuen Tag wie `v1.0.0-rc.5` an diesem Commit und einen Release-Entwurf
+2. Einen neuen Tag wie `v1.0.0-rc.6` an diesem Commit und einen Release-Entwurf
    anlegen. Beim RC **Set as a pre-release** aktivieren. Bestehende Tags bleiben
    unverändert. ZIP und Prüfsummen werden vom Workflow erzeugt.
 3. Erst **Publish release** startet die Veröffentlichung. PRs, normale Pushes,
@@ -139,8 +139,8 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    **Public** stellen und bei fehlgeschlagener öffentlicher Prüfung **Re-run
    failed jobs** wählen. Den gesamten Build dafür nicht erneut starten.
 
-Das nächste RC5 erhält `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5` und
-`docker.io/dubctrl/hue2lox:1.0.0-rc.5`. Beide Registries müssen vor einer
+Das künftige RC6 soll `ghcr.io/square-com-de/hue2lox:1.0.0-rc.6` und
+`docker.io/dubctrl/hue2lox:1.0.0-rc.6` erhalten; diese Referenzen sind noch keine verfügbaren Downloads. Beide Registries müssen vor einer
 Stable-Promotion erfolgreich geprüft sein. Uploads in zwei Registries sind nicht
 atomar; bei Teilfehlern bleiben vorhandene Ergebnisse bestehen und der
 fehlgeschlagene Job wird mit denselben Artefakten wiederholt. `latest` wird ausschließlich

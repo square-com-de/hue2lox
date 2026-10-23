@@ -1,3 +1,5 @@
+**Published images: RC5; current source: main.** The merged installer and application changes are covered by [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) and planned for [unpublished RC6](RC6-PREPARATION.md). Until RC6 images exist, choose a local build for those changes; the fixed RC5 references below deliver RC5. The native adapter remains a separate experimental deployment path.
+
 # Running the container image
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).

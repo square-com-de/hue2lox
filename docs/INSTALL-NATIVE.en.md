@@ -8,7 +8,7 @@ This additional deployment on main uses the same application and interface as Do
 
 ## Shared interactive installer (development)
 
-RC5 remains unchanged and does not include this native installer. Use a clean, reviewed checkout of PR #18 and record its exact commit. Do not use a mutable main download as a released native package. Start the existing assistant as root (`su -`, or `sudo -i` on Ubuntu):
+RC5 remains unchanged and does not include this native installer. Use a clean, reviewed main checkout after the PR #18 merge and record its exact commit. Do not use a mutable main download as a released native package. Start the existing assistant as root (`su -`, or `sudo -i` on Ubuntu):
 
 ```sh
 bash /absolute/path/to/hue2lox/install-assistant.sh
@@ -33,7 +33,7 @@ bash /absolute/path/to/hue2lox/install-assistant.sh --deployment native \
 
 A source ZIP without Git identity does not fabricate a source commit or download main. The native package step instead asks for a verified archive and its SHA-256. No native release asset is published yet. A prepared development package uses `0.0.0-dev.<commit>`; it is not a release. Restart the assistant from the newly reviewed checkout when updating code. Reinstall requires the same package identity as the retained data; use the old verified archive when necessary. Native data paths remain fixed and are independent of the Docker installation directory.
 
-The optional `--check --deployment native` is read-only. No installation changes occur merely by selecting a backend or viewing status. Real Ubuntu/DietPi VM acceptance and native hardware tests remain open; platform fixtures and systemd-container CI do not replace them.
+The optional `--check --deployment native` is read-only. No installation changes occur merely by selecting a backend or viewing status. Real Ubuntu 26.04/DietPi 13 amd64 acceptance passed, including actual code update and rollback. It applies to the recorded commit; native hardware tests remain separately open. See [current deployment acceptance](https://github.com/square-com-de/hue2lox/blob/main/docs/DEPLOYMENT-ACCEPTANCE.md).
 
 ## Requirements and limits
 

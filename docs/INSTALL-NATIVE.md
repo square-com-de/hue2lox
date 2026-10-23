@@ -8,7 +8,7 @@ Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und 
 
 ## Gemeinsamer interaktiver Installer (Entwicklung)
 
-RC5 bleibt unverändert und enthält diesen nativen Installer nicht. Verwende einen sauberen, geprüften Git-Checkout von PR #18 und notiere die genaue Commit-ID. Kein veränderlicher main-Download gilt als freigegebenes natives Paket. Den vorhandenen Assistenten als root starten (`su -`, auf Ubuntu gegebenenfalls `sudo -i`):
+RC5 bleibt unverändert und enthält diesen nativen Installer nicht. Verwende einen sauberen, geprüften main-Checkout nach Integration von PR #18 und notiere die genaue Commit-ID. Kein veränderlicher main-Download gilt als freigegebenes natives Paket. Den vorhandenen Assistenten als root starten (`su -`, auf Ubuntu gegebenenfalls `sudo -i`):
 
 ```sh
 bash /absoluter/pfad/zu/hue2lox/install-assistant.sh
@@ -33,7 +33,7 @@ bash /absoluter/pfad/zu/hue2lox/install-assistant.sh --deployment native \
 
 Ein Quell-ZIP ohne Git-Identität erfindet keinen Commit und lädt kein main nach. Der native Paketschritt fragt stattdessen nach einem geprüften Archiv und dessen SHA-256. Es gibt noch kein veröffentlichtes natives Release-Asset. Ein vorbereitetes Entwicklungspaket heißt `0.0.0-dev.<commit>`; es ist kein Release. Bei einem Codeupdate den Assistenten aus dem neu geprüften Checkout neu starten. Wiederinstallation benötigt dieselbe Paketidentität wie der erhaltene Datenstand; gegebenenfalls das frühere geprüfte Archiv verwenden. Native Datenpfade bleiben fest und sind unabhängig vom Docker-Installationsordner.
 
-Die optionale Auswahl `--check --deployment native` ist nur lesend. Backend-Auswahl und Statusanzeige allein ändern keine Installation. Echte Ubuntu-/DietPi-VM-Abnahmen und native Hardwaretests bleiben offen; Plattform-Fixtures und systemd-Container-CI ersetzen sie nicht.
+Die optionale Auswahl `--check --deployment native` ist nur lesend. Backend-Auswahl und Statusanzeige allein ändern keine Installation. Die reale Ubuntu-26.04-/DietPi-13-amd64-Abnahme ist bestanden, einschließlich echtem Codewechsel und Rollback. Sie gilt für den exakt protokollierten Stand; native Hardwaretests bleiben separat offen. Siehe [aktuelle Deployment-Abnahme](https://github.com/square-com-de/hue2lox/blob/main/docs/DEPLOYMENT-ACCEPTANCE.md).
 
 ## Voraussetzungen und Grenzen
 

@@ -1,12 +1,12 @@
 # Install Hue2Lox on Linux
 
-**Development / PR #18:** The shared installer adds a Docker/native choice. Native operation is experimental and is not included in the unchanged RC5 release. See the [native development guide](docs/INSTALL-NATIVE.en.md).
+**Current main:** PR #18 is merged; the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [RC6 is being prepared](docs/RC6-PREPARATION.md), not yet released. Native operation remains experimental and is not included in RC5. See the [native development guide](docs/INSTALL-NATIVE.en.md).
 
 [Deutsch](INSTALL.de.md) · [RC5 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5) · [English manual](docs/MANUAL.md)
 
 This guide installs **RC5** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
 
-## Upcoming installer: prebuilt release images
+## Installer on main: Docker/native and prebuilt images
 
 The development installer now defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. **This is not in the RC5 ZIP linked below.** The development installer currently selects the published `1.0.0-rc.5` image; choose **local build** to test code changes from `main`. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
 
@@ -49,11 +49,13 @@ You need a Linux server or VM, its address and user account, root or sudo access
 
 | 64-bit system | Automatic package setup | Observed test scope |
 | --- | --- | --- |
-| Ubuntu 22.04 / 24.04 / 26.04 LTS | amd64, arm64 | Ubuntu 26.04 amd64 through HTTPS health check; other variants pending |
+| Ubuntu 22.04 / 24.04 / 26.04 LTS | amd64, arm64 | Main: Ubuntu 26.04 amd64 Docker/native update, rollback and reboot accepted; other variants separate |
 | Debian 12 / 13 | amd64, arm64 | Debian 13 VM: installation, login, pairing, inventory and reboot confirmed by user on 20 October 2026; Debian 12/ARM pending |
 | Raspberry Pi OS based on Debian 12 / 13 | arm64 | Detection tested automatically; physical Pi acceptance pending |
-| DietPi based on Debian 12 / 13 | amd64, arm64 | Detection tested automatically; full platform acceptance pending |
+| DietPi based on Debian 12 / 13 | amd64, arm64 | Main: DietPi 13 amd64 Docker/native update, rollback and reboot accepted; DietPi 12/ARM separate |
 | Other Linux distributions | Install prerequisites manually; existing Docker and Compose can be reused | No general compatibility claim |
+
+The table separates automatic platform support from real testing. New VM evidence applies to the main commit in the [acceptance report](docs/DEPLOYMENT-ACCEPTANCE.md), not retroactively to the RC5 ZIP.
 
 A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. The unchanged RC5 installer builds images locally from source. For the prebuilt RC5 image, use the separate [container guide](docs/DOCKER.md).
 

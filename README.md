@@ -23,6 +23,7 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 - Copy Loxone HTTP commands or export a selection as XML.
 - Inspect incoming requests in a temporary, sanitized HTTP monitor.
 - Manage locally over HTTPS without a cloud account for normal operation.
+- On main: shared Docker/native installer and local discovery copy helpers; RC6 is not yet published.
 
 ## Preview
 
@@ -36,9 +37,9 @@ Choose the installation method that suits you:
 
 | Installation method | Who is it for? | Status and guide |
 | --- | --- | --- |
-| **Installer with Docker** | A guided setup for beginners. The assistant prepares Docker and builds Hue2Lox on your server. | **Available in RC5** · [Installation guide](INSTALL.md) |
+| **Installer with Docker** | Guided setup: RC5 builds locally; main offers a fixed image or local build. | **Available in RC5** · [Installation guide](INSTALL.md) |
 | **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC5** · [Container guide](docs/DOCKER.md) |
-| **Python installer, without Docker** | For experimental direct service installation on explicitly supported Linux test targets. | **Experimental / PR #18** · [Shared installer and native guide](docs/INSTALL-NATIVE.en.md). Not included in RC5. |
+| **Python installer, without Docker** | For experimental direct service installation on explicitly supported Linux test targets. | **Experimental on main** · [Shared installer and native guide](docs/INSTALL-NATIVE.en.md). Not included in RC5. |
 
 Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The development installer offers Docker or native operation; the native path is experimental and is not part of RC5. For Docker, the development installer offers a pinned release image or a local build. Choose the local build to test the new app features, including discovery help; published RC5 images remain unchanged.
 
@@ -67,7 +68,7 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Release Candidate 5.** German and English are available. An earlier fresh Debian 13 installation, bridge pairing, light display and restart have passed a user-run test. A fresh Debian test of the RC5 package and end-to-end testing with a Loxone Miniserver are still pending. Original project code is licensed under Apache 2.0.
+**Published: RC5. Preparing: RC6, not yet released.** PR #18 is merged into main. Real Ubuntu 26.04/DietPi 13 acceptance of the shared installer, Docker/native lifecycle, update/rollback and retained state passed. See [acceptance and limits](docs/DEPLOYMENT-ACCEPTANCE.md). Hue/Loxone hardware tests and final RC6 package checks remain separately open. Original project code is licensed under Apache 2.0.
 
 RC5 offers **source code with the installer** and a **prebuilt Docker Hub/GHCR image for AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5`. The installer continues to build locally. Source and license materials accompany the [release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). There is no `latest` tag before a stable release.
 
@@ -75,16 +76,16 @@ RC5 is an immutable version. Verify its [commit and checksum](docs/DOWNLOADS.md)
 
 Create and edit scenes in the Hue app; recall them through Loxone. Synchronizing actual Hue light state back into the Loxone Lighting Controller is not part of this project.
 
-**Existing installations:** a general release updater is not yet available. Preserve credentials and device state; do not overwrite an existing installation with fresh setup.
+**Existing installations:** use the [backup/update/rollback procedure](docs/UPDATE-DOCKER.md) for standard Docker deployments or [native maintenance](docs/INSTALL-NATIVE.en.md). Inspect custom Compose/prototype installations separately. Fresh setup is not a general updater.
 
-See [release notes](RELEASE.md) and [documented test results](docs/TEST-RESULTS.md) for details.
+See the [changelog](CHANGELOG.md), [unpublished RC6 preparation](docs/RC6-PREPARATION.md) and [release overview](RELEASE.md).
 
 ## Documentation
 
 | Topic | Start here |
 | --- | --- |
 | Usage, troubleshooting and backup | [Manual](docs/MANUAL.md) |
-| Native installer and VM evidence | [Native guide](docs/INSTALL-NATIVE.en.md) · [VM acceptance](docs/NATIVE-VM-ACCEPTANCE.md) |
+| Native installer and VM evidence | [Native guide](docs/INSTALL-NATIVE.en.md) · [Current VM acceptance](docs/DEPLOYMENT-ACCEPTANCE.md) |
 | Fresh test installation | [Installation](INSTALL.md) |
 | Prebuilt Docker image (AMD64/ARM64) | [Container guide](docs/DOCKER.md) |
 | Loxone HTTP outputs and XML | [Illustrated guide](docs/TUTORIAL.md) |

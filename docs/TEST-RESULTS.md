@@ -1,8 +1,14 @@
+# Aktueller Nachweis / Current evidence — 23.10.2026
+
+Die [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) des integrierten PR-18-Stands ist bestanden. Hardware- und finale RC6-Paketabnahme bleiben offen. / Deployment acceptance of the merged PR #18 code passed; hardware and final RC6 package checks remain open.
+
+**Historie / History:** Alle nachfolgenden Berichte behalten ihren ursprünglichen Commit-, Datums- und Prüfumfang; damalige Offen-Punkte sind keine aktuelle Gesamtliste. / The following reports retain their original commit, date and scope; their pending items are not the current overall checklist.
+
 ## Separate native VM acceptance — 21.10.2026
 
 See [native VM acceptance and remaining evidence](NATIVE-VM-ACCEPTANCE.md) for commits 1652485 and 6dbd8ae. The manual results do not establish acceptance of the later main integration or native hardware control. Historical results below retain their original scope.
 
-# Aktueller Installationstest – 20.10.2026
+# Historischer Installationstest – 20.10.2026
 
 Vom Nutzer auf einer frisch installierten Debian-13-VM unter Proxmox bestätigt:
 - Interaktiver Installer erfolgreich abgeschlossen; Weblogin funktioniert.
