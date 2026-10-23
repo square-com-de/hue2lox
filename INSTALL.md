@@ -132,6 +132,8 @@ Open the HTTPS address printed by the installer, for example `https://192.0.2.50
 openssl x509 -in /opt/hue2lox-test/certs/server.crt -noout -fingerprint -sha256
 ```
 
+Fresh installations enable control, RGB and Lumitech for supported lights immediately. Control commands still require a valid token. Updates and reinstalls retaining data preserve existing settings unchanged. The installer itself does not send light commands.
+
 Initial login is **admin / admin**. You can change the password in the interface. Pair a bridge via **Bridges**, pressing its physical button when instructed. Check the inventory, then follow the [English Loxone tutorial](docs/TUTORIAL.md). Scenes are created in the Hue app. Actual Hue state is not synchronized back into the Loxone Lighting Controller.
 
 For persistent browser trust, import only the public server certificate after checking its fingerprint; never share `server.key`. Certificates last 365 days and require renewal. Trust and HTTPS compatibility with the Miniserver are separate checks.

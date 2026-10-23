@@ -20,6 +20,8 @@ class DockerUpdateTests(unittest.TestCase):
             with self.subTest(source=source), tempfile.TemporaryDirectory() as temp:
                 old = setup.prepare(Path(temp).resolve()/'old', '127.0.0.1', source='build')
                 values = (old/'.env').read_text() + 'LOCAL_OPERATOR_SETTING=retained\n'
+                for flag in ('WRITES', 'COLOR', 'WHITE'):
+                    values = values.replace(f'HUE_{flag}_ENABLED=1', f'HUE_{flag}_ENABLED=0')
                 (old/'.env').write_text(values)
                 private = {str(p.relative_to(old)): (p.read_bytes(), p.stat().st_mode & 0o777)
                            for folder in ('data', 'secrets', 'certs') for p in (old/folder).rglob('*') if p.is_file()}
@@ -36,7 +38,8 @@ class DockerUpdateTests(unittest.TestCase):
                     self.assertEqual((candidate/name).stat().st_mode & 0o777, mode)
                     self.assertEqual((old/name).read_bytes(), content)
                 env = dict(line.split('=',1) for line in (candidate/'.env').read_text().splitlines())
-                self.assertEqual(env['HUE_WRITES_ENABLED'], '0')
+                for flag in ('WRITES', 'COLOR', 'WHITE'):
+                    self.assertEqual(env[f'HUE_{flag}_ENABLED'], '0')
                 self.assertEqual(env['LOCAL_OPERATOR_SETTING'], 'retained')
                 old_env = dict(line.split('=',1) for line in values.splitlines())
                 self.assertEqual(env['COMPOSE_PROJECT_NAME'], old_env['COMPOSE_PROJECT_NAME'])

@@ -405,8 +405,8 @@ def install(args, layout):
                       'HUE_CONTROL_TOKEN_FILE': str(layout.config / 'secrets/control_token'),
                       'HUE_CA_FILE': str(layout.current / 'trust/huebridge-ca.pem'),
                       'TLS_CERT': str(layout.config / 'certs/server.crt'), 'TLS_KEY': str(layout.config / 'certs/server.key'),
-                      'HUE_LEGACY_ENABLED': '0', 'HUE_WRITES_ENABLED': '0', 'HUE_COLOR_ENABLED': '0',
-                      'HUE_WHITE_ENABLED': '0', 'PYTHONDONTWRITEBYTECODE': '1'}
+                      'HUE_LEGACY_ENABLED': '0', 'HUE_WRITES_ENABLED': '1', 'HUE_COLOR_ENABLED': '1',
+                      'HUE_WHITE_ENABLED': '1', 'PYTHONDONTWRITEBYTECODE': '1'}
             atomic_text(layout.config / 'settings.env', ''.join(f'{k}={v}\n' for k, v in values.items()), 0o640)
             activate(layout, destination)
             install_unit(layout, destination)
@@ -429,7 +429,7 @@ def install(args, layout):
                 for path in reversed(created):
                     if path.exists(): shutil.rmtree(path)
             raise
-    print(f'Native installation ready: https://{host}:{args.port}\nInitial login: admin / admin. Change it after login. Control remains disabled.')
+    print(f'Native installation ready: https://{host}:{args.port}\nInitial login: admin / admin. Change it after login. Control, RGB and Lumitech are enabled for supported lights.')
 
 
 def reinstall(args, layout):
