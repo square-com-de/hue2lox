@@ -1,4 +1,4 @@
-> **Unveröffentlichter RC6-Kandidat:** Dieser Branch bindet bereits RC6. Die RC5-Links unten bleiben der bisherige öffentliche Download; für RC6 lokale Probe-Pakete verwenden. Geplante RC6-Anleitungen: [Installation](INSTALL.de.md), [Release Notes](docs/RELEASE-NOTES-RC6.md), [technischer Prüfstand](docs/RC6-TECHNICAL-REVIEW.md). Noch keine Hardware- oder Veröffentlichungsfreigabe.
+> **Unveröffentlichter RC6-Kandidat:** RC6 ist das Ziel dieser Anleitungen, Downloads und Images sind noch nicht verfügbar. Isoliert die übergebenen lokalen Pakete verwenden; beim Docker-Installer lokalen Build wählen. [RC5→RC6 und Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md). Keine Hardware- oder Veröffentlichungsfreigabe.
 
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
@@ -35,28 +35,22 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
-Wähle den Installationsweg, der zu dir passt:
+Der gemeinsame **RC6-Installer** bietet Docker oder nativen Betrieb. RC6 ist noch nicht veröffentlicht: Für die Abnahme lokale, gegen die übergebenen Prüfsummen verifizierte Pakete verwenden. Die öffentlichen Downloadbefehle in den Anleitungen sind erst nach Veröffentlichung ausführbar.
 
-| Installationsweg | Für wen? | Status und Anleitung |
+| Installationsweg | Für wen? | Anleitung |
 | --- | --- | --- |
-| **Installer mit Docker** | Für Einsteiger: RC5 baut lokal; main bietet ein festes Image oder lokalen Build. | **In RC5 verfügbar** · [Installationsanleitung](INSTALL.de.md) |
-| **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In RC5 verfügbar** · [Container-Anleitung (Englisch)](docs/DOCKER.md) |
-| **Python-Installer, ohne Docker** | Für experimentellen direkten Dienstbetrieb auf ausdrücklich unterstützten Linux-Testsystemen. | **Experimentell auf main** · [Gemeinsamer Installer und native Anleitung](docs/INSTALL-NATIVE.md). Nicht in RC5 enthalten. |
+| **Installer mit Docker** | Geführte Einrichtung; festes Release-Image nach Veröffentlichung oder lokaler Build. | [Installationsanleitung](INSTALL.de.md). Vor Veröffentlichung **lokalen Build** wählen. |
+| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). RC6-Image noch nicht verfügbar. |
+| **Nativ ohne Docker** | Experimenteller systemd-Betrieb auf den ausdrücklich geprüften amd64-Linux-Zielen. | [Native Anleitung](docs/INSTALL-NATIVE.md). Quell-ZIP und natives Archiv erforderlich. |
 
-Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der RC6-Kandidateninstaller bietet Docker oder nativen Betrieb; der native Weg ist experimentell und gehört nicht zu RC5. Für Docker bietet der Entwicklungsinstaller ein festes Release-Image oder einen lokalen Build. Neue App-Funktionen einschließlich Discovery-Hilfe werden mit dem lokalen Build getestet; veröffentlichte RC5-Images bleiben unverändert.
+1. **Installer starten:** Die [Anleitung](INSTALL.de.md) beschreibt Voraussetzungen, Paketprüfung und Auswahl des Installationswegs. Mac oder Windows-PC dienen zur Bedienung des Linux-Servers.
+2. **Hue2Lox einrichten:** Der Installer prüft Voraussetzungen; vorhandene funktionierende Docker-Installationen werden weiterverwendet. Neue Installationen erlauben die von der Lampe unterstützten Steuerfunktionen.
+3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hardware erst bei der gesonderten Abnahme koppeln.
+4. **Mit Loxone verbinden:** Für den späteren Hardwaretest beschreibt die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
 
-### Mit dem Docker-Installer loslegen (RC5)
+**[Installationsanleitung](INSTALL.de.md) · [Geplante RC6-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [RC6-Release-Entwurf](docs/RELEASE-NOTES-RC6.md)**
 
-Du brauchst einen Linux-Server, eine VM oder einen Raspberry Pi mit unterstütztem 64-Bit-Betriebssystem, eine Hue Bridge und einen Loxone Miniserver für die Steuerung. Dein Mac oder Windows-PC begleitet dich bei der Einrichtung.
-
-1. **Installer starten:** Die [Installationsanleitung](INSTALL.de.md) führt dich durch Anmeldung am Server, direkten RC5-Download mit Prüfsumme und Start des Installers.
-2. **Hue2Lox einrichten:** Der Installer prüft dein System und kann fehlende Pakete und Docker installieren. Vorhandene funktionierende Docker-Installationen werden weiterverwendet.
-3. **Bridge koppeln:** Öffne die angezeigte Webadresse (bei direktem HTTPS das Zertifikat prüfen) und melde dich mit `admin` / `admin` an. Das Passwort kannst du in der Oberfläche ändern.
-4. **Mit Loxone verbinden:** Wähle Lampen oder Szenen aus und folge der [bebilderten Anleitung](docs/TUTORIAL.de.md), um Befehle zu kopieren oder XML in Loxone Config zu importieren.
-
-**[Zur Installationsanleitung](INSTALL.de.md) · [RC5 als ZIP herunterladen](https://github.com/square-com-de/hue2lox/releases/download/v1.0.0-rc.5/hue2lox-v1.0.0-rc.5.zip) · [Download prüfen](docs/DOWNLOADS.md)**
-
-Lieber mit KI-Begleitung? Nutze den [Installationsprompt für ChatGPT oder Claude](docs/AI-INSTALL.de.md). Er führt dich bis zum selben interaktiven Installer.
+**Bereits installiert?** Den [gesicherten RC5→RC6-Weg mit ausdrücklicher Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md) verwenden. Ein Update überschreibt keine bewusst gesperrten Funktionen. Für KI-Begleitung gibt es den [Installationsprompt](docs/AI-INSTALL.de.md).
 
 ## Feedback & Kontakt
 
@@ -72,9 +66,7 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 **Veröffentlicht: RC5. In Vorbereitung: RC6, noch nicht veröffentlicht.** PR #18 ist in main integriert. Die reale Ubuntu-26.04-/DietPi-13-Abnahme des gemeinsamen Installers, Docker/nativ sowie Update/Rollback und Datenerhalt ist bestanden. [Abnahme und Grenzen](docs/DEPLOYMENT-ACCEPTANCE.md). Hue-/Loxone-Hardwaretests und die Prüfung der endgültigen RC6-Pakete bleiben separat offen. Der eigene Projektcode steht unter Apache 2.0.
 
-RC5 bietet **Quellcode samt Installer** und ein **fertiges Docker-Hub-/GHCR-Image für AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5`. Der RC5-Installer baut lokal; der RC6-Kandidat bietet ein festes Image oder lokalen Build. Quellen- und Lizenzbeilagen stehen beim [Release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). Vor einem stabilen Release gibt es keinen `latest`-Tag.
-
-RC5 ist ein unveränderter Versionsstand. [Version, Commit und Prüfsumme](docs/DOWNLOADS.md) prüfen. `main` ist der getrennte Entwicklungsstand.
+Zielversion ist `1.0.0-rc.6`: Quell-ZIP, natives Archiv und später Docker-Hub-/GHCR-Images für AMD64/ARM64. Alle Teile müssen zum selben geprüften Quellstand gehören. Vor Veröffentlichung gibt es keine nutzbaren RC6-Downloads oder Image-Tags. Kein `latest` vor Stable. RC1 und RC5 bleiben bei dieser Vorbereitung unverändert; frühere Release-Nachweise ersetzen keine RC6-Abnahme.
 
 Szenen erstellst du weiterhin in der Hue-App. Hue2Lox ruft sie über Loxone ab. Eine Synchronisierung des tatsächlichen Lampenzustands zurück in den Loxone-Lichtsteuerungsbaustein ist nicht vorgesehen.
 

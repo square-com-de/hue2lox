@@ -119,3 +119,5 @@ The override forces the exact saved image without rebuilding/downloading, includ
 ## Acceptance criteria
 
 Demonstrate different target code/image, retained registry/token/password/certificate/public URL/feature flags/owners/modes after update, and exact old image plus old data after rollback. A deliberately broken isolated candidate must fail startup and be recoverable. A version label change alone is not a code migration. These are deployment tests, not a general schema-migration or hardware qualification.
+
+For an actual RC5→RC6 transition and explicit control opt-in, follow the [specific recovery guide](RECOVERY-CONTROL.md).

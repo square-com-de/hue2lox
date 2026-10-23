@@ -19,7 +19,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix='hue2lox-fresh-smoke-') as tmp:
         with socket.socket() as s:s.bind(('127.0.0.1',0));port=s.getsockname()[1]
         root=setup.prepare(Path(tmp)/'instance','127.0.0.1',port,source='build')
-        env=dict(os.environ,PORT=str(port),BIND_HOST='127.0.0.1',TLS_CERT=str(root/'certs/server.crt'),TLS_KEY=str(root/'certs/server.key'),HUE_STATE_DIR=str(root/'data'),HUE_REGISTRY_FILE=str(root/'data/registry.json'),HUE_ADMIN_AUTH_FILE=str(root/'data/admin_auth.json'),HUE_CONTROL_TOKEN_FILE=str(root/'secrets/control_token'),HUE_PUBLIC_URL=f'https://127.0.0.1:{port}',HUE_LEGACY_ENABLED='0',HUE_WRITES_ENABLED='0',HUE_COLOR_ENABLED='0',HUE_WHITE_ENABLED='0')
+        env=dict(os.environ,PORT=str(port),BIND_HOST='127.0.0.1',TLS_CERT=str(root/'certs/server.crt'),TLS_KEY=str(root/'certs/server.key'),HUE_STATE_DIR=str(root/'data'),HUE_REGISTRY_FILE=str(root/'data/registry.json'),HUE_ADMIN_AUTH_FILE=str(root/'data/admin_auth.json'),HUE_CONTROL_TOKEN_FILE=str(root/'secrets/control_token'),HUE_PUBLIC_URL=f'https://127.0.0.1:{port}',HUE_LEGACY_ENABLED='0')
+        generated = dict(line.split('=', 1) for line in (root/'.env').read_text().splitlines())
+        for flag in ('HUE_WRITES_ENABLED', 'HUE_COLOR_ENABLED', 'HUE_WHITE_ENABLED'):
+            env[flag] = generated[flag]
+            assert env[flag] == '1'
         base=env['HUE_PUBLIC_URL'];ctx=ssl.create_default_context(cafile=str(root/'certs/server.crt'))
         original_token=(root/'secrets/control_token').read_bytes();original_key=(root/'certs/server.key').read_bytes()
         def request(path,body=None,headers=None):
@@ -56,6 +60,7 @@ def main():
                 cookie=headers['Set-Cookie'].split(';')[0];csrf=json.loads(body)['csrf']
                 auth={'Cookie':cookie,'X-CSRF-Token':csrf,'Origin':base}
                 code,_,body=request('/api/overview',headers=auth);assert code==200 and json.loads(body)['bridges']==[]
+                assert json.loads(body)['features']=={'control':True,'rgb':True,'white':True}
                 for path in ['/','/assets/i18n.js','/assets/locales/en.js','/assets/discovery-help.js', '/assets/sidebar-icons.svg', '/assets/sidebar-icons-license.txt','/tutorial/en','/licenses']:
                     assert request(path)[0]==200,path
                 assert request('/api/admin/token',{},headers={'Cookie':cookie})[0]==403

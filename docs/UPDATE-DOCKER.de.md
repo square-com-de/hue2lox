@@ -126,3 +126,5 @@ Die Zusatzdatei erzwingt genau das gesicherte Image – ohne Neubau und ohne Dow
 ## Abnahmekriterien
 
 Neuer Anwendungscode bzw. neue Image-ID tatsächlich aktiv; unveränderte Registry, Token, bestehendes Passwort, Zertifikat, Browseradresse, Schaltfreigaben, Eigentümer und Modi nach Update. Nach Rollback exakt altes Image UND alter Datenstand. Ein bewusst nicht startfähiger Testkandidat darf keinen Erfolg melden; vollständige Rückkehr zur Sicherung muss funktionieren. Das sind Deployment-Prüfungen, keine allgemeine Migrationsfreigabe und keine Hardwareabnahme.
+
+Für RC5→RC6 und ausdrückliche Steuerungsfreigabe die [konkrete Korrekturanleitung](RECOVERY-CONTROL.de.md).

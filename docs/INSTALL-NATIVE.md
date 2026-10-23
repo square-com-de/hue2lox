@@ -72,7 +72,7 @@ sudo bash deployment/native/install.sh \
 
 `192.168.1.50` ist nur eine Beispieladresse, nicht automatisch die Adresse deines Servers. Verwende dessen feste LAN-IP. Der Installer akzeptiert derzeit nur lokale IPv4-Adressen und Ports ab 1024. Er verweigert eine Neuinitialisierung vorhandener Daten. Er erstellt eigene Zugangsdaten und ein Zertifikat, startet den Dienst und prüft HTTPS mit Zertifikatsprüfung. Er sucht keine Bridge und schaltet keine Lampen. Schlägt der erste HTTPS-Test fehl, bleiben Dateien zur Diagnose erhalten; die Installation gilt dann nicht als erfolgreich. Nicht erneut initialisieren, sondern Ursache beheben oder ausdrücklich deinstallieren.
 
-Nach erfolgreicher Einrichtung die ausgegebene HTTPS-Adresse öffnen, Zertifikatsfingerabdruck über einen vertrauenswürdigen Weg prüfen und mit `admin` / `admin` anmelden. Passwort in der Oberfläche ändern. Schreib-, Farb- und Weißsteuerung sind bei Neuinstallation zunächst deaktiviert. Pairing und Loxone-Einrichtung gehören zu einer separat freigegebenen Hardwareabnahme, siehe [Abnahmeplan](ACCEPTANCE.md).
+Nach erfolgreicher Einrichtung die ausgegebene HTTPS-Adresse öffnen, Zertifikatsfingerabdruck über einen vertrauenswürdigen Weg prüfen und mit `admin` / `admin` anmelden. Passwort in der Oberfläche ändern. Steuerung, RGB und Lumitech sind bei Neuinstallationen für unterstützte Lampen direkt aktiviert. Ein vorhandenes Token bleibt für Steuerungsbefehle erforderlich. Updates und Wiederinstallationen mit Datenerhalt übernehmen die bisherigen Einstellungen unverändert. Pairing und Loxone-Einrichtung gehören zu einer separat freigegebenen Hardwareabnahme, siehe [Abnahmeplan](ACCEPTANCE.md).
 
 ## Dateien und Betrieb
 
@@ -202,3 +202,5 @@ bash install-assistant.sh --deployment native \
 ```
 
 Der Assistent prüft das Archiv; Git wird dafür nicht benötigt. Das native Archiv ist versionsgebunden und enthält Manifest/Anwendung/Wartungswerkzeuge. Veröffentlichung und Hardwarefreigabe bleiben separat.
+
+Bestehende native Entwicklungsinstallation? Den [separaten nativen Korrektur-/Rollbackweg](RECOVERY-CONTROL.de.md).

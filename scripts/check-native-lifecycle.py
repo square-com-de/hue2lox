@@ -43,6 +43,8 @@ assert json.loads(Path('/tmp/assistant-package/package.json').read_text())['vers
 assistant = 'source /source/install-assistant.sh; DEPLOYMENT=native; NATIVE_PACKAGE=$1; NATIVE_SHA256=$2; native_prepare_package; choose_server_ip(){ SELECTED_IP=127.0.0.1; }; confirm(){ return 0; }; prepare_setup'
 run('bash', '-c', assistant + ' <<< 18443', 'native-ci', str(packages[0]), digest(packages[0]))
 settings = dict(line.split('=', 1) for line in Path('/etc/hue2lox/settings.env').read_text().splitlines() if line and not line.startswith('#') and '=' in line)
+for flag in ('HUE_WRITES_ENABLED', 'HUE_COLOR_ENABLED', 'HUE_WHITE_ENABLED'):
+    assert settings[flag] == '1', flag
 base = settings['HUE_PUBLIC_URL']
 cert = Path(settings['TLS_CERT'])
 context = ssl.create_default_context(cafile=str(cert))
@@ -68,6 +70,7 @@ def check_login(password):
     auth = {'Cookie': headers['Set-Cookie'].split(';')[0], 'X-CSRF-Token': json.loads(body)['csrf'], 'Origin': base}
     code, _, body = request('/api/overview', headers=auth)
     assert code == 200 and json.loads(body)['bridges'] == []
+    assert json.loads(body)['features'] == {'control': True, 'rgb': True, 'white': True}
     assert request('/api/admin/token', {}, {'Cookie': auth['Cookie']})[0] == 403
     for path in ('/', '/assets/locales/en.js', '/assets/discovery-help.js', '/assets/sidebar-icons.svg', '/assets/sidebar-icons-license.txt', '/tutorial/en', '/licenses'):
         assert request(path)[0] == 200

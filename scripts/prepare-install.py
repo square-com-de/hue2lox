@@ -78,7 +78,7 @@ def prepare(destination,host,port=8443,scheme='https',public_url=None,source='im
         initialize(work/'data', work/'certs' if scheme == 'https' else None,
                    work/'secrets', str(address), *owner)
         name = installation_name()
-        (work/'.env').write_text(f'COMPOSE_PROJECT_NAME={name}\nHUE2LOX_CONTAINER_NAME={name}-1\nHUE2LOX_BIND_IP={address}\nHUE2LOX_PORT={port}\nHUE2LOX_SCHEME={scheme}\nHUE_PUBLIC_URL={public_url}\nHUE_WRITES_ENABLED=0\nHUE_COLOR_ENABLED=0\nHUE_WHITE_ENABLED=0\n');(work/'.env').chmod(0o600)
+        (work/'.env').write_text(f'COMPOSE_PROJECT_NAME={name}\nHUE2LOX_CONTAINER_NAME={name}-1\nHUE2LOX_BIND_IP={address}\nHUE2LOX_PORT={port}\nHUE2LOX_SCHEME={scheme}\nHUE_PUBLIC_URL={public_url}\nHUE_WRITES_ENABLED=1\nHUE_COLOR_ENABLED=1\nHUE_WHITE_ENABLED=1\n');(work/'.env').chmod(0o600)
         with (work/'.env').open('a') as settings:
             settings.write(f'HUE2LOX_SOURCE={source}\n')
             if image: settings.write(f'HUE2LOX_IMAGE={image}\n')
@@ -111,4 +111,4 @@ if __name__=='__main__':
     try:dest=prepare(args.destination,args.host,args.port,args.scheme,args.public_url,args.source,args.registry)
     except (ValueError,OSError,subprocess.SubprocessError) as error:parser.exit(1,message('Setup failed: '+str(error))+'\n')
     print('Fresh installation prepared at '+str(dest))
-    print('No container started; no Hue requests sent. Control is disabled by default.')
+    print('No container started; no Hue requests sent. Control, RGB and Lumitech are enabled for supported lights.')

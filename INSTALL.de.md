@@ -376,7 +376,7 @@ fi
 
 Erwartet: `Fresh installation prepared at /opt/hue2lox-test`.
 
-Das Skript erzeugt eigene Schlüssel, einen zufälligen Loxone-Token, Login `admin` / `admin` und eine leere Bridge-Liste. Keine alten Konfigurationen oder Schlüssel kopieren. Noch läuft kein Container und die Lampensteuerung ist deaktiviert.
+Das Skript erzeugt eigene Schlüssel, einen zufälligen Loxone-Token, Login `admin` / `admin` und eine leere Bridge-Liste. Keine alten Konfigurationen oder Schlüssel kopieren. Noch läuft kein Container. Steuerung, RGB und Lumitech sind für unterstützte Lampen bereits aktiviert; der Installer sendet keine Lampenbefehle.
 
 ## 8. Starten und prüfen
 
@@ -415,26 +415,7 @@ Beim ersten Öffnen kann eine Zertifikatswarnung erscheinen. Hilfe dazu findest 
 
 1. Bridge im Webinterface suchen oder per IP hinzufügen, Link-Taste drücken und koppeln. Falls Discovery trotz Host-Netzwerk nicht funktioniert, LAN/VLAN und Firewall prüfen oder die IP manuell verwenden.
 2. Inventar, Fähigkeiten und Icons prüfen. Einlesen allein schaltet keine Lampe.
-3. Erst für einen gewollten Steuerungstest auf dem SERVER öffnen:
-
-```sh
-sudo nano /opt/hue2lox-test/.env
-```
-
-Diese vorhandenen Zeilen von `0` auf `1` ändern:
-
-```text
-HUE_WRITES_ENABLED=1
-HUE_COLOR_ENABLED=1
-HUE_WHITE_ENABLED=1
-```
-
-In nano: **Ctrl+O**, Enter zum Speichern; **Ctrl+X** zum Schließen. Anschließend:
-
-```sh
-sudo docker compose --project-directory /opt/hue2lox-test --env-file /opt/hue2lox-test/.env -f /opt/hue2lox-test/compose.yaml up -d
-```
-
+3. Steuerung, RGB und Lumitech stehen für unterstützte Lampen direkt bereit. Steuerungsbefehle benötigen weiterhin den Loxone-Token. Updates und Wiederinstallationen mit Datenerhalt übernehmen vorhandene Einstellungen unverändert.
 4. Eine Testlampe auswählen; gleichzeitige Steuerung durch die bestehende Anlage vermeiden. Befehle/XML nach der [Loxone-Anleitung](docs/TUTORIAL.de.md) einrichten.
 5. Mit `sudo docker compose --project-directory /opt/hue2lox-test --env-file /opt/hue2lox-test/.env -f /opt/hue2lox-test/compose.yaml restart` neu starten. Kopplung, geändertes Passwort und gespeicherte Einstellungen müssen erhalten bleiben. Erneute Anmeldung kann nötig sein.
 
@@ -583,3 +564,5 @@ verwenden; keinen festen Projektnamen mit `-p` darüberlegen.
 [Certificate renewal, IP change, backup and restore / Zertifikat, IP-Wechsel und Sicherung](docs/MAINTENANCE.de.md)
 
 Für Updates bestehender Installationen des Entwicklungsinstallers gilt der separate [Docker-Update- und Rollback-Ablauf](docs/UPDATE-DOCKER.de.md). Das Neuinstallationsmenü überschreibt keine vorhandene Installation.
+
+Bereits installiert? Den [RC5→RC6-Weg mit ausdrücklicher Steuerungsfreigabe und Rollback](docs/RECOVERY-CONTROL.de.md).

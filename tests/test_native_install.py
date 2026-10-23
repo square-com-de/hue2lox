@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 import tarfile
 import tempfile
+import socket
+
+REAL_SOCKET = socket.socket
 import unittest
 from unittest.mock import patch
 
@@ -191,6 +194,11 @@ class NativeLifecycleTests(unittest.TestCase):
                 for path in base.rglob('*') if path.is_file()}
 
     def changed_user_state(self):
+        config = self.layout.config / 'settings.env'
+        text = config.read_text()
+        for flag in ('WRITES', 'COLOR', 'WHITE'):
+            text = text.replace(f'HUE_{flag}_ENABLED=1', f'HUE_{flag}_ENABLED=0')
+        config.write_text(text)
         (self.layout.state / 'registry.json').write_text('{"schema_version":1,"bridges":[],"user_marker":"preserve"}')
         (self.layout.state / 'admin_auth.json').write_text('user changed credential hash')
         (self.layout.config / 'secrets/control_token').write_text('user changed token')
@@ -198,11 +206,14 @@ class NativeLifecycleTests(unittest.TestCase):
     def next_package(self):
         self.args.sha256 = package(self.archive, version='1.2.4', commit='b' * 40)
 
-    def test_fresh_install_preserves_disabled_control_and_private_modes(self):
+    def test_fresh_install_enables_control_and_preserves_private_modes(self):
         self.install()
         values = native.settings(self.layout)
+        from tests.control_defaults import assert_ready
+        with patch.object(native.socket, 'socket', REAL_SOCKET):
+            assert_ready(self, values)
         for key in ('HUE_WRITES_ENABLED', 'HUE_COLOR_ENABLED', 'HUE_WHITE_ENABLED'):
-            self.assertEqual(values[key], '0')
+            self.assertEqual(values[key], '1')
         self.assertEqual((self.layout.state / 'admin_auth.json').stat().st_mode & 0o777, 0o600)
         self.assertEqual((self.layout.config / 'certs/server.key').stat().st_mode & 0o777, 0o640)
         self.assertEqual(self.layout.state.stat().st_mode & 0o777, 0o700)

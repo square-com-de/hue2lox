@@ -31,3 +31,9 @@ Candidate technical checks must pass package/HTTPS smokes, all source tests, fou
 - Stable 1.0 approval, explicitly declared platform scope and native experimental status. / Stable-Freigabe und klarer Plattformumfang; nativ bleibt experimentell.
 
 RC1 `1d631cd1231d7cf004c6452c1fad0c262ff92bfd` and RC5 `45237512dcd18db9aaf3611173ce91ad8c654450` remain unchanged, including release text/assets. No new tag, release, registry image, latest update or production deployment is part of preparation.
+
+## Control defaults and existing installations / Steuerung und Bestandsinstallationen
+
+Fresh Docker/native installations now set the three control flags to `1`; existing values remain unchanged on update/reinstall. Token and per-light capability enforcement are retained. Actual RC5 installer deployments stored `0`, whereas direct RC5 images without overrides defaulted to `1`. RC5 did not include native packages. The explicit offline correction tool changes only the three flags after operator opt-in, with a private settings backup. Docker requires container recreation, native requires a service restart. Full update/rollback and independent acceptance: [English procedure](RECOVERY-CONTROL.md), [deutscher Ablauf](RECOVERY-CONTROL.de.md). The final integrated candidate must pass renewed tests and independent practical acceptance; previous green runs do not approve this integration.
+
+Neue Docker-/native Installationen setzen die drei Steuerungsflags auf `1`; Updates/Wiederinstallationen behalten bestehende Werte. Token- und Lampenfähigkeitsprüfung bleiben aktiv. Der reale RC5-Installer speicherte `0`, direkte RC5-Images ohne Overrides verwendeten `1`. RC5 enthielt kein natives Paket. Eine bewusste Freigabe erfolgt offline mit privater Sicherung, bei Docker anschließend durch Neuerstellen des Containers. Die endgültige Integration benötigt erneute Tests und unabhängige praktische Abnahme; frühere grüne Läufe ersetzen diese nicht.
