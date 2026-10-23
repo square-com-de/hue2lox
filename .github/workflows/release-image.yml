@@ -54,7 +54,8 @@ jobs:
         with:
           name: release-image-arm64
           path: images/arm64
-      - run: python3 scripts/release-image.py prepare
+      - name: Prepare source ZIP, verified native archive and container materials
+        run: python3 scripts/release-image.py prepare
       - name: Authenticate to GHCR
         env:
           GH_TOKEN: ${{ github.token }}
@@ -67,7 +68,7 @@ jobs:
         run: |
           test -n "$DOCKERHUB_USERNAME" && test -n "$DOCKERHUB_TOKEN"
           printf '%s' "$DOCKERHUB_TOKEN" | docker login docker.io -u "$DOCKERHUB_USERNAME" --password-stdin
-      - name: Publish verified assets and exact candidate images
+      - name: Publish verified source/native assets and exact candidate images
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/release-image.py publish

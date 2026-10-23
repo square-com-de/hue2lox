@@ -3,6 +3,9 @@ import importlib.util
 import io
 import json
 import os
+import shutil
+import tarfile
+import hashlib
 import zipfile
 import subprocess
 import tempfile
@@ -17,14 +20,14 @@ spec.loader.exec_module(m)
 SHA = 'a' * 40
 
 
-def event(tag='v1.0.0-rc.5', prerelease=True):
+def event(tag='v1.0.0-rc.6', prerelease=True):
     return {'action': 'published', 'release': {'id': 42, 'tag_name': tag,
             'draft': False, 'prerelease': prerelease}}
 
 
 class ReleaseTests(unittest.TestCase):
     def test_rc_and_stable_get_explicit_versions(self):
-        for tag, rc in [('v1.0.0-rc.5', True), ('v1.0.0', False), ('v2.1.0-rc.1', True)]:
+        for tag, rc in [('v1.0.0-rc.6', True), ('v1.0.0', False), ('v2.1.0-rc.1', True)]:
             with self.subTest(tag=tag):
                 result = m.plan(event(tag, rc), 'release', m.REPO, SHA)
                 self.assertEqual(result['version'], tag[1:])
@@ -35,7 +38,7 @@ class ReleaseTests(unittest.TestCase):
         for name in ('workflow_dispatch', 'push', 'pull_request'):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 m.plan(event(), name, m.REPO, SHA)
-        for tag in ('main', 'v1.0.0-rc.1', 'v1.0.0-rc.2', 'v1.0.0-rc.3', 'v1.0.0-rc.4',
+        for tag in ('main', 'v1.0.0-rc.1', 'v1.0.0-rc.2', 'v1.0.0-rc.3', 'v1.0.0-rc.4', 'v1.0.0-rc.5',
                     'v0.9.0', 'v01.0.0', 'v1.0.0-rc.0', 'v1.0.0; echo bad'):
             with self.subTest(tag=tag), self.assertRaises(ValueError):
                 m.plan(event(tag), 'release', m.REPO, SHA)
@@ -136,12 +139,24 @@ class ReleaseTests(unittest.TestCase):
             os.chdir(directory)
             try:
                 subprocess.run(['git', 'init', '-q'], check=True)
+                builder_spec = importlib.util.spec_from_file_location('fixture_builder', ROOT / 'scripts/build-native-package.py')
+                builder = importlib.util.module_from_spec(builder_spec)
+                builder_spec.loader.exec_module(builder)
+                for tree in builder.TREES:
+                    shutil.copytree(ROOT / tree, Path(tree))
+                for name in (*builder.FILES, 'scripts/build-native-package.py'):
+                    destination = Path(name)
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(ROOT / name, destination)
                 Path('README.md').write_text('committed source')
-                subprocess.run(['git', 'add', 'README.md'], check=True)
+                subprocess.run(['git', 'add', '.'], check=True)
                 subprocess.run(['git', '-c', 'user.name=Test', '-c', 'user.email=test@example.org',
                                 '-c', 'commit.gpgsign=false', 'commit', '-qm', 'fixture'], check=True)
                 commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
                 Path('private-untracked.txt').write_text('not a release file')
+                original_app = Path('src/app.py').read_bytes()
+                Path('src/app.py').write_bytes(b'dirty tracked content must not ship')
+                Path('src/private-untracked.py').write_text('not a release file')
                 Path('materials').mkdir()
                 Path('materials/hue2lox-base-sources.tar.gz').write_bytes(b'checked bundle')
                 Path('evidence/amd64').mkdir(parents=True)
@@ -157,12 +172,45 @@ class ReleaseTests(unittest.TestCase):
                 with patch.object(m.subprocess, 'run', side_effect=command), \
                      patch.object(m, 'verify_inventory', return_value='image-id'):
                     assets = m.prepare(info)
-                with zipfile.ZipFile(assets / 'hue2lox-v1.0.0-rc.5.zip') as archive:
-                    self.assertEqual(archive.read('hue2lox-v1.0.0-rc.5/README.md'), b'committed source')
+                with zipfile.ZipFile(assets / 'hue2lox-v1.0.0-rc.6.zip') as archive:
+                    self.assertEqual(archive.read('hue2lox-v1.0.0-rc.6/README.md'), b'committed source')
                     self.assertFalse(any('private-untracked' in name for name in archive.namelist()))
+                native_name = 'hue2lox-1.0.0-rc.6-native.tar.gz'
+                with tarfile.open(assets / native_name) as archive:
+                    manifest = json.load(archive.extractfile('hue2lox-native/manifest.json'))
+                    self.assertEqual(manifest['commit'], commit)
+                    self.assertEqual(manifest['version'], '1.0.0-rc.6')
+                    self.assertIs(manifest['dirty'], False)
+                    self.assertEqual(archive.extractfile('hue2lox-native/src/app.py').read(), original_app)
+                    self.assertFalse(any('private-untracked' in name for name in archive.getnames()))
+                    for name, expected in manifest['files'].items():
+                        self.assertEqual(hashlib.sha256(archive.extractfile('hue2lox-native/' + name).read()).hexdigest(), expected)
+                Path('second').mkdir()
+                m.prepare_source_packages(info, Path('second'))
+                self.assertEqual((assets / native_name).read_bytes(), (Path('second') / native_name).read_bytes())
+                self.assertEqual((assets / 'hue2lox-v1.0.0-rc.6.zip').read_bytes(), (Path('second') / 'hue2lox-v1.0.0-rc.6.zip').read_bytes())
                 for line in (assets / 'SHA256SUMS.txt').read_text().splitlines():
                     expected, name = line.split('  ')
                     self.assertEqual(m.digest(assets / name), expected)
+                # Reject a corrupted native member before any asset upload.
+                def corrupt_package(args, **kwargs):
+                    result = original_run(args, **kwargs)
+                    if '--output' in args and any('build-native-package.py' in str(a) for a in args):
+                        package = Path(args[args.index('--output') + 1]) / native_name
+                        with tarfile.open(package) as archive:
+                            entries = [(entry, archive.extractfile(entry).read()) for entry in archive.getmembers()]
+                        with tarfile.open(package, 'w:gz') as archive:
+                            for entry, content in entries:
+                                if entry.name.endswith('/src/app.py'):
+                                    content = b'corrupt runtime'
+                                    entry.size = len(content)
+                                archive.addfile(entry, io.BytesIO(content))
+                    return result
+                Path('tampered').mkdir()
+                with patch.object(m.subprocess, 'run', side_effect=corrupt_package), \
+                     self.assertRaisesRegex(ValueError, 'file hash mismatch'):
+                    m.prepare_source_packages(info, Path('tampered'))
+                self.assertFalse((Path('tampered') / native_name).exists())
             finally:
                 os.chdir(previous)
 
@@ -229,7 +277,7 @@ class ReleaseTests(unittest.TestCase):
                 self.assertEqual(len(tags), 4)
                 self.assertEqual({t[2] for t in tags}, {'image-id'})
                 self.assertEqual({t[3] for t in tags},
-                                 {image + ':1.0.0-rc.5-' + arch for image in m.IMAGES for arch in m.ARCHES})
+                                 {image + ':1.0.0-rc.6-' + arch for image in m.IMAGES for arch in m.ARCHES})
                 creations = [c for c in commands.call_args_list if c.args[0][:3] == ['docker', 'manifest', 'create']]
                 self.assertEqual(len(creations), 0 if existing else 2)
 

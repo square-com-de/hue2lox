@@ -44,7 +44,7 @@ branch/tag, opening a PR, saving a draft or manually running the preparation
 workflow cannot publish an image.
 
 The workflow checks the tag, source commit and prerelease flag, and rejects the
-historical RC1–RC4 tags. It runs the source tests, installer smoke tests and
+historical RC1–RC5 tags. It runs the source tests, installer smoke tests and
 HTTP/HTTPS container tests. Independently, it builds AMD64 and ARM64 candidates,
 boots each, inventories them, creates SPDX SBOMs, and blocks on fixable high or
 critical vulnerabilities. The source-material job compares both inventories
@@ -52,7 +52,7 @@ with the pinned license/source mappings and verifies source download hashes.
 
 Only after every gate passes does the publisher:
 
-- Attach `hue2lox-vVERSION.zip`, `hue2lox-base-sources.tar.gz`,
+- Attach `hue2lox-vVERSION.zip`, `hue2lox-VERSION-native.tar.gz`, `hue2lox-base-sources.tar.gz`,
   `container-evidence.tar.gz`, `container-release.json` and `SHA256SUMS.txt`
   permanently to the release, then verify their downloads without credentials.
 - Load and verify the **same images** that were inventoried and scanned. There
@@ -130,7 +130,7 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    Tags allein und manuelle Vorbereitungsläufe veröffentlichen nichts.
 4. Tests, HTTP-/HTTPS-Installation, beide CPU-Architekturen, Schwachstellenscans
    und Quellenabgleich müssen erfolgreich sein. Anschließend werden Quellen,
-   vollständige Lizenzbeilagen, Inventare, SBOMs und Prüfsummen dauerhaft am
+   das native Archiv `hue2lox-VERSION-native.tar.gz`, vollständige Lizenzbeilagen, Inventare, SBOMs und Prüfsummen dauerhaft am
    Release hinterlegt und ohne Anmeldung heruntergeladen und geprüft.
 5. Die exakt geprüften Images werden zu GHCR und Docker Hub übertragen. Beide Architekturen
    werden danach aus beiden Registries ohne Anmeldung geladen und mit den Prüfnachweisen verglichen.
@@ -162,3 +162,11 @@ befristete CI-Artefakte ersetzen diese Downloads nicht.
 Before creating a new release tag, set `install/release-image.json` to the same version without the leading `v` (for example, tag `v1.0.0-rc.6` → version `1.0.0-rc.6`). Release publication refuses a mismatch so a new ZIP cannot silently install the previous release image. Do not retag or replace RC5. During development, the file continues to name the last published version; select local build to test `main`.
 
 Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version ohne führendes `v` enthalten. Die Veröffentlichung stoppt bei Abweichungen, damit ein neues ZIP nicht unbemerkt das vorherige Image installiert. RC5 nicht neu taggen oder ersetzen. Während der Entwicklung bleibt die letzte veröffentlichte Version eingetragen; Änderungen aus `main` mit lokalem Build testen.
+
+## Native release asset / Natives Release-Asset
+
+`prepare` builds the native archive in a clean local clone of the exact release commit, alongside the source ZIP. It rejects dirty identity, wrong version/commit, unexpected entries and mismatching file hashes. The common `SHA256SUMS.txt` covers the native archive; `publish` uses the same immutable-asset and anonymous-byte-verification path as the ZIP. A different existing asset is never overwritten. No native pip packages, container or hardware access are required for package creation. Native runtime support remains experimental and amd64-only, independent of ARM64 container availability.
+
+`prepare` baut das native Archiv in einem sauberen lokalen Klon desselben Release-Commits wie das Quell-ZIP. Falsche Version/Commit-ID, unsaubere Identität, unerwartete Einträge oder falsche Dateihashes stoppen den Ablauf. Die gemeinsame `SHA256SUMS.txt` enthält das native Archiv; Upload und anonyme Byteprüfung verwenden denselben unveränderlichen Asset-Pfad wie das ZIP. Abweichende vorhandene Assets werden nicht überschrieben. Für den Paketbau sind weder pip-Pakete noch Container oder Hardwarezugriff nötig. Native Laufzeitunterstützung bleibt experimentell und auf amd64 begrenzt, unabhängig von ARM64-Containern.
+
+Use the [offline RC6 package check](RC6-PREPARATION.md#isolierte-paketprüfung--isolated-package-checks) before publication. / Vor Veröffentlichung die isolierte Paketprüfung verwenden. It creates no tag or release. / Sie erstellt keinen Tag und kein Release.
