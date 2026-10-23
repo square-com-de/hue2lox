@@ -1,3 +1,9 @@
+# RC6 candidate — prepared, unpublished / vorbereitet, unveröffentlicht
+
+This branch is the RC6 release candidate source with version pin `1.0.0-rc.6`. It must remain unmerged until separately approved; no tag/release/image is created here. / Dieser Branch enthält den RC6-Kandidaten mit festem Versionspin. Bis zur separaten Freigabe ungemergt lassen; hier wird kein Tag/Release/Image angelegt.
+
+[RC6 release-note draft / Release-Notes-Entwurf](docs/RELEASE-NOTES-RC6.md) · [Technical checks / Technische Prüfungen](docs/RC6-TECHNICAL-REVIEW.md) · [Hardware plan / Hardwareplan](docs/ACCEPTANCE.md)
+
 # Release status / Release-Stand — 23.10.2026
 
 **Published / Veröffentlicht: RC5. RC6: unpublished preparation / unveröffentlichte Vorbereitung.** PR #18 is merged into main; [current deployment acceptance / aktuelle Deployment-Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) passed. See [changelog](CHANGELOG.md) and [RC6 draft and release gates / RC6-Entwurf und Freigabepunkte](docs/RC6-PREPARATION.md). No RC6 tag, release or image is advertised as available. / Kein RC6-Tag, Release oder Image wird als verfügbar dargestellt.

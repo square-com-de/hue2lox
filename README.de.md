@@ -1,3 +1,5 @@
+> **Unveröffentlichter RC6-Kandidat:** Dieser Branch bindet bereits RC6. Die RC5-Links unten bleiben der bisherige öffentliche Download; für RC6 lokale Probe-Pakete verwenden. Geplante RC6-Anleitungen: [Installation](INSTALL.de.md), [Release Notes](docs/RELEASE-NOTES-RC6.md), [technischer Prüfstand](docs/RC6-TECHNICAL-REVIEW.md). Noch keine Hardware- oder Veröffentlichungsfreigabe.
+
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
 <p align="center">
@@ -41,7 +43,7 @@ Wähle den Installationsweg, der zu dir passt:
 | **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In RC5 verfügbar** · [Container-Anleitung (Englisch)](docs/DOCKER.md) |
 | **Python-Installer, ohne Docker** | Für experimentellen direkten Dienstbetrieb auf ausdrücklich unterstützten Linux-Testsystemen. | **Experimentell auf main** · [Gemeinsamer Installer und native Anleitung](docs/INSTALL-NATIVE.md). Nicht in RC5 enthalten. |
 
-Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der Entwicklungsinstaller bietet Docker oder nativen Betrieb; der native Weg ist experimentell und gehört nicht zu RC5. Für Docker bietet der Entwicklungsinstaller ein festes Release-Image oder einen lokalen Build. Neue App-Funktionen einschließlich Discovery-Hilfe werden mit dem lokalen Build getestet; veröffentlichte RC5-Images bleiben unverändert.
+Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der RC6-Kandidateninstaller bietet Docker oder nativen Betrieb; der native Weg ist experimentell und gehört nicht zu RC5. Für Docker bietet der Entwicklungsinstaller ein festes Release-Image oder einen lokalen Build. Neue App-Funktionen einschließlich Discovery-Hilfe werden mit dem lokalen Build getestet; veröffentlichte RC5-Images bleiben unverändert.
 
 ### Mit dem Docker-Installer loslegen (RC5)
 
@@ -70,7 +72,7 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 **Veröffentlicht: RC5. In Vorbereitung: RC6, noch nicht veröffentlicht.** PR #18 ist in main integriert. Die reale Ubuntu-26.04-/DietPi-13-Abnahme des gemeinsamen Installers, Docker/nativ sowie Update/Rollback und Datenerhalt ist bestanden. [Abnahme und Grenzen](docs/DEPLOYMENT-ACCEPTANCE.md). Hue-/Loxone-Hardwaretests und die Prüfung der endgültigen RC6-Pakete bleiben separat offen. Der eigene Projektcode steht unter Apache 2.0.
 
-RC5 bietet **Quellcode samt Installer** und ein **fertiges Docker-Hub-/GHCR-Image für AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5`. Der Installer baut weiterhin lokal. Quellen- und Lizenzbeilagen stehen beim [Release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). Vor einem stabilen Release gibt es keinen `latest`-Tag.
+RC5 bietet **Quellcode samt Installer** und ein **fertiges Docker-Hub-/GHCR-Image für AMD64/ARM64**: `ghcr.io/square-com-de/hue2lox:1.0.0-rc.5`. Der RC5-Installer baut lokal; der RC6-Kandidat bietet ein festes Image oder lokalen Build. Quellen- und Lizenzbeilagen stehen beim [Release](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). Vor einem stabilen Release gibt es keinen `latest`-Tag.
 
 RC5 ist ein unveränderter Versionsstand. [Version, Commit und Prüfsumme](docs/DOWNLOADS.md) prüfen. `main` ist der getrennte Entwicklungsstand.
 

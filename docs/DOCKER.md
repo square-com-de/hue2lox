@@ -1,24 +1,28 @@
-**Published images: RC5; current source: main.** The merged installer and application changes are covered by [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) and planned for [unpublished RC6](RC6-PREPARATION.md). Until RC6 images exist, choose a local build for those changes; the fixed RC5 references below deliver RC5. The native adapter remains a separate experimental deployment path.
+> **RC6 preparation — NOT RELEASED.** RC6 downloads/images below are planned references and must not be run until publication is explicitly approved and verified. For isolated tests use the supplied local ZIP/native archive or local build. Published RC5 remains [available unchanged](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). This candidate branch intentionally pins RC6; live main retains RC5 until merge approval.
+
+> **RC6-Vorbereitung — NICHT VERÖFFENTLICHT.** RC6-Downloads/Images unten sind geplante Verweise, erst nach freigegebener und geprüfter Veröffentlichung verwenden. Isoliert die lokal bereitgestellten Archive oder lokalen Build nutzen. RC5 bleibt unverändert verfügbar. Dieser Kandidatenbranch bindet RC6; main behält RC5 bis zur Merge-Freigabe.
+
+**Published images: RC5. This branch prepares RC6.** The merged installer and application changes are covered by [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) and planned for [unpublished RC6](RC6-PREPARATION.md). Until RC6 images exist, choose a local build for those changes; the RC6 references below are conditional on publication. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-RC5 provides identical images at `docker.io/dubctrl/hue2lox:1.0.0-rc.5` and
-`ghcr.io/square-com-de/hue2lox:1.0.0-rc.5` for
+After successful publication RC6 will provide identical images at `docker.io/dubctrl/hue2lox:1.0.0-rc.6` and
+`ghcr.io/square-com-de/hue2lox:1.0.0-rc.6` for
 `linux/amd64` and `linux/arm64`. RC4 remains unchanged on GHCR; RC1–RC3 remain unchanged and ZIP-only.
-[RC5 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5).
+[RC6 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6).
 
 ## Image tags
 
-Use the exact version `1.0.0-rc.5` for this candidate. There are no floating `rc`
+Use the exact version `1.0.0-rc.6` for this candidate. There are no floating `rc`
 or minor-version tags. `latest` is reserved for a future stable release and is
 not created by an RC.
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.5
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.6
 # Alternatively, from Docker Hub:
-podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.5
+podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.6
 ```
 
 The release workflow publishes only after a GitHub release is published and all
@@ -46,7 +50,7 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy the [RC5 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.5/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
+Copy the [RC6 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.6/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
 
 ```sh
 docker compose up -d
@@ -55,7 +59,7 @@ docker compose up -d
 On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
 
 The Compose example uses GHCR. To use Docker Hub, change only its `image` value
-to `docker.io/dubctrl/hue2lox:1.0.0-rc.5`; both registries contain the same images.
+to `docker.io/dubctrl/hue2lox:1.0.0-rc.6`; both registries must contain the same verified images.
 
 ## Podman Desktop on macOS
 
@@ -64,14 +68,14 @@ For a new local test, run this in the Mac terminal (choose another container and
 volume name if these already exist):
 
 ```sh
-podman run -d --name hue2lox-rc5-test \
+podman run -d --name hue2lox-rc6-test \
   -p 127.0.0.1:18443:8443 \
   -e PORT=8443 \
   -e HUE_PUBLIC_URL=http://localhost:18443 \
-  -v hue2lox-rc5-data:/data \
+  -v hue2lox-rc6-data:/data \
   --read-only --tmpfs /tmp --cap-drop=ALL \
   --security-opt=no-new-privileges \
-  docker.io/dubctrl/hue2lox:1.0.0-rc.5
+  docker.io/dubctrl/hue2lox:1.0.0-rc.6
 ```
 
 Open **http://localhost:18443** exactly. Initial login is `admin` / `admin`
@@ -111,7 +115,7 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 
 **Installer-created deployments:** use the complete [update/rollback guide](UPDATE-DOCKER.md) / [deutsche Anleitung](UPDATE-DOCKER.de.md), including a cold backup and the exact previous image. It covers local builds and pinned release images.
 
-**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged RC5 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
+**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged RC6 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
 
 ## Settings
 

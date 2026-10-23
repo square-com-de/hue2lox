@@ -190,3 +190,15 @@ Das spätere LoxBerry-Plugin kann gemeinsame Zustandsvorbereitung und Anwendung 
 [Manuelle VM-Abnahme und offene Nachweise](NATIVE-VM-ACCEPTANCE.md).
 
 Die im gemeinsamen Installer gewählte Sprache gilt auch für die eigenen Python-Helfermeldungen und Fehlermeldungen. Für direkte Aufrufe kann `export HUE2LOX_INSTALL_LANG=de` gesetzt werden; mit `en` erscheinen englische Meldungen. Ausgaben externer Werkzeuge (apt, Docker, systemd) und deren Originalprotokolle werden nicht umgeschrieben.
+
+## RC6-Quell-ZIP und natives Archiv
+
+**Vorbereitung, noch nicht veröffentlicht.** Zusätzlich zum `hue2lox-v1.0.0-rc.6.zip` wird `hue2lox-1.0.0-rc.6-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; bis zur Veröffentlichung nur die lokale Übergabe verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
+
+```sh
+bash install-assistant.sh --deployment native \
+  --native-package /absoluter/pfad/hue2lox-1.0.0-rc.6-native.tar.gz \
+  --native-sha256 GEPRUEFTER_SHA256
+```
+
+Der Assistent prüft das Archiv; Git wird dafür nicht benötigt. Das native Archiv ist versionsgebunden und enthält Manifest/Anwendung/Wartungswerkzeuge. Veröffentlichung und Hardwarefreigabe bleiben separat.

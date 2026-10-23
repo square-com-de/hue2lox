@@ -1,4 +1,8 @@
-**Stand / Status:** PR #18 is merged into main. Real Ubuntu/DietPi Docker and native lifecycle acceptance passed; [evidence / Nachweise](DEPLOYMENT-ACCEPTANCE.md). RC6 is [unpublished preparation / unveröffentlichte Vorbereitung](RC6-PREPARATION.md). The image pin stays RC5 until a new image actually exists; local builds use current source. / Der Image-Pin bleibt bis zur tatsächlichen Verfügbarkeit eines neuen Images auf RC5; lokale Builds verwenden den aktuellen Quellstand.
+> **RC6 preparation — NOT RELEASED.** RC6 downloads/images below are planned references and must not be run until publication is explicitly approved and verified. For isolated tests use the supplied local ZIP/native archive or local build. Published RC5 remains [available unchanged](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). This candidate branch intentionally pins RC6; live main retains RC5 until merge approval.
+
+> **RC6-Vorbereitung — NICHT VERÖFFENTLICHT.** RC6-Downloads/Images unten sind geplante Verweise, erst nach freigegebener und geprüfter Veröffentlichung verwenden. Isoliert die lokal bereitgestellten Archive oder lokalen Build nutzen. RC5 bleibt unverändert verfügbar. Dieser Kandidatenbranch bindet RC6; main behält RC5 bis zur Merge-Freigabe.
+
+**Candidate status / Kandidatenstand:** This release branch pins RC6 before tagging. RC6 images are not yet available; test only local builds or locally prepared fixture images. Live main stays on published RC5 until merge approval. / Dieser Release-Branch bindet RC6 vor dem Tag; die Images sind noch nicht verfügbar. Nur lokale Builds bzw. isolierte Fixture-Images testen; main bleibt bis zur Merge-Freigabe auf RC5.
 
 # Installer image selection
 
@@ -6,7 +10,7 @@
 
 ## English
 
-This describes the development installer, not the unchanged RC5 ZIP. The development installer currently selects the published image `1.0.0-rc.5`. The next release will pin its own version before publication.
+This describes the shared RC6 candidate installer. Its fixed image reference is `1.0.0-rc.6`; it becomes usable only after successful publication. Local builds use the supplied candidate source.
 
 In **step 5**, choose:
 
@@ -39,7 +43,7 @@ The choice is recorded in `.env` and the generated `compose.yaml`. Source files 
 
 ## Deutsch
 
-Dies beschreibt den Entwicklungsinstaller, nicht das unveränderte RC5-ZIP. Der Entwicklungsinstaller verwendet aktuell das veröffentlichte Image `1.0.0-rc.5`. Vor der nächsten Veröffentlichung wird deren eigene feste Version eingetragen.
+Dies beschreibt den gemeinsamen RC6-Kandidateninstaller. Seine feste Image-Referenz ist `1.0.0-rc.6`; sie wird erst nach erfolgreicher Veröffentlichung nutzbar. Lokale Builds verwenden den bereitgestellten Kandidatenquellstand.
 
 In **Schritt 5** auswählen:
 

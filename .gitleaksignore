@@ -1,0 +1,5 @@
+# Exact historical false positives: literal synthetic redaction-test fixture,
+# manually checked in both commits; never a deployed credential. No path/rule
+# allowlist and no history rewrite. See docs/RC6-TECHNICAL-REVIEW.md.
+132737ba7e6d4cc18e3f04c6503e65ecc386a1bf:tests/test_monitor.py:generic-api-key:48
+b9c8418fc0ef88fde7060850b5affff15814120b:test_monitor.py:generic-api-key:48

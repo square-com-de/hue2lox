@@ -1,6 +1,6 @@
 # Hue2Lox – third-party notices / Quellen und Lizenzen
 
-Reviewed: 20 October 2026. Original Hue2Lox code, documentation and project assets are licensed under Apache License 2.0, to the extent applicable rights exist. See LICENSE and NOTICE. Third-party components retain their own licenses; the project license does not replace the terms below.
+Reviewed: 23 October 2026 for the unpublished RC6 preparation. Original Hue2Lox code, documentation and project assets are licensed under Apache License 2.0, to the extent applicable rights exist. See LICENSE and NOTICE. Third-party components retain their own licenses; the project license does not replace the terms below.
 
 ## Sidebar navigation icons – Iconoir
 
@@ -26,22 +26,48 @@ The current lamp icons are original geometric SVG drawings created for Hue2Lox, 
 `trust/huebridge-ca.pem` was sourced from the Raycast Hue extension at revision `eb2e5bff8a2ed8b12208f0835827d9bd35027692`:
 https://github.com/raycast/extensions/blob/eb2e5bff8a2ed8b12208f0835827d9bd35027692/extensions/hue/assets/huebridge_cacert.pem
 
-This is a public trust certificate, not a private key. Source provenance is recorded; certificate redistribution terms and applicable upstream notices must still be verified before a public release. The repository's general license is not assumed to grant rights to every third-party asset it contains.
+The two public trust certificates are not private keys. The bundle is byte-identical to the pinned source (SHA256 `2ff54626fc51de587cce0f3f0339552f89da781b5d5949fa0c90ec30ddf8acfa`). That revision declares MIT in the Hue extension package.json and carries the root MIT license, copyright (c) 2021 Raycast. The complete original text is retained in `trust/LICENSE-raycast.txt` and below so it accompanies source, native and Docker distributions. Certificate issuers remain Philips Hue and Signify Hue; no endorsement, ownership transfer or Apache relicensing is implied.
 
 ## Container/runtime dependencies
 
-The image uses the official `python:3.12-alpine` base image, pinned by digest in both Dockerfiles. Candidate package/source inventories are recorded under `compliance/`; see [image preparation status](docs/IMAGE-COMPLIANCE.md). These preparation records do not yet constitute full image-distribution approval. Python and its standard library have the PSF license and additional notices: https://docs.python.org/3.12/license.html . Alpine packages, OpenSSL and other runtime components retain their respective licenses. Hue2Lox installs no additional pip packages, but the base image can include pip and its vendored libraries. These and all transitive runtime components must be included in any image inventory.
+The Docker image uses official `python:3.15-alpine`, pinned by digest in both Dockerfiles and `compliance/base-image.json`. Python is 3.15.0 in the locked candidate; native deployment uses the supported operating system's Python (minimum 3.11), not the Docker base. Python and its standard library have the PSF license and additional notices: https://docs.python.org/3.15/license.html . Alpine, OpenSSL and other runtime components retain their individual terms.
 
-The planned release distributes source code, installer and Dockerfiles only. Users build locally and obtain the base image directly from its upstream provider. No prebuilt Hue2Lox images, image archives or VM/appliance images are currently offered. This does not remove the license obligations for third-party materials actually bundled in our source archive, including the catalog and certificate bundle.
+No application pip packages are installed. pip and ensurepip, including vendored wheels, are removed from the final Docker runtime. Their original sources/notices remain in the source-material bundle as non-runtime provenance. Actual AMD64/ARM64 inventories, SPDX SBOMs and scans are compared with the checksum-locked component/source records. See [container sources](docs/CONTAINER-SOURCES.md) and [compliance evidence](docs/IMAGE-COMPLIANCE.md).
 
-Before distributing a built image: pin and record the actual base-image digest, generate an inventory/SBOM of the built image and preserve relevant license/source-offer obligations. This document is not a complete binary-image license audit. The release gate is documented in RELEASE.md; passing security scans does not satisfy it.
+RC5 already distributes prebuilt images through Docker Hub and GHCR with permanent source/license assets on its unchanged release page. RC6 is unpublished preparation. Its source ZIP, native archive, exact container candidates and corresponding source/license evidence must share the release commit. The publication workflow checks inventories and downloads and refuses differing existing version assets. CI artifacts alone are not the permanent source-delivery channel. No VM/appliance image is offered.
 
 ## Branding and screenshots
 
-The octopus assets were generated with Imagegen for this project; provenance is in docs/LOGO.md. No third-party lamp manufacturer endorsement is implied. Hue/Philips Hue and Loxone names identify compatible products; this is an independent project. Verify naming/branding and screenshot publication rights before a public release. Tutorial screenshots currently show German UI.
+The octopus assets were generated with Imagegen for this project; provenance is in docs/LOGO.md. No third-party lamp manufacturer endorsement is implied. Hue/Philips Hue and Loxone names identify compatible products; this is an independent project. The original generated project artwork and original geometric light icons are recorded in docs/LOGO.md and docs/ICONS.md. Tutorial illustrations use project test data; they are not official manufacturer artwork or a compatibility certification. No right to third-party trademarks is granted by this project license.
 
-## Deutsch: Status vor Veröffentlichung
+## Deutsch: Lizenz- und Quellenstand
 
-Hue2Lox steht unter Apache 2.0; siehe LICENSE und NOTICE. Drittanbieterbedingungen bleiben bestehen. Die aktuellen Lampensymbole sind eigenständig gezeichnete SVGs. Das bisherige Iconpaket wurde aus dem aktuellen Stand entfernt; historische Kopien behalten ihre ursprünglichen Lizenzbedingungen. Der MIT-Hinweis des Modellkatalogs bleibt enthalten. Zertifikatsweitergabe und Marken-/Screenshotrechte bleiben zu prüfen. Vorerst ist nur Quellcode-Verteilung mit lokalem Docker-Build geplant; vor einem späteren Vertrieb fertiger Images müssen deren komponentenspezifische Lizenz- und Quellenunterlagen vollständig vorliegen. Siehe RELEASE.md.
+Eigene Bestandteile stehen unter Apache 2.0. Iconoir-Symbole, Modellkatalog und das unverändert aus dem MIT-lizenzierten Raycast-Quellstand übernommene öffentliche CA-Bundle behalten ihre Originalhinweise. Vollständige MIT-Texte sind beigefügt; die eigene Lizenz ersetzt diese nicht. Oktopus-Grafiken und geometrische Lampensymbole wurden für das Projekt erstellt; fremde Marken bezeichnen kompatible Produkte und keine offizielle Verbindung.
+
+Docker verwendet Python 3.15 auf Alpine, gepinnt und mit Inventar-/Quellenabgleich für AMD64/ARM64. Nativ verwendet Hue2Lox das unterstützte System-Python ab 3.11 und bleibt experimentell. pip/ensurepip sind nicht im fertigen Docker-Laufzeitimage enthalten. RC5-Images und ihre Quellenbeilagen sind veröffentlicht; RC6 samt nativem Archiv ist noch unveröffentlicht. Die finalen Beilagen und tatsächlichen anonymen Downloads werden im Release-Ablauf geprüft. Hardware- und Stable-Freigabe sind davon getrennt.
 
 The standalone catalog download bundles CSV, source notice and full upstream MIT license. Pinned catalog source commit: `499535e092401a6c21e8c3b5e3aeca8062c11841`.
+
+## Complete Raycast upstream MIT notice / Vollständiger MIT-Originalhinweis
+
+MIT License
+
+Copyright (c) 2021 Raycast
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -45,7 +45,7 @@ class MonitorTests(unittest.TestCase):
         monitor.record_body(handle,b'{"loxone_rgb":<v>}')
         event=monitor.snapshot()['events'][-1];self.assertIn('<v>',event['body']);self.assertRegex(event['body_detail'],r'^invalid_json:\d+:\d+$')
     def test_body_redaction_valid_and_malformed(self):
-        monitor.start();secret='PRIVATE-KEY-ABC123456789'
+        monitor.start();secret='not-a-real-secret'
         bodies=[json.dumps({'token':secret,'on':secret,'rgb':{'r':secret,'g':999,'b':0}}),
                 '{"token":"'+secret+'","loxone_rgb":<v>}',
                 '{"token":123456789,"loxone_rgb":123456789012345678901234567890,',
