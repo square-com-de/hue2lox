@@ -44,6 +44,21 @@ neue EIN-Flanke. Es gibt keinen allgemeinen AUS-Aufruf für eine Szene. Lampen
 lassen sich weiterhin über ihre vorhandenen Ein/Aus-Befehle ausschalten.
 Hue2Lox speichert oder ändert keine Loxone-Konfiguration automatisch.
 
+**Keine Zustandsrückmeldung an den Lichtbaustein:** Der Szenenaufruf übermittelt
+keine Lampenwerte oder aktive Stimmung an Loxone. Anzeige und Ausschaltverhalten
+des Lichtbausteins können deshalb vom tatsächlichen Lichtzustand abweichen.
+Die Szene ist kein schaltbarer Lichtkreis, und ein Taster löst diese Grenze
+nicht. Einen gemeinsamen Raum-Aus-Befehl separat für die richtigen Lampen
+konfigurieren; der Szenenaufruf erzeugt ihn nicht. Für vollständig im
+Lichtbaustein verwaltete Stimmungen die Lampen über Hue2Lox anbinden und die
+Stimmungen in Loxone anlegen. [Deutsches Handbuch](MANUAL.de.md#4-szenen) ·
+[English manual](MANUAL.md#scenes).
+
+Bei einem analogen Szenenausgang oder einem zusätzlichen Aufruf beim Ausschalten
+kann Loxone die Szene erneut aktivieren. Im HTTP-Monitor auf `/recall` nach dem
+AUS-Befehl einer Lampe achten. Den Szenenausgang digital konfigurieren, alle
+AUS-Felder leer lassen und die Verbindung zum auslösenden Baustein prüfen.
+
 ## Schnittstellen und Schutz
 
 - `GET /api/admin/scenes`: Sitzungsanmeldung erforderlich, nur registrierte Metadaten.

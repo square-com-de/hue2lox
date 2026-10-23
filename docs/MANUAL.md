@@ -31,7 +31,13 @@ For multiple lights, select their checkboxes and **Export selection as XML**. A 
 
 ## Scenes
 
-Create, edit and delete scenes in the Hue app. Use **Scan scenes** to synchronize inventory. **Commands** and **XML** work as for lights; recall uses an ON pulse. Management allows ignoring, restoring and removing only from Hue2Lox.
+Create, edit and delete scenes in the Hue app. Use **Scan scenes** to synchronize inventory. **Commands** and **XML** provide a command to **activate** the scene. Management allows ignoring, restoring and removing only from Hue2Lox.
+
+**Important: a Hue scene is not an on/off lighting circuit here.** It sets its member lights to stored values. Hue2Lox provides no scene OFF command and does not restore previous light states. Switch lights off separately through their light outputs or a deliberately configured common room-off command in Loxone. That command must actually switch off the relevant lights; recalling a scene does not create it automatically.
+
+Scene recall sends **no light-state feedback to the Loxone Lighting Controller**. Its displayed state, active mood and switch-off behaviour can therefore differ from the physical lights. Connecting the same lights separately does not automatically synchronize an externally recalled Hue scene either. For moods managed by the Lighting Controller, connect the lights through Hue2Lox and create the moods in Loxone.
+
+In Loxone, configure the scene command as a **digital output** and trigger it with an **ON pulse/push button**; set repetition to `0` and leave the **OFF command, OFF header and OFF body empty**. Another recall needs a new ON edge. An analog scene output or an additional scene recall while switching off can turn the lights back on. The HTTP monitor must show no scene `/recall` request when only switching off. Detailed [scene configuration guide (German)](SCENES.md).
 
 Scenes can still control ignored/removed lights included in their Hue definition.
 

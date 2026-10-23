@@ -9,6 +9,7 @@
 - Nativ: experimenteller systemd-Betrieb ohne Docker auf den deklarierten amd64-Zielen; eigenes verifiziertes natives Release-Archiv zusätzlich zum Quell-ZIP.
 - Updates mit Sicherung, exaktes Rollback und Deinstallation/Wiederinstallation mit Datenerhalt; umask-077-Korrektur.
 - Lokale Discovery-Kopierhilfen und sechs Iconoir-Sidebar-Symbole mit vollständigen Lizenzhinweisen.
+- Hue-Szenen bleiben reine Aktivierungsbefehle ohne AUS-Funktion oder Zustandsrückmeldung an den Loxone-Lichtbaustein; DE/EN-Handbuch erklärt die separate Ausschaltung und Konfiguration als digitalen Impulsausgang.
 - Technische Paket-/Docker-/systemd-Prüfungen und Sicherheits-/Quellenprüfung protokolliert. Echte Hue-/Loxone-Hardwareabnahme bleibt offen und wird gemeinsam durchgeführt.
 
 Erstlogin bleibt `admin/admin`, danach Passwort ändern. RC1/RC5 unverändert. Kein `latest` für RCs. Native ARM-/Raspberry-Pi-OS-Unterstützung, Statusrückmeldung, Schalter/BWM und LoxBerry-Plugin sind nicht Bestandteil dieses Kandidaten. Angepasste Compose-/Prototyp-Installationen benötigen eine eigene Migrationsprüfung.
@@ -20,6 +21,7 @@ Erstlogin bleibt `admin/admin`, danach Passwort ändern. RC1/RC5 unverändert. K
 - Native: experimental systemd deployment on declared amd64 targets; verified native archive supplied alongside the source ZIP.
 - Backed-up updates, exact rollback and retained-data uninstall/reinstall; umask-077 permission fix.
 - Local discovery copy helpers and six Iconoir sidebar icons with complete notices.
+- Hue scenes remain activation-only commands, without scene OFF or Lighting Controller state feedback; the DE/EN manuals explain separate switch-off and digital pulse-output configuration.
 - Technical package/Docker/systemd and security/source checks recorded. Real Hue/Loxone hardware acceptance remains pending for the joint test.
 
 Initial login remains admin/admin; change it afterwards. RC1/RC5 stay unchanged. RCs do not set latest. Native ARM/Raspberry Pi OS, status feedback, switch/motion inputs and a LoxBerry plugin are outside this candidate. Custom Compose/prototype deployments need separate migration review.

@@ -31,7 +31,13 @@ Für mehrere Lampen die Checkboxen verwenden und **Auswahl als XML** wählen. Ei
 
 ## 4. Szenen
 
-Szenen in der Hue-App erstellen, bearbeiten und löschen. In Hue2Lox **Szenen einlesen** wählen, um den Bestand abzugleichen. **Befehle** und **XML** funktionieren wie bei Lampen; der Aufruf verwendet einen EIN-Impuls. Verwaltung bietet Ignorieren, Wiederherstellen und Entfernen nur für Hue2Lox.
+Szenen in der Hue-App erstellen, bearbeiten und löschen. In Hue2Lox **Szenen einlesen** wählen, um den Bestand abzugleichen. **Befehle** und **XML** liefern einen Befehl zum **Aktivieren** der Szene. Verwaltung bietet Ignorieren, Wiederherstellen und Entfernen nur für Hue2Lox.
+
+**Wichtig: Eine Hue-Szene ist hier kein Ein/Aus-Lichtkreis.** Sie setzt die zugehörigen Lampen auf gespeicherte Werte. Hue2Lox bietet dafür keinen AUS-Befehl und stellt auch keinen vorherigen Lampenzustand wieder her. Ausschalten erfolgt separat über die Lampenausgänge oder einen in Loxone eigens eingerichteten gemeinsamen Raum-Aus-Befehl. Dieser muss die betreffenden Lampen tatsächlich ausschalten; der Szenenaufruf richtet ihn nicht automatisch ein.
+
+Der Szenenaufruf meldet **keine Lampenzustände an den Loxone-Lichtbaustein zurück**. Dessen Anzeige, aktive Stimmung und Ausschaltverhalten können deshalb vom tatsächlichen Lichtzustand abweichen. Auch das zusätzliche Anbinden derselben Lampen synchronisiert eine extern aufgerufene Hue-Szene nicht automatisch. Für im Lichtbaustein verwaltete Stimmungen die Lampen über Hue2Lox anbinden und die Stimmungen in Loxone anlegen.
+
+In Loxone den Szenenbefehl als **Digitalausgang** konfigurieren und mit einem **EIN-Impuls/Taster** aufrufen; Wiederholung auf `0`, **AUS-Befehl, AUS-Header und AUS-Body leer lassen**. Für einen erneuten Aufruf braucht es eine neue EIN-Flanke. Ein analoger Szenenausgang oder ein zusätzlicher Szenenaufruf beim Ausschalten kann die gerade ausgeschalteten Lampen wieder einschalten. Im HTTP-Monitor darf beim reinen Ausschalten kein Szenen-`/recall` erscheinen. Details: [Szenen und Loxone-Konfiguration](SCENES.md).
 
 Eine Hue-Szene kann auch Lampen schalten, die in Hue2Lox ignoriert oder entfernt wurden. Maßgeblich ist ihre Zusammensetzung in Hue.
 
