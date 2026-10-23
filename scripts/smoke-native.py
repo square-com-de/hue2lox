@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Exercise an actual native package over loopback HTTPS; no systemd or hardware."""
+import argparse
 import hashlib
 import importlib.util
 import json
@@ -36,16 +37,18 @@ def load_manager():
     return manager
 
 
-def main():
+def main(package=None, checksum=None):
     with tempfile.TemporaryDirectory(prefix='hue2lox-native-smoke-') as temporary:
         root = Path(temporary)
-        subprocess.run([sys.executable, str(ROOT / 'scripts/build-native-package.py'),
-                        '--version', '0.0.0-smoke', '--output', str(root / 'packages')],
-                       check=True, stdout=subprocess.DEVNULL)
-        package = root / 'packages/hue2lox-0.0.0-smoke-native.tar.gz'
+        if package is None:
+            subprocess.run([sys.executable, str(ROOT / 'scripts/build-native-package.py'),
+                            '--version', '0.0.0-smoke', '--output', str(root / 'packages')],
+                           check=True, stdout=subprocess.DEVNULL)
+            package = root / 'packages/hue2lox-0.0.0-smoke-native.tar.gz'
+            checksum = hashlib.sha256(package.read_bytes()).hexdigest()
         runtime = root / 'runtime'
         manager = load_manager()
-        manager.verify_package(package, hashlib.sha256(package.read_bytes()).hexdigest(), runtime)
+        manager.verify_package(package, checksum, runtime)
         manager.validate_runtime(runtime)
         private = root / 'private'
         private.mkdir()
@@ -143,4 +146,10 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--package', type=Path)
+    parser.add_argument('--sha256')
+    args = parser.parse_args()
+    if bool(args.package) != bool(args.sha256):
+        parser.error('--package and --sha256 must be provided together')
+    main(args.package.resolve() if args.package else None, args.sha256)

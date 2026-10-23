@@ -26,6 +26,12 @@ def digest(path):
 
 
 packages = sorted(Path('/packages').glob('*.tar.gz'))
+if os.environ.get('HUE2LOX_CI_BASE_PACKAGE'):
+    base_package = Path(os.environ['HUE2LOX_CI_BASE_PACKAGE'])
+    assert base_package in packages
+    packages = [base_package, *[p for p in packages if p != base_package]]
+with tarfile.open(packages[0]) as archive:
+    base_version = json.load(archive.extractfile('hue2lox-native/manifest.json'))['version']
 assert len(packages) == 2
 installer = '/source/deployment/native/install.sh'
 updater = '/source/deployment/native/update.sh'
@@ -102,7 +108,7 @@ late_backup = next(Path('/var/backups/hue2lox').iterdir())
 run('sh', '/source/deployment/native/rollback.sh', '--backup', str(late_backup))
 check_login(password)
 assert snapshot() == before
-assert json.loads(Path('/etc/hue2lox/install.json').read_text())['version'] == '0.0.0-ci.1'
+assert json.loads(Path('/etc/hue2lox/install.json').read_text())['version'] == base_version
 run('sh', updater, '--package', str(packages[1]), '--sha256', digest(packages[1]))
 active = Path('/opt/hue2lox/current').resolve()
 uid = subprocess.check_output(['systemctl', 'show', 'hue2lox.service', '-p', 'User', '--value'], text=True).strip()

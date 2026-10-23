@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import sys
 import tarfile
 import tempfile
 import urllib.request
@@ -35,8 +36,8 @@ def plan(event, event_name, repository, commit):
         raise ValueError('Unexpected repository, draft or unsupported version tag')
     version = tuple(int(n) for n in match.groups()[:3])
     rc = match.group(4)
-    if version < (1, 0, 0) or (version == (1, 0, 0) and rc and int(rc) < 5):
-        raise ValueError('Historical RC1, RC2, RC3 and RC4 must remain unchanged')
+    if version < (1, 0, 0) or (version == (1, 0, 0) and rc and int(rc) < 6):
+        raise ValueError('Historical RC1 through RC5 must remain unchanged')
     if release.get('prerelease') is not bool(rc):
         raise ValueError('RC tags must be prereleases; stable tags must not be prereleases')
     if not re.fullmatch(r'[0-9a-f]{40}', commit):
@@ -107,13 +108,52 @@ def archive_evidence(destination):
                         raise ValueError('Evidence must contain regular files/directories')
 
 
+def prepare_source_packages(info, assets):
+    """Offline source/native assets from one immutable commit, never workspace state."""
+    if (not re.fullmatch(r'[0-9a-f]{40}', info['commit'])
+            or not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-rc\.[1-9][0-9]*)?', info['version'])
+            or info['tag'] != 'v' + info['version']):
+        raise ValueError('Expected matching release version, tag and full commit')
+    source = run('git', '-c', 'safe.directory=' + str(Path.cwd().resolve()), 'rev-parse', '--show-toplevel')
+    assets = assets.resolve()
+    source_name = 'hue2lox-' + info['tag']
+    subprocess.run(['git', '-c', 'safe.directory=' + source, 'archive', '--format=zip', '--prefix=' + source_name + '/',
+                    '--output=' + str(assets / (source_name + '.zip')), info['commit']], check=True)
+    # A clean local clone excludes dirty/untracked files and artifact downloads.
+    # Do not mutate the release checkout or manufacture a commit for a ZIP tree.
+    with tempfile.TemporaryDirectory(prefix='hue2lox-release-native-') as temporary:
+        checkout, output = Path(temporary) / 'source', Path(temporary) / 'packages'
+        subprocess.run(['git', '-c', 'safe.directory=' + source,
+                        '-c', 'safe.directory=' + str(Path(source) / '.git'),
+                        'clone', '--quiet', '--no-hardlinks', '--no-checkout',
+                        '--', source, str(checkout)], check=True)
+        subprocess.run(['git', 'checkout', '--quiet', '--detach', info['commit']], cwd=checkout, check=True)
+        subprocess.run([sys.executable, '-B', str(checkout / 'scripts/build-native-package.py'),
+                        '--version', info['version'], '--output', str(output)], cwd=checkout, check=True)
+        package = output / ('hue2lox-' + info['version'] + '-native.tar.gz')
+        with tarfile.open(package) as archive:
+            members = archive.getmembers()
+            if any(not entry.isfile() or not entry.name.startswith('hue2lox-native/')
+                   or '..' in Path(entry.name).parts for entry in members):
+                raise ValueError('Unexpected native package entry')
+            manifest = json.load(archive.extractfile('hue2lox-native/manifest.json'))
+            if (manifest['commit'] != info['commit'] or manifest['version'] != info['version']
+                    or manifest['dirty'] is not False):
+                raise ValueError('Native package source/version identity mismatch')
+            expected = {'hue2lox-native/' + name for name in manifest['files']} | {'hue2lox-native/manifest.json'}
+            if len(members) != len(expected) or {entry.name for entry in members} != expected:
+                raise ValueError('Native manifest does not cover the exact archive')
+            for name, expected_hash in manifest['files'].items():
+                if hashlib.sha256(archive.extractfile('hue2lox-native/' + name).read()).hexdigest() != expected_hash:
+                    raise ValueError('Native package file hash mismatch')
+        (assets / package.name).write_bytes(package.read_bytes())
+
+
 def prepare(info):
     """Build recipient assets after all quality and material jobs succeeded."""
     assets = Path('release-assets')
     assets.mkdir()
-    source_name = 'hue2lox-' + info['tag']
-    subprocess.run(['git', 'archive', '--format=zip', '--prefix=' + source_name + '/',
-                    '--output=' + str(assets / (source_name + '.zip')), info['commit']], check=True)
+    prepare_source_packages(info, assets)
     bundle = Path('materials/hue2lox-base-sources.tar.gz')
     subprocess.run(['sha256sum', '--check', 'hue2lox-base-sources.tar.gz.sha256'], cwd='materials', check=True)
     (assets / bundle.name).write_bytes(bundle.read_bytes())
@@ -243,8 +283,26 @@ def verify_public(info):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('validate', 'prepare', 'publish', 'verify-public'))
-    command = parser.parse_args().command
+    parser.add_argument('command', choices=('validate', 'prepare', 'publish', 'verify-public', 'source-packages'))
+    parser.add_argument('--version', help='Offline source-packages only; does not create a release')
+    parser.add_argument('--commit', help='Offline source-packages only; defaults to HEAD')
+    parser.add_argument('--output', type=Path, help='New local directory for offline packages')
+    args = parser.parse_args()
+    command = args.command
+    if command == 'source-packages':
+        if not args.version or not args.output:
+            parser.error('source-packages requires --version and --output')
+        info = {'version': args.version, 'tag': 'v' + args.version,
+                'commit': args.commit or run('git', '-c', 'safe.directory=' + str(Path.cwd().resolve()),
+                                             'rev-parse', 'HEAD')}
+        args.output.mkdir(parents=True, exist_ok=False)
+        prepare_source_packages(info, args.output)
+        paths = sorted(args.output.iterdir())
+        (args.output / 'SHA256SUMS.txt').write_text(''.join(digest(p) + '  ' + p.name + '\n' for p in paths))
+        print('Prepared local source/native packages only; no publication.')
+        return
+    if args.version or args.commit or args.output:
+        parser.error('Package options are restricted to offline source-packages')
     info = current_plan()
     if command == 'prepare':
         prepare(info)
