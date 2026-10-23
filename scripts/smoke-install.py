@@ -56,7 +56,7 @@ def main():
                 cookie=headers['Set-Cookie'].split(';')[0];csrf=json.loads(body)['csrf']
                 auth={'Cookie':cookie,'X-CSRF-Token':csrf,'Origin':base}
                 code,_,body=request('/api/overview',headers=auth);assert code==200 and json.loads(body)['bridges']==[]
-                for path in ['/','/assets/i18n.js','/assets/locales/en.js','/tutorial/en','/licenses']:
+                for path in ['/','/assets/i18n.js','/assets/locales/en.js','/assets/discovery-help.js', '/assets/sidebar-icons.svg', '/assets/sidebar-icons-license.txt','/tutorial/en','/licenses']:
                     assert request(path)[0]==200,path
                 assert request('/api/admin/token',{},headers={'Cookie':cookie})[0]==403
                 code,_,body=request('/api/admin/token',{},headers=auth);assert code==200

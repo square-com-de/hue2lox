@@ -38,9 +38,9 @@ Choose the installation method that suits you:
 | --- | --- | --- |
 | **Installer with Docker** | A guided setup for beginners. The assistant prepares Docker and builds Hue2Lox on your server. | **Available in RC5** · [Installation guide](INSTALL.md) |
 | **Docker / Compose with a prebuilt image** | For existing container setups, including those behind a reverse proxy such as Traefik. | **Available in RC5** · [Container guide](docs/DOCKER.md) |
-| **Python installer, without Docker** | For running Hue2Lox directly as a service on Debian. | **In preparation** · Installation guide to follow. |
+| **Python installer, without Docker** | For experimental direct service installation on explicitly supported Linux test targets. | **Experimental / PR #18** · [Shared installer and native guide](docs/INSTALL-NATIVE.en.md). Not included in RC5. |
 
-Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The native Python installer is still in preparation. The Docker installer builds its image locally.
+Choose the guided installer or use the versioned Docker Hub or GHCR image directly. The development installer offers Docker or native operation; the native path is experimental and is not part of RC5. For Docker, the development installer offers a pinned release image or a local build. Choose the local build to test the new app features, including discovery help; published RC5 images remain unchanged.
 
 ### Get started with the Docker installer (RC5)
 
@@ -84,6 +84,7 @@ See [release notes](RELEASE.md) and [documented test results](docs/TEST-RESULTS.
 | Topic | Start here |
 | --- | --- |
 | Usage, troubleshooting and backup | [Manual](docs/MANUAL.md) |
+| Native installer and VM evidence | [Native guide](docs/INSTALL-NATIVE.en.md) · [VM acceptance](docs/NATIVE-VM-ACCEPTANCE.md) |
 | Fresh test installation | [Installation](INSTALL.md) |
 | Prebuilt Docker image (AMD64/ARM64) | [Container guide](docs/DOCKER.md) |
 | Loxone HTTP outputs and XML | [Illustrated guide](docs/TUTORIAL.md) |

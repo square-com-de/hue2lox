@@ -1,5 +1,7 @@
 # Install Hue2Lox on Linux
 
+**Development / PR #18:** The shared installer adds a Docker/native choice. Native operation is experimental and is not included in the unchanged RC5 release. See the [native development guide](docs/INSTALL-NATIVE.en.md).
+
 [Deutsch](INSTALL.de.md) · [RC5 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5) · [English manual](docs/MANUAL.md)
 
 This guide installs **RC5** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
@@ -152,3 +154,5 @@ The installer is for fresh installations, not a general updater. Preserve the wh
 ## Maintenance / Wartung
 
 [Certificate renewal, IP change, backup and restore / Zertifikat, IP-Wechsel und Sicherung](docs/MAINTENANCE.md)
+
+For updates of deployments created by the development installer, follow [Docker update and rollback](docs/UPDATE-DOCKER.md). This adds a separate reviewed staging workflow; the fresh-install menu does not overwrite installations.

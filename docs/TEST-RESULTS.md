@@ -1,3 +1,7 @@
+## Separate native VM acceptance — 21.10.2026
+
+See [native VM acceptance and remaining evidence](NATIVE-VM-ACCEPTANCE.md) for commits 1652485 and 6dbd8ae. The manual results do not establish acceptance of the later main integration or native hardware control. Historical results below retain their original scope.
+
 # Aktueller Installationstest – 20.10.2026
 
 Vom Nutzer auf einer frisch installierten Debian-13-VM unter Proxmox bestätigt:

@@ -1,0 +1,31 @@
+[Unit]
+Description=Hue2Lox native HTTPS service
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=hue2lox
+Group=hue2lox
+WorkingDirectory=/opt/hue2lox/current/src
+EnvironmentFile=/etc/hue2lox/settings.env
+ExecStart=/usr/bin/python3 -u /opt/hue2lox/current/src/app.py
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/hue2lox
+CapabilityBoundingSet=
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

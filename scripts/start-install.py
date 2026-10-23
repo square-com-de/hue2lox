@@ -14,6 +14,11 @@ import time
 import urllib.request
 
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
+sys.dont_write_bytecode = True
+from installer_messages import message, localized_print as print
+
+
 def preflight(destination):
     dest = Path(destination).resolve()
     required = ('compose.yaml', '.env', 'secrets/control_token', 'data/registry.json',
@@ -195,4 +200,4 @@ if __name__ == '__main__':
     try:
         start(args.destination)
     except (ValueError, OSError, subprocess.SubprocessError) as error:
-        parser.exit(1, 'Start stopped: ' + str(error) + '\n')
+        parser.exit(1, message('Start stopped: ' + str(error)) + '\n')

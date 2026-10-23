@@ -81,6 +81,14 @@ step_heading() {
     6) title=$(translate 'START & HEALTHCHECK' 'START & HEALTH CHECK');;
     7) title=$(translate 'INSTALLATIONSORDNER' 'INSTALLATION DIRECTORY');;
   esac
+  if [[ "${DEPLOYMENT:-docker}" == native ]]; then
+    case "$number" in
+      4) title=$(translate 'NATIVES PAKET' 'NATIVE PACKAGE');;
+      5) title=$(translate 'NATIV INSTALLIEREN' 'INSTALL NATIVELY');;
+      6) title=$(translate 'NATIVES HTTPS PRÜFEN' 'CHECK NATIVE HTTPS');;
+      7) title=$(translate 'NATIVE WARTUNG' 'NATIVE MAINTENANCE');;
+    esac
+  fi
   if [[ -t 1 && "${TERM:-dumb}" != dumb && -z "${NO_COLOR+x}" ]]; then
     colour='\033[1;34m'; reset='\033[0m'
   fi
@@ -159,7 +167,7 @@ run() {
 
 root_required() {
   if (( EUID != 0 )); then
-    printf "$(translate 'Für diesen Schritt bitte neu starten: sudo bash "%s/install-assistant.sh"\n' 'For this step, restart with: sudo bash "%s/install-assistant.sh"\n')" "$SOURCE"
+    printf "$(translate 'Als root starten (su - oder sudo -i), dann: bash "%s/install-assistant.sh"\n' 'Start as root (su - or sudo -i), then: bash "%s/install-assistant.sh"\n')" "$SOURCE"
     return 1
   fi
 }
@@ -218,6 +226,7 @@ docker_source() {
   printf 'Types: deb\nURIs: https://download.docker.com/linux/%s\nSuites: %s\nComponents: stable\nArchitectures: %s\nSigned-By: /etc/apt/keyrings/docker.asc\n' "$DOCKER_FAMILY" "$DOCKER_SUITE" "$DOCKER_ARCH"
 }
 status() {
+  if [[ "${DEPLOYMENT:-docker}" == native ]]; then native_status; return; fi
   printf '\n=== %s ===\n\n' "$(translate 'SYSTEM & VORAUSSETZUNGEN' 'SYSTEM & PREREQUISITES')"
   printf 'System: '
   if [[ -r /etc/os-release ]]; then (. /etc/os-release; printf '%s\n' "$PRETTY_NAME"); else uname -s; fi
@@ -265,10 +274,12 @@ ssh_setup() {
 }
 base_packages() {
   root_required || return
-  package_platform || return
+  if [[ "${DEPLOYMENT:-docker}" == native ]]; then native_package_platform || return; else package_platform || return; fi
   confirm "$(translate 'Grundpakete python3, openssl, curl, ca-certificates und unzip installieren/aktualisieren?' 'Install/update python3, openssl, curl, ca-certificates and unzip?')" || return 0
   run apt-get update || return
-  run apt-get install -y --no-install-recommends python3 openssl curl ca-certificates unzip || return
+  local extra=()
+  [[ "${DEPLOYMENT:-docker}" != native ]] || extra=(git passwd)
+  run apt-get install -y --no-install-recommends python3 openssl curl ca-certificates unzip "${extra[@]}" || return
   feedback success "$(translate 'Grundpakete sind installiert.' 'Base packages are installed.')"
 }
 docker_setup() {
@@ -376,7 +387,7 @@ choose_install_source() {
     esac
   done
 }
-prepare_setup() {
+prepare_docker_setup() {
   root_required || return
   if [[ -e "$DEST" || -L "$DEST" ]]; then
     printf "$(translate 'Ziel %s existiert bereits. Schritt Starten wählen oder unter Fehlerbehebung nachlesen. Nichts überschrieben.\n' 'Destination %s already exists. Choose Start or see Troubleshooting. Nothing was overwritten.\n')" "$DEST"; return 1
@@ -418,26 +429,55 @@ PY
   run python3 "$SOURCE/scripts/prepare-install.py" --destination "$DEST" --host "$ip" --port "$port" --scheme "$scheme" --public-url "$public_url" --source "$INSTALL_SOURCE" --registry "$INSTALL_REGISTRY" || return
   feedback success "$(translate 'Vorbereitung abgeschlossen. Weiter mit Schritt 6.' 'Preparation complete. Continue with step 6.')"
 }
-start_setup() {
+start_docker_setup() {
   root_required || return
   command -v python3 >/dev/null || { printf "$(translate 'Python fehlt: zuerst Grundpakete auswählen.\n' 'Python is missing: select Base packages first.\n')"; return 1; }
   confirm "$(translate "Installation in $DEST mit dem gespeicherten Installationsweg starten und Verbindung prüfen?" "Start installation in $DEST using its saved installation method and check the connection?")" || return 0
   run python3 "$SOURCE/scripts/start-install.py" --destination "$DEST" || return
 }
+# Keep both deployment adapters behind the same translated menu.
+source "$SOURCE/scripts/native-menu.sh"
+prepare_setup() {
+  if [[ "$DEPLOYMENT" == native ]]; then prepare_native_setup; else prepare_docker_setup; fi
+}
+start_setup() {
+  if [[ "$DEPLOYMENT" == native ]]; then native_health; else start_docker_setup; fi
+}
 main() {
   export HUE2LOX_INSTALL_COMPACT=1
-  if [[ "${1:-}" == --verbose ]]; then export HUE2LOX_INSTALL_COMPACT=0; shift; fi
-  if [[ "${1:-}" == --check ]]; then status; return; fi
-  if [[ -n "${1:-}" ]]; then printf "$(translate 'Aufruf: bash install-assistant.sh [--verbose] [--check]\n' 'Usage: bash install-assistant.sh [--verbose] [--check]\n')"; return 1; fi
+  local requested= check=0
+  while (( $# )); do
+    case "$1" in
+      --verbose) export HUE2LOX_INSTALL_COMPACT=0; shift;;
+      --check) check=1; shift;;
+      --deployment) [[ $# -ge 2 && ( "$2" == docker || "$2" == native ) ]] || return 1; requested=$2; shift 2;;
+      --native-package) [[ $# -ge 2 ]] || return 1; NATIVE_PACKAGE=$2; shift 2;;
+      --native-sha256) [[ $# -ge 2 ]] || return 1; NATIVE_SHA256=$2; shift 2;;
+      *) printf '%s\n' 'Usage: bash install-assistant.sh [--verbose] [--check] [--deployment docker|native] [--native-package FILE --native-sha256 SHA256]'; return 1;;
+    esac
+  done
+  [[ -z "$NATIVE_PACKAGE" && -z "$NATIVE_SHA256" || -n "$NATIVE_PACKAGE" && -n "$NATIVE_SHA256" ]] || return 1
+  if (( check )); then DEPLOYMENT=${requested:-docker}; status; return; fi
   if [[ ! -t 0 ]]; then printf "$(translate 'Bitte interaktiv im Server-Terminal starten, nicht über eine Pipe.\n' 'Run interactively in the server terminal, not through a pipe.\n')"; return 1; fi
   welcome_heading
   choose_language || return 0
+  if [[ -n "$requested" ]]; then DEPLOYMENT=$requested; else choose_deployment || return 0; fi
+  if [[ "$DEPLOYMENT" == native ]]; then DEST=/opt/hue2lox; fi
+  trap native_cleanup EXIT
   local choice
   while true; do
     clear_screen
     installer_banner
+    if [[ "$DEPLOYMENT" == native ]]; then
+      printf '%s\n' "$(translate 'Native Testziele: Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13; amd64, Python ab 3.11, systemd. Keine Hardwarefreigabe.' 'Native test targets: Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13; amd64, Python 3.11+, systemd. No hardware approval.')"
+    else
     printf "$(translate 'Hue2Lox Installationsassistent – Linux: Ubuntu, Debian, Raspberry Pi OS 64 Bit und DietPi\nKeine Bridge wird gekoppelt; Lampensteuerung bleibt bei Neuinstallation aus.\n' 'Hue2Lox installation assistant – Linux: Ubuntu, Debian, Raspberry Pi OS 64-bit and DietPi\nNo bridge will be paired; light control stays disabled on a new installation.\n')"
+    fi
+    if [[ "$DEPLOYMENT" == native ]]; then
+      printf '%b\n' "$(translate '\nNATIV – EXPERIMENTELL (amd64)\n1  System und Voraussetzungen prüfen (nur lesen)\n2  SSH-Server prüfen/einrichten (optional)\n3  Grundpakete installieren\n4  Natives Paket vorbereiten / prüfen\n5  Hue2Lox nativ installieren (IP und Port)\n6  Dienst / HTTPS prüfen\n7  Wartung: Update, Wiederinstallation, Rollback, Deinstallation\n0  Beenden' '\nNATIVE – EXPERIMENTAL (amd64)\n1  Check system and prerequisites (read only)\n2  Check/set up SSH server (optional)\n3  Install base packages\n4  Prepare / verify native package\n5  Install Hue2Lox natively (IP and port)\n6  Check service / HTTPS\n7  Maintenance: update, reinstall, rollback, uninstall\n0  Exit')"
+    else
     printf "$(translate '\n1  System und Voraussetzungen prüfen (nur lesen)\n2  SSH-Server prüfen/einrichten (optional)\n3  Grundpakete installieren\n4  Docker und Compose prüfen/einrichten\n5  Hue2Lox vorbereiten (IP und Port abfragen)\n6  Hue2Lox starten / Healthcheck\n7  Anderen Installationsordner wählen\n0  Beenden\n' '\n1  Check system and prerequisites (read only)\n2  Check/set up SSH server (optional)\n3  Install base packages\n4  Check/set up Docker and Compose\n5  Prepare Hue2Lox (choose IP and port)\n6  Start Hue2Lox / health check\n7  Choose another installation directory\n0  Exit\n')"
+    fi
     read -r -p "$(translate 'Schritt wählen: ' 'Choose a step: ')" choice || return 0
     case "$choice" in
       [1-7]) clear_screen; step_heading "$choice";;
@@ -446,10 +486,10 @@ main() {
       1) status || feedback error "$(translate 'Prüfung nicht vollständig.' 'Check incomplete.')";;
       2) ssh_setup || feedback error "$(translate 'SSH-Schritt gestoppt. Ursache prüfen, bevor du fortfährst.' 'SSH setup stopped. Check the cause before continuing.')";;
       3) base_packages || feedback error "$(translate 'Paketinstallation gestoppt. Ursache prüfen.' 'Package installation stopped. Check the cause.')";;
-      4) docker_setup || feedback error "$(translate 'Docker-Schritt gestoppt. Ursache prüfen.' 'Docker setup stopped. Check the cause.')";;
+      4) if [[ "$DEPLOYMENT" == native ]]; then native_prepare_package || feedback error "$(translate 'Paketvorbereitung gestoppt.' 'Package preparation stopped.')"; else docker_setup || feedback error "$(translate 'Docker-Schritt gestoppt. Ursache prüfen.' 'Docker setup stopped. Check the cause.')"; fi;;
       5) prepare_setup || feedback error "$(translate 'Vorbereitung gestoppt. Vorhandene Installation nicht überschrieben.' 'Preparation stopped. Existing installation was not overwritten.')";;
       6) start_setup || feedback error "$(translate 'Start nicht bestätigt. Fehlermeldung prüfen.' 'Startup not confirmed. Check the error message.')";;
-      7) printf "$(translate 'Jede neue Installation erhält einen eigenen Namen. Bitte einen freien Port wählen.\n' 'Each new installation gets its own name. Please choose an unused port.\n')"; read -r -p "$(translate 'Absoluter Zielpfad: ' 'Absolute destination path: ')" choice; if [[ "$choice" == /* && "$choice" != / ]]; then DEST=$choice; else printf "$(translate 'Ungültiger Pfad.\n' 'Invalid path.\n')"; fi;;
+      7) if [[ "$DEPLOYMENT" == native ]]; then native_maintenance || feedback error "$(translate 'Wartung gestoppt.' 'Maintenance stopped.')"; else printf "$(translate 'Jede neue Installation erhält einen eigenen Namen. Bitte einen freien Port wählen.\n' 'Each new installation gets its own name. Please choose an unused port.\n')"; read -r -p "$(translate 'Absoluter Zielpfad: ' 'Absolute destination path: ')" choice; if [[ "$choice" == /* && "$choice" != / ]]; then DEST=$choice; else printf "$(translate 'Ungültiger Pfad.\n' 'Invalid path.\n')"; fi; fi;;
       0) return 0;;
       *) printf "$(translate 'Bitte eine Zahl von 0 bis 7 wählen.\n' 'Please choose a number from 0 to 7.\n')";;
     esac

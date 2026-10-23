@@ -15,3 +15,11 @@ The old icon assets and current runtime attribution have been removed. Historica
 Additional product families and model assignments: [research notes](ICON-RESEARCH.md) and `catalog/lamp-icon-models.json`. Only exact catalog model IDs are mapped; manual overrides always win.
 
 Resonate (`1746430P7`, `929003553001`) uses a compact rectangular wall-light symbol; filament model `LTO001` uses a visible-filament bulb symbol. These exact model mappings override broad bridge archetypes such as `wall_lantern` and `vintage_bulb`. Both shapes are also available as manual choices.
+
+## Sidebar navigation – Iconoir
+
+The six sidebar symbols use Iconoir Regular v7.12.1, selected by the project owner on 21 October 2026: overview → dashboard, lamps → light-bulb, scenes → sparks, bridges → network, HTTP monitor → activity, Loxone settings → settings.
+
+The original 24×24 geometry and 1.5-unit strokes are retained in `web/sidebar-icons.svg`. Navigation renders the local sprite at 22×22 CSS pixels using currentColor, so active/hover colors follow the existing sidebar. Decorative SVGs are hidden from assistive technology and do not take focus; visible translated button labels and existing navigation handlers remain in place. No network search or remote asset request is introduced. Docker and native packages include the web directory and the complete MIT notice in `web/sidebar-icons-LICENSE.txt`; this is linked from the DE/EN licenses page.
+
+Source: https://github.com/iconoir-icons/iconoir/tree/v7.12.1/icons/regular . Copyright (c) 2021 Luca Burgio; MIT. The separate original lamp-shape artwork described above remains under Apache 2.0.

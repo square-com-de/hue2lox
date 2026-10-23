@@ -38,9 +38,9 @@ Wähle den Installationsweg, der zu dir passt:
 | --- | --- | --- |
 | **Installer mit Docker** | Für Einsteiger: Der Assistent richtet Docker ein und baut Hue2Lox auf deinem Server. | **In RC5 verfügbar** · [Installationsanleitung](INSTALL.de.md) |
 | **Docker / Compose mit fertigem Image** | Für bestehende Container-Umgebungen, auch hinter einem Reverse Proxy wie Traefik. | **In RC5 verfügbar** · [Container-Anleitung (Englisch)](docs/DOCKER.md) |
-| **Python-Installer, ohne Docker** | Um Hue2Lox direkt als Dienst auf Debian zu betreiben. | **In Vorbereitung** · Anleitung folgt. |
+| **Python-Installer, ohne Docker** | Für experimentellen direkten Dienstbetrieb auf ausdrücklich unterstützten Linux-Testsystemen. | **Experimentell / PR #18** · [Gemeinsamer Installer und native Anleitung](docs/INSTALL-NATIVE.md). Nicht in RC5 enthalten. |
 
-Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der native Python-Installer ist noch in Vorbereitung. Der Docker-Installer baut sein Image weiterhin lokal.
+Wähle den geführten Installer oder nutze direkt das versionierte Docker-Hub- oder GHCR-Image. Der Entwicklungsinstaller bietet Docker oder nativen Betrieb; der native Weg ist experimentell und gehört nicht zu RC5. Für Docker bietet der Entwicklungsinstaller ein festes Release-Image oder einen lokalen Build. Neue App-Funktionen einschließlich Discovery-Hilfe werden mit dem lokalen Build getestet; veröffentlichte RC5-Images bleiben unverändert.
 
 ### Mit dem Docker-Installer loslegen (RC5)
 
@@ -84,6 +84,7 @@ Details stehen in den [Release-Hinweisen](RELEASE.md) und den [dokumentierten Te
 | Thema | Einstieg |
 | --- | --- |
 | Bedienung, Fehlerbehebung, Backup | [Handbuch](docs/MANUAL.de.md) |
+| Nativer Installer und VM-Nachweise | [Native Anleitung](docs/INSTALL-NATIVE.md) · [VM-Abnahme](docs/NATIVE-VM-ACCEPTANCE.md) |
 | Neue Testinstallation | [Installation](INSTALL.de.md) |
 | Fertiges Docker-Image (AMD64/ARM64) | [Container-Anleitung (Englisch)](docs/DOCKER.md) |
 | HTTP-Ausgänge und XML in Loxone | [Bebilderte Anleitung](docs/TUTORIAL.de.md) |

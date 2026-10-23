@@ -7,11 +7,11 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
 assert (ROOT/'Dockerfile').read_bytes() == (ROOT/'docker/Dockerfile.status').read_bytes(), 'Docker recipes diverged: update both together'
-for path in sorted((ROOT / 'src').glob('*.py')) + sorted((ROOT / 'tests').rglob('*.py')) + sorted((ROOT / 'scripts').glob('*.py')) + sorted((ROOT / 'tools').glob('*.py')):
+for path in sorted((ROOT / 'src').glob('*.py')) + sorted((ROOT / 'tests').rglob('*.py')) + sorted((ROOT / 'scripts').glob('*.py')) + sorted((ROOT / 'tools').glob('*.py')) + sorted((ROOT / 'deployment').rglob('*.py')):
     ast.parse(path.read_text(), filename=str(path))
 for path in sorted((ROOT / 'web').rglob('*.js')):
     subprocess.run(['node', '--check', str(path)], check=True, stdout=subprocess.DEVNULL)
-for path in sorted(ROOT.glob('*.sh')) + sorted((ROOT / 'scripts').glob('*.sh')):
+for path in sorted(ROOT.glob('*.sh')) + sorted((ROOT / 'scripts').glob('*.sh')) + sorted((ROOT / 'deployment').rglob('*.sh')):
     interpreter = 'bash' if 'bash' in path.read_text().splitlines()[0] else 'sh'
     subprocess.run([interpreter, '-n', str(path)], check=True)
 de = json.loads((ROOT / 'web/locales/de.json').read_text())

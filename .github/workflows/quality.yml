@@ -25,12 +25,14 @@ jobs:
       - run: python scripts/check-quality.py
       - run: python -m unittest discover -s tests -t . -p 'test_*.py'
       - run: python scripts/smoke-install.py
+      - run: python scripts/smoke-native.py
       - name: Check generated translations and tutorials
         run: |
+          python tools/build_discovery_help.py
           python tools/build_locales.py
           python tools/build_tutorial.py
           python tools/build_tutorial.py --english
-          git diff --exit-code -- web/locales web/tutorial.html web/tutorial-en.html
+          git diff --exit-code -- web/discovery-help.js web/locales web/tutorial.html web/tutorial-en.html
       - name: Scan source for secrets (private report, no matched text in logs)
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
         with:
@@ -49,6 +51,8 @@ jobs:
         run: sudo env CI=true sh scripts/ci-container.sh
       - name: Test installer with prebuilt release-layout images
         run: sudo env CI=true sh scripts/ci-installer-image.sh
+      - name: Test cold Docker updates and exact-image rollback
+        run: sudo env CI=true python3 scripts/check-docker-update.py
       - name: Scan image for fixable high and critical vulnerabilities
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # 0.36.0
         with:
@@ -67,3 +71,23 @@ jobs:
           path: ${{ runner.temp }}/hue2lox-image-report.json
           if-no-files-found: warn
           retention-days: 90
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["debian:12", "debian:13", "ubuntu:24.04", "ubuntu:26.04"]
+    name: Native ${{ matrix.os }} amd64 (isolated systemd)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build native packages and test offline lifecycle
+        run: sudo env CI=true sh scripts/ci-native.sh "${{ matrix.os }}"
+  windows-discovery:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Test local discovery parser on Windows PowerShell 5.1
+        shell: powershell
+        run: ./tests/discovery-windows.ps1

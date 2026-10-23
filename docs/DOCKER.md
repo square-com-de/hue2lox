@@ -16,7 +16,7 @@ not created by an RC.
 ```sh
 docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.5
 # Alternatively, from Docker Hub:
-podman pull docker.io/dubctrl/square-com-de/hue2lox:1.0.0-rc.5
+podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.5
 ```
 
 The release workflow publishes only after a GitHub release is published and all
@@ -107,11 +107,9 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 
 ## Updating
 
-```sh
-docker compose pull && docker compose up -d
-```
+**Installer-created deployments:** use the complete [update/rollback guide](UPDATE-DOCKER.md) / [deutsche Anleitung](UPDATE-DOCKER.de.md), including a cold backup and the exact previous image. It covers local builds and pinned release images.
 
-`/data` is kept across upgrades and existing files are never overwritten by the container. Back up `/data` first: the data format is not yet versioned for compatibility between release candidates.
+**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged RC5 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
 
 ## Settings
 
@@ -124,3 +122,19 @@ docker compose pull && docker compose up -d
 | `HUE_COLOR_ENABLED` | `1` | Allow RGB colour commands |
 | `HUE_WHITE_ENABLED` | `1` | Allow tunable-white commands |
 | `TLS_CERT`, `TLS_KEY` | unset | Optional built-in HTTPS; set both or neither |
+
+### Local bridge discovery from your computer
+
+If container discovery finds no bridges, open **Bridges → No bridge found? Find its IP address locally** in the web interface. Choose macOS, Windows or Linux, copy the complete command and run it in your computer’s terminal (outside the container). Enter a returned IPv4 address in **Add Hue Bridge**.
+
+The commands query only local mDNS, never an online discovery service. macOS uses `dns-sd`; Windows PowerShell 5.1/PowerShell 7 uses the built-in .NET UDP client; Linux requires `avahi-browse` and a running Avahi daemon. Installation hints appear in the Linux panel. The browser only displays and copies the commands; it does not execute them.
+
+The computer or test VM must be on a network that can reach the bridges and receive local multicast replies. An isolated VM network, VPN, guest Wi-Fi or firewall may still prevent discovery. In that case, use the bridge address shown by your router. Do not disable your firewall to run the search.
+
+### Lokale Bridge-Suche auf deinem Computer
+
+Findet die Containersuche keine Bridges, öffne **Bridges → Keine Bridge gefunden? IP-Adresse lokal ermitteln**. Wähle Mac, Windows oder Linux, kopiere den gesamten Befehl und führe ihn im Terminal deines Computers aus (außerhalb des Containers). Trage eine gefundene IPv4-Adresse unter **Hue Bridge hinzufügen** ein.
+
+Die Befehle fragen ausschließlich lokales mDNS ab, keinen Onlinedienst. macOS verwendet `dns-sd`, Windows PowerShell 5.1/PowerShell 7 den integrierten .NET-UDP-Client. Linux benötigt `avahi-browse` und einen laufenden Avahi-Dienst; Installationshinweise stehen im aufklappbaren Bereich. Der Browser zeigt und kopiert die Befehle, führt sie aber nicht aus.
+
+Computer oder Test-VM müssen die Bridges im lokalen Netzwerk erreichen und Multicast-Antworten empfangen können. Bei isoliertem VM-Netz, VPN, Gast-WLAN oder Firewall kann auch diese Suche scheitern. Dann die Bridge-Adresse im Router nachsehen. Die Firewall für die Suche nicht abschalten.
