@@ -1,4 +1,4 @@
-**Main status:** Docker/native deployment acceptance passed; [evidence and limits](DEPLOYMENT-ACCEPTANCE.md). Use [Docker update/rollback](UPDATE-DOCKER.md) or [native maintenance](INSTALL-NATIVE.en.md), separately from unchanged RC5. [RC6](RC6-PREPARATION.md) is not yet published.
+**Main status:** Docker/native deployment acceptance passed; [evidence and limits](DEPLOYMENT-ACCEPTANCE.md). Use [Docker update/rollback](UPDATE-DOCKER.md) or [native maintenance](INSTALL-NATIVE.en.md), separately from unchanged RC5. [RC6 release notes](RELEASE-NOTES-RC6.md); RC6 is not a stable release.
 
 # Hue2Lox – user manual
 

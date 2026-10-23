@@ -2,7 +2,7 @@
 
 [Deutsch](RECOVERY-CONTROL.de.md)
 
-**RC6 is unpublished.** This guide is for isolated acceptance using the supplied local RC6 archives; do not pull unavailable RC6 registry images. Production and hardware remain untouched.
+This guide describes the tested RC5→RC6 local-build path and explicit control opt-in. Use the source ZIP and checksum from the RC6 release. The alternative pinned-image update is documented in [Docker update](UPDATE-DOCKER.md); update an existing installation only on its operator's explicit instruction.
 
 The RC5 Docker installer stored `HUE_WRITES_ENABLED`, `HUE_COLOR_ENABLED` and `HUE_WHITE_ENABLED` as `0`. The direct RC5 image without these overrides defaults to `1`. RC6 sets all three to `1` for **fresh installations only**. Updates preserve existing values, including intentionally disabled `0` values. Correction therefore requires an explicit operator decision. `1` only permits switching/dimming/RGB/TW/Lumitech features supported by each light; bearer-token and capability checks remain enforced. No pairing, credential or saved light-mode reset is needed.
 

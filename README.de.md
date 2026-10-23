@@ -1,4 +1,4 @@
-> **Unveröffentlichter RC6-Kandidat:** RC6 ist das Ziel dieser Anleitungen, Downloads und Images sind noch nicht verfügbar. Isoliert die übergebenen lokalen Pakete verwenden; beim Docker-Installer lokalen Build wählen. [RC5→RC6 und Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md). Keine Hardware- oder Veröffentlichungsfreigabe.
+> **RC6 — Release Candidate:** [Release und Downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6). Vor der Installation den erfolgreichen Veröffentlichungsabschluss und Prüfsummen kontrollieren. Nativ bleibt experimentell. [RC5→RC6 und Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md).
 
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
@@ -25,7 +25,7 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 - Loxone-HTTP-Befehle kopieren oder eine Auswahl als XML exportieren.
 - Loxone-Anfragen mit einem zeitlich begrenzten, bereinigten HTTP-Monitor prüfen.
 - Lokal über HTTPS verwalten – ohne Cloudkonto für den laufenden Betrieb.
-- Auf main: gemeinsamer Docker-/nativer Installer und kopierbare lokale Discovery-Hilfe; RC6 noch unveröffentlicht.
+- Auf main: gemeinsamer Docker-/nativer Installer und kopierbare lokale Discovery-Hilfe; in RC6 enthalten.
 
 ## So sieht es aus
 
@@ -35,12 +35,12 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
-Der gemeinsame **RC6-Installer** bietet Docker oder nativen Betrieb. RC6 ist noch nicht veröffentlicht: Für die Abnahme lokale, gegen die übergebenen Prüfsummen verifizierte Pakete verwenden. Die öffentlichen Downloadbefehle in den Anleitungen sind erst nach Veröffentlichung ausführbar.
+Der gemeinsame **RC6-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte RC6-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
 
 | Installationsweg | Für wen? | Anleitung |
 | --- | --- | --- |
-| **Installer mit Docker** | Geführte Einrichtung; festes Release-Image nach Veröffentlichung oder lokaler Build. | [Installationsanleitung](INSTALL.de.md). Vor Veröffentlichung **lokalen Build** wählen. |
-| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). RC6-Image noch nicht verfügbar. |
+| **Installer mit Docker** | Geführte Einrichtung; festes Release-Image nach Veröffentlichung oder lokaler Build. | [Installationsanleitung](INSTALL.de.md). Für Quelltests **lokalen Build** wählen. |
+| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). Festes RC6-Image verwenden. |
 | **Nativ ohne Docker** | Experimenteller systemd-Betrieb auf den ausdrücklich geprüften amd64-Linux-Zielen. | [Native Anleitung](docs/INSTALL-NATIVE.md). Quell-ZIP und natives Archiv erforderlich. |
 
 1. **Installer starten:** Die [Anleitung](INSTALL.de.md) beschreibt Voraussetzungen, Paketprüfung und Auswahl des Installationswegs. Mac oder Windows-PC dienen zur Bedienung des Linux-Servers.
@@ -48,7 +48,7 @@ Der gemeinsame **RC6-Installer** bietet Docker oder nativen Betrieb. RC6 ist noc
 3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hardware erst bei der gesonderten Abnahme koppeln.
 4. **Mit Loxone verbinden:** Für den späteren Hardwaretest beschreibt die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
 
-**[Installationsanleitung](INSTALL.de.md) · [Geplante RC6-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [RC6-Release-Entwurf](docs/RELEASE-NOTES-RC6.md)**
+**[Installationsanleitung](INSTALL.de.md) · [RC6-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [RC6-Release-Hinweise](docs/RELEASE-NOTES-RC6.md)**
 
 **Bereits installiert?** Den [gesicherten RC5→RC6-Weg mit ausdrücklicher Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md) verwenden. Ein Update überschreibt keine bewusst gesperrten Funktionen. Für KI-Begleitung gibt es den [Installationsprompt](docs/AI-INSTALL.de.md).
 
@@ -64,15 +64,15 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Veröffentlicht: RC5. In Vorbereitung: RC6, noch nicht veröffentlicht.** PR #18 ist in main integriert. Die reale Ubuntu-26.04-/DietPi-13-Abnahme des gemeinsamen Installers, Docker/nativ sowie Update/Rollback und Datenerhalt ist bestanden. [Abnahme und Grenzen](docs/DEPLOYMENT-ACCEPTANCE.md). Hue-/Loxone-Hardwaretests und die Prüfung der endgültigen RC6-Pakete bleiben separat offen. Der eigene Projektcode steht unter Apache 2.0.
+**Release Candidate: RC6. Kein Stable-Release.** PR #18 ist in main integriert. Die reale Ubuntu-26.04-/DietPi-13-Abnahme des gemeinsamen Installers, Docker/nativ sowie Update/Rollback und Datenerhalt ist bestanden. [Abnahme und Grenzen](docs/DEPLOYMENT-ACCEPTANCE.md). Die Nutzerabnahme bestätigt den TV-Strip über Lumitech (Farbe, Warm-/Kaltweiß, Dimmen, Aus), Szenenaktivierung und Datenerhalt nach Neustart; weitere Geräte sind damit nicht pauschal abgenommen. Der eigene Projektcode steht unter Apache 2.0.
 
-Zielversion ist `1.0.0-rc.6`: Quell-ZIP, natives Archiv und später Docker-Hub-/GHCR-Images für AMD64/ARM64. Alle Teile müssen zum selben geprüften Quellstand gehören. Vor Veröffentlichung gibt es keine nutzbaren RC6-Downloads oder Image-Tags. Kein `latest` vor Stable. RC1 und RC5 bleiben bei dieser Vorbereitung unverändert; frühere Release-Nachweise ersetzen keine RC6-Abnahme.
+Zielversion ist `1.0.0-rc.6`: Quell-ZIP, natives Archiv und später Docker-Hub-/GHCR-Images für AMD64/ARM64. Alle Teile müssen zum selben geprüften Quellstand gehören. Die versionierten Downloads und Images erst nach erfolgreichem Veröffentlichungsabschluss verwenden. Kein `latest` vor Stable. RC1 und RC5 bleiben bei dieser Vorbereitung unverändert; frühere Release-Nachweise ersetzen keine RC6-Abnahme.
 
 Szenen erstellst du weiterhin in der Hue-App. Hue2Lox ruft sie über Loxone ab. Eine Synchronisierung des tatsächlichen Lampenzustands zurück in den Loxone-Lichtsteuerungsbaustein ist nicht vorgesehen.
 
 **Bestehende Installationen:** Für Standard-Docker-Installationen gilt der [gesicherte Update-/Rollbackweg](docs/UPDATE-DOCKER.de.md), für native Installationen die [native Wartung](docs/INSTALL-NATIVE.md). Angepasste Compose-/Prototyp-Installationen separat prüfen. Eine Neuinstallation ist kein allgemeiner Updater.
 
-Änderungen stehen im [Changelog](CHANGELOG.md), der [unveröffentlichten RC6-Vorbereitung](docs/RC6-PREPARATION.md) und den [Release-Hinweisen](RELEASE.md).
+Änderungen stehen im [Changelog](CHANGELOG.md), der [historischen RC6-Vorbereitung](docs/RC6-PREPARATION.md) und den [Release-Hinweisen](RELEASE.md).
 
 ## Dokumentation
 

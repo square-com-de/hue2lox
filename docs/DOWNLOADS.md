@@ -1,8 +1,8 @@
-> **RC6 preparation — NOT RELEASED.** RC6 downloads/images below are planned references and must not be run until publication is explicitly approved and verified. For isolated tests use the supplied local ZIP/native archive or local build. Published RC5 remains [available unchanged](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). This candidate branch intentionally pins RC6; live main retains RC5 until merge approval.
+> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
 
-> **RC6-Vorbereitung — NICHT VERÖFFENTLICHT.** RC6-Downloads/Images unten sind geplante Verweise, erst nach freigegebener und geprüfter Veröffentlichung verwenden. Isoliert die lokal bereitgestellten Archive oder lokalen Build nutzen. RC5 bleibt unverändert verfügbar. Dieser Kandidatenbranch bindet RC6; main behält RC5 bis zur Merge-Freigabe.
+> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
 
-**Aktueller Downloadstatus / Current downloads:** RC5 bleibt die veröffentlichte Version. RC6 ist [in Vorbereitung](RC6-PREPARATION.md), ohne veröffentlichten Download oder Image-Tag. Die [neue Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) gilt für main, nicht rückwirkend für das RC6-Paket. / RC5 remains the published version. RC6 is being prepared, without published downloads or image tags; new deployment evidence applies to main, not retroactively to RC6.
+**Release-Version / Release version: RC6.** Der erfolgreiche Veröffentlichungsworkflow bestätigt Downloads, Prüfsummen und beide Registries; [Release-Hinweise](RELEASE-NOTES-RC6.md). / The successful publication workflow verifies downloads, checksums and both registries; see the release notes.
 
 # RC6: Download und Prüfsumme / Download and checksum
 
@@ -59,4 +59,4 @@ Die ZIP-Prüfbefehle oben wählen gezielt den ZIP-Eintrag aus der gemeinsamen Pr
 
 [RC5](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5) remains published and unchanged at commit `45237512dcd18db9aaf3611173ce91ad8c654450`. [RC1](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.1) remains unchanged at `1d631cd1231d7cf004c6452c1fad0c262ff92bfd`. / RC5 und RC1 bleiben unter ihren ursprünglichen Tags unverändert.
 
-RC6 is unpublished. Final package hashes and source commit are recorded in the local preparation handoff; future public downloads must match the release evidence before approval. Hardware and stable acceptance remain separate. / RC6 ist unveröffentlicht. Endgültige Paketprüfsummen und Quellcommit stehen in der lokalen Übergabe; öffentliche Downloads müssen später mit den Release-Nachweisen übereinstimmen. Hardware- und Stable-Abnahme bleiben separat.
+Use the source commit and checksums recorded on the RC6 release. Successful public verification must match these artifacts to the tested images. Stable acceptance remains separate. / Quellcommit und Prüfsummen beim RC6-Release verwenden. Die öffentliche Prüfung muss diese Dateien den geprüften Images zuordnen. Stable-Freigabe bleibt separat.

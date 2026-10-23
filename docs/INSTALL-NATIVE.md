@@ -4,7 +4,7 @@ Die Web-App enthält auch die optionale lokale Discovery-Hilfe für macOS, Windo
 
 [English](INSTALL-NATIVE.en.md) · [Dockerinstallation](../INSTALL.de.md)
 
-Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Es gibt noch kein veröffentlichtes natives Releasepaket. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
+Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Für RC6 das versionierte native Archiv samt Prüfsumme zusätzlich zum Quell-ZIP verwenden; Details im RC6-Abschnitt unten. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
 
 ## Gemeinsamer interaktiver Installer (Entwicklung)
 
@@ -193,7 +193,7 @@ Die im gemeinsamen Installer gewählte Sprache gilt auch für die eigenen Python
 
 ## RC6-Quell-ZIP und natives Archiv
 
-**Vorbereitung, noch nicht veröffentlicht.** Zusätzlich zum `hue2lox-v1.0.0-rc.6.zip` wird `hue2lox-1.0.0-rc.6-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; bis zur Veröffentlichung nur die lokale Übergabe verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
+**Natives RC6-Archiv.** Zusätzlich zum `hue2lox-v1.0.0-rc.6.zip` wird `hue2lox-1.0.0-rc.6-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; die versionierten Release-Dateien nach erfolgreichem Veröffentlichungsabschluss verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
 
 ```sh
 bash install-assistant.sh --deployment native \

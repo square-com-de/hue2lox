@@ -1,4 +1,4 @@
-**Stand main:** Docker-/native Deployment-Abnahme bestanden; [Nachweise und Grenzen](DEPLOYMENT-ACCEPTANCE.md). [Docker-Update/Rollback](UPDATE-DOCKER.de.md) und [native Wartung](INSTALL-NATIVE.md) getrennt vom unveränderten RC5 behandeln. [RC6](RC6-PREPARATION.md) noch unveröffentlicht.
+**Stand main:** Docker-/native Deployment-Abnahme bestanden; [Nachweise und Grenzen](DEPLOYMENT-ACCEPTANCE.md). [Docker-Update/Rollback](UPDATE-DOCKER.de.md) und [native Wartung](INSTALL-NATIVE.md) getrennt vom unveränderten RC5 behandeln. [RC6-Release-Hinweise](RELEASE-NOTES-RC6.md); RC6 ist kein Stable-Release.
 
 # Hue2Lox – Handbuch
 

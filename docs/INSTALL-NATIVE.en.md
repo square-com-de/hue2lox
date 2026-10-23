@@ -4,7 +4,7 @@ The web app also includes optional local discovery help for macOS, Windows and L
 
 [Deutsch](INSTALL-NATIVE.md) · [Docker installation](../INSTALL.md)
 
-This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. No native release package has been published. **The native path is experimental.** Explicit test targets are Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, currently amd64 only. This is not hardware approval.
+This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. For RC6, use the versioned native archive and checksum alongside the source ZIP; see the RC6 section below. **The native path is experimental.** Explicit test targets are Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, currently amd64 only. This is not hardware approval.
 
 ## Shared interactive installer (development)
 
@@ -193,7 +193,7 @@ The language selected in the shared assistant also applies to its own Python hel
 
 ## RC6 source ZIP and native archive
 
-**Preparation, not yet published.** Supply `hue2lox-1.0.0-rc.6-native.tar.gz` alongside `hue2lox-v1.0.0-rc.6.zip`. Verify both hashes from the same `SHA256SUMS.txt`; use the local handoff until publication. The native archive is separate from the extracted source ZIP. From the extracted source ZIP as root:
+**RC6 native archive.** Supply `hue2lox-1.0.0-rc.6-native.tar.gz` alongside `hue2lox-v1.0.0-rc.6.zip`. Verify both hashes from the same `SHA256SUMS.txt`; use the versioned release assets after publication completes. The native archive is separate from the extracted source ZIP. From the extracted source ZIP as root:
 
 ```sh
 bash install-assistant.sh --deployment native \

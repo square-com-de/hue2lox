@@ -1,8 +1,8 @@
-> **RC6 preparation — NOT RELEASED.** RC6 downloads/images below are planned references and must not be run until publication is explicitly approved and verified. For isolated tests use the supplied local ZIP/native archive or local build. Published RC5 remains [available unchanged](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). This candidate branch intentionally pins RC6; live main retains RC5 until merge approval.
+> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
 
-> **RC6-Vorbereitung — NICHT VERÖFFENTLICHT.** RC6-Downloads/Images unten sind geplante Verweise, erst nach freigegebener und geprüfter Veröffentlichung verwenden. Isoliert die lokal bereitgestellten Archive oder lokalen Build nutzen. RC5 bleibt unverändert verfügbar. Dieser Kandidatenbranch bindet RC6; main behält RC5 bis zur Merge-Freigabe.
+> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
 
-**Candidate status / Kandidatenstand:** This release branch pins RC6 before tagging. RC6 images are not yet available; test only local builds or locally prepared fixture images. Live main stays on published RC5 until merge approval. / Dieser Release-Branch bindet RC6 vor dem Tag; die Images sind noch nicht verfügbar. Nur lokale Builds bzw. isolierte Fixture-Images testen; main bleibt bis zur Merge-Freigabe auf RC5.
+**Release version / Release-Version:** The RC6 source ZIP pins `1.0.0-rc.6` in both registry selections. Verify release publication before using prebuilt images. Local builds remain an explicit alternative. / Das RC6-Quell-ZIP bindet bei beiden Registries `1.0.0-rc.6`. Vor Verwendung fertiger Images den erfolgreichen Release-Abschluss prüfen. Lokale Builds bleiben eine ausdrückliche Alternative.
 
 # Installer image selection
 

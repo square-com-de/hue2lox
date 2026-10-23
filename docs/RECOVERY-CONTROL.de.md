@@ -2,7 +2,7 @@
 
 [English](RECOVERY-CONTROL.md)
 
-**RC6 ist unveröffentlicht.** Diese Anleitung ist für die isolierte Abnahme mit den übergebenen lokalen RC6-Archiven gedacht; keine RC6-Images aus einer Registry ziehen. Produktion und Hardware bleiben unberührt.
+Diese Anleitung beschreibt den geprüften lokalen Buildweg von RC5 zu RC6 und die ausdrückliche Steuerungsfreigabe. Das RC6-Quell-ZIP samt Prüfsumme vom Release verwenden. Der alternative feste Image-Updateweg steht in [Docker-Update](UPDATE-DOCKER.de.md); ein Update bestehender Installationen erfolgt ausschließlich auf ausdrücklichen Betreiberauftrag.
 
 Der RC5-Docker-Installer hat `HUE_WRITES_ENABLED`, `HUE_COLOR_ENABLED` und `HUE_WHITE_ENABLED` mit `0` gespeichert. Das direkte RC5-Image ohne solche Overrides hat dagegen Standardwerte `1`. RC6 setzt nur bei **Neuinstallationen** alle drei auf `1`. Updates behalten vorhandene Werte, auch bewusst gesetzte `0`. Daher ist eine Korrektur immer eine ausdrückliche Betreiberentscheidung. `1` erlaubt nur die von der jeweiligen Lampe unterstützten Schalt-/Dimm-/RGB-/TW-/Lumitech-Funktionen; Tokenpflicht und Capability-Prüfung bleiben bestehen. Pairings, Zugangsdaten und Lampenmodi werden nicht zurückgesetzt.
 

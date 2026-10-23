@@ -1,10 +1,10 @@
-> **RC6 preparation — NOT RELEASED.** RC6 downloads/images below are planned references and must not be run until publication is explicitly approved and verified. For isolated tests use the supplied local ZIP/native archive or local build. Published RC5 remains [available unchanged](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5). This candidate branch intentionally pins RC6; live main retains RC5 until merge approval.
+> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
 
-> **RC6-Vorbereitung — NICHT VERÖFFENTLICHT.** RC6-Downloads/Images unten sind geplante Verweise, erst nach freigegebener und geprüfter Veröffentlichung verwenden. Isoliert die lokal bereitgestellten Archive oder lokalen Build nutzen. RC5 bleibt unverändert verfügbar. Dieser Kandidatenbranch bindet RC6; main behält RC5 bis zur Merge-Freigabe.
+> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
 
 # Install Hue2Lox on Linux
 
-**Current main:** PR #18 is merged; the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [RC6 is being prepared](docs/RC6-PREPARATION.md), not yet released. Native operation remains experimental and is included in this RC6 candidate; use the separate native archive with the source-ZIP assistant. See the [native development guide](docs/INSTALL-NATIVE.en.md).
+**Current main:** PR #18 is merged; the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [RC6 release notes](docs/RELEASE-NOTES-RC6.md). Native operation remains experimental and is included in this RC6 candidate; use the separate native archive with the source-ZIP assistant. See the [native development guide](docs/INSTALL-NATIVE.en.md).
 
 [Deutsch](INSTALL.de.md) · [RC6 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6) · [English manual](docs/MANUAL.md)
 
@@ -12,7 +12,7 @@ This guide installs **RC6** directly on the Linux server. The [version, package 
 
 ## Installer on main: Docker/native and prebuilt images
 
-The development installer now defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. This choice is included in the prepared RC6 source ZIP. This candidate pins `1.0.0-rc.6`, which is not published yet; choose **local build** to test code changes from `main`. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
+The development installer now defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. This choice is included in the prepared RC6 source ZIP. This release pins `1.0.0-rc.6`; use the fixed image for normal installation, or **local build** to test a reviewed source checkout. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
 
 ## HTTP or HTTPS in the installer
 

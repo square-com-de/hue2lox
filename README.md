@@ -1,4 +1,4 @@
-> **Unpublished RC6 candidate:** RC6 is the target of these guides; downloads and images are not yet available. For isolated tests use supplied local packages and choose local build in the Docker installer. [RC5→RC6 and control opt-in](docs/RECOVERY-CONTROL.md). No hardware or publication approval.
+> **RC6 — Release Candidate:** [Release and downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6). Verify successful publication and checksums before installing. Native remains experimental. [RC5→RC6 and control opt-in](docs/RECOVERY-CONTROL.md).
 
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
@@ -25,7 +25,7 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 - Copy Loxone HTTP commands or export a selection as XML.
 - Inspect incoming requests in a temporary, sanitized HTTP monitor.
 - Manage locally over HTTPS without a cloud account for normal operation.
-- On main: shared Docker/native installer and local discovery copy helpers; RC6 is not yet published.
+- On main: shared Docker/native installer and local discovery copy helpers; included in RC6.
 
 ## Preview
 
@@ -35,12 +35,12 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
-The shared **RC6 installer** offers Docker or native operation. RC6 is not published yet: use supplied local packages with independently supplied checksums for acceptance. Public download commands in the guides become usable only after publication.
+The shared **RC6 installer** offers Docker or native operation. The installation guides use the versioned RC6 source ZIP and fixed images; verify checksums and successful release publication.
 
 | Installation method | Who is it for? | Guide |
 | --- | --- | --- |
-| **Installer with Docker** | Guided setup; fixed release image after publication or local build. | [Installation guide](INSTALL.md). Choose **local build** before publication. |
-| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). RC6 image not yet available. |
+| **Installer with Docker** | Guided setup; fixed release image after publication or local build. | [Installation guide](INSTALL.md). Choose **local build** for source tests. |
+| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed RC6 image. |
 | **Native without Docker** | Experimental systemd operation on explicitly tested amd64 Linux targets. | [Native guide](docs/INSTALL-NATIVE.en.md). Source ZIP and native archive required. |
 
 1. **Start the installer:** the [guide](INSTALL.md) covers prerequisites, package verification and deployment selection. Use your Mac or Windows PC to operate the Linux server.
@@ -48,7 +48,7 @@ The shared **RC6 installer** offers Docker or native operation. RC6 is not publi
 3. **Sign in:** open the displayed web address and verify its certificate for direct HTTPS. Initial login `admin/admin`; change the password afterwards. Pair hardware only during the separate hardware acceptance.
 4. **Connect Loxone:** for later hardware testing, the [illustrated guide](docs/TUTORIAL.md) explains commands and XML for Loxone Config.
 
-**[Installation guide](INSTALL.md) · [Planned RC6 packages and checksums](docs/DOWNLOADS.md) · [RC6 release-note draft](docs/RELEASE-NOTES-RC6.md)**
+**[Installation guide](INSTALL.md) · [RC6 packages and checksums](docs/DOWNLOADS.md) · [RC6 release notes](docs/RELEASE-NOTES-RC6.md)**
 
 **Already installed?** Follow the [backed-up RC5→RC6 procedure with explicit control opt-in](docs/RECOVERY-CONTROL.md). Updating never overrides intentionally disabled controls. AI guidance is available through the [installation prompt](docs/AI-INSTALL.md).
 
@@ -64,15 +64,15 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Published: RC5. Preparing: RC6, not yet released.** PR #18 is merged into main. Real Ubuntu 26.04/DietPi 13 acceptance of the shared installer, Docker/native lifecycle, update/rollback and retained state passed. See [acceptance and limits](docs/DEPLOYMENT-ACCEPTANCE.md). Hue/Loxone hardware tests and final RC6 package checks remain separately open. Original project code is licensed under Apache 2.0.
+**Release candidate: RC6. Not a stable release.** PR #18 is merged into main. Real Ubuntu 26.04/DietPi 13 acceptance of the shared installer, Docker/native lifecycle, update/rollback and retained state passed. See [acceptance and limits](docs/DEPLOYMENT-ACCEPTANCE.md). User acceptance confirms TV-strip Lumitech color, warm/cold white, dimming, off, scene activation and state retained after reboot; this does not qualify every device. Original project code is licensed under Apache 2.0.
 
-Target version: `1.0.0-rc.6`, with source ZIP, native archive and eventual Docker Hub/GHCR images for AMD64/ARM64. All materials must identify the same reviewed source. RC6 downloads/image tags are unavailable before publication. No `latest` before stable. RC1 and RC5 remain unchanged during preparation; earlier release evidence does not qualify RC6.
+Target version: `1.0.0-rc.6`, with source ZIP, native archive and eventual Docker Hub/GHCR images for AMD64/ARM64. All materials must identify the same reviewed source. Use versioned downloads and images only after successful publication. No `latest` before stable. RC1 and RC5 remain unchanged during preparation; earlier release evidence does not qualify RC6.
 
 Create and edit scenes in the Hue app; recall them through Loxone. Synchronizing actual Hue light state back into the Loxone Lighting Controller is not part of this project.
 
 **Existing installations:** use the [backup/update/rollback procedure](docs/UPDATE-DOCKER.md) for standard Docker deployments or [native maintenance](docs/INSTALL-NATIVE.en.md). Inspect custom Compose/prototype installations separately. Fresh setup is not a general updater.
 
-See the [changelog](CHANGELOG.md), [unpublished RC6 preparation](docs/RC6-PREPARATION.md) and [release overview](RELEASE.md).
+See the [changelog](CHANGELOG.md), [historical RC6 preparation](docs/RC6-PREPARATION.md) and [release overview](RELEASE.md).
 
 ## Documentation
 
