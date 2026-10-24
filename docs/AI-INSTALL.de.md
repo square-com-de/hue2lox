@@ -1,7 +1,3 @@
-> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
-
-> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
-
 # Mit KI installieren
 
 [Startseite](../README.de.md) · [English](AI-INSTALL.md) · [Installationsanleitung](../INSTALL.de.md)
@@ -13,7 +9,7 @@ Du brauchst einen Linux-Zielserver, dessen IP und Benutzernamen, SSH-Zugang und 
 ## Prompt zum Kopieren
 
 ```text
-Dieser Prompt ist für RC6 nach Veröffentlichung vorbereitet. Prüfe zuerst, ob RC6 tatsächlich veröffentlicht ist. Falls nicht: keine Downloadversuche; für einen isolierten Test die lokal bereitgestellten, geprüften Pakete verwenden.
+Dieser Prompt ist für 1.0.0 nach Veröffentlichung vorbereitet. Prüfe zuerst, ob 1.0.0 tatsächlich veröffentlicht ist. Falls nicht: keine Downloadversuche; für einen isolierten Test die lokal bereitgestellten, geprüften Pakete verwenden.
 
 Hilf mir, den Hue2Lox-Installer zu starten. Halte es einfach und führe mich
 Schritt für Schritt durch genau diesen Ablauf:
@@ -27,14 +23,14 @@ Schritt für Schritt durch genau diesen Ablauf:
    Wenn ich bereits Root bin, keinen Wechsel verlangen. sudo nicht installieren
    und keine Benutzergruppen ändern.
 3. Folge dem Direktdownload-Ablauf in
-   https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.6/INSTALL.de.md.
+   https://github.com/square-com-de/hue2lox/blob/v1.0.0/INSTALL.de.md.
    Auf dem Zielserver als Root ca-certificates, curl und unzip bereitstellen.
-   Das feste Paket hue2lox-v1.0.0-rc.6.zip und SHA256SUMS.txt direkt von
-   https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6 laden.
+   Das feste Paket hue2lox-v1.0.0.zip und SHA256SUMS.txt direkt von
+   https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0 laden.
    Kein Download auf dem Arbeitsgerät und kein scp nötig. Kein main-Branch-ZIP.
-4. In einem neuen Downloadordner mit grep '  hue2lox-v1.0.0-rc.6.zip$' SHA256SUMS.txt | sha256sum --check - prüfen.
+4. In einem neuen Downloadordner mit grep '  hue2lox-v1.0.0.zip$' SHA256SUMS.txt | sha256sum --check - prüfen.
    Nur nach erfolgreicher Prüfung entpacken und install-assistant.sh aus
-   hue2lox-v1.0.0-rc.6 starten. Bei Fehlern stoppen und nichts überschreiben.
+   hue2lox-v1.0.0 starten. Bei Fehlern stoppen und nichts überschreiben.
    Danach übernimmt das Installer-Menü.
 
 Beschrifte jeden Befehlsblock mit ARBEITSGERÄT oder ZIELSERVER.

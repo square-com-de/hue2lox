@@ -1,8 +1,14 @@
 # Changelog
 
-[Unpublished RC6 plan / Unveröffentlichter RC6-Plan](docs/RC6-PREPARATION.md) · [Released RC5 / Veröffentlichtes RC5](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5)
+## 1.0.0 — 2026-10-24
 
-## Unreleased — target / Ziel 1.0.0-rc.6
+First stable release / Erstes Stable-Release. Scene on/off with visible defaults and automatic exact-group assignment; immediate selection without confirmation checkbox. Existing recall commands remain compatible. / Szenen-Ein/Aus mit sichtbaren Defaults und automatischer exakter Gruppenzuordnung; direkte Auswahl ohne Bestätigungshaken. Bestehende Recall-Befehle bleiben kompatibel.
+
+[Full DE/EN notes / Vollständige Hinweise](docs/RELEASE-NOTES-1.0.0.md). Native remains experimental / Nativ bleibt experimentell.
+
+[Historical RC6 plan / Historischer RC6-Plan](docs/RC6-PREPARATION.md) · [Released RC5 / Veröffentlichtes RC5](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5)
+
+## 1.0.0-rc.6 — historical / historisch
 
 ### Deutsch
 

@@ -1,28 +1,23 @@
-> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
-
-> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
-
-**Release version: RC6.** Use the fixed RC6 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-RC6.md) describe the shared installer, discovery help and documented scene limits. The native adapter remains a separate experimental deployment path.
+**Release version: 1.0.0.** Use the fixed 1.0.0 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.0.md) describe the shared installer, discovery help and documented scene limits. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-After successful publication RC6 will provide identical images at `docker.io/dubctrl/hue2lox:1.0.0-rc.6` and
-`ghcr.io/square-com-de/hue2lox:1.0.0-rc.6` for
+Stable 1.0.0 provides identical images at `docker.io/dubctrl/hue2lox:1.0.0` and
+`ghcr.io/square-com-de/hue2lox:1.0.0` for
 `linux/amd64` and `linux/arm64`. RC4 remains unchanged on GHCR; RC1–RC3 remain unchanged and ZIP-only.
-[RC6 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6).
+[1.0.0 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0).
 
 ## Image tags
 
-Use the exact version `1.0.0-rc.6` for this candidate. There are no floating `rc`
-or minor-version tags. `latest` is reserved for a future stable release and is
-not created by an RC.
+Use the exact version `1.0.0` for this release. There are no floating `rc`
+or minor-version tags. `latest` follows the latest successfully verified stable release. RC releases never move it. Pin `1.0.0` to avoid unintended version changes.
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.6
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0
 # Alternatively, from Docker Hub:
-podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.6
+podman pull docker.io/dubctrl/hue2lox:1.0.0
 ```
 
 The release workflow publishes only after a GitHub release is published and all
@@ -50,7 +45,7 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy the [RC6 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0-rc.6/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
+Copy the [1.0.0 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
 
 ```sh
 docker compose up -d
@@ -59,7 +54,7 @@ docker compose up -d
 On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
 
 The Compose example uses GHCR. To use Docker Hub, change only its `image` value
-to `docker.io/dubctrl/hue2lox:1.0.0-rc.6`; both registries must contain the same verified images.
+to `docker.io/dubctrl/hue2lox:1.0.0`; both registries must contain the same verified images.
 
 ## Podman Desktop on macOS
 
@@ -75,7 +70,7 @@ podman run -d --name hue2lox-rc6-test \
   -v hue2lox-rc6-data:/data \
   --read-only --tmpfs /tmp --cap-drop=ALL \
   --security-opt=no-new-privileges \
-  docker.io/dubctrl/hue2lox:1.0.0-rc.6
+  docker.io/dubctrl/hue2lox:1.0.0
 ```
 
 Open **http://localhost:18443** exactly. Initial login is `admin` / `admin`
@@ -115,7 +110,7 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 
 **Installer-created deployments:** use the complete [update/rollback guide](UPDATE-DOCKER.md) / [deutsche Anleitung](UPDATE-DOCKER.de.md), including a cold backup and the exact previous image. It covers local builds and pinned release images.
 
-**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged RC6 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
+**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged 1.0.0 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
 
 ## Settings
 

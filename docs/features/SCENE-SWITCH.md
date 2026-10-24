@@ -1,6 +1,6 @@
-# Scenes as on/off lighting circuits — development after RC6
+# Scenes as on/off lighting circuits
 
-This optional extension belongs to the feature PR for [issue 42](https://github.com/square-com-de/hue2lox/issues/42), not the published RC6. Existing Loxone commands are not rewritten. Hardware acceptance remains open.
+Available in Stable 1.0.0. On 24 October 2026 the user confirmed scene switching and final OFF with Hue and Loxone in the Portainer test stack. Existing Loxone commands are not rewritten.
 
 ## Setup
 
@@ -14,7 +14,7 @@ This optional extension belongs to the feature PR for [issue 42](https://github.
 
 ON recalls the saved Hue scene without an additional dimming value. OFF switches off **the entire assigned group**, including additional lamps. There is no native Hue scene-OFF endpoint. Rescan after changes in Hue. If saved group membership or scene assignment changes, no new group is silently selected: the UI shows current lamps and asks you to choose the group again. A placeholder allows choosing the same changed group again. Stale selections are rejected; no confirmation checkbox is needed.
 
-Existing explicit group assignments are retained. Existing recall endpoints and imported Loxone commands continue to work and are not rewritten. New exports use the displayed mode. Older records without a saved mode/group are considered undecided: on/off becomes the default, automatically usable only with a unique exact group. The first PR45 version did not store a reset-to-recall preference, so those old choices cannot be reconstructed. New explicit recall preferences are stored. This PR does not modify production or published RC6 packages.
+Existing explicit group assignments are retained. Existing recall endpoints and imported Loxone commands continue to work and are not rewritten. New exports use the displayed mode. Older records without a saved mode/group are considered undecided: on/off becomes the default, automatically usable only with a unique exact group. The first PR45 version did not store a reset-to-recall preference, so those old choices cannot be reconstructed. New explicit recall preferences are stored. Published RC packages remain unchanged.
 
 ## Scene changes and limitations
 

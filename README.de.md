@@ -1,5 +1,3 @@
-> **RC6 — Release Candidate:** [Release und Downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6). Vor der Installation den erfolgreichen Veröffentlichungsabschluss und Prüfsummen kontrollieren. Nativ bleibt experimentell. [RC5→RC6 und Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md).
-
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
 <p align="center">
@@ -25,7 +23,8 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 - Loxone-HTTP-Befehle kopieren oder eine Auswahl als XML exportieren.
 - Loxone-Anfragen mit einem zeitlich begrenzten, bereinigten HTTP-Monitor prüfen.
 - Lokal über HTTPS verwalten – ohne Cloudkonto für den laufenden Betrieb.
-- Auf main: gemeinsamer Docker-/nativer Installer und kopierbare lokale Discovery-Hilfe; in RC6 enthalten.
+- Gemeinsamer Docker-/nativer Installer und lokale Suchhilfen für macOS, Windows und Linux.
+- Szenen als digitale Ein/Aus-Lichtkreise mit automatisch zugeordneten, eindeutig passenden Gruppen.
 
 ## So sieht es aus
 
@@ -35,22 +34,22 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
-Der gemeinsame **RC6-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte RC6-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
+Der gemeinsame **1.0.0-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte 1.0.0-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
 
 | Installationsweg | Für wen? | Anleitung |
 | --- | --- | --- |
 | **Installer mit Docker** | Geführte Einrichtung; festes Release-Image nach Veröffentlichung oder lokaler Build. | [Installationsanleitung](INSTALL.de.md). Für Quelltests **lokalen Build** wählen. |
-| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). Festes RC6-Image verwenden. |
+| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). Festes 1.0.0-Image verwenden. |
 | **Nativ ohne Docker** | Experimenteller systemd-Betrieb auf den ausdrücklich geprüften amd64-Linux-Zielen. | [Native Anleitung](docs/INSTALL-NATIVE.md). Quell-ZIP und natives Archiv erforderlich. |
 
 1. **Installer starten:** Die [Anleitung](INSTALL.de.md) beschreibt Voraussetzungen, Paketprüfung und Auswahl des Installationswegs. Mac oder Windows-PC dienen zur Bedienung des Linux-Servers.
 2. **Hue2Lox einrichten:** Der Installer prüft Voraussetzungen; vorhandene funktionierende Docker-Installationen werden weiterverwendet. Neue Installationen erlauben die von der Lampe unterstützten Steuerfunktionen.
-3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hardware erst bei der gesonderten Abnahme koppeln.
-4. **Mit Loxone verbinden:** Für den späteren Hardwaretest beschreibt die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
+3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hue Bridge hinzufügen und Lampen sowie Szenen einlesen.
+4. **Mit Loxone verbinden:** Die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
 
-**[Installationsanleitung](INSTALL.de.md) · [RC6-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [RC6-Release-Hinweise](docs/RELEASE-NOTES-RC6.md)**
+**[Installationsanleitung](INSTALL.de.md) · [1.0.0-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [1.0.0-Release-Hinweise](docs/RELEASE-NOTES-1.0.0.md)**
 
-**Bereits installiert?** Den [gesicherten RC5→RC6-Weg mit ausdrücklicher Steuerungsfreigabe](docs/RECOVERY-CONTROL.de.md) verwenden. Ein Update überschreibt keine bewusst gesperrten Funktionen. Für KI-Begleitung gibt es den [Installationsprompt](docs/AI-INSTALL.de.md).
+**Bereits installiert?** Den [gesicherten Update-/Rollbackweg](docs/UPDATE-DOCKER.de.md) verwenden. Ein Update überschreibt keine bewusst gesperrten Funktionen. Für KI-Begleitung gibt es den [Installationsprompt](docs/AI-INSTALL.de.md).
 
 ## Feedback & Kontakt
 
@@ -64,11 +63,11 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Release Candidate: RC6. Kein Stable-Release.** PR #18 ist in main integriert. Die reale Ubuntu-26.04-/DietPi-13-Abnahme des gemeinsamen Installers, Docker/nativ sowie Update/Rollback und Datenerhalt ist bestanden. [Abnahme und Grenzen](docs/DEPLOYMENT-ACCEPTANCE.md). Die Nutzerabnahme bestätigt den TV-Strip über Lumitech (Farbe, Warm-/Kaltweiß, Dimmen, Aus), Szenenaktivierung und Datenerhalt nach Neustart; weitere Geräte sind damit nicht pauschal abgenommen. Der eigene Projektcode steht unter Apache 2.0.
+**Stable 1.0.0.** Enthält den gemeinsamen Installer, lokale Suchhilfen und Szenen-Ein/Aus. Die Nutzerabnahme umfasst TV-Strip-Lumitech-Farbe, warmes/kaltes Weiß, Dimmen, AUS, Szenenwechsel und abschließendes AUS. Docker-/native Lebenszyklustests auf Ubuntu und DietPi prüfen Neustart, Update/Rollback und Datenerhalt. Siehe [Release-Hinweise und Grenzen](docs/RELEASE-NOTES-1.0.0.md).
 
-Zielversion ist `1.0.0-rc.6`: Quell-ZIP, natives Archiv und später Docker-Hub-/GHCR-Images für AMD64/ARM64. Alle Teile müssen zum selben geprüften Quellstand gehören. Die versionierten Downloads und Images erst nach erfolgreichem Veröffentlichungsabschluss verwenden. Kein `latest` vor Stable. RC1 und RC5 bleiben bei dieser Vorbereitung unverändert; frühere Release-Nachweise ersetzen keine RC6-Abnahme.
+Versioniertes ZIP oder `1.0.0`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.0` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
 
-Szenen erstellst du weiterhin in der Hue-App. Hue2Lox ruft sie über Loxone ab. Eine Synchronisierung des tatsächlichen Lampenzustands zurück in den Loxone-Lichtsteuerungsbaustein ist nicht vorgesehen.
+Szenen in der Hue-App erstellen und bearbeiten. [Szenen Ein/Aus](docs/features/SCENE-SWITCH.de.md) aktiviert eine Szene und schaltet ihre zugeordnete Gruppe aus. Bestehende Recall-Befehle bleiben nutzbar; für AUS die neuen digitalen Befehle importieren. Eine Rückmeldung des tatsächlichen Lampenzustands in den Loxone-Lichtbaustein ist nicht enthalten.
 
 **Bestehende Installationen:** Für Standard-Docker-Installationen gilt der [gesicherte Update-/Rollbackweg](docs/UPDATE-DOCKER.de.md), für native Installationen die [native Wartung](docs/INSTALL-NATIVE.md). Angepasste Compose-/Prototyp-Installationen separat prüfen. Eine Neuinstallation ist kein allgemeiner Updater.
 

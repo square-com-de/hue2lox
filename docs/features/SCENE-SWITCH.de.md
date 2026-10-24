@@ -1,6 +1,6 @@
-# Szenen als Ein/Aus-Lichtkreis — Entwicklung nach RC6
+# Szenen als Ein/Aus-Lichtkreis
 
-Diese optionale Erweiterung gehört zum Feature-PR für [Issue 42](https://github.com/square-com-de/hue2lox/issues/42), nicht zum veröffentlichten RC6. Bestehende Loxone-Befehle werden nicht umgeschrieben. Hardwareabnahme noch offen.
+Seit Stable 1.0.0 verfügbar. Szenenwechsel und abschließendes AUS wurden am 24.10.2026 vom Nutzer im Portainer-Teststack mit Hue und Loxone bestätigt. Bestehende Loxone-Befehle werden nicht umgeschrieben.
 
 ## Einrichtung
 
@@ -14,7 +14,7 @@ Diese optionale Erweiterung gehört zum Feature-PR für [Issue 42](https://githu
 
 EIN aktiviert die gespeicherte Hue-Szene ohne zusätzlichen Dimmwert. AUS schaltet **die ganze zugeordnete Gruppe** aus, auch zusätzliche Lampen. Es gibt keinen nativen Hue-Szene-AUS-Endpunkt. Nach Änderungen in Hue erneut einlesen. Ändert sich die gespeicherte Gruppenmitgliedschaft oder Szenenzuordnung, wird nicht still eine neue Gruppe gewählt: Die Oberfläche zeigt die aktuellen Lampen und fordert zur erneuten Gruppenauswahl auf. Dabei erscheint der Auswahlplatzhalter, damit auch dieselbe geänderte Gruppe mit einer Auswahl neu übernommen werden kann. Eine zwischenzeitlich veraltete Auswahl wird abgewiesen; keine Bestätigungscheckbox.
 
-Vorhandene ausdrückliche Gruppenzuordnungen werden beibehalten. Bereits bestehende Recall-Endpunkte und importierte Loxone-Befehle funktionieren weiter und werden nicht umgeschrieben. Für neue Exporte gilt der angezeigte Modus. Ein Altstand ohne gespeicherten Modus/Gruppe gilt als unentschieden: Ein/Aus ist dort der neue Standard, automatisch nutzbar nur bei eindeutig exakter Gruppe. Der erste PR45-Stand hatte eine zurückgesetzte Recall-Wahl nicht gespeichert; solche früheren Entscheidungen sind nachträglich nicht erkennbar. Die neue ausdrückliche Recall-Wahl wird gespeichert. Produktion und veröffentlichte RC6-Pakete werden durch diesen PR nicht verändert.
+Vorhandene ausdrückliche Gruppenzuordnungen werden beibehalten. Bereits bestehende Recall-Endpunkte und importierte Loxone-Befehle funktionieren weiter und werden nicht umgeschrieben. Für neue Exporte gilt der angezeigte Modus. Ein Altstand ohne gespeicherten Modus/Gruppe gilt als unentschieden: Ein/Aus ist dort der neue Standard, automatisch nutzbar nur bei eindeutig exakter Gruppe. Der erste PR45-Stand hatte eine zurückgesetzte Recall-Wahl nicht gespeichert; solche früheren Entscheidungen sind nachträglich nicht erkennbar. Die neue ausdrückliche Recall-Wahl wird gespeichert. Veröffentlichte RC-Pakete bleiben unverändert.
 
 ## Szenenwechsel und Grenzen
 

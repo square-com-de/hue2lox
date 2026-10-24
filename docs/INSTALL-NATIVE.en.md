@@ -4,7 +4,7 @@ The web app also includes optional local discovery help for macOS, Windows and L
 
 [Deutsch](INSTALL-NATIVE.md) · [Docker installation](../INSTALL.md)
 
-This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. For RC6, use the versioned native archive and checksum alongside the source ZIP; see the RC6 section below. **The native path is experimental.** Explicit test targets are Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, currently amd64 only. This is not hardware approval.
+This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. For 1.0.0, use the versioned native archive and checksum alongside the source ZIP; see the 1.0.0 section below. **The native path is experimental.** Explicit test targets are Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, currently amd64 only. This is not hardware approval.
 
 ## Shared interactive installer (development)
 
@@ -191,13 +191,13 @@ A future LoxBerry plugin can reuse the application and state preparation. Its di
 
 The language selected in the shared assistant also applies to its own Python helper status and error messages. Direct CLI calls can use `export HUE2LOX_INSTALL_LANG=en` or `de`. Output from external tools (apt, Docker, systemd) and their original logs is not rewritten.
 
-## RC6 source ZIP and native archive
+## Stable source ZIP and native archive
 
-**RC6 native archive.** Supply `hue2lox-1.0.0-rc.6-native.tar.gz` alongside `hue2lox-v1.0.0-rc.6.zip`. Verify both hashes from the same `SHA256SUMS.txt`; use the versioned release assets after publication completes. The native archive is separate from the extracted source ZIP. From the extracted source ZIP as root:
+**1.0.0 native archive.** Supply `hue2lox-1.0.0-native.tar.gz` alongside `hue2lox-v1.0.0.zip`. Verify both hashes from the same `SHA256SUMS.txt`; use the versioned release assets after publication completes. The native archive is separate from the extracted source ZIP. From the extracted source ZIP as root:
 
 ```sh
 bash install-assistant.sh --deployment native \
-  --native-package /absolute/path/hue2lox-1.0.0-rc.6-native.tar.gz \
+  --native-package /absolute/path/hue2lox-1.0.0-native.tar.gz \
   --native-sha256 VERIFIED_SHA256
 ```
 

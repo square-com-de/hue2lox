@@ -90,6 +90,6 @@ Die [Release-Checkliste](../RELEASE.md) nennt offene Prüfungen. Eigener Projekt
 
 Unter **Nutzung & Verwaltung → Lampensymbol** kannst du die Form pro Lampe wählen. **Automatisch** verwendet Modell und Bridge-Daten; unbekannte Geräte erhalten ein Glühbirnensymbol. Die Auswahl bleibt bei Neustarts und erneutem Einlesen erhalten und verändert keine Loxone-Befehle.
 
-### In Entwicklung nach RC6: Szenen als Ein/Aus-Lichtkreis
+### Seit Stable 1.0.0: Szenen als Ein/Aus-Lichtkreis
 
-Die optionale Erweiterung und ihre Grenzen sind unter [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) beschrieben. Sie ist nicht Teil des veröffentlichten RC6; bestehende Recall-Befehle funktionieren weiter. Neue Exporte verwenden den direkt sichtbaren Modus, mit Ein/Aus als Standard bei eindeutiger Zuordnung. Hardwareabnahme steht aus.
+Die optionale Erweiterung und ihre Grenzen sind unter [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) beschrieben. Sie ist seit Stable 1.0.0 enthalten; bestehende Recall-Befehle funktionieren weiter. Neue Exporte verwenden den direkt sichtbaren Modus, mit Ein/Aus als Standard bei eindeutiger Zuordnung. Szenenwechsel und AUS wurden vom Nutzer mit Hue/Loxone bestätigt.
