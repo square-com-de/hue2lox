@@ -1,36 +1,40 @@
 # Container setup: login, storage, networking and HTTPS
 
-Preferred path: **Docker Compose inside a Linux VM**, for example on Proxmox. [Observed runtime status](RUNTIME-SUPPORT.md); the newly requested clean Proxmox acceptance is pending and is not replaced by the Mac Podman test.
+Preferred: Docker Compose inside a Linux VM, for example on Proxmox. [Test status and limits](RUNTIME-SUPPORT.md).
 
 [Deutsch](CONTAINER-SETUP.de.md) · [Container guide](DOCKER.md) · [Linux installer](../INSTALL.md)
 
 These notes apply to the published Hue2Lox image starting with **1.0.1**. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.
 
-## Before starting
+## Quick start: Docker on a Linux server
 
-| Setting | Value |
-|---|---|
-| Image | `docker.io/dubctrl/hue2lox:1.0.1` or `ghcr.io/square-com-de/hue2lox:1.0.1` |
-| Storage | Named volume `hue2lox-data` → container path `/data`, writable |
-| Port | Linux Compose: service directly on host port `18443` (host networking); desktop port mappings are configured separately |
-| Browser | Without TLS, `http://SERVER-IP:18443`; on the same computer, `http://localhost:18443` also works |
-| First login | `admin` / `admin` with fresh data; then change the password in the UI |
-| Browser address | Direct localhost/private-IP access needs no `HUE_PUBLIC_URL`; set the exact browser URL for custom DNS names/reverse proxies |
-
-**A port number does not enable HTTPS.** Port 8443 still serves HTTP without TLS configuration. `localhost` means the computer running the browser; a Loxone Miniserver needs a server address it can reach.
-
-## Quick start with Docker Compose on Linux
-
-Prerequisites: Docker Engine and the Compose plugin running inside your Linux VM; port **18443** free. Save the [Compose file from this checkout](../docker/compose.image.yaml) as **compose.yaml** in a new dedicated folder. From that folder run (if your user lacks Docker permissions, use `su -` to become root, then change back to that folder):
+Docker Engine and Docker Compose must already be installed. Use a new directory and a free TCP port 18443. Download the [Compose file](../docker/compose.quickstart.yaml), save it as `compose.yaml`, then run:
 
 ```sh
 docker compose up -d --wait
 docker compose ps
 ```
 
-Open **http://SERVER-IP:18443** using the Linux VM’s actual LAN IP, sign in with **admin/admin** and change the password. The container must be healthy; also check browser login. Storage is created automatically, with no manual folder ownership or browser-address setting. Keep the same folder/project and volume when updating.
+Open **http://SERVER-IP:18443** from your browser. Replace `SERVER-IP` with the Linux server's private IP. Fresh data uses **admin / admin**; change the password after login. No URL variable, certificate, host directory or permission adjustment is needed for this direct-IP HTTP setup. Compose creates persistent storage automatically. Keep the same project/directory for updates. Existing installations keep their current Compose file and volume mapping; this template is for fresh installations.
 
-This profile uses unencrypted HTTP on a trusted LAN. For HTTPS, use the guided installer or the TLS/proxy setup below. VLANs/firewalls can limit discovery; direct bridge connectivity is a separate check. This revised template still needs clean-VM acceptance and is not the unchanged file in the published `v1.0.1` archive.
+This default is HTTP on a trusted LAN. HTTPS needs a certificate trusted by your browser or a reverse proxy; a port number does not enable encryption. Automatic bridge discovery may be limited by container networking: use the local discovery help or enter the bridge IP. The container must still be able to reach that IP. After adding a bridge, press its physical link button when prompted.
+
+In Portainer, create a **Stack**, paste the same Compose file and deploy it. The volume is created automatically; no separate folder setup is required. This describes Docker Standalone, not Swarm.
+
+If port 18443 is already occupied, choose a free port with `HUE2LOX_HTTP_PORT=18444 docker compose up -d --wait` and use that port in the browser. Keep this setting in the project’s `.env` file for later recreations.
+
+## Before starting
+
+| Setting | Value |
+|---|---|
+| Image | `docker.io/dubctrl/hue2lox:1.0.1` or `ghcr.io/square-com-de/hue2lox:1.0.1` |
+| Storage | Compose creates named volume `<project>_data` → container path `/data`, writable |
+| Published port | Free host port such as `18443` → container TCP port `8443` |
+| Browser | Without TLS, `http://SERVER-IP:18443`; on the same computer, `http://localhost:18443` also works |
+| First login | `admin` / `admin` with fresh data; then change the password in the UI |
+| Browser address | Direct localhost/private-IP access needs no `HUE_PUBLIC_URL`; set the exact browser URL for custom DNS names/reverse proxies |
+
+**A port number does not enable HTTPS.** Port 8443 still serves HTTP without TLS configuration. `localhost` means the computer running the browser; a Loxone Miniserver needs a server address it can reach.
 
 ## Where is my data?
 
@@ -43,7 +47,7 @@ For persistent use, choose a **named volume** and mount the same volume at `/dat
 ### Portainer (Docker Standalone)
 
 1. Select the **Linux server’s Docker Standalone environment**, then **Stacks → Add stack**; name the stack `hue2lox`.
-2. Paste the complete [Compose file from this checkout](../docker/compose.image.yaml) into the web editor and choose **Deploy the stack**. Port **18443** must be free. Do not create another volume or port mapping: storage and Linux host networking are already defined.
+2. Paste the complete [Compose file from this checkout](../docker/compose.quickstart.yaml) into the web editor and choose **Deploy the stack**. Port **18443** must be free. Do not create another volume or port mapping: storage and port publishing are already defined.
 3. Open **http://SERVER-IP:18443**, using that Docker server’s LAN IP. Fresh data: **admin/admin**, then change the password. This is HTTP on a trusted LAN; see below for HTTPS.
 4. Under **Inspect → Mounts**, check `Destination: /data`, type `volume`, `RW: true`. The container must be healthy; also check browser login.
 
@@ -77,7 +81,7 @@ Set both TLS variables or omit both. Empty values do not disable TLS; partial co
 
 ## Bridge discovery and direct access are separate tests
 
-- **Automatic discovery** uses local multicast: mDNS UDP 5353 and SSDP UDP 1900. Replies must reach the container. The Docker installer/Compose on Linux uses host networking; VLANs, guest networks and firewalls can still limit discovery.
+- **Automatic discovery** uses local multicast: mDNS UDP 5353 and SSDP UDP 1900. Replies must reach the container. The guided Docker installer uses host networking on Linux; the quick-start Compose file uses port forwarding; VLANs, guest networks and firewalls can still limit discovery.
 - **Manual addition** requires a route from the container to the bridge IP and HTTP/HTTPS access to it (TCP 80/443 depending on the check). Publishing the web-interface port alone does not provide this route.
 - **Podman Desktop on Mac/Windows** uses a Linux VM. Multicast discovery may fail while manual access succeeds. Host networking there does not automatically mean the physical Mac/Windows LAN. A successful UI login does not prove bridge connectivity.
 

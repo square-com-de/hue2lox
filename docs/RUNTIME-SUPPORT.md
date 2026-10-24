@@ -28,6 +28,10 @@ Fresh data uses `admin/admin`. Retained data keeps its existing password, bridge
 
 Pin `1.0.1` instead of `latest`, or use its published digest. The [digest record](https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/container-digests.json) binds platform and commit. Historical releases remain unchanged.
 
+## New partial Proxmox acceptance
+
+Ubuntu **26.04.1 amd64**, Docker **29.9.2**, Compose **5.6.1**: image/API login, persistence, update and restore/rollback passed. The exact new quick-start file, browser, Portainer and real hardware are not fully accepted yet. [Evidence and limits](acceptance/PROXMOX-1.0.1.md). Runtime versions are now recorded for this new partial acceptance.
+
 ## Before the next stable approval
 
 Open: independent acceptance of these consolidated guides; exact Docker/Compose versions and actually executed copy/paste commands; recovery retaining passwords and deliberately disabled flags. Record hardware scope explicitly; mocks establish no new lamp/Miniserver acceptance. The maintainer opens the [technical stable gate](GHCR-RELEASE.md#stable-acceptance-gate) only using that evidence. Published 1.0.0/1.0.1 are not rewritten.

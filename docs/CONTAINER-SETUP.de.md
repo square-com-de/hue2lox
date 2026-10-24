@@ -1,36 +1,40 @@
 # Container einrichten: Anmeldung, Speicher, Netzwerk und HTTPS
 
-Bevorzugter Weg: **Docker Compose innerhalb einer Linux-VM**, etwa auf Proxmox. [Belegter Runtime-Status](RUNTIME-SUPPORT.de.md); die neu angeforderte saubere Proxmox-Abnahme ist noch offen und wird nicht durch den Mac-Podman-Test ersetzt.
+Bevorzugt: Docker Compose innerhalb einer Linux-VM, etwa auf Proxmox. [Teststatus und Grenzen](RUNTIME-SUPPORT.de.md).
 
 [English](CONTAINER-SETUP.md) · [Container-Anleitung](DOCKER.md) · [Linux-Installer](../INSTALL.de.md)
 
 Diese Hinweise gelten für das veröffentlichte Hue2Lox-Image ab **1.0.1**. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.
 
-## Vor dem Start
+## Schnellstart: Docker auf einem Linux-Server
 
-| Einstellung | Was eintragen? |
-|---|---|
-| Image | `docker.io/dubctrl/hue2lox:1.0.1` oder `ghcr.io/square-com-de/hue2lox:1.0.1` |
-| Speicher | Benanntes Volume `hue2lox-data` → Containerpfad `/data`, schreibbar |
-| Port | Linux-Compose: Dienst direkt auf Host-Port `18443` (Host-Netzwerk); Desktop-Portmapping separat konfigurieren |
-| Browser | Ohne TLS zunächst `http://SERVER-IP:18443`; auf demselben Computer auch `http://localhost:18443` |
-| Erste Anmeldung | `admin` / `admin` bei neuen Daten; anschließend Passwort in der Oberfläche ändern |
-| Browseradresse | Für direkte localhost/private-IP-Zugriffe keine `HUE_PUBLIC_URL` nötig; bei eigenem DNS-Namen/Reverse Proxy die genaue Browseradresse setzen |
-
-**Portnummern aktivieren kein HTTPS.** Auch Port 8443 spricht ohne TLS-Konfiguration HTTP. `localhost` meint immer den Computer, auf dem der Browser läuft; ein Loxone-Miniserver benötigt eine von ihm erreichbare Serveradresse.
-
-## Schnellstart mit Docker Compose auf Linux
-
-Voraussetzung: Docker Engine und Compose-Plugin laufen auf deiner Linux-VM; Port **18443** ist frei. Die [Compose-Datei dieses Checkouts](../docker/compose.image.yaml) als **compose.yaml** in einem neuen eigenen Ordner speichern. In diesem Ordner ausführen (bei fehlenden Docker-Rechten mit `su -` zu root wechseln und anschließend wieder in diesen Ordner gehen):
+Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Lade die [Compose-Datei](../docker/compose.quickstart.yaml) herunter, speichere sie als `compose.yaml` und starte:
 
 ```sh
 docker compose up -d --wait
 docker compose ps
 ```
 
-**http://SERVER-IP:18443** mit der tatsächlichen LAN-IP der Linux-VM öffnen, mit **admin/admin** anmelden und Passwort ändern. Der Container muss gesund sein; zusätzlich den Browserlogin prüfen. Speicher wird automatisch angelegt, keine Ordnerrechte oder Browseradresse nachtragen. Für Updates denselben Ordner/Projektnamen und dasselbe Volume behalten.
+Öffne **http://SERVER-IP:18443** im Browser. Ersetze `SERVER-IP` durch die private IP des Linux-Servers. Bei frischen Daten gilt **admin / admin**; ändere das Passwort nach der Anmeldung. Für diesen direkten HTTP-Zugriff brauchst du keine URL-Variable, kein Zertifikat, keinen eigenen Datenordner und keine Rechteanpassung. Compose legt den dauerhaften Speicher automatisch an. Verwende bei Updates dasselbe Projekt beziehungsweise denselben Ordner. Bestehende Installationen behalten ihre bisherige Compose-Datei und Volume-Zuordnung; diese Vorlage ist für Neuinstallationen.
 
-Dieses Profil verwendet unverschlüsseltes HTTP im vertrauenswürdigen LAN. Für HTTPS den geführten Installer oder die TLS-/Proxy-Einrichtung unten verwenden. Automatische Suche kann durch VLANs/Firewall begrenzt sein; direkter Bridge-Zugriff bleibt eine eigene Prüfung. Diese überarbeitete Vorlage benötigt noch die Clean-VM-Abnahme und ist nicht die unveränderte Datei aus dem veröffentlichten `v1.0.1`-Archiv.
+Dieser Standardweg nutzt HTTP im vertrauenswürdigen LAN. HTTPS braucht ein vom Browser akzeptiertes Zertifikat oder einen Reverse Proxy; die Portnummer allein aktiviert keine Verschlüsselung. Die automatische Bridge-Suche kann durch das Containernetz begrenzt sein: Nutze dann die lokale Suchhilfe oder gib die Bridge-IP ein. Der Container muss diese IP weiterhin erreichen können. Drücke beim Koppeln den physischen Knopf der Bridge, sobald die Oberfläche dazu auffordert.
+
+In Portainer einen **Stack** anlegen, dieselbe Compose-Datei einfügen und deployen. Das Volume entsteht automatisch; ein eigener Ordner ist nicht nötig. Gemeint ist Docker Standalone, nicht Swarm.
+
+Ist Port 18443 bereits belegt, wähle einen freien Port mit `HUE2LOX_HTTP_PORT=18444 docker compose up -d --wait` und verwende diesen auch im Browser. Halte diese Einstellung für späteres Neuerstellen in der `.env`-Datei des Projekts fest.
+
+## Vor dem Start
+
+| Einstellung | Was eintragen? |
+|---|---|
+| Image | `docker.io/dubctrl/hue2lox:1.0.1` oder `ghcr.io/square-com-de/hue2lox:1.0.1` |
+| Speicher | Compose legt das benannte Volume `<Projekt>_data` an → Containerpfad `/data`, schreibbar |
+| Port bei Portweiterleitung | Freier Host-Port, etwa `18443` → Container-Port `8443` (TCP) |
+| Browser | Ohne TLS zunächst `http://SERVER-IP:18443`; auf demselben Computer auch `http://localhost:18443` |
+| Erste Anmeldung | `admin` / `admin` bei neuen Daten; anschließend Passwort in der Oberfläche ändern |
+| Browseradresse | Für direkte localhost/private-IP-Zugriffe keine `HUE_PUBLIC_URL` nötig; bei eigenem DNS-Namen/Reverse Proxy die genaue Browseradresse setzen |
+
+**Portnummern aktivieren kein HTTPS.** Auch Port 8443 spricht ohne TLS-Konfiguration HTTP. `localhost` meint immer den Computer, auf dem der Browser läuft; ein Loxone-Miniserver benötigt eine von ihm erreichbare Serveradresse.
 
 ## Wo bleiben meine Daten?
 
@@ -43,7 +47,7 @@ Für dauerhaften Betrieb ein **benanntes Volume** verwenden und bei Updates erne
 ### Portainer (Docker Standalone)
 
 1. Die **Docker-Standalone-Umgebung auf dem Linux-Server** auswählen, dann **Stacks → Add stack** öffnen; Stackname `hue2lox`.
-2. Die [Compose-Datei dieses Checkouts](../docker/compose.image.yaml) vollständig in den Webeditor kopieren und **Deploy the stack** wählen. Port **18443** muss frei sein. Kein zusätzliches Volume und keine Portfreigabe anlegen: die Datei enthält Speicher und Linux-Host-Netzwerk bereits.
+2. Die [Compose-Datei dieses Checkouts](../docker/compose.quickstart.yaml) vollständig in den Webeditor kopieren und **Deploy the stack** wählen. Port **18443** muss frei sein. Kein zusätzliches Volume und keine Portfreigabe anlegen: die Datei enthält Speicher und Portzuordnung bereits.
 3. **http://SERVER-IP:18443** mit der LAN-IP dieses Docker-Servers öffnen. Frische Daten: **admin/admin**, danach Passwort ändern. Das ist HTTP im vertrauenswürdigen LAN; für HTTPS siehe unten.
 4. Unter **Inspect → Mounts** prüfen: `Destination: /data`, Typ `volume`, `RW: true`. Container muss gesund sein; Browserlogin zusätzlich prüfen.
 
@@ -77,7 +81,7 @@ Beide TLS-Variablen setzen oder beide weglassen. Leere Werte sind keine Deaktivi
 
 ## Bridge-Suche und direkter Zugriff sind zwei verschiedene Tests
 
-- **Automatische Suche** verwendet lokales Multicast (mDNS UDP 5353 und SSDP UDP 1900). Antworten müssen den Container erreichen. Beim Docker-Installer/Compose auf einem Linux-Host wird Host-Netzwerk verwendet; auch dort können VLANs, Gastnetz oder Firewall die Suche begrenzen.
+- **Automatische Suche** verwendet lokales Multicast (mDNS UDP 5353 und SSDP UDP 1900). Antworten müssen den Container erreichen. Der geführte Docker-Installer verwendet auf Linux Host-Netzwerk; die einfache Compose-Vorlage nutzt Portweiterleitung; auch dort können VLANs, Gastnetz oder Firewall die Suche begrenzen.
 - **Manuelles Hinzufügen** benötigt eine direkte Netzwerkroute zur Bridge-IP. Die HTTP-/HTTPS-Verbindung zur Bridge (TCP 80/443, je nach Prüfschritt) muss aus dem Container erreichbar sein. Ein veröffentlichter GUI-Port allein stellt das nicht sicher.
 - **Podman Desktop auf Mac/Windows** verwendet eine Linux-VM. Die Bridge-Suche aus dieser VM kann scheitern, obwohl manueller Zugriff funktioniert. `host` bedeutet dort nicht automatisch das physische Mac-/Windows-LAN. Funktionierender Browser-Login beweist noch keinen Bridge-Zugriff.
 

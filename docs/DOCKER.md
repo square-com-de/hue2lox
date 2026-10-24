@@ -49,18 +49,16 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-On a Linux server with Docker Engine and the Compose plugin, save the [Compose file from this checkout](../docker/compose.image.yaml) as `compose.yaml` in a new, dedicated folder. Port **18443** must be free. No browser-address variable, host-folder preparation or image build is needed for direct private-IP access. From that folder, run:
+Save the [Compose file](../docker/compose.quickstart.yaml) as `compose.yaml` in a new directory. Docker and Compose must already be installed; port 18443 must be free.
 
 ```sh
 docker compose up -d --wait
 docker compose ps
 ```
 
-Open **http://SERVER-IP:18443** using the Linux server’s actual LAN IP. Fresh data: **admin / admin**, then change the password. The image healthcheck must become healthy; also verify browser login. HTTP is unencrypted: use this simple profile only on a trusted LAN. For HTTPS, use the guided installer or the TLS/proxy setup above. The Compose file automatically creates a writable named volume; keep the same folder/project or Portainer stack when updating.
+Open **http://SERVER-IP:18443**, log in with **admin / admin** for fresh data and change the password. Replace SERVER-IP with the Linux server's private IP. No `HUE_PUBLIC_URL` setting is needed for this direct-IP setup. Compose creates the named data volume automatically. Portainer Docker Standalone uses the same file as a Stack.
 
-This revised template belongs to this checkout, not the unchanged `v1.0.1` source archive. Clean-VM acceptance of this exact template is pending.
-
-On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
+This default uses HTTP on a trusted LAN. For HTTPS use the [certificate/proxy guide](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by Docker networking; use the local discovery help or enter the bridge IP. Direct bridge-IP access still requires a route from the container to the bridge. The guided Linux installer remains the host-network alternative.
 
 The Compose example uses GHCR. To use Docker Hub, change only its `image` value
 to `docker.io/dubctrl/hue2lox:1.0.1`; both registries must contain the same verified images.

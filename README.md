@@ -45,7 +45,7 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 | Podman Desktop on macOS ARM64 | Separately tested local path, not blanket LAN/Proxmox acceptance. | [Accepted flow and limits](docs/DOCKER.md#podman-desktop-on-macos) |
 | Native without Docker | Experimental alternative for explicitly tested amd64/systemd targets. | [Native guide](docs/INSTALL-NATIVE.en.md) |
 
-1. **Prepare the container:** configure Docker/Compose, fixed image version, persistent data, reachable browser URL and HTTP/TLS using the container guide. The newly requested clean Proxmox acceptance is pending; its actual commands/runtime versions will be recorded as accepted only after the Deployer supplies evidence.
+1. **Prepare the container:** Start the [Compose quick-start file](docker/compose.quickstart.yaml) using the [short guide](docs/CONTAINER-SETUP.md). Docker/Compose must be installed and port 18443 free. Final browser/clean-VM acceptance remains open until the Deployer provides evidence.
 2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
 3. **Configure the bridge:** it must be reachable from the container. Failed multicast discovery differs from failed direct connectivity; manual IP entry cannot bypass a network block.
 4. **Connect Loxone:** use the [illustrated commands/XML guide](docs/TUTORIAL.md). Import new digital commands for scene OFF; existing recall outputs are not rewritten.

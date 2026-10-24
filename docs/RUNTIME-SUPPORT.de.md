@@ -28,6 +28,10 @@ Frische Daten verwenden `admin/admin`. Erhaltene Daten behalten das bisherige Pa
 
 `1.0.1` statt `latest` pinnen, oder den veröffentlichten Digest verwenden. Der [Digest-Nachweis](https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/container-digests.json) bindet Plattform und Commit. Alte Releases bleiben unverändert.
 
+## Neue Proxmox-Teilabnahme
+
+Ubuntu **26.04.1 amd64**, Docker **29.9.2**, Compose **5.6.1**: Image-/API-Login, Datenerhalt, Update und Restore/Rollback bestanden. Exakte neue Quickstart-Datei, Browser, Portainer und reale Hardware noch nicht vollständig abgenommen. [Nachweise und Grenzen](acceptance/PROXMOX-1.0.1.md). Die früheren fehlenden Runtime-Versionen sind damit für diese neue Teilabnahme erfasst.
+
 ## Vor der nächsten Stable-Freigabe
 
 Noch offen: unabhängige Abnahme der hier konsolidierten Anleitungen, Aufzeichnung der Docker-/Compose-Versionen und der tatsächlich ausgeführten Copy/Paste-Befehle, Prüfung von Recovery mit erhaltenem Passwort und bewusst deaktivierten Flags. Hardwareumfang explizit protokollieren; keine neuen Lampen-/Miniserver-Erfolge aus Mocks ableiten. Maintainer öffnet das [technische Stable-Gate](GHCR-RELEASE.md#stable-acceptance-gate) erst anhand dieser Nachweise. Die bereits veröffentlichten 1.0.0/1.0.1 werden nicht umgeschrieben.
