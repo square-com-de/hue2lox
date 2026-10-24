@@ -11,6 +11,7 @@ import time
 import request_monitor
 import discovery
 import scenes
+import scene_switch
 import bridge_admin
 import dashboard
 import admin_auth
@@ -335,7 +336,10 @@ class Handler(BaseHTTPRequestHandler):
             if len(raw) != length:
                 raise ValueError('incomplete body')
             state = parse_request_json(raw)
-            if scene_command:
+            if scene_command and self.path.endswith('/state'):
+                if type(state) is not dict or set(state) != {'on'} or type(state['on']) is not bool:
+                    raise ValueError('expected scene switch')
+            elif scene_command:
                 if type(state) is not dict or set(state) != {'recall'} or state['recall'] is not True:
                     raise ValueError('expected scene recall')
             else:
@@ -354,16 +358,21 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             if scene_command:
-                result = scenes.recall(*target)
+                result = scene_switch.control(*target,state['on']) if self.path.endswith('/state') else scenes.recall(*target)
                 dashboard.invalidate()
             elif target is None:
                 result = write_state(state)
             else:
                 result = write_state(state, bridge=target[0], light_id=target[1]['id'])
+        except scene_switch.Conflict as error:
+            self.send_json(409, {'status':'error','error':str(error)})
+            return
         except Exception as error:
             print('Hue command failed: ' + type(error).__name__, flush=True)
             self.send_json(502, {'status': 'error', 'error': 'bridge_command_failed'})
             return
+        if result.get('ignored'):
+            self.monitor_reason='superseded_scene_off'
         self.send_json(200, result)
 
     def admin_origin(self):
@@ -409,7 +418,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wrong_control_method()
             return
         self.close_connection = True
-        paths = {'/api/admin/monitor/start', '/api/admin/monitor/stop', '/api/admin/monitor/clear', '/api/admin/discovery', '/api/admin/miniserver', '/api/admin/scenes/ignore', '/api/admin/scenes/remove', '/api/admin/scenes/export', '/api/admin/lights/icon', '/api/admin/lights/usage', '/api/admin/lights/ignore', '/api/admin/lights/remove', '/api/admin/login', '/api/admin/logout', '/api/admin/password', '/api/admin/token', '/api/admin/export', '/api/admin/bridges/add', '/api/admin/bridges/pair', '/api/admin/bridges/scan'}
+        paths = {'/api/admin/monitor/start', '/api/admin/monitor/stop', '/api/admin/monitor/clear', '/api/admin/discovery', '/api/admin/miniserver', '/api/admin/scenes/switch', '/api/admin/scenes/ignore', '/api/admin/scenes/remove', '/api/admin/scenes/export', '/api/admin/lights/icon', '/api/admin/lights/usage', '/api/admin/lights/ignore', '/api/admin/lights/remove', '/api/admin/login', '/api/admin/logout', '/api/admin/password', '/api/admin/token', '/api/admin/export', '/api/admin/bridges/add', '/api/admin/bridges/pair', '/api/admin/bridges/scan'}
         if self.path not in paths:
             self.send_error(404)
             return
@@ -448,6 +457,9 @@ class Handler(BaseHTTPRequestHandler):
                 result=discovery.save_miniserver(body.get('name'),body.get('url'))
                 dashboard.invalidate()
                 self.send_json(200, {'status':'ok','miniserver':result})
+            elif self.path == '/api/admin/scenes/switch':
+                scene_switch.configure(body.get('bridge_id'),body.get('scene_id'),body.get('group_id'),body.get('confirmation'))
+                self.send_json(200, {'status':'ok'})
             elif self.path in ('/api/admin/scenes/ignore','/api/admin/scenes/remove'):
                 result = bridge_admin.manage_scene(body.get('bridge_id'),body.get('scene_id'),self.path.rsplit('/',1)[1],body.get('ignored',True))
                 self.send_json(200, {'status':'ok', **result})
@@ -534,7 +546,7 @@ class Handler(BaseHTTPRequestHandler):
         self.wrong_control_method()
 
     def send_json(self, status, result):
-        self.monitor_reason=result.get('error')
+        self.monitor_reason=result.get('error') or result.get('reason')
         body = json.dumps(result, separators=(',', ':')).encode()
         self.send_response(status)
         self.send_header('Content-Type', 'application/json')

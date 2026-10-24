@@ -157,7 +157,7 @@ def collect_lights(resources):
     return sorted(lights, key=lambda light: (light['room'].casefold(), light['name'].casefold(), light['id']))
 
 
-def apply_inventory(original, discovered, discovered_scenes=None):
+def apply_inventory(original, discovered, discovered_scenes=None, discovered_groups=None):
     def change(document):
         bridge = next((b for b in document['bridges'] if b['id'] == original['id']),None)
         if bridge is None or bridge['host'] != original['host'] or bridge.get('bridge_id') != original.get('bridge_id'):
@@ -184,6 +184,8 @@ def apply_inventory(original, discovered, discovered_scenes=None):
             # Local ignore flags survive rediscovery; local removals last until rescan.
             bridge['scenes'] = [{**previous_scenes.get(scene['id'],{}), **scene, 'removed':False}
                                 for scene in discovered_scenes]
+        if discovered_groups is not None:
+            bridge['scene_groups'] = discovered_groups
         bridge['last_scan'] = datetime.now(timezone.utc).isoformat()
         bridge['enabled'] = True
         return copy.deepcopy(bridge)
@@ -204,7 +206,7 @@ def scan_bridge(bridge_ref):
             discovered_scenes = scenes.collect(resources)
         except (OSError, ValueError):
             raise BridgeError('inventory_unavailable',502) from None
-        return apply_inventory(bridge, discovered, discovered_scenes)
+        return apply_inventory(bridge, discovered, discovered_scenes, scenes.collect_groups(resources))
     finally:
         lock.release()
 
@@ -253,7 +255,7 @@ def pair_bridge(bridge_ref, replace=False):
             resources = request_resources(bridge)
             discovered = collect_lights(resources)
             discovered_scenes = scenes.collect(resources)
-            return {'bridge':apply_inventory(bridge,discovered,discovered_scenes),'inventory_ready':True}
+            return {'bridge':apply_inventory(bridge,discovered,discovered_scenes,scenes.collect_groups(resources)),'inventory_ready':True}
         except (OSError,ValueError,BridgeError):
             return {'bridge':public_bridge(bridge_record(bridge_ref)), 'inventory_ready':False}
     finally:

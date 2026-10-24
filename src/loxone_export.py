@@ -62,7 +62,7 @@ def resolve_path(path):
 
 def export_xml(keys, include_token, token=None, kind='lights', variants=None, language='de'):
     if language not in ('de','en'):raise ValueError('unsupported language')
-    translated_names={'Ein/Aus':'On/off','Dimmen':'Dimming','Lumitech RGB + Weiß':'Lumitech RGB + White','Szene aktivieren':'Recall scene'} if language=='en' else {}
+    translated_names={'Ein/Aus':'On/off','Dimmen':'Dimming','Lumitech RGB + Weiß':'Lumitech RGB + White','Szene aktivieren':'Recall scene','Szene Ein/Aus':'Scene on/off'} if language=='en' else {}
     if type(keys) is not list or not keys or len(keys) > 500 or any(type(key) is not str for key in keys) or len(set(keys)) != len(keys):
         raise ValueError('invalid selection')
     if kind not in ('lights','scenes'):

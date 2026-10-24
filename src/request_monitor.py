@@ -17,7 +17,8 @@ DEADLINE=0
 GENERATION=0
 NEXT_ID=0
 REASONS={'unauthorized','writes_disabled','control_not_configured','invalid_length','expected_json',
-         'invalid_state','white_disabled','color_disabled','bridge_command_failed','configuration_unavailable'}
+         'invalid_state','white_disabled','color_disabled','bridge_command_failed','configuration_unavailable','superseded_scene_off','scene_switch_configuration_changed',
+         'scene_switch_ownership_unknown','scene_switch_overlapping_group_active'}
 
 
 def control_path(path):

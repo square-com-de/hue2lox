@@ -89,3 +89,7 @@ The prototype updater's limited rollback copy is not a complete backup. A genera
 See [release readiness](../RELEASE.md) and [third-party notices](../THIRD-PARTY-NOTICES.md). Original project code and original SVG icons are licensed under [Apache License 2.0](../LICENSE); third-party materials retain their respective terms.
 
 Under **Usage & management → Light icon**, choose a shape per light. **Automatic** uses model and bridge metadata; unknown devices receive a bulb symbol. The choice survives restarts and rescans and does not change Loxone commands.
+
+### In development after RC6: scenes as on/off lighting circuits
+
+The optional extension and its limitations are described in [Scene on/off](features/SCENE-SWITCH.md). It is not part of the published RC6; existing scenes remain recall-only. Hardware acceptance is still pending.
