@@ -47,13 +47,16 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy the [1.0.1 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.1/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
+Save the [Compose file](../docker/compose.quickstart.yaml) as `compose.yaml` in a new directory. Docker and Compose must already be installed; port 18443 must be free.
 
 ```sh
-docker compose up -d
+docker compose up -d --wait
+docker compose ps
 ```
 
-On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
+Open **http://SERVER-IP:18443**, log in with **admin / admin** for fresh data and change the password. Replace SERVER-IP with the Linux server's private IP. No `HUE_PUBLIC_URL` setting is needed for this direct-IP setup. Compose creates the named data volume automatically. Portainer Docker Standalone uses the same file as a Stack.
+
+This default uses HTTP on a trusted LAN. For HTTPS use the [certificate/proxy guide](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by Docker networking; use the local discovery help or enter the bridge IP. Direct bridge-IP access still requires a route from the container to the bridge. The guided Linux installer remains the host-network alternative.
 
 The Compose example uses GHCR. To use Docker Hub, change only its `image` value
 to `docker.io/dubctrl/hue2lox:1.0.1`; both registries must contain the same verified images.

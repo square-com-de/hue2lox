@@ -4,6 +4,21 @@
 
 Diese Hinweise gelten für das veröffentlichte Hue2Lox-Image ab **1.0.1**. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.
 
+## Schnellstart: Docker auf einem Linux-Server
+
+Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Lade die [Compose-Datei](../docker/compose.quickstart.yaml) herunter, speichere sie als `compose.yaml` und starte:
+
+```sh
+docker compose up -d --wait
+docker compose ps
+```
+
+Öffne **http://SERVER-IP:18443** im Browser. Ersetze `SERVER-IP` durch die private IP des Linux-Servers. Bei frischen Daten gilt **admin / admin**; ändere das Passwort nach der Anmeldung. Für diesen direkten HTTP-Zugriff brauchst du keine URL-Variable, kein Zertifikat, keinen eigenen Datenordner und keine Rechteanpassung. Compose legt den dauerhaften Speicher automatisch an. Verwende bei Updates dasselbe Projekt beziehungsweise denselben Ordner. Bestehende Installationen behalten ihre bisherige Compose-Datei und Volume-Zuordnung; diese Vorlage ist für Neuinstallationen.
+
+Dieser Standardweg nutzt HTTP im vertrauenswürdigen LAN. HTTPS braucht ein vom Browser akzeptiertes Zertifikat oder einen Reverse Proxy; die Portnummer allein aktiviert keine Verschlüsselung. Die automatische Bridge-Suche kann durch das Containernetz begrenzt sein: Nutze dann die lokale Suchhilfe oder gib die Bridge-IP ein. Der Container muss diese IP weiterhin erreichen können. Drücke beim Koppeln den physischen Knopf der Bridge, sobald die Oberfläche dazu auffordert.
+
+In Portainer einen **Stack** anlegen, dieselbe Compose-Datei einfügen und deployen. Das Volume entsteht automatisch; ein eigener Ordner ist nicht nötig. Gemeint ist Docker Standalone, nicht Swarm.
+
 ## Vor dem Start
 
 | Einstellung | Was eintragen? |
@@ -32,7 +47,7 @@ Für dauerhaften Betrieb ein **benanntes Volume** verwenden und bei Updates erne
 3. Ports/Netzwerk und gegebenenfalls Umgebungsvariablen konfigurieren, dann deployen.
 4. Unter **Inspect → Mounts** prüfen: Ziel `Destination: /data`, Typ `volume`, das gewählte Volume und `RW: true`.
 
-Die Beschriftungen können je nach Portainer-Version abweichen. Die Daten liegen auf dem **Docker-Server der ausgewählten Portainer-Umgebung**, nicht auf deinem Browser-PC. Alternativ die [Compose-Vorlage](../docker/compose.image.yaml) als Stack verwenden; sie enthält bereits ein benanntes Volume. Bei gleichem Stacknamen bleibt die Zuordnung erhalten. Ein anderer Stackname kann ein neues Volume erzeugen.
+Die Beschriftungen können je nach Portainer-Version abweichen. Die Daten liegen auf dem **Docker-Server der ausgewählten Portainer-Umgebung**, nicht auf deinem Browser-PC. Alternativ die [Compose-Vorlage](../docker/compose.quickstart.yaml) als Stack verwenden; sie enthält bereits ein benanntes Volume. Bei gleichem Stacknamen bleibt die Zuordnung erhalten. Ein anderer Stackname kann ein neues Volume erzeugen.
 
 ### Podman Desktop und eigener Ordner
 
@@ -62,7 +77,7 @@ Beide TLS-Variablen setzen oder beide weglassen. Leere Werte sind keine Deaktivi
 
 ## Bridge-Suche und direkter Zugriff sind zwei verschiedene Tests
 
-- **Automatische Suche** verwendet lokales Multicast (mDNS UDP 5353 und SSDP UDP 1900). Antworten müssen den Container erreichen. Beim Docker-Installer/Compose auf einem Linux-Host wird Host-Netzwerk verwendet; auch dort können VLANs, Gastnetz oder Firewall die Suche begrenzen.
+- **Automatische Suche** verwendet lokales Multicast (mDNS UDP 5353 und SSDP UDP 1900). Antworten müssen den Container erreichen. Der geführte Docker-Installer verwendet auf Linux Host-Netzwerk; die einfache Compose-Vorlage nutzt Portweiterleitung; auch dort können VLANs, Gastnetz oder Firewall die Suche begrenzen.
 - **Manuelles Hinzufügen** benötigt eine direkte Netzwerkroute zur Bridge-IP. Die HTTP-/HTTPS-Verbindung zur Bridge (TCP 80/443, je nach Prüfschritt) muss aus dem Container erreichbar sein. Ein veröffentlichter GUI-Port allein stellt das nicht sicher.
 - **Podman Desktop auf Mac/Windows** verwendet eine Linux-VM. Die Bridge-Suche aus dieser VM kann scheitern, obwohl manueller Zugriff funktioniert. `host` bedeutet dort nicht automatisch das physische Mac-/Windows-LAN. Funktionierender Browser-Login beweist noch keinen Bridge-Zugriff.
 

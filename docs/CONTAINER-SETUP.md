@@ -4,6 +4,21 @@
 
 These notes apply to the published Hue2Lox image starting with **1.0.1**. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.
 
+## Quick start: Docker on a Linux server
+
+Docker Engine and Docker Compose must already be installed. Use a new directory and a free TCP port 18443. Download the [Compose file](../docker/compose.quickstart.yaml), save it as `compose.yaml`, then run:
+
+```sh
+docker compose up -d --wait
+docker compose ps
+```
+
+Open **http://SERVER-IP:18443** from your browser. Replace `SERVER-IP` with the Linux server's private IP. Fresh data uses **admin / admin**; change the password after login. No URL variable, certificate, host directory or permission adjustment is needed for this direct-IP HTTP setup. Compose creates persistent storage automatically. Keep the same project/directory for updates. Existing installations keep their current Compose file and volume mapping; this template is for fresh installations.
+
+This default is HTTP on a trusted LAN. HTTPS needs a certificate trusted by your browser or a reverse proxy; a port number does not enable encryption. Automatic bridge discovery may be limited by container networking: use the local discovery help or enter the bridge IP. The container must still be able to reach that IP. After adding a bridge, press its physical link button when prompted.
+
+In Portainer, create a **Stack**, paste the same Compose file and deploy it. The volume is created automatically; no separate folder setup is required. This describes Docker Standalone, not Swarm.
+
 ## Before starting
 
 | Setting | Value |
@@ -32,7 +47,7 @@ For persistent use, choose a **named volume** and mount the same volume at `/dat
 3. Configure ports/networking and any required environment variables, then deploy.
 4. Check **Inspect → Mounts**: `Destination: /data`, type `volume`, the selected volume and `RW: true`.
 
-Labels can differ between Portainer versions. Storage lives on the **Docker server managed by the selected environment**, not the computer displaying Portainer. Alternatively deploy the [Compose template](../docker/compose.image.yaml) as a stack; it already declares a named volume. Retain the stack name to preserve the mapping; a different stack name can create another volume.
+Labels can differ between Portainer versions. Storage lives on the **Docker server managed by the selected environment**, not the computer displaying Portainer. Alternatively deploy the [Compose template](../docker/compose.quickstart.yaml) as a stack; it already declares a named volume. Retain the stack name to preserve the mapping; a different stack name can create another volume.
 
 ### Podman Desktop and host folders
 
@@ -62,7 +77,7 @@ Set both TLS variables or omit both. Empty values do not disable TLS; partial co
 
 ## Bridge discovery and direct access are separate tests
 
-- **Automatic discovery** uses local multicast: mDNS UDP 5353 and SSDP UDP 1900. Replies must reach the container. The Docker installer/Compose on Linux uses host networking; VLANs, guest networks and firewalls can still limit discovery.
+- **Automatic discovery** uses local multicast: mDNS UDP 5353 and SSDP UDP 1900. Replies must reach the container. The guided Docker installer uses host networking on Linux; the quick-start Compose file uses port forwarding; VLANs, guest networks and firewalls can still limit discovery.
 - **Manual addition** requires a route from the container to the bridge IP and HTTP/HTTPS access to it (TCP 80/443 depending on the check). Publishing the web-interface port alone does not provide this route.
 - **Podman Desktop on Mac/Windows** uses a Linux VM. Multicast discovery may fail while manual access succeeds. Host networking there does not automatically mean the physical Mac/Windows LAN. A successful UI login does not prove bridge connectivity.
 
