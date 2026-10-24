@@ -1,5 +1,7 @@
 # Proxmox Linux VM acceptance — scope
 
+**Follow-up 25.10.2026:** [Fresh OS, disabled-flag recovery and actual Portainer GUI completed](FINAL-CONTAINER-2026-10-25.md). Historical limitations below describe the earlier run; hardware remains separate.
+
 The consolidated [independent Deployer report](../CONTAINER-ACCEPTANCE-1.0.1.md) records the tested system, immutable image/file identities, executed commands and results. It supersedes this path’s earlier partial status.
 
 The HTTP quick start passed real browser login, reload, changed-password login after restart, cold restore into another volume and retained-password browser login. The unchanged file was obtained from PR49 commit `bd8b4d172cafd8db9e602c992ec3e9704a4ce420`; the same bytes are included in PR50.

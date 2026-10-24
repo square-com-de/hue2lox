@@ -1,0 +1,323 @@
+{
+  "recorded_utc": "2026-10-24T23:14:33.942900+00:00",
+  "application_version": "1.0.1",
+  "application_commit": "f245a4ddd8857706f6ded748fb6945ea5aa88a38",
+  "documentation_base": "06b6578867e3e6fbf8e83156bf25dc41ccae5af1",
+  "quickstart_commit": "bd8b4d172cafd8db9e602c992ec3e9704a4ce420",
+  "quickstart_sha256": "c519baada5bc731a3087b54e517b535b69f6e021bf1037557f4e1b79b402d652",
+  "portainer_version": "2.45.3 LTS",
+  "portainer_digest": "sha256:3609c307943bca8e5c492f69ddd6965df177208b50678a4cff28391c8dd4e96e",
+  "fresh_os_baseline": {
+    "os": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+    "docker": "29.9.2",
+    "compose": "Docker Compose version v5.6.1",
+    "fresh_os_no_clone": true,
+    "docker_containers_volumes_images_empty": true,
+    "ipv6_all_default_interface_disabled": true,
+    "private_lan_and_multicast_denied": true
+  },
+  "receipts": {
+    "baseline.json": {
+      "os": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n",
+      "docker": "29.9.2",
+      "compose": "Docker Compose version v5.6.1",
+      "fresh_os_no_clone": true,
+      "docker_containers_volumes_images_empty": true,
+      "ipv6_all_default_interface_disabled": true,
+      "private_lan_and_multicast_denied": true
+    },
+    "check-disabled-initial.json": {
+      "phase": "disabled-initial",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "0",
+        "HUE_COLOR_ENABLED": "0",
+        "HUE_WHITE_ENABLED": "0"
+      },
+      "valid_token_write_blocked": true,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
+        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+      },
+      "data_writable": true,
+      "public_url": true
+    },
+    "check-disabled-recreated.json": {
+      "phase": "disabled-recreated",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "0",
+        "HUE_COLOR_ENABLED": "0",
+        "HUE_WHITE_ENABLED": "0"
+      },
+      "valid_token_write_blocked": true,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
+        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+      },
+      "data_writable": true,
+      "public_url": true
+    },
+    "check-disabled-restored-current.json": {
+      "phase": "disabled-restored-current",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "0",
+        "HUE_COLOR_ENABLED": "0",
+        "HUE_WHITE_ENABLED": "0"
+      },
+      "valid_token_write_blocked": true,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
+        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+      },
+      "data_writable": true,
+      "public_url": true
+    },
+    "check-disabled-rollback.json": {
+      "phase": "disabled-rollback",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "0",
+        "HUE_COLOR_ENABLED": "0",
+        "HUE_WHITE_ENABLED": "0"
+      },
+      "valid_token_write_blocked": true,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
+        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+      },
+      "data_writable": true,
+      "public_url": true
+    },
+    "check-disabled-updated.json": {
+      "phase": "disabled-updated",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "0",
+        "HUE_COLOR_ENABLED": "0",
+        "HUE_WHITE_ENABLED": "0"
+      },
+      "valid_token_write_blocked": true,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
+        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+      },
+      "data_writable": true,
+      "public_url": true
+    },
+    "check-fresh-initial.json": {
+      "phase": "fresh-initial",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "1",
+        "HUE_COLOR_ENABLED": "1",
+        "HUE_WHITE_ENABLED": "1"
+      },
+      "valid_token_write_blocked": null,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "e94bbdd84271095d26f59b3b686f1579a2b5154e0d5b46c5aebb0f68f210a5d1",
+        "secrets/control_token": "d79ed84592c0ded4ffd4592139b27398a0d6f413f513a5df40605e5e602ebe04"
+      },
+      "data_writable": true,
+      "public_url": false
+    },
+    "check-portainer-initial.json": {
+      "phase": "portainer-initial",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "1",
+        "HUE_COLOR_ENABLED": "1",
+        "HUE_WHITE_ENABLED": "1"
+      },
+      "valid_token_write_blocked": null,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "f44e6bfb85efffb6e2907f540a7befb81cd71eda20fcbc3a2408f06d98ac19d4",
+        "secrets/control_token": "fd890eb57e4e825e9f5efc760dca8a749539019a7634a29df12b918967b9b823"
+      },
+      "data_writable": true,
+      "public_url": false
+    },
+    "check-portainer-recreated.json": {
+      "phase": "portainer-recreated",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "1",
+        "HUE_COLOR_ENABLED": "1",
+        "HUE_WHITE_ENABLED": "1"
+      },
+      "valid_token_write_blocked": null,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "f44e6bfb85efffb6e2907f540a7befb81cd71eda20fcbc3a2408f06d98ac19d4",
+        "secrets/control_token": "fd890eb57e4e825e9f5efc760dca8a749539019a7634a29df12b918967b9b823"
+      },
+      "data_writable": true,
+      "public_url": false
+    },
+    "check-portainer-restarted.json": {
+      "phase": "portainer-restarted",
+      "login": true,
+      "old_password_rejected": true,
+      "session": true,
+      "foreign_origin_rejected": true,
+      "empty_bridge_registry": true,
+      "flags": {
+        "HUE_WRITES_ENABLED": "1",
+        "HUE_COLOR_ENABLED": "1",
+        "HUE_WHITE_ENABLED": "1"
+      },
+      "valid_token_write_blocked": null,
+      "state_hashes": {
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
+        "admin_auth.json": "f44e6bfb85efffb6e2907f540a7befb81cd71eda20fcbc3a2408f06d98ac19d4",
+        "secrets/control_token": "fd890eb57e4e825e9f5efc760dca8a749539019a7634a29df12b918967b9b823"
+      },
+      "data_writable": true,
+      "public_url": false
+    },
+    "portainer-created.json": {
+      "portainer_stack_exists": true,
+      "image_id": "sha256:7e12e1491937c36cec763850b3db1c60916e727bf9bbdb82a4f5447e5812076b",
+      "status": "running",
+      "health": "healthy",
+      "ports": {
+        "8443/tcp": [
+          {
+            "HostIp": "",
+            "HostPort": "18443"
+          }
+        ]
+      },
+      "mounts": [
+        {
+          "type": "volume",
+          "name": "hue2lox-portainer_data",
+          "destination": "/data",
+          "rw": true
+        }
+      ],
+      "web_editor_saved_sha256": "c519baada5bc731a3087b54e517b535b69f6e021bf1037557f4e1b79b402d652",
+      "public_file_sha256": "c519baada5bc731a3087b54e517b535b69f6e021bf1037557f4e1b79b402d652",
+      "byte_identical": true,
+      "text_identical_ignoring_blank_lines": true
+    },
+    "portainer-recreate.json": {
+      "gui_recreate_observed": true,
+      "old_container_id": "2295c71afc6217009c3c95b09e86660b6cfbadd943b0c78c2bd55d48dee06ba8",
+      "new_container_id": "4c081490a86368473034a62a9c844161cac5318a967c328b6c076c01d960d1c9",
+      "healthy": true,
+      "state_hashes_preserved": true,
+      "same_volume": true,
+      "image": "ghcr.io/square-com-de/hue2lox:1.0.1",
+      "revision": "f245a4ddd8857706f6ded748fb6945ea5aa88a38"
+    },
+    "portainer-restart.json": {
+      "gui_restart_observed": true,
+      "container_id": "2295c71afc6217009c3c95b09e86660b6cfbadd943b0c78c2bd55d48dee06ba8",
+      "started_after_initial_check": true,
+      "healthy": true,
+      "state_hashes_preserved": true,
+      "volume": "hue2lox-portainer_data"
+    },
+    "recovery-summary.json": {
+      "all_five_phases_passed": true,
+      "phases": [
+        "disabled-initial",
+        "disabled-updated",
+        "disabled-recreated",
+        "disabled-rollback",
+        "disabled-restored-current"
+      ],
+      "flags_preserved": true,
+      "valid_token_writes_disabled": true,
+      "password_token_registry_hashes_identical": true,
+      "old_data_volume_preserved": true,
+      "restore_used_new_volume": true,
+      "hardware_registry_empty": true
+    }
+  },
+  "final_containers": [
+    {
+      "name": "hue2lox-hue2lox-1",
+      "image": "ghcr.io/square-com-de/hue2lox:1.0.1",
+      "revision": "f245a4ddd8857706f6ded748fb6945ea5aa88a38",
+      "running": false,
+      "healthy": "unhealthy",
+      "exit_code": 137,
+      "oom_killed": false
+    },
+    {
+      "name": "hue2lox-recovery-hue2lox-1",
+      "image": "ghcr.io/square-com-de/hue2lox:1.0.1",
+      "revision": "f245a4ddd8857706f6ded748fb6945ea5aa88a38",
+      "running": false,
+      "healthy": "unhealthy",
+      "exit_code": 137,
+      "oom_killed": false
+    },
+    {
+      "name": "hue2lox-portainer-hue2lox-1",
+      "image": "ghcr.io/square-com-de/hue2lox:1.0.1",
+      "revision": "f245a4ddd8857706f6ded748fb6945ea5aa88a38",
+      "running": true,
+      "healthy": "healthy",
+      "exit_code": 0,
+      "oom_killed": false
+    },
+    {
+      "name": "hue2lox-portainer-test",
+      "image": "portainer/portainer-ce:2.45.3",
+      "revision": "e5a61af",
+      "running": true,
+      "healthy": null,
+      "exit_code": 0,
+      "oom_killed": false
+    }
+  ],
+  "hardware_tested": false,
+  "production_changed": false,
+  "release_published": false,
+  "isolation_preserved": true,
+  "executed_checker_sha256": "75fedbd92c5111ade3bb7adcac6ab13564c80c55becc5251c57bfacfc0886aed",
+  "executed_recovery_script_sha256": "2c16a05118272b9f4daf35f1438c24e32498587be616f030e7fd77614c4ff092"
+}
