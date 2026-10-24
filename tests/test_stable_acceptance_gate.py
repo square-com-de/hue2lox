@@ -61,3 +61,8 @@ class StableGateTests(unittest.TestCase):
             changed=m.acceptance_source_digest('HEAD',root)
             (root/'app.py').write_text('print(2)');git('add','.');git('commit','-qm','new code')
             self.assertNotEqual(changed,m.acceptance_source_digest('HEAD',root))
+
+            (root/'zz.py').write_text('tracked file');git('add','.');git('commit','-qm','last file')
+            before=m.acceptance_source_digest('HEAD',root)
+            (root/'zz.py').rename(root/'zz.py ');git('add','-A');git('commit','-qm','trailing space in path')
+            self.assertNotEqual(before,m.acceptance_source_digest('HEAD',root))

@@ -34,25 +34,23 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
-**Which path was tested?** [Runtime and version status](docs/RUNTIME-SUPPORT.md): Linux Docker/Compose, a scoped Podman Desktop test on macOS ARM64, experimental native deployment; no LoxBerry plugin yet. These are separate acceptance scopes.
+**Preferred: a Docker Compose container in a Linux VM**, for example on Proxmox. Proxmox hosts the VM; Docker Engine and Compose run inside Linux. This does not certify a privileged LXC deployment.
 
+[Runtime/version status](docs/RUNTIME-SUPPORT.md) · [Storage, login, networking and TLS](docs/CONTAINER-SETUP.md)
 
-The shared **1.0.1 installer** offers Docker or native operation. The installation guides use the versioned 1.0.1 source ZIP and fixed images; verify checksums and successful release publication.
-
-| Installation method | Who is it for? | Guide |
+| Installation path | Status | Guide |
 | --- | --- | --- |
-| **Installer with Docker** | Guided setup; fixed release image after publication or local build. | [Installation guide](INSTALL.md). Choose **local build** for source tests. |
-| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed 1.0.1 image. |
-| **Native without Docker** | Experimental systemd operation on explicitly tested amd64 Linux targets. | [Native guide](docs/INSTALL-NATIVE.en.md). Source ZIP and native archive required. |
+| **Docker Compose in a Linux VM** | Preferred container path: fixed **1.0.1**, persistent volume and matching browser URL. | [Container guide](docs/DOCKER.md#docker-compose) · [Setup](docs/CONTAINER-SETUP.md) |
+| Guided Docker installer | Alternative guided setup with direct HTTPS, fixed image or local build. | [Linux installer](INSTALL.md) |
+| Podman Desktop on macOS ARM64 | Separately tested local path, not blanket LAN/Proxmox acceptance. | [Accepted flow and limits](docs/DOCKER.md#podman-desktop-on-macos) |
+| Native without Docker | Experimental alternative for explicitly tested amd64/systemd targets. | [Native guide](docs/INSTALL-NATIVE.en.md) |
 
-1. **Start the installer:** the [guide](INSTALL.md) covers prerequisites, package verification and deployment selection. Use your Mac or Windows PC to operate the Linux server.
-2. **Set up Hue2Lox:** the installer checks prerequisites and reuses working Docker installations. Fresh installations enable the control features each light supports.
-3. **Sign in:** open the displayed web address and verify its certificate for direct HTTPS. Initial login `admin/admin`; change the password afterwards. Add your Hue Bridge and read its lights and scenes.
-4. **Connect Loxone:** the [illustrated guide](docs/TUTORIAL.md) explains commands and XML for Loxone Config.
+1. **Prepare the container:** configure Docker/Compose, fixed image version, persistent data, reachable browser URL and HTTP/TLS using the container guide. The newly requested clean Proxmox acceptance is pending; its actual commands/runtime versions will be recorded as accepted only after the Deployer supplies evidence.
+2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
+3. **Configure the bridge:** it must be reachable from the container. Failed multicast discovery differs from failed direct connectivity; manual IP entry cannot bypass a network block.
+4. **Connect Loxone:** use the [illustrated commands/XML guide](docs/TUTORIAL.md). Import new digital commands for scene OFF; existing recall outputs are not rewritten.
 
-**[Installation guide](INSTALL.md) · [1.0.1 packages and checksums](docs/DOWNLOADS.md) · [1.0.1 release notes](docs/RELEASE-NOTES-1.0.1.md)**
-
-**Already installed?** Follow the [backup, update and rollback guide](docs/UPDATE-DOCKER.md). Updating never overrides intentionally disabled controls. AI guidance is available through the [installation prompt](docs/AI-INSTALL.md).
+**Already installed?** Use [backup, update and rollback](docs/UPDATE-DOCKER.md), not the fresh installer. Pull and restart do not replace an existing container. Handle custom Portainer/Compose stacks separately; preserve passwords and intentionally disabled controls. [1.0.1 downloads/checksums](docs/DOWNLOADS.md) · [Release notes](docs/RELEASE-NOTES-1.0.1.md). There is no dedicated LoxBerry plugin yet.
 
 ## Feedback & contact
 

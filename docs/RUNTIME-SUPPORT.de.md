@@ -31,3 +31,5 @@ Frische Daten verwenden `admin/admin`. Erhaltene Daten behalten das bisherige Pa
 ## Vor der nächsten Stable-Freigabe
 
 Noch offen: unabhängige Abnahme der hier konsolidierten Anleitungen, Aufzeichnung der Docker-/Compose-Versionen und der tatsächlich ausgeführten Copy/Paste-Befehle, Prüfung von Recovery mit erhaltenem Passwort und bewusst deaktivierten Flags. Hardwareumfang explizit protokollieren; keine neuen Lampen-/Miniserver-Erfolge aus Mocks ableiten. Maintainer öffnet das [technische Stable-Gate](GHCR-RELEASE.md#stable-acceptance-gate) erst anhand dieser Nachweise. Die bereits veröffentlichten 1.0.0/1.0.1 werden nicht umgeschrieben.
+
+**Aktueller Zusatzauftrag:** Docker Compose als bevorzugten Endnutzerweg auf einer frischen Proxmox-Linux-VM abnehmen. Docker-/Compose-Versionen, unveränderlichen Image-Stand, tatsächliche Installations-/Startbefehle, Initiallogin, Browseradresse, Volume, TLS, Netzwerkgrenzen, Recreate, Backup/Restore und Rollback protokollieren. Diese neue Abnahme ist noch offen; keine Befehle oder Port-/IP-Werte als gemessen erfinden. Owner: Deployer, Handoff über den PM.

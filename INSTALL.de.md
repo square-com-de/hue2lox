@@ -1,5 +1,7 @@
 # Hue2Lox auf Linux installieren
 
+**Bevorzugt ist Docker Compose auf einer Linux-VM:** [Container-Einrichtung](docs/CONTAINER-SETUP.de.md) · [Compose-Anleitung](docs/DOCKER.md#docker-compose) · [Teststatus](docs/RUNTIME-SUPPORT.de.md). Der nachfolgende geführte Installer ist eine Alternative; nativ bleibt experimentell. Der neue saubere Proxmox-Endnutzernachweis samt tatsächlich ausgeführten Docker-Befehlen steht noch aus.
+
 Vor dem Containerstart: **[Anmeldung, dauerhafter Speicher, Netzwerkzugriff und HTTP/HTTPS](docs/CONTAINER-SETUP.de.md)**. Mit Hinweisen für Portainer und Podman Desktop sowie zur automatischen Suche und zum manuellen Bridge-Zugriff.
 
 **Stable 1.0.1:** der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Der native Weg bleibt experimentell und ist in 1.0.1 enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Anleitung](docs/INSTALL-NATIVE.md).
@@ -15,11 +17,11 @@ Neue Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Ein gesunder He
 - [Option 1: Einfach und komfortabel – der Installer](#option-1-einfach-und-komfortabel--der-installer)
 - [Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt](#option-2-entwicklungsstand-main--manuelle-installation-schritt-für-schritt)
 
-Option 1 installiert **1.0.1** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den normalen Einstieg Option 1 verwenden.
+Option 1 installiert **1.0.1** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den geführten Installationsweg Option 1 verwenden.
 
 Hue2Lox ist für **Linux-Systeme mit Docker Engine und Docker Compose** vorgesehen – auf einem eigenen Rechner, in einer virtuellen Maschine oder auf einem Raspberry Pi. Als Plattformen kommen beispielsweise Ubuntu, Debian, DietPi oder Raspberry Pi OS (früher Raspbian) infrage, sofern Betriebssystemversion und CPU-Architektur die benötigten Pakete und Container unterstützen.
 
-**Für den einfachen Einstieg empfehlen wir Option 1: den Installer.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
+**Als geführte Alternative steht Option 1 zur Verfügung.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
 
 Beim 1.0.1-Paket lädst du die Hue2Lox-Quelldateien herunter. Der 1.0.1-Installer bietet das feste 1.0.1-Image oder einen lokalen Build aus dem Quell-ZIP an. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
 

@@ -61,10 +61,10 @@ STABLE_CHECKS = ('documentation_review', 'published_user_flow', 'update_recovery
 
 def acceptance_source_digest(commit, cwd=None):
     """Bind approval to all tracked content except the approval record itself."""
-    entries = run('git', '-c', 'core.quotePath=true', 'ls-tree', '--full-tree', '-r', commit, cwd=cwd).splitlines()
-    content = '\n'.join(line for line in entries
-                        if line.split('\t', 1)[1] != 'compliance/stable-readiness.json')
-    return hashlib.sha256(content.encode()).hexdigest()
+    entries = subprocess.check_output(['git', 'ls-tree', '--full-tree', '-rz', commit], cwd=cwd).split(b'\0')
+    content = b'\0'.join(entry for entry in entries if entry and
+                         entry.split(b'\t', 1)[1] != b'compliance/stable-readiness.json')
+    return hashlib.sha256(content).hexdigest()
 
 
 def check_stable_readiness(info, path=None):
