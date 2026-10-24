@@ -1,8 +1,16 @@
 # Install Hue2Lox on Linux
 
+**Preferred: Docker Compose in a Linux VM:** [container setup](docs/CONTAINER-SETUP.md) · [Compose guide](docs/DOCKER.md#docker-compose) · [test status](docs/RUNTIME-SUPPORT.md). The guided installer below is an alternative; native remains experimental. The new clean Proxmox end-user record and its actually executed Docker commands are still pending.
+
 Before starting a container: **[login, persistent storage, network access and HTTP/HTTPS](docs/CONTAINER-SETUP.md)**. Includes Portainer and Podman Desktop; explains why discovery and manual bridge access are different checks.
 
 **Stable 1.0.1:** the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [1.0.1 release notes](docs/RELEASE-NOTES-1.0.1.md). Native operation remains experimental and is included in 1.0.1; use the separate native archive with the source-ZIP assistant. See the [native guide](docs/INSTALL-NATIVE.en.md).
+
+## Choose the correct path first
+
+The installer on this page runs on **Linux with Docker Engine and the Compose plugin (`docker compose`)**, or in the explicitly selected native mode. **Podman is not a drop-in replacement for Docker in this installer.** For the tested local macOS ARM64 desktop flow, see [Podman Desktop](docs/DOCKER.md#podman-desktop-on-macos). See [runtime status](docs/RUNTIME-SUPPORT.md) for versions and acceptance limits; Linux Compose tests do not certify Docker Desktop, Windows Podman or every NAS platform.
+
+Fresh data: `admin/admin`; retained data: the existing password. A healthy endpoint does not establish successful login or lamp control. Upgrade by replacing the container/service while retaining data using [Docker update/rollback](docs/UPDATE-DOCKER.md) or [native maintenance](docs/INSTALL-NATIVE.en.md). A restart alone adopts neither a new image nor changed environment variables. Ordinary updates preserve RC5 control restrictions: [intentional recovery](docs/RECOVERY-CONTROL.md).
 
 [Deutsch](INSTALL.de.md) · [1.0.1 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1) · [English manual](docs/MANUAL.md)
 
@@ -44,10 +52,9 @@ Omitting `--scheme` retains direct HTTPS. The script prepares files; start throu
 installer step 6 on the server. Certificate renewal on an HTTP installation is
 handled by the proxy, not Hue2Lox.
 
-
 ## Requirements and supported systems
 
-You need a Linux server or VM, its address and user account, root or sudo access, Internet access for packages and the Docker base image, and access to your Hue Bridge on the local network. Install the OS and SSH first; the installer cannot establish an SSH connection to a server without SSH. macOS and Windows are clients, not installation targets.
+You need a Linux server or VM, its address and user account, root or sudo access, Internet access for packages and the Docker base image, and access to your Hue Bridge on the local network. Install the OS and SSH first; the installer cannot establish an SSH connection to a server without SSH. The guided installer itself runs on Linux. macOS/Windows can be clients; the separately tested macOS Podman Desktop path uses a Linux VM.
 
 | 64-bit system | Automatic package setup | Observed test scope |
 | --- | --- | --- |

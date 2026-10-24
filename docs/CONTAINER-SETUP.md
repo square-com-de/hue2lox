@@ -1,5 +1,7 @@
 # Container setup: login, storage, networking and HTTPS
 
+Preferred path: **Docker Compose inside a Linux VM**, for example on Proxmox. [Observed runtime status](RUNTIME-SUPPORT.md); the newly requested clean Proxmox acceptance is pending and is not replaced by the Mac Podman test.
+
 [Deutsch](CONTAINER-SETUP.de.md) · [Container guide](DOCKER.md) · [Linux installer](../INSTALL.md)
 
 These notes apply to the published Hue2Lox image starting with **1.0.1**. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.

@@ -1,5 +1,7 @@
 # Container einrichten: Anmeldung, Speicher, Netzwerk und HTTPS
 
+Bevorzugter Weg: **Docker Compose innerhalb einer Linux-VM**, etwa auf Proxmox. [Belegter Runtime-Status](RUNTIME-SUPPORT.de.md); die neu angeforderte saubere Proxmox-Abnahme ist noch offen und wird nicht durch den Mac-Podman-Test ersetzt.
+
 [English](CONTAINER-SETUP.md) · [Container-Anleitung](DOCKER.md) · [Linux-Installer](../INSTALL.de.md)
 
 Diese Hinweise gelten für das veröffentlichte Hue2Lox-Image ab **1.0.1**. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.

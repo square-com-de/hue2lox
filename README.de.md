@@ -34,22 +34,23 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
-Der gemeinsame **1.0.1-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte 1.0.1-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
+**Bevorzugt: Container mit Docker Compose auf einer Linux-VM**, beispielsweise unter Proxmox. Proxmox stellt die VM bereit; Docker Engine und Compose laufen innerhalb von Linux. Ein privilegierter LXC wird dadurch nicht als Installationsziel freigegeben.
 
-| Installationsweg | Für wen? | Anleitung |
+[Runtime- und Versionsstatus](docs/RUNTIME-SUPPORT.de.md) · [Speicher, Anmeldung, Netzwerk und TLS](docs/CONTAINER-SETUP.de.md)
+
+| Installationsweg | Einordnung | Anleitung |
 | --- | --- | --- |
-| **Installer mit Docker** | Geführte Einrichtung; festes Release-Image nach Veröffentlichung oder lokaler Build. | [Installationsanleitung](INSTALL.de.md). Für Quelltests **lokalen Build** wählen. |
-| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). Festes 1.0.1-Image verwenden. |
-| **Nativ ohne Docker** | Experimenteller systemd-Betrieb auf den ausdrücklich geprüften amd64-Linux-Zielen. | [Native Anleitung](docs/INSTALL-NATIVE.md). Quell-ZIP und natives Archiv erforderlich. |
+| **Docker Compose auf Linux-VM** | Bevorzugter Containerweg, feste Version **1.0.1**, dauerhaftes Volume und zur Browseradresse passende Konfiguration. | [Container-Anleitung](docs/DOCKER.md#docker-compose) · [Einrichtung DE](docs/CONTAINER-SETUP.de.md) |
+| Geführter Docker-Installer | Alternative für geführte Einrichtung mit direktem HTTPS; festes Image oder lokaler Build. | [Linux-Installer](INSTALL.de.md) |
+| Podman Desktop auf macOS ARM64 | Separat geprüfter lokaler Testweg, keine pauschale LAN-/Proxmox-Freigabe. | [Geprüfter Ablauf und Grenzen](docs/DOCKER.md#podman-desktop-on-macos) |
+| Nativ ohne Docker | Experimentelle Alternative für ausdrücklich geprüfte amd64-systemd-Ziele. | [Native Anleitung](docs/INSTALL-NATIVE.md) |
 
-1. **Installer starten:** Die [Anleitung](INSTALL.de.md) beschreibt Voraussetzungen, Paketprüfung und Auswahl des Installationswegs. Mac oder Windows-PC dienen zur Bedienung des Linux-Servers.
-2. **Hue2Lox einrichten:** Der Installer prüft Voraussetzungen; vorhandene funktionierende Docker-Installationen werden weiterverwendet. Neue Installationen erlauben die von der Lampe unterstützten Steuerfunktionen.
-3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hue Bridge hinzufügen und Lampen sowie Szenen einlesen.
-4. **Mit Loxone verbinden:** Die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
+1. **Container vorbereiten:** Docker/Compose, feste Image-Version, dauerhafte Datenablage, erreichbare Browseradresse und HTTP/TLS nach der Container-Anleitung konfigurieren. Die neu beauftragte saubere Proxmox-Abnahme ist noch offen; deren tatsächliche Befehle/Runtime-Versionen werden erst nach dem Deployer-Nachweis als geprüfter Ablauf übernommen.
+2. **Anmelden:** Angezeigte HTTP-/HTTPS-Adresse verwenden; Port 8443 allein bedeutet kein HTTPS. Frische Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Bei HTTPS das Zertifikat prüfen.
+3. **Bridge einrichten:** Container muss die Bridge im LAN erreichen können. Fehlende Multicast-Suche und fehlender direkter Netzwerkzugriff sind unterschiedliche Probleme; eine manuelle IP umgeht keine Netzsperre.
+4. **Mit Loxone verbinden:** [Bebilderte Anleitung](docs/TUTORIAL.de.md) für Befehle und XML. Für Szenen-AUS die neuen digitalen Befehle übernehmen; alte Recall-Ausgänge bleiben unverändert.
 
-**[Installationsanleitung](INSTALL.de.md) · [1.0.1-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md)**
-
-**Bereits installiert?** Den [gesicherten Update-/Rollbackweg](docs/UPDATE-DOCKER.de.md) verwenden. Ein Update überschreibt keine bewusst gesperrten Funktionen. Für KI-Begleitung gibt es den [Installationsprompt](docs/AI-INSTALL.de.md).
+**Bereits installiert?** [Backup, Update und Rollback](docs/UPDATE-DOCKER.de.md) statt Neuinstallation. `pull` und `restart` ersetzen keinen bestehenden Container. Eigene Portainer-/Compose-Stacks getrennt behandeln; keine bewusst gesperrten Funktionen oder gespeicherten Passwörter überschreiben. [1.0.1-Download/Prüfsummen](docs/DOWNLOADS.md) · [Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Ein LoxBerry-Plugin gibt es noch nicht.
 
 ## Feedback & Kontakt
 
@@ -87,6 +88,8 @@ Szenen in der Hue-App erstellen und bearbeiten. [Szenen Ein/Aus](docs/features/S
 | Was wir gemeinsam testen | [Abnahmeplan](docs/ACCEPTANCE.md) |
 | Quellen, Icons und Lizenzstatus | [Drittanbieterhinweise](THIRD-PARTY-NOTICES.md) |
 | Release-Stand und Grenzen | [Release-Hinweise](RELEASE.md) |
+
+**Nach einem Update:** Neuerstellen statt nur Neustarten; vorhandene Daten behalten ihr Passwort und absichtlich gesetzte Steuerungssperren. Bei RC5-Altbestand zuerst die [gezielte Recovery-Anleitung](docs/RECOVERY-CONTROL.de.md) lesen. [Lessons Learned und offene Freigabekriterien](docs/LESSONS-LEARNED.de.md).
 
 ## Tests und Sicherheit
 
