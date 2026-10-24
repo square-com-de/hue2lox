@@ -1,6 +1,8 @@
-**Release version: 1.0.1.** Use the fixed 1.0.1 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.1.md) describe the shared installer, discovery help and documented scene limits. The native adapter remains a separate experimental deployment path.
+**Release version: 1.0.1.** Use the fixed 1.0.1 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.1.md) describe the direct desktop login fix. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
+
+**Start here:** [Storage, login, networking and HTTPS](CONTAINER-SETUP.md) · [Speicher, Anmeldung, Netzwerk und HTTPS (Deutsch)](CONTAINER-SETUP.de.md).
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
@@ -58,31 +60,28 @@ to `docker.io/dubctrl/hue2lox:1.0.1`; both registries must contain the same veri
 
 ## Podman Desktop on macOS
 
-Pulling the image and pressing Play alone does not configure the browser address.
-For a new local test, run this in the Mac terminal (choose another container and
-volume name if these already exist):
+For a quick fresh test with **1.0.1**, pull the fixed image, choose **Run Image → Create and start**, keep the default port mapping and open **http://localhost:8443**. No environment variables are needed for direct localhost/private-IP HTTP access. Fresh data uses **admin / admin**. Stop an older test container if it occupies that port; do not delete its data.
+
+For a persistent local test with an explicitly named volume, use the Mac terminal
+(choose another container and volume name if these already exist):
 
 ```sh
-podman run -d --name hue2lox-rc6-test \
+podman run -d --name hue2lox-test \
   -p 127.0.0.1:18443:8443 \
-  -e PORT=8443 \
-  -e HUE_PUBLIC_URL=http://localhost:18443 \
-  -v hue2lox-rc6-data:/data \
+  -v hue2lox-data:/data \
   --read-only --tmpfs /tmp --cap-drop=ALL \
   --security-opt=no-new-privileges \
   docker.io/dubctrl/hue2lox:1.0.1
 ```
 
-Open **http://localhost:18443** exactly. Initial login is `admin` / `admin`
-for a fresh data volume; change the password after login. Keep `HUE_PUBLIC_URL`
-aligned with the URL used in the browser. A mismatch can currently appear as an
-incorrect-password error even with valid credentials.
+Open **http://localhost:18443**. Keep the named volume for subsequent containers.
+Existing data retains its changed password. This localhost-only example is for
+Mac testing, not access from a separate Loxone Miniserver.
 
-Podman Desktop runs containers in a Linux VM on macOS. LAN multicast discovery
-may not reach Hue bridges. If the search finds nothing, enter the bridge's LAN IP
-in **Add Hue Bridge / Hue Bridge hinzufügen** below the search and pair it using
-the bridge button. The bridge must be reachable from the VM. This localhost-only
-example is for testing on the Mac, not for Loxone access from another machine.
+Podman Desktop on macOS runs containers in a Linux VM. Automatic multicast
+search may fail; manual bridge-IP access also depends on the VM's route to the LAN.
+If both fail, investigate connectivity rather than assuming manual entry will fix it.
+See [network checks and storage](CONTAINER-SETUP.md).
 
 ## Unraid (Compose Manager)
 
@@ -117,7 +116,7 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `PORT` | `8443` | Listen port |
-| `HUE_PUBLIC_URL` | `https://localhost:8443` | Address used in the generated Loxone commands; an `https://` value also marks the login cookie `Secure` |
+| `HUE_PUBLIC_URL` | unset: request address for direct localhost/private-IP access | Set the exact browser URL for a custom hostname/reverse proxy. Used for origin checks, cookies and generated Loxone URLs. |
 | `HUE2LOX_ADMIN_PASSWORD` | `admin` | Initial admin password, applied only when no credentials exist yet |
 | `HUE_WRITES_ENABLED` | `1` | Allow switching and dimming (see Lamp control) |
 | `HUE_COLOR_ENABLED` | `1` | Allow RGB colour commands |
@@ -139,11 +138,3 @@ Findet die Containersuche keine Bridges, öffne **Bridges → Keine Bridge gefun
 Die Befehle fragen ausschließlich lokales mDNS ab, keinen Onlinedienst. macOS verwendet `dns-sd`, Windows PowerShell 5.1/PowerShell 7 den integrierten .NET-UDP-Client. Linux benötigt `avahi-browse` und einen laufenden Avahi-Dienst; Installationshinweise stehen im aufklappbaren Bereich. Der Browser zeigt und kopiert die Befehle, führt sie aber nicht aus.
 
 Computer oder Test-VM müssen die Bridges im lokalen Netzwerk erreichen und Multicast-Antworten empfangen können. Bei isoliertem VM-Netz, VPN, Gast-WLAN oder Firewall kann auch diese Suche scheitern. Dann die Bridge-Adresse im Router nachsehen. Die Firewall für die Suche nicht abschalten.
-
-## Podman Desktop: direct first start
-
-Pull `docker.io/dubctrl/hue2lox:1.0.1` (or `ghcr.io/square-com-de/hue2lox:1.0.1`). Choose **Run Image → Create and start**, keep the port mapping, then **Open Browser**. Fresh data signs in with **admin / admin**; no environment variables are required for direct localhost/private-IP HTTP access. Stop an older test container first if it occupies the same host port. Do not delete its volume. Existing containers keep their old image until recreated with the new version and their preserved volume.
-
-For a reverse proxy/custom hostname, set `HUE_PUBLIC_URL` to the exact browser URL. For Loxone on another machine use a server address reachable from that machine rather than localhost.
-
-Deutsch: Image laden → **Run Image → Create and start** → **Open Browser** → **admin / admin** bei frischen Daten. Für localhost/private IPs sind keine zusätzlichen Variablen nötig. Vorhandene Daten behalten das bestehende Passwort. Bereits laufende Container aktualisieren sich nicht automatisch.
