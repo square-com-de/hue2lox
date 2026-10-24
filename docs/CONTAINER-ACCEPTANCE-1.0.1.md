@@ -1,6 +1,6 @@
 # Container acceptance — 1.0.1
 
-Status: **partial acceptance; no new release or production approval**. Recorded 24 October 2026.
+Status: **partial acceptance; no new release or production approval**. Recorded 24 October 2026; coordinated VM reboot verified 25 October 2026 (Europe/Berlin).
 
 ## Tested identities
 
@@ -38,7 +38,7 @@ The project name and alternate free port isolate this test from another acceptan
 | HTTPS browser login with self-signed certificate | NOT VERIFIED | Browser rejects the untrusted test certificate; warning not bypassed |
 | Quick-start external HTTP browser login | PASS | Real browser on another LAN computer: admin/admin, dashboard, reload; changed password after restart |
 | Quick-start HTTP cold backup and restore into a second volume | PASS | Retained-password API and real browser login; identical password/token/registry hashes; original volume retained |
-| VM reboot for this combined acceptance | NOT TESTED | Shared acceptance host |
+| Coordinated VM reboot | PASS | Both stacks automatically healthy; changed passwords accepted, old passwords rejected; password/token/registry hashes match the cold pre-reboot backup; real HTTP browser login repeated |
 | Real bridges, discovery and Loxone control | NOT TESTED | Production LAN intentionally blocked |
 | Portainer GUI deployment of this exact quick-start file | NOT TESTED | Same Compose format, not an independent GUI acceptance claim |
 
