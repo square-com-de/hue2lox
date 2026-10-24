@@ -26,6 +26,10 @@ class SceneTests(unittest.TestCase):
     def scan(self):
         with patch('bridge_admin.request_resources',return_value=resources()),patch('bridge_admin.request_document') as write:
             bridge_admin.scan_bridge('eg1');write.assert_not_called()
+        # Legacy recall export is an explicit user preference in the new UI.
+        def legacy(doc):
+            for scene in doc['bridges'][0]['scenes']:scene['switch_mode']='recall'
+        bridge_store.update_registry(legacy)
     def test_inventory_room_zone_and_read_only_rescan(self):
         self.scan();items=scenes.available_scenes();self.assertEqual(len(items),2)
         self.assertEqual({s['room'] for s in items},{'Wohnen & Küche','Ganzes Haus'})
@@ -120,7 +124,9 @@ class SceneAPITests(unittest.TestCase):
         test_admin.AdminTests.setUp(self)
         self.registry=self.directory/'registry.json'
         doc=json.loads((Path(__file__).resolve().parent.parent/'tests/fixtures/registry.json').read_text())
-        doc['bridges'][0]['scenes']=scenes.collect(resources());self.registry.write_text(json.dumps(doc))
+        doc['bridges'][0]['scenes']=scenes.collect(resources())
+        for scene in doc['bridges'][0]['scenes']:scene['switch_mode']='recall'
+        self.registry.write_text(json.dumps(doc))
         self.registry_env=patch.dict(os.environ,{'HUE_REGISTRY_FILE':str(self.registry),'HUE_STATE_DIR':str(self.directory)});self.registry_env.start()
     def tearDown(self):
         self.registry_env.stop();test_admin.AdminTests.tearDown(self)

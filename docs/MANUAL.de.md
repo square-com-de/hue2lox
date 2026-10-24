@@ -89,3 +89,7 @@ Das bestehende Prototyp-Update legt nur eine begrenzte Rückrollkopie an; sie er
 Die [Release-Checkliste](../RELEASE.md) nennt offene Prüfungen. Eigener Projektcode und eigene SVG-Symbole stehen unter der [Apache License 2.0](../LICENSE); Drittanbieterbestandteile behalten ihre jeweiligen Bedingungen. [Quellen und Lizenztexte](../THIRD-PARTY-NOTICES.md) sind auch über den Footer erreichbar.
 
 Unter **Nutzung & Verwaltung → Lampensymbol** kannst du die Form pro Lampe wählen. **Automatisch** verwendet Modell und Bridge-Daten; unbekannte Geräte erhalten ein Glühbirnensymbol. Die Auswahl bleibt bei Neustarts und erneutem Einlesen erhalten und verändert keine Loxone-Befehle.
+
+### In Entwicklung nach RC6: Szenen als Ein/Aus-Lichtkreis
+
+Die optionale Erweiterung und ihre Grenzen sind unter [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) beschrieben. Sie ist nicht Teil des veröffentlichten RC6; bestehende Recall-Befehle funktionieren weiter. Neue Exporte verwenden den direkt sichtbaren Modus, mit Ein/Aus als Standard bei eindeutiger Zuordnung. Hardwareabnahme steht aus.

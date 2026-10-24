@@ -130,3 +130,5 @@ body[data-page="scenes"] #notice:not(.error){display:none}
 
 /* Iconoir sidebar icons: fixed geometry, inherited navigation state colors. */
 nav .sidebar-icon{width:22px;height:22px;flex:0 0 22px;display:block;pointer-events:none}nav button{gap:14px}nav button>span{min-width:0;overflow-wrap:anywhere}
+
+.scene-switch-settings{margin:8px 0 12px;min-width:0}.scene-switch-controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.scene-switch-controls label{display:flex;align-items:center;gap:8px;font-size:13px}.scene-switch-controls select{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);max-width:100%}.scene-switch-settings p{margin:8px 0}.scene-switch-settings .info{overflow-wrap:anywhere}@media(max-width:700px){.scene-switch-controls label{flex-wrap:wrap;max-width:100%}}

@@ -39,7 +39,7 @@ def collect(resources):
         seen.add(reference)
         result.append({'id':reference,'name':str(metadata.get('name',reference))[:256],
                        'room':groups.get(group.get('rid'),''),'group_type':group.get('rtype',''),
-                       'light_ids':sorted(members),'present':True})
+                       'group_id':group['rid'],'light_ids':sorted(members),'present':True})
     if len(result)>2000:
         raise ValueError('too many scenes')
     return sorted(result,key=lambda scene:(scene['room'].casefold(),scene['name'].casefold(),scene['id']))
@@ -55,31 +55,38 @@ def available_scenes():
             reference=scene.get('id')
             if not isinstance(reference,str) or not REFERENCE.fullmatch(reference):
                 continue
+            from scene_switch import describe
+            switch = describe(bridge, scene)
             key=bridge['id']+'/'+reference
             result.append({'key':key,'name':scene['name'],'bridge':bridge['name'],'bridge_id':bridge['id'],
-                           'room':scene.get('room',''),'path':'/api/scenes/'+key+'/recall',
+                           'room':scene.get('room',''),'path':'/api/scenes/'+key+('/state' if switch['mode']=='switch' else '/recall'),
+                           'switch':switch,
                            'ignored':bool(scene.get('ignored')),
                            'available':bridge.get('enabled') is True and not scene.get('ignored'),
                            'light_count':len(scene.get('light_ids',[])),
                            'hidden_light_count':len(hidden.intersection(scene.get('light_ids',[]))),
-                           'commands':[{'id':'recall','name':'Szene aktivieren','body_on':'{"recall":true}',
-                                        'body_off':'','analog':False}]})
+                           'commands':([{'id':'switch','name':'Szene Ein/Aus','body_on':'{"on":true}',
+                                        'body_off':'{"on":false}','analog':False}] if switch['enabled'] else [{'id':'recall','name':'Szene aktivieren','body_on':'{"recall":true}',
+                                        'body_off':'','analog':False}]) if not switch['needs_group'] else []})
     return result
 
 
 def resolve_path(path):
-    match=re.fullmatch(r'/api/scenes/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/recall',path)
+    match=re.fullmatch(r'/api/scenes/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/(recall|state)',path)
     if not match:
         return None
     for bridge in read_registry()['bridges']:
         if bridge['id']==match[1] and bridge.get('enabled') is True:
             for scene in bridge.get('scenes',[]):
                 if scene['id']==match[2] and scene.get('present') is not False and not scene.get('ignored') and not scene.get('removed'):
+                    if match[3]=='state':
+                        from scene_switch import describe
+                        if not describe(bridge,scene)['enabled']:return None
                     return bridge,scene
     return None
 
 
-def recall(bridge, scene):
+def _recall(bridge, scene):
     document=request_document('PUT','/clip/v2/resource/scene/'+scene['id'],
                               payload={'recall':{'action':'active'}},bridge=bridge)
     if (type(document) is not dict or document.get('errors') != [] or
@@ -89,3 +96,40 @@ def recall(bridge, scene):
         raise ValueError('scene recall rejected')
     # The bridge accepted the command; no claim about an observed lamp state.
     return {'status':'ok','scene_id':scene['id'],'accepted':True,'tls_verified':True}
+
+
+def recall(bridge, scene):
+    # Legacy calls also serialize with switches and invalidate local ownership.
+    from scene_switch import LOCK, forget
+    with LOCK:
+        forget(bridge['id'])
+        return _recall(bridge,scene)
+
+
+def collect_groups(resources):
+    """Only complete, addressable room/zone memberships can be confirmed for OFF."""
+    lights={r['id']:r for r in resources if r.get('type')=='light'}
+    grouped={r['id']:r for r in resources if r.get('type')=='grouped_light'}
+    devices={r['id'] for r in resources if r.get('type')=='device'}
+    result=[]
+    for resource in resources:
+        if resource.get('type') not in ('room','zone'):continue
+        services=resource.get('services',[])
+        children=resource.get('children',[])
+        if type(services) is not list or type(children) is not list:continue
+        targets=[s.get('rid') for s in services if type(s) is dict and s.get('rtype')=='grouped_light']
+        if len(targets)!=1 or targets[0] not in grouped:continue
+        if grouped[targets[0]].get('owner')!={'rid':resource.get('id'),'rtype':resource['type']}:continue
+        members=set();complete=bool(children)
+        for child in children:
+            if type(child) is not dict:complete=False;break
+            if child.get('rtype')=='light' and child.get('rid') in lights:members.add(child['rid'])
+            elif child.get('rtype')=='device' and child.get('rid') in devices:
+                found={rid for rid,light in lights.items() if light.get('owner',{}).get('rid')==child.get('rid')}
+                # Devices without light services (e.g. buttons) do not add lamps.
+                members.update(found)
+            else:complete=False;break
+        if complete and members and all(REFERENCE.fullmatch(v or '') for v in [resource.get('id'),targets[0],*members]):
+            result.append({'id':resource['id'],'name':str(resource.get('metadata',{}).get('name',resource['id']))[:256],
+                           'type':resource['type'],'grouped_light_id':targets[0],'light_ids':sorted(members)})
+    return sorted(result,key=lambda g:g['id'])
