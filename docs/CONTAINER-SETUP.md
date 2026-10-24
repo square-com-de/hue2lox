@@ -19,6 +19,8 @@ This default is HTTP on a trusted LAN. HTTPS needs a certificate trusted by your
 
 In Portainer, create a **Stack**, paste the same Compose file and deploy it. The volume is created automatically; no separate folder setup is required. This describes Docker Standalone, not Swarm.
 
+If port 18443 is already occupied, choose a free port with `HUE2LOX_HTTP_PORT=18444 docker compose up -d --wait` and use that port in the browser. Keep this setting in the project’s `.env` file for later recreations.
+
 ## Before starting
 
 | Setting | Value |

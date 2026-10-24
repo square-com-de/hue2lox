@@ -6,7 +6,7 @@ services:
     image: ghcr.io/square-com-de/hue2lox:1.0.1
     restart: unless-stopped
     ports:
-      - "18443:8443"
+      - "${HUE2LOX_HTTP_PORT:-18443}:8443"
     volumes:
       - data:/data
     read_only: true
