@@ -90,6 +90,6 @@ See [release readiness](../RELEASE.md) and [third-party notices](../THIRD-PARTY-
 
 Under **Usage & management → Light icon**, choose a shape per light. **Automatic** uses model and bridge metadata; unknown devices receive a bulb symbol. The choice survives restarts and rescans and does not change Loxone commands.
 
-### In development after RC6: scenes as on/off lighting circuits
+### Since Stable 1.0.0: scenes as on/off lighting circuits
 
-The optional extension and its limitations are described in [Scene on/off](features/SCENE-SWITCH.md). It is not part of the published RC6; existing recall commands continue to work. New exports use the directly visible mode, with on/off as the default for uniquely matching groups. Hardware acceptance is still pending.
+The optional extension and its limitations are described in [Scene on/off](features/SCENE-SWITCH.md). It is included in Stable 1.0.0; existing recall commands continue to work. New exports use the directly visible mode, with on/off as the default for uniquely matching groups. Scene switching and OFF have passed user acceptance with Hue/Loxone.

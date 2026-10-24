@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version', default='1.0.0-rc.6')
+    parser.add_argument('--version', default='1.0.0')
     parser.add_argument('--docker', action='store_true', help='Disposable CI runner/root only')
     args = parser.parse_args()
     if args.docker and (os.environ.get('CI') != 'true' or os.getuid() != 0):

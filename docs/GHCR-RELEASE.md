@@ -2,9 +2,9 @@
 
 ## English
 
-This is a maintainer runbook for a **future** release. Merging this workflow does
+This is the maintainer runbook for versioned releases. Merging this workflow does
 not push an image or update an installation. RC1–RC5 releases, tags and assets
-remain unchanged. RC5 is already published on Docker Hub and GHCR; the next planned release is RC6. See [unpublished RC6 preparation](RC6-PREPARATION.md).
+remain unchanged. RC6 is published on both registries; Stable 1.0.0 follows the same verified workflow. See [Stable release notes](RELEASE-NOTES-1.0.0.md).
 
 ### Before publishing
 
@@ -13,7 +13,7 @@ remain unchanged. RC5 is already published on Docker Hub and GHCR; the next plan
    review the [container compliance evidence](IMAGE-COMPLIANCE.md). Prepare the
    version-specific installation/Compose references in that commit before tagging;
    the release ZIP preserves that exact source and cannot be corrected afterward.
-2. Create a new tag, for example `v1.0.0-rc.6`, at that commit. Never move an
+2. Create a new tag, for example `v1.0.0`, at that commit. Never move an
    existing release tag. Create a draft GitHub release with short release notes.
    For an RC, select **Set as a pre-release**; for `v1.0.0`, leave that unchecked.
 3. In the notes, link the installation guide and explain that the same version
@@ -68,15 +68,14 @@ Only after every gate passes does the publisher:
 - For a stable release only, move `latest` if this is also GitHub's latest stable
   release. **An RC never creates or changes `latest`.**
 
-For the future RC6 example, the version tag is `1.0.0-rc.6` (without the leading `v`):
+For Stable 1.0.0, the version tag is `1.0.0` (without the leading `v`):
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0-rc.6
-podman pull docker.io/dubctrl/hue2lox:1.0.0-rc.6
+docker pull ghcr.io/square-com-de/hue2lox:1.0.0
+podman pull docker.io/dubctrl/hue2lox:1.0.0
 ```
 
-These commands are examples for the future release, **not available downloads
-until that release has actually passed publication**. Docker selects AMD64 or
+Use these versioned commands after the release publication workflow succeeds. Docker selects AMD64 or
 ARM64 automatically. Announce the new download/Compose links only when those
 assets and anonymous pulls work. Existing installations do not update themselves.
 
@@ -105,9 +104,9 @@ cannot prove registry write permissions or package visibility.
 
 ## Deutsch
 
-Dieser Ablauf ist für ein **künftiges** Release vorbereitet. Das Zusammenführen
+Dies ist der Maintainer-Ablauf für versionierte Releases. Das Zusammenführen
 des PR veröffentlicht keine Images und ändert weder RC1–RC5 noch laufende
-Installationen. RC5 ist bereits auf Docker Hub und GHCR veröffentlicht. Als Nächstes ist RC6 geplant; siehe [unveröffentlichte Vorbereitung](RC6-PREPARATION.md).
+Installationen. RC6 ist auf Docker Hub und GHCR veröffentlicht. Stable 1.0.0 verwendet denselben geprüften Ablauf; siehe [Release-Hinweise](RELEASE-NOTES-1.0.0.md).
 
 Vorher das öffentliche Docker-Hub-Repository `dubctrl/hue2lox` anlegen und im
 GitHub-Repository unter Settings → Secrets and variables → Actions die Secrets
@@ -123,7 +122,7 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    auswählen und die Abnahme mit echten Geräten sowie die Lizenzbeilagen prüfen.
    Versionsbezogene Installations-/Compose-Verweise vor dem Tag im Quellstand
    vorbereiten: Das Release-ZIP enthält exakt diesen Stand.
-2. Einen neuen Tag wie `v1.0.0-rc.6` an diesem Commit und einen Release-Entwurf
+2. Einen neuen Tag wie `v1.0.0` an diesem Commit und einen Release-Entwurf
    anlegen. Beim RC **Set as a pre-release** aktivieren. Bestehende Tags bleiben
    unverändert. ZIP und Prüfsummen werden vom Workflow erzeugt.
 3. Erst **Publish release** startet die Veröffentlichung. PRs, normale Pushes,
@@ -139,8 +138,8 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    **Public** stellen und bei fehlgeschlagener öffentlicher Prüfung **Re-run
    failed jobs** wählen. Den gesamten Build dafür nicht erneut starten.
 
-Das künftige RC6 soll `ghcr.io/square-com-de/hue2lox:1.0.0-rc.6` und
-`docker.io/dubctrl/hue2lox:1.0.0-rc.6` erhalten; diese Referenzen sind noch keine verfügbaren Downloads. Beide Registries müssen vor einer
+Stable 1.0.0 erhält `ghcr.io/square-com-de/hue2lox:1.0.0` und
+`docker.io/dubctrl/hue2lox:1.0.0` ; diese Referenzen erst nach erfolgreicher Veröffentlichung verwenden. Beide Registries müssen vor einer
 Stable-Promotion erfolgreich geprüft sein. Uploads in zwei Registries sind nicht
 atomar; bei Teilfehlern bleiben vorhandene Ergebnisse bestehen und der
 fehlgeschlagene Job wird mit denselben Artefakten wiederholt. `latest` wird ausschließlich
@@ -159,7 +158,7 @@ befristete CI-Artefakte ersetzen diese Downloads nicht.
 
 ## Installer version for the next release / Installer-Version
 
-Before creating a new release tag, set `install/release-image.json` to the same version without the leading `v` (for example, tag `v1.0.0-rc.6` → version `1.0.0-rc.6`). Release publication refuses a mismatch so a new ZIP cannot silently install the previous release image. Do not retag or replace RC5. During development, the file continues to name the last published version; select local build to test `main`.
+Before creating a new release tag, set `install/release-image.json` to the same version without the leading `v` (for example, tag `v1.0.0` → version `1.0.0`). Release publication refuses a mismatch so a new ZIP cannot silently install the previous release image. Do not retag or replace RC5. During development, the file continues to name the last published version; select local build to test `main`.
 
 Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version ohne führendes `v` enthalten. Die Veröffentlichung stoppt bei Abweichungen, damit ein neues ZIP nicht unbemerkt das vorherige Image installiert. RC5 nicht neu taggen oder ersetzen. Während der Entwicklung bleibt die letzte veröffentlichte Version eingetragen; Änderungen aus `main` mit lokalem Build testen.
 

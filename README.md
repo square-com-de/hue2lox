@@ -1,5 +1,3 @@
-> **RC6 — Release Candidate:** [Release and downloads](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.6). Verify successful publication and checksums before installing. Native remains experimental. [RC5→RC6 and control opt-in](docs/RECOVERY-CONTROL.md).
-
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
 <p align="center">
@@ -25,7 +23,8 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 - Copy Loxone HTTP commands or export a selection as XML.
 - Inspect incoming requests in a temporary, sanitized HTTP monitor.
 - Manage locally over HTTPS without a cloud account for normal operation.
-- On main: shared Docker/native installer and local discovery copy helpers; included in RC6.
+- Shared Docker/native installer and local discovery helpers for macOS, Windows and Linux.
+- Scenes as digital on/off circuits, with automatic assignment of uniquely matching groups.
 
 ## Preview
 
@@ -35,22 +34,22 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
-The shared **RC6 installer** offers Docker or native operation. The installation guides use the versioned RC6 source ZIP and fixed images; verify checksums and successful release publication.
+The shared **1.0.0 installer** offers Docker or native operation. The installation guides use the versioned 1.0.0 source ZIP and fixed images; verify checksums and successful release publication.
 
 | Installation method | Who is it for? | Guide |
 | --- | --- | --- |
 | **Installer with Docker** | Guided setup; fixed release image after publication or local build. | [Installation guide](INSTALL.md). Choose **local build** for source tests. |
-| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed RC6 image. |
+| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed 1.0.0 image. |
 | **Native without Docker** | Experimental systemd operation on explicitly tested amd64 Linux targets. | [Native guide](docs/INSTALL-NATIVE.en.md). Source ZIP and native archive required. |
 
 1. **Start the installer:** the [guide](INSTALL.md) covers prerequisites, package verification and deployment selection. Use your Mac or Windows PC to operate the Linux server.
 2. **Set up Hue2Lox:** the installer checks prerequisites and reuses working Docker installations. Fresh installations enable the control features each light supports.
-3. **Sign in:** open the displayed web address and verify its certificate for direct HTTPS. Initial login `admin/admin`; change the password afterwards. Pair hardware only during the separate hardware acceptance.
-4. **Connect Loxone:** for later hardware testing, the [illustrated guide](docs/TUTORIAL.md) explains commands and XML for Loxone Config.
+3. **Sign in:** open the displayed web address and verify its certificate for direct HTTPS. Initial login `admin/admin`; change the password afterwards. Add your Hue Bridge and read its lights and scenes.
+4. **Connect Loxone:** the [illustrated guide](docs/TUTORIAL.md) explains commands and XML for Loxone Config.
 
-**[Installation guide](INSTALL.md) · [RC6 packages and checksums](docs/DOWNLOADS.md) · [RC6 release notes](docs/RELEASE-NOTES-RC6.md)**
+**[Installation guide](INSTALL.md) · [1.0.0 packages and checksums](docs/DOWNLOADS.md) · [1.0.0 release notes](docs/RELEASE-NOTES-1.0.0.md)**
 
-**Already installed?** Follow the [backed-up RC5→RC6 procedure with explicit control opt-in](docs/RECOVERY-CONTROL.md). Updating never overrides intentionally disabled controls. AI guidance is available through the [installation prompt](docs/AI-INSTALL.md).
+**Already installed?** Follow the [backup, update and rollback guide](docs/UPDATE-DOCKER.md). Updating never overrides intentionally disabled controls. AI guidance is available through the [installation prompt](docs/AI-INSTALL.md).
 
 ## Feedback & contact
 
@@ -64,11 +63,11 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Release candidate: RC6. Not a stable release.** PR #18 is merged into main. Real Ubuntu 26.04/DietPi 13 acceptance of the shared installer, Docker/native lifecycle, update/rollback and retained state passed. See [acceptance and limits](docs/DEPLOYMENT-ACCEPTANCE.md). User acceptance confirms TV-strip Lumitech color, warm/cold white, dimming, off, scene activation and state retained after reboot; this does not qualify every device. Original project code is licensed under Apache 2.0.
+**Stable 1.0.0.** Includes the shared installer, local discovery help and scene on/off control. User acceptance covers TV-strip Lumitech color, warm/cold white, dimming, off, scene changes and final OFF. Docker/native lifecycle tests on Ubuntu and DietPi cover restart, update/rollback and retained data. See [release notes and limits](docs/RELEASE-NOTES-1.0.0.md).
 
-Target version: `1.0.0-rc.6`, with source ZIP, native archive and eventual Docker Hub/GHCR images for AMD64/ARM64. All materials must identify the same reviewed source. Use versioned downloads and images only after successful publication. No `latest` before stable. RC1 and RC5 remain unchanged during preparation; earlier release evidence does not qualify RC6.
+Use the versioned ZIP or `1.0.0` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.0` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
 
-Create and edit scenes in the Hue app; recall them through Loxone. Synchronizing actual Hue light state back into the Loxone Lighting Controller is not part of this project.
+Create and edit scenes in the Hue app. [Scene on/off](docs/features/SCENE-SWITCH.md) activates a scene and switches off its assigned group. Existing recall commands keep working; import the new digital commands to use OFF. Actual light-state feedback into the Loxone Lighting Controller is not included.
 
 **Existing installations:** use the [backup/update/rollback procedure](docs/UPDATE-DOCKER.md) for standard Docker deployments or [native maintenance](docs/INSTALL-NATIVE.en.md). Inspect custom Compose/prototype installations separately. Fresh setup is not a general updater.
 

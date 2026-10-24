@@ -1,8 +1,4 @@
-> **RC6 release installation:** Use the versioned release assets and verify their checksums. If publication jobs are still running, wait for successful completion before installing. Native operation remains experimental; RC6 is not Stable 1.0.
-
-> **RC6-Releaseinstallation:** Versionierte Release-Dateien verwenden und Prüfsummen kontrollieren. Falls die Veröffentlichung noch läuft, vor der Installation den erfolgreichen Abschluss abwarten. Nativ bleibt experimentell; RC6 ist nicht Stable 1.0.
-
-**Release version / Release-Version:** The RC6 source ZIP pins `1.0.0-rc.6` in both registry selections. Verify release publication before using prebuilt images. Local builds remain an explicit alternative. / Das RC6-Quell-ZIP bindet bei beiden Registries `1.0.0-rc.6`. Vor Verwendung fertiger Images den erfolgreichen Release-Abschluss prüfen. Lokale Builds bleiben eine ausdrückliche Alternative.
+**Release version / Release-Version:** The 1.0.0 source ZIP pins `1.0.0` in both registry selections. Verify release publication before using prebuilt images. Local builds remain an explicit alternative. / Das 1.0.0-Quell-ZIP bindet bei beiden Registries `1.0.0`. Vor Verwendung fertiger Images den erfolgreichen Release-Abschluss prüfen. Lokale Builds bleiben eine ausdrückliche Alternative.
 
 # Installer image selection
 
@@ -10,7 +6,7 @@
 
 ## English
 
-This describes the shared RC6 candidate installer. Its fixed image reference is `1.0.0-rc.6`; it becomes usable only after successful publication. Local builds use the supplied candidate source.
+This describes the shared 1.0.0 installer. Its fixed image reference is `1.0.0`; it becomes usable only after successful publication. Local builds use the supplied source.
 
 In **step 5**, choose:
 
@@ -43,7 +39,7 @@ The choice is recorded in `.env` and the generated `compose.yaml`. Source files 
 
 ## Deutsch
 
-Dies beschreibt den gemeinsamen RC6-Kandidateninstaller. Seine feste Image-Referenz ist `1.0.0-rc.6`; sie wird erst nach erfolgreicher Veröffentlichung nutzbar. Lokale Builds verwenden den bereitgestellten Kandidatenquellstand.
+Dies beschreibt den gemeinsamen 1.0.0-Installer. Seine feste Image-Referenz ist `1.0.0`; sie wird erst nach erfolgreicher Veröffentlichung nutzbar. Lokale Builds verwenden den bereitgestellten Quellstand.
 
 In **Schritt 5** auswählen:
 

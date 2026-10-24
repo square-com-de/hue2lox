@@ -4,7 +4,7 @@ Die Web-App enthält auch die optionale lokale Discovery-Hilfe für macOS, Windo
 
 [English](INSTALL-NATIVE.en.md) · [Dockerinstallation](../INSTALL.de.md)
 
-Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Für RC6 das versionierte native Archiv samt Prüfsumme zusätzlich zum Quell-ZIP verwenden; Details im RC6-Abschnitt unten. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
+Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Für 1.0.0 das versionierte native Archiv samt Prüfsumme zusätzlich zum Quell-ZIP verwenden; Details im 1.0.0-Abschnitt unten. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
 
 ## Gemeinsamer interaktiver Installer (Entwicklung)
 
@@ -191,13 +191,13 @@ Das spätere LoxBerry-Plugin kann gemeinsame Zustandsvorbereitung und Anwendung 
 
 Die im gemeinsamen Installer gewählte Sprache gilt auch für die eigenen Python-Helfermeldungen und Fehlermeldungen. Für direkte Aufrufe kann `export HUE2LOX_INSTALL_LANG=de` gesetzt werden; mit `en` erscheinen englische Meldungen. Ausgaben externer Werkzeuge (apt, Docker, systemd) und deren Originalprotokolle werden nicht umgeschrieben.
 
-## RC6-Quell-ZIP und natives Archiv
+## Stable-Quell-ZIP und natives Archiv
 
-**Natives RC6-Archiv.** Zusätzlich zum `hue2lox-v1.0.0-rc.6.zip` wird `hue2lox-1.0.0-rc.6-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; die versionierten Release-Dateien nach erfolgreichem Veröffentlichungsabschluss verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
+**Natives 1.0.0-Archiv.** Zusätzlich zum `hue2lox-v1.0.0.zip` wird `hue2lox-1.0.0-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; die versionierten Release-Dateien nach erfolgreichem Veröffentlichungsabschluss verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
 
 ```sh
 bash install-assistant.sh --deployment native \
-  --native-package /absoluter/pfad/hue2lox-1.0.0-rc.6-native.tar.gz \
+  --native-package /absoluter/pfad/hue2lox-1.0.0-native.tar.gz \
   --native-sha256 GEPRUEFTER_SHA256
 ```
 
