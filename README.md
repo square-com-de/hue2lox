@@ -34,12 +34,12 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
-The shared **1.0.0 installer** offers Docker or native operation. The installation guides use the versioned 1.0.0 source ZIP and fixed images; verify checksums and successful release publication.
+The shared **1.0.1 installer** offers Docker or native operation. The installation guides use the versioned 1.0.1 source ZIP and fixed images; verify checksums and successful release publication.
 
 | Installation method | Who is it for? | Guide |
 | --- | --- | --- |
 | **Installer with Docker** | Guided setup; fixed release image after publication or local build. | [Installation guide](INSTALL.md). Choose **local build** for source tests. |
-| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed 1.0.0 image. |
+| **Docker / Compose** | Existing container environments, including reverse proxies. | [Container guide](docs/DOCKER.md). Use the fixed 1.0.1 image. |
 | **Native without Docker** | Experimental systemd operation on explicitly tested amd64 Linux targets. | [Native guide](docs/INSTALL-NATIVE.en.md). Source ZIP and native archive required. |
 
 1. **Start the installer:** the [guide](INSTALL.md) covers prerequisites, package verification and deployment selection. Use your Mac or Windows PC to operate the Linux server.
@@ -47,7 +47,7 @@ The shared **1.0.0 installer** offers Docker or native operation. The installati
 3. **Sign in:** open the displayed web address and verify its certificate for direct HTTPS. Initial login `admin/admin`; change the password afterwards. Add your Hue Bridge and read its lights and scenes.
 4. **Connect Loxone:** the [illustrated guide](docs/TUTORIAL.md) explains commands and XML for Loxone Config.
 
-**[Installation guide](INSTALL.md) · [1.0.0 packages and checksums](docs/DOWNLOADS.md) · [1.0.0 release notes](docs/RELEASE-NOTES-1.0.0.md)**
+**[Installation guide](INSTALL.md) · [1.0.1 packages and checksums](docs/DOWNLOADS.md) · [1.0.1 release notes](docs/RELEASE-NOTES-1.0.1.md)**
 
 **Already installed?** Follow the [backup, update and rollback guide](docs/UPDATE-DOCKER.md). Updating never overrides intentionally disabled controls. AI guidance is available through the [installation prompt](docs/AI-INSTALL.md).
 
@@ -63,9 +63,9 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Stable 1.0.0.** Includes the shared installer, local discovery help and scene on/off control. User acceptance covers TV-strip Lumitech color, warm/cold white, dimming, off, scene changes and final OFF. Docker/native lifecycle tests on Ubuntu and DietPi cover restart, update/rollback and retained data. See [release notes and limits](docs/RELEASE-NOTES-1.0.0.md).
+**Stable 1.0.1.** Includes the shared installer, local discovery help and scene on/off control. User acceptance covers TV-strip Lumitech color, warm/cold white, dimming, off, scene changes and final OFF. Docker/native lifecycle tests on Ubuntu and DietPi cover restart, update/rollback and retained data. See [release notes and limits](docs/RELEASE-NOTES-1.0.1.md).
 
-Use the versioned ZIP or `1.0.0` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.0` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
+Use the versioned ZIP or `1.0.1` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.1` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
 
 Create and edit scenes in the Hue app. [Scene on/off](docs/features/SCENE-SWITCH.md) activates a scene and switches off its assigned group. Existing recall commands keep working; import the new digital commands to use OFF. Actual light-state feedback into the Loxone Lighting Controller is not included.
 

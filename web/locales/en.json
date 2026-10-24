@@ -434,5 +434,7 @@
   "Keine passende Gruppe bekannt. Szenen erneut einlesen oder „Nur aktivieren“ wählen.": "No matching group is known. Rescan scenes or choose “Recall only”.",
   "Steuerung gespeichert. XML neu exportieren; bestehende Loxone-Befehle bleiben unverändert.": "Control saved. Export XML again; existing Loxone commands remain unchanged.",
   "Gruppe konnte nicht übernommen werden. Aktuelle Lampen prüfen und erneut auswählen.": "Could not apply the group. Check the current lamps and select again.",
-  "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.": "ON recalls the scene. OFF switches off the entire assigned group. No lamp state feedback to Loxone. Send ON first after restart. Switch overlapping groups off first."
+  "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.": "ON recalls the scene. OFF switches off the entire assigned group. No lamp state feedback to Loxone. Send ON first after restart. Switch overlapping groups off first.",
+  "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.": "This browser address does not match the server configuration. Use the configured address or adjust HUE_PUBLIC_URL.",
+  "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Login failed. Please check the server configuration and connection."
 }

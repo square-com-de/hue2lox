@@ -11,13 +11,7 @@ import xml.etree.ElementTree as ET
 from bridge_store import read_registry, ensure_short_names
 
 
-def public_url():
-    url = os.environ.get('HUE_PUBLIC_URL', 'https://localhost:8443').rstrip('/')
-    parsed = urlsplit(url)
-    if parsed.scheme not in ('http', 'https') or not parsed.hostname or parsed.username or parsed.password or parsed.path or parsed.query or parsed.fragment:
-        raise ValueError('invalid public URL')
-    parsed.port
-    return url
+from public_address import public_url
 
 
 def registry():

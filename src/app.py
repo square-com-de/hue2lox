@@ -15,6 +15,7 @@ import scene_switch
 import bridge_admin
 import dashboard
 import admin_auth
+import public_address
 import loxone_export
 from urllib.parse import urlsplit
 from hue_client import read_status, state_payload, write_state, BridgeRequestError, decode_json_document
@@ -76,6 +77,7 @@ class Handler(BaseHTTPRequestHandler):
     def handle_one_request(self):
         # A socket timeout is only an inactivity timeout. A client sending one
         # header byte at a time must not keep a worker indefinitely.
+        url_token = public_address.request_url.set(None)
         self._header_deadline = time.monotonic() + getattr(self.server, 'request_timeout', 5)
         self._reading_headers = True
         def expire():
@@ -95,11 +97,23 @@ class Handler(BaseHTTPRequestHandler):
         finally:
             self._reading_headers = False
             self._header_timer.cancel()
+            public_address.request_url.reset(url_token)
 
     def parse_request(self):
         try:
             valid = super().parse_request()
-            return valid and time.monotonic() < self._header_deadline
+            if not valid or time.monotonic() >= self._header_deadline:
+                return False
+            if 'HUE_PUBLIC_URL' not in os.environ:
+                try:
+                    if len(self.headers.get_all('Host', [])) != 1:
+                        raise ValueError('ambiguous host')
+                    url = public_address.direct_url(self.headers.get('Host'), isinstance(self.connection, ssl.SSLSocket))
+                    public_address.request_url.set(url)
+                except (ValueError, TypeError):
+                    self.send_json(403, {'status': 'error', 'error': 'invalid_origin'})
+                    return False
+            return True
         finally:
             self._reading_headers = False
             self._header_timer.cancel()

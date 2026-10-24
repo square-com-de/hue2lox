@@ -1,4 +1,4 @@
-# Stable 1.0.0: fixed version; persistent data lives in the volume below.
+# Stable 1.0.1: fixed version; persistent data lives in the volume below.
 # Run the published image: no source checkout, no build, one data volume.
 # Works with plain `docker compose up -d` and with the Unraid Compose Manager.
 # Serves plain HTTP; put a reverse proxy in front for HTTPS.
@@ -6,7 +6,7 @@
 services:
   hue2lox:
     # Pin the tested release candidate. No floating rc/latest tag is needed.
-    image: ghcr.io/square-com-de/hue2lox:1.0.0
+    image: ghcr.io/square-com-de/hue2lox:1.0.1
     container_name: hue2lox
     restart: unless-stopped
     network_mode: host

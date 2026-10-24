@@ -1,18 +1,18 @@
 # Install Hue2Lox on Linux
 
-**Stable 1.0.0:** the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [1.0.0 release notes](docs/RELEASE-NOTES-1.0.0.md). Native operation remains experimental and is included in 1.0.0; use the separate native archive with the source-ZIP assistant. See the [native guide](docs/INSTALL-NATIVE.en.md).
+**Stable 1.0.1:** the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [1.0.1 release notes](docs/RELEASE-NOTES-1.0.1.md). Native operation remains experimental and is included in 1.0.1; use the separate native archive with the source-ZIP assistant. See the [native guide](docs/INSTALL-NATIVE.en.md).
 
-[Deutsch](INSTALL.de.md) · [1.0.0 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0) · [English manual](docs/MANUAL.md)
+[Deutsch](INSTALL.de.md) · [1.0.1 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1) · [English manual](docs/MANUAL.md)
 
-This guide installs **1.0.0** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
+This guide installs **1.0.1** directly on the Linux server. The [version, package and checksum](docs/DOWNLOADS.md) belong together. The German manual development path uses `main` and is separate from this release installation.
 
 ## Installer on main: Docker/native and prebuilt images
 
-The installer defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. This choice is included in the 1.0.0 source ZIP. This release pins `1.0.0`; use the fixed image for normal installation, or **local build** to test a reviewed source checkout. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
+The installer defaults to a fixed release image from Docker Hub, with GHCR and local builds as alternatives. This choice is included in the 1.0.1 source ZIP. This release pins `1.0.1`; use the fixed image for normal installation, or **local build** to test a reviewed source checkout. See [image selection and scripted setup](docs/INSTALLER-IMAGES.md).
 
 ## HTTP or HTTPS in the installer
 
-1.0.0 includes this choice. The older RC3 ZIP remains unchanged.
+1.0.1 includes this choice. The older RC3 ZIP remains unchanged.
 In step 5 choose:
 
 1. **Direct HTTPS (default):** the installer creates a self-signed certificate and key.
@@ -55,9 +55,9 @@ You need a Linux server or VM, its address and user account, root or sudo access
 | DietPi based on Debian 12 / 13 | amd64, arm64 | Main: DietPi 13 amd64 Docker/native update, rollback and reboot accepted; DietPi 12/ARM separate |
 | Other Linux distributions | Install prerequisites manually; existing Docker and Compose can be reused | No general compatibility claim |
 
-The table separates automatic platform support from real testing. New VM evidence applies to the main commit in the [acceptance report](docs/DEPLOYMENT-ACCEPTANCE.md), not retroactively to the 1.0.0 ZIP.
+The table separates automatic platform support from real testing. New VM evidence applies to the main commit in the [acceptance report](docs/DEPLOYMENT-ACCEPTANCE.md), not retroactively to the 1.0.1 ZIP.
 
-A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. The 1.0.0 installer offers a fixed release image or a local build. For the prebuilt 1.0.0 image, use the separate [container guide](docs/DOCKER.md).
+A 64-bit processor with a 32-bit OS is not sufficient. Existing working Docker Engine and Compose are reused. The installer does not automatically remove conflicting Docker packages or overwrite existing installation directories. The 1.0.1 installer offers a fixed release image or a local build. For the prebuilt 1.0.1 image, use the separate [container guide](docs/DOCKER.md).
 
 ## 1. Connect to the server
 
@@ -85,21 +85,21 @@ apt install -y --no-install-recommends ca-certificates curl unzip
 
 This applies to the Ubuntu/Debian-based systems above. On other systems, provide these three tools using their package manager. Stop on errors; if you see “Not live until”, check the server clock first.
 
-## 3. Download 1.0.0, verify and start
+## 3. Download 1.0.1, verify and start
 
-**Still on the server as root.** Copy the whole block. It creates a new download directory, downloads the fixed 1.0.0 package and SHA-256 checksum, verifies and extracts it, then starts the installer. Existing directories are not overwritten.
+**Still on the server as root.** Copy the whole block. It creates a new download directory, downloads the fixed 1.0.1 package and SHA-256 checksum, verifies and extracts it, then starts the installer. Existing directories are not overwritten.
 
 ```sh
 HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc6-XXXXXXXX") &&
 cd "$HUE2LOX_DOWNLOAD_DIR" &&
-curl --fail --location --output hue2lox-v1.0.0.zip \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0/hue2lox-v1.0.0.zip &&
+curl --fail --location --output hue2lox-v1.0.1.zip \
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/hue2lox-v1.0.1.zip &&
 curl --fail --location --output SHA256SUMS.txt \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.0/SHA256SUMS.txt &&
-(grep '  hue2lox-v1.0.0.zip$' SHA256SUMS.txt | sha256sum --check -) &&
-unzip -tq hue2lox-v1.0.0.zip &&
-unzip -q hue2lox-v1.0.0.zip &&
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.0/install-assistant.sh"
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/SHA256SUMS.txt &&
+(grep '  hue2lox-v1.0.1.zip$' SHA256SUMS.txt | sha256sum --check -) &&
+unzip -tq hue2lox-v1.0.1.zip &&
+unzip -q hue2lox-v1.0.1.zip &&
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.1/install-assistant.sh"
 ```
 
 Continue only when verification succeeds. On `FAILED`, download or extraction errors, stop; do not start the installer separately. The checksum must come from the same release as the ZIP. `Code → Download ZIP` downloads the development branch instead.
@@ -108,7 +108,7 @@ Continue only when verification succeeds. On `FAILED`, download or extraction er
 
 ## 4. Continue in the installer
 
-Select English, then **Docker** for the steps below. For **native, without Docker**, follow the [native 1.0.0 handoff](docs/INSTALL-NATIVE.en.md#stable-source-zip-and-native-archive). The Docker menu offers:
+Select English, then **Docker** for the steps below. For **native, without Docker**, follow the [native 1.0.1 handoff](docs/INSTALL-NATIVE.en.md#stable-source-zip-and-native-archive). The Docker menu offers:
 
 1. Check the system and prerequisites without changes.
 2. Check/configure SSH (optional; skip if already active).

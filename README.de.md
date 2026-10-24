@@ -34,12 +34,12 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
-Der gemeinsame **1.0.0-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte 1.0.0-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
+Der gemeinsame **1.0.1-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte 1.0.1-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
 
 | Installationsweg | Für wen? | Anleitung |
 | --- | --- | --- |
 | **Installer mit Docker** | Geführte Einrichtung; festes Release-Image nach Veröffentlichung oder lokaler Build. | [Installationsanleitung](INSTALL.de.md). Für Quelltests **lokalen Build** wählen. |
-| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). Festes 1.0.0-Image verwenden. |
+| **Docker / Compose** | Bestehende Container-Umgebung, auch mit Reverse Proxy. | [Container-Anleitung (Englisch)](docs/DOCKER.md). Festes 1.0.1-Image verwenden. |
 | **Nativ ohne Docker** | Experimenteller systemd-Betrieb auf den ausdrücklich geprüften amd64-Linux-Zielen. | [Native Anleitung](docs/INSTALL-NATIVE.md). Quell-ZIP und natives Archiv erforderlich. |
 
 1. **Installer starten:** Die [Anleitung](INSTALL.de.md) beschreibt Voraussetzungen, Paketprüfung und Auswahl des Installationswegs. Mac oder Windows-PC dienen zur Bedienung des Linux-Servers.
@@ -47,7 +47,7 @@ Der gemeinsame **1.0.0-Installer** bietet Docker oder nativen Betrieb. Die Insta
 3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hue Bridge hinzufügen und Lampen sowie Szenen einlesen.
 4. **Mit Loxone verbinden:** Die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
 
-**[Installationsanleitung](INSTALL.de.md) · [1.0.0-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [1.0.0-Release-Hinweise](docs/RELEASE-NOTES-1.0.0.md)**
+**[Installationsanleitung](INSTALL.de.md) · [1.0.1-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md)**
 
 **Bereits installiert?** Den [gesicherten Update-/Rollbackweg](docs/UPDATE-DOCKER.de.md) verwenden. Ein Update überschreibt keine bewusst gesperrten Funktionen. Für KI-Begleitung gibt es den [Installationsprompt](docs/AI-INSTALL.de.md).
 
@@ -63,9 +63,9 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Stable 1.0.0.** Enthält den gemeinsamen Installer, lokale Suchhilfen und Szenen-Ein/Aus. Die Nutzerabnahme umfasst TV-Strip-Lumitech-Farbe, warmes/kaltes Weiß, Dimmen, AUS, Szenenwechsel und abschließendes AUS. Docker-/native Lebenszyklustests auf Ubuntu und DietPi prüfen Neustart, Update/Rollback und Datenerhalt. Siehe [Release-Hinweise und Grenzen](docs/RELEASE-NOTES-1.0.0.md).
+**Stable 1.0.1.** Enthält den gemeinsamen Installer, lokale Suchhilfen und Szenen-Ein/Aus. Die Nutzerabnahme umfasst TV-Strip-Lumitech-Farbe, warmes/kaltes Weiß, Dimmen, AUS, Szenenwechsel und abschließendes AUS. Docker-/native Lebenszyklustests auf Ubuntu und DietPi prüfen Neustart, Update/Rollback und Datenerhalt. Siehe [Release-Hinweise und Grenzen](docs/RELEASE-NOTES-1.0.1.md).
 
-Versioniertes ZIP oder `1.0.0`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.0` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
+Versioniertes ZIP oder `1.0.1`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.1` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
 
 Szenen in der Hue-App erstellen und bearbeiten. [Szenen Ein/Aus](docs/features/SCENE-SWITCH.de.md) aktiviert eine Szene und schaltet ihre zugeordnete Gruppe aus. Bestehende Recall-Befehle bleiben nutzbar; für AUS die neuen digitalen Befehle importieren. Eine Rückmeldung des tatsächlichen Lampenzustands in den Loxone-Lichtbaustein ist nicht enthalten.
 
