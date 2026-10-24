@@ -45,7 +45,7 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 | Podman Desktop auf macOS ARM64 | Separat geprüfter lokaler Testweg, keine pauschale LAN-/Proxmox-Freigabe. | [Geprüfter Ablauf und Grenzen](docs/DOCKER.md#podman-desktop-on-macos) |
 | Nativ ohne Docker | Experimentelle Alternative für ausdrücklich geprüfte amd64-systemd-Ziele. | [Native Anleitung](docs/INSTALL-NATIVE.md) |
 
-1. **Container vorbereiten:** Die [Compose-Schnellstartdatei](docker/compose.quickstart.yaml) nach der [kurzen Anleitung](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) starten. Docker/Compose müssen vorhanden und Port 18443 frei sein. Die endgültige Browser-/Clean-VM-Abnahme bleibt bis zum Deployer-Nachweis offen.
+1. **Container vorbereiten:** Die [Compose-Schnellstartdatei](docker/compose.quickstart.yaml) nach der [kurzen Anleitung](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) starten. Docker/Compose müssen vorhanden und Port 18443 frei sein. Browserlogin und Datenerhalt sind unabhängig geprüft; [genauer Testumfang und Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Anmelden:** Angezeigte HTTP-/HTTPS-Adresse verwenden; Port 8443 allein bedeutet kein HTTPS. Frische Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Bei HTTPS das Zertifikat prüfen.
 3. **Bridge einrichten:** Container muss die Bridge im LAN erreichen können. Fehlende Multicast-Suche und fehlender direkter Netzwerkzugriff sind unterschiedliche Probleme; eine manuelle IP umgeht keine Netzsperre.
 4. **Mit Loxone verbinden:** [Bebilderte Anleitung](docs/TUTORIAL.de.md) für Befehle und XML. Für Szenen-AUS die neuen digitalen Befehle übernehmen; alte Recall-Ausgänge bleiben unverändert.

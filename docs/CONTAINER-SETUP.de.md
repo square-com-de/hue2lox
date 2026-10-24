@@ -8,10 +8,11 @@ Diese Hinweise gelten für das veröffentlichte Hue2Lox-Image ab **1.0.1**. Sie 
 
 ## Schnellstart: Docker auf einem Linux-Server
 
-Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Lade die [Compose-Datei](../docker/compose.quickstart.yaml) herunter, speichere sie als `compose.yaml` und starte:
+Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Die Befehle in diesem Ordner mit Docker-Rechten ausführen (etwa nach `su -` und anschließendem Wechsel in den Ordner). Der Download verwendet die öffentlich verfügbare, getestete Datei an einem festen Commit; er überschreibt keine bestehende Installation, wenn du wie beschrieben einen neuen Ordner verwendest:
 
 ```sh
-docker compose up -d --wait
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+docker compose up -d --wait &&
 docker compose ps
 ```
 

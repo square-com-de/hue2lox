@@ -49,19 +49,9 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Save the [Compose file](../docker/compose.quickstart.yaml) as `compose.yaml` in a new directory. Docker and Compose must already be installed; port 18443 must be free.
+Use the single [quick-start procedure](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server) / [deutscher Schnellstart](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server). It downloads the immutable, publicly available tested Compose file, starts the fixed 1.0.1 image and creates persistent storage automatically. Open **http://SERVER-IP:18443**, sign in with **admin/admin** for fresh data and change the password. Portainer Docker Standalone uses that same file as a Stack.
 
-```sh
-docker compose up -d --wait
-docker compose ps
-```
-
-Open **http://SERVER-IP:18443**, log in with **admin / admin** for fresh data and change the password. Replace SERVER-IP with the Linux server's private IP. No `HUE_PUBLIC_URL` setting is needed for this direct-IP setup. Compose creates the named data volume automatically. Portainer Docker Standalone uses the same file as a Stack.
-
-This default uses HTTP on a trusted LAN. For HTTPS use the [certificate/proxy guide](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by Docker networking; use the local discovery help or enter the bridge IP. Direct bridge-IP access still requires a route from the container to the bridge. The guided Linux installer remains the host-network alternative.
-
-The Compose example uses GHCR. To use Docker Hub, change only its `image` value
-to `docker.io/dubctrl/hue2lox:1.0.1`; both registries must contain the same verified images.
+HTTP is intentional and for a trusted LAN. HTTPS requires the [certificate/proxy setup](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by container networking; use local discovery help or the bridge IP. Direct bridge access still needs a network route. The guided installer and `compose.image.yaml` remain Linux host-network alternatives; they are not a second default installation path.
 
 ## Podman Desktop on macOS
 

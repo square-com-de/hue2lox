@@ -30,10 +30,10 @@ Pin `1.0.1` instead of `latest`, or use its published digest. The [digest record
 
 ## New partial Proxmox acceptance
 
-Ubuntu **26.04.1 amd64**, Docker **29.9.2**, Compose **5.6.1**: image/API login, persistence, update and restore/rollback passed. The exact new quick-start file, browser, Portainer and real hardware are not fully accepted yet. [Evidence and limits](acceptance/PROXMOX-1.0.1.md). Runtime versions are now recorded for this new partial acceptance.
+Ubuntu **26.04.1 amd64**, Docker **29.9.2**, Compose **5.6.1**: image/API login, persistence, update and restore/rollback passed. The exact quick-start file, HTTP browser login, restart and restore passed; Portainer GUI, a repeated clean-OS run and real hardware remain open. [Evidence and limits](acceptance/PROXMOX-1.0.1.md). Runtime versions are now recorded for this new partial acceptance.
 
 ## Before the next stable approval
 
-Open: independent acceptance of these consolidated guides; exact Docker/Compose versions and actually executed copy/paste commands; recovery retaining passwords and deliberately disabled flags. Record hardware scope explicitly; mocks establish no new lamp/Miniserver acceptance. The maintainer opens the [technical stable gate](GHCR-RELEASE.md#stable-acceptance-gate) only using that evidence. Published 1.0.0/1.0.1 are not rewritten.
+Open: independent acceptance of these consolidated guides; the repeated clean-OS scope and recovery of deliberately disabled flags. Runtime versions, executed commands and retained-password checks are recorded in the new Deployer report. Record hardware scope explicitly; mocks establish no new lamp/Miniserver acceptance. The maintainer opens the [technical stable gate](GHCR-RELEASE.md#stable-acceptance-gate) only using that evidence. Published 1.0.0/1.0.1 are not rewritten.
 
-**Current additional acceptance:** test Docker Compose as the preferred end-user path in a fresh Proxmox Linux VM. Record Docker/Compose versions, immutable image identity, actual installation/start commands, initial login, browser URL, volume, TLS, network limits, recreate, backup/restore and rollback. This new acceptance is pending; do not invent tested commands or port/IP values. Owner: Deployer, handoff through the PM.
+**Additional acceptance:** The [partial Proxmox report](CONTAINER-ACCEPTANCE-1.0.1.md) now records runtime versions, the unchanged quick-start file, browser and lifecycle evidence. Platform, hardware and clean-OS limits remain explicit. Owner: Deployer; coordination through the PM.
