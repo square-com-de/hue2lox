@@ -1,12 +1,26 @@
 # Hue2Lox auf Linux installieren
 
-**Bevorzugt ist Docker Compose auf einer Linux-VM:** [Container-Einrichtung](docs/CONTAINER-SETUP.de.md) · [Compose-Anleitung](docs/DOCKER.md#docker-compose) · [Teststatus](docs/RUNTIME-SUPPORT.de.md). Der nachfolgende geführte Installer ist eine Alternative; nativ bleibt experimentell. Der neue saubere Proxmox-Endnutzernachweis samt tatsächlich ausgeführten Docker-Befehlen steht noch aus.
+**Bevorzugt ist Docker Compose auf einer Linux-VM:** [Container-Einrichtung](docs/CONTAINER-SETUP.de.md) · [Compose-Anleitung](docs/DOCKER.md#docker-compose) · [Teststatus](docs/RUNTIME-SUPPORT.de.md). Der nachfolgende geführte Installer ist eine Alternative; nativ bleibt experimentell. Der [getestete Download-/Startblock mit anschließendem Login](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) ist der Einstieg ohne Quellcode oder Modusauswahl. [Proxmox-Nachweis und verbleibende Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
+
+### Einfach starten
+
+Voraussetzung: Linux mit Docker Engine, Compose-Plugin und curl; Docker-Rechte (beispielsweise `su -`) und freier Port **18443**. Im gewünschten übergeordneten Verzeichnis ausführen. Der neue Ordner `hue2lox` darf noch nicht existieren; bestehende Installationen über den Updateweg warten.
+
+```sh
+mkdir hue2lox &&
+cd hue2lox &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+docker compose up -d --wait &&
+docker compose ps
+```
+
+Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht; HTTPS und weitere Einstellungen sind optional in der [Container-Anleitung](docs/CONTAINER-SETUP.de.md) erklärt. Die isolierte VM-Abnahme verwendete dieselbe Datei mit Testport **18444**, weil 18443 dort bereits belegt war; normale Vorgabe ist 18443.
 
 Vor dem Containerstart: **[Anmeldung, dauerhafter Speicher, Netzwerkzugriff und HTTP/HTTPS](docs/CONTAINER-SETUP.de.md)**. Mit Hinweisen für Portainer und Podman Desktop sowie zur automatischen Suche und zum manuellen Bridge-Zugriff.
 
 **Stable 1.0.1:** der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Der native Weg bleibt experimentell und ist in 1.0.1 enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Anleitung](docs/INSTALL-NATIVE.md).
 
-## Zuerst den passenden Weg wählen
+## Optional: geführter Installer oder native Installation
 
 Der Installer auf dieser Seite läuft auf **Linux mit Docker Engine und dem Compose-Plugin (`docker compose`)** oder im ausdrücklich gewählten nativen Modus. **Podman ist kein Ersatz für Docker in diesem Installer.** Für den geprüften lokalen Desktop-Einstieg auf macOS ARM64 siehe [Podman Desktop](docs/DOCKER.md#podman-desktop-on-macos). Die unterstützten Versionen und Abnahmegrenzen stehen im [Runtime-Status](docs/RUNTIME-SUPPORT.de.md); Linux-Compose ist keine Abnahme für Docker Desktop, Podman unter Windows oder alle NAS-Systeme.
 

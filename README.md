@@ -45,6 +45,20 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 | Podman Desktop on macOS ARM64 | Separately tested local path, not blanket LAN/Proxmox acceptance. | [Accepted flow and limits](docs/DOCKER.md#podman-desktop-on-macos) |
 | Native without Docker | Experimental alternative for explicitly tested amd64/systemd targets. | [Native guide](docs/INSTALL-NATIVE.en.md) |
 
+### Simple start
+
+Prerequisites: Linux with Docker Engine, the Compose plugin and curl; Docker permissions (for example `su -`) and free port **18443**. Run from the desired parent directory. The new `hue2lox` folder must not exist; maintain existing installations using the update procedure.
+
+```sh
+mkdir hue2lox &&
+cd hue2lox &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+docker compose up -d --wait &&
+docker compose ps
+```
+
+Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN; HTTPS and other optional settings are described in the [container guide](docs/CONTAINER-SETUP.md). The isolated VM acceptance used the same file with test port **18444**, because 18443 was occupied there; the normal default is 18443.
+
 1. **Prepare the container:** Start the [Compose quick-start file](docker/compose.quickstart.yaml) using the [short guide](docs/CONTAINER-SETUP.md). Docker/Compose must be installed and port 18443 free. Browser login and persistence were independently checked; see [exact test scope and limits](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
 3. **Configure the bridge:** it must be reachable from the container. Failed multicast discovery differs from failed direct connectivity; manual IP entry cannot bypass a network block.

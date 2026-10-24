@@ -1,12 +1,26 @@
 # Install Hue2Lox on Linux
 
-**Preferred: Docker Compose in a Linux VM:** [container setup](docs/CONTAINER-SETUP.md) · [Compose guide](docs/DOCKER.md#docker-compose) · [test status](docs/RUNTIME-SUPPORT.md). The guided installer below is an alternative; native remains experimental. The new clean Proxmox end-user record and its actually executed Docker commands are still pending.
+**Preferred: Docker Compose in a Linux VM:** [container setup](docs/CONTAINER-SETUP.md) · [Compose guide](docs/DOCKER.md#docker-compose) · [test status](docs/RUNTIME-SUPPORT.md). The guided installer below is an alternative; native remains experimental. Start with the [tested download/start commands and login](docs/CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server), without source code or mode selection. [Proxmox evidence and remaining limits](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
+
+### Simple start
+
+Prerequisites: Linux with Docker Engine, the Compose plugin and curl; Docker permissions (for example `su -`) and free port **18443**. Run from the desired parent directory. The new `hue2lox` folder must not exist; maintain existing installations using the update procedure.
+
+```sh
+mkdir hue2lox &&
+cd hue2lox &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+docker compose up -d --wait &&
+docker compose ps
+```
+
+Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN; HTTPS and other optional settings are described in the [container guide](docs/CONTAINER-SETUP.md). The isolated VM acceptance used the same file with test port **18444**, because 18443 was occupied there; the normal default is 18443.
 
 Before starting a container: **[login, persistent storage, network access and HTTP/HTTPS](docs/CONTAINER-SETUP.md)**. Includes Portainer and Podman Desktop; explains why discovery and manual bridge access are different checks.
 
 **Stable 1.0.1:** the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [1.0.1 release notes](docs/RELEASE-NOTES-1.0.1.md). Native operation remains experimental and is included in 1.0.1; use the separate native archive with the source-ZIP assistant. See the [native guide](docs/INSTALL-NATIVE.en.md).
 
-## Choose the correct path first
+## Optional: guided installer or native installation
 
 The installer on this page runs on **Linux with Docker Engine and the Compose plugin (`docker compose`)**, or in the explicitly selected native mode. **Podman is not a drop-in replacement for Docker in this installer.** For the tested local macOS ARM64 desktop flow, see [Podman Desktop](docs/DOCKER.md#podman-desktop-on-macos). See [runtime status](docs/RUNTIME-SUPPORT.md) for versions and acceptance limits; Linux Compose tests do not certify Docker Desktop, Windows Podman or every NAS platform.
 
