@@ -4,7 +4,7 @@
 
 **Start here:** [Storage, login, networking and HTTPS](CONTAINER-SETUP.md) · [Speicher, Anmeldung, Netzwerk und HTTPS (Deutsch)](CONTAINER-SETUP.de.md).
 
-For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
+For Linux Docker Engine hosts; Unraid/Synology examples below are integration examples, not independent platform acceptance. See the [runtime matrix](RUNTIME-SUPPORT.md). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
 Stable 1.0.1 provides identical images at `docker.io/dubctrl/hue2lox:1.0.1` and
 `ghcr.io/square-com-de/hue2lox:1.0.1` for
@@ -27,6 +27,8 @@ tests, scans and source-material checks pass. Pushing a branch/tag alone cannot
 publish images. See [GHCR-RELEASE.md](GHCR-RELEASE.md).
 
 ## HTTP and HTTPS
+
+In 1.0.1, direct localhost/private-IP access can leave `HUE_PUBLIC_URL` unset. Explicit values remain authoritative; forwarded headers cannot override them. Use [runtime-specific instructions](RUNTIME-SUPPORT.md).
 
 The image serves **plain HTTP**. Like most self-hosted apps, it does not manage certificates: if you want HTTPS, terminate TLS in a reverse proxy in front of it and set `HUE_PUBLIC_URL` to the `https://` address. The proxy must forward the original `Host` header: the admin interface rejects requests whose `Host` or `Origin` differs from `HUE_PUBLIC_URL`. Without a proxy, the admin login and control token cross your network unencrypted, so only expose it on a network you trust.
 
@@ -60,10 +62,21 @@ to `docker.io/dubctrl/hue2lox:1.0.1`; both registries must contain the same veri
 
 ## Podman Desktop on macOS
 
-For a quick fresh test with **1.0.1**, pull the fixed image, choose **Run Image → Create and start**, keep the default port mapping and open **http://localhost:8443**. No environment variables are needed for direct localhost/private-IP HTTP access. Fresh data uses **admin / admin**. Stop an older test container if it occupies that port; do not delete its data.
+**Verified scope:** Podman Desktop **1.30.5, macOS ARM64**, public `1.0.1` ARM64 image, fresh data, actual GUI pull/create/login/reload/restart. This is a local desktop test, not certification of Linux/Windows Podman, `podman compose`, multicast discovery or Loxone LAN access. [Evidence and limits](RUNTIME-SUPPORT.md).
 
-For a persistent local test with an explicitly named volume, use the Mac terminal
-(choose another container and volume name if these already exist):
+1. In **Images → Pull an image**, enter `docker.io/dubctrl/hue2lox:1.0.1` (or the identical GHCR reference).
+2. Choose **Run Image → Create and start**. Keep the displayed defaults and port mapping. Stop an older test container if its host port is occupied; keep its data volume.
+3. Choose **Open Browser** and use the actual mapped **HTTP** URL. With a fresh writable `/data` volume, sign in with **admin / admin**. No URL/TLS environment variables are needed for direct localhost/private-IP access in 1.0.1.
+4. Reload, restart the same container through Podman Desktop, and sign in again. Existing data always retains its previous password; pulling a newer image does not update an existing container.
+
+For custom DNS/reverse proxies, set `HUE_PUBLIC_URL` to the exact browser URL and keep the original Host header. An address mismatch now has its own configuration error, not an incorrect-password message. Do not disable origin/CSRF checks or reset retained passwords to work around it.
+
+Podman Desktop uses a Linux VM. Multicast may not cross its network. If discovery finds nothing, use **Bridges → No bridge found?** or enter the bridge IP; do not infer that a working GUI proves LAN discovery. A localhost URL cannot be used by a separate Loxone Miniserver. Pairing and real lamp effects need their own acceptance.
+
+Deutsch: **Podman Desktop 1.30.5 auf macOS ARM64** wurde mit dem öffentlichen 1.0.1-Image geprüft: **Images → Pull an image → Run Image → Create and start → Open Browser → admin/admin** bei frischen Daten. Standard-Portzuordnung beibehalten, tatsächlich angezeigte HTTP-Adresse verwenden; keine zusätzlichen URL-/TLS-Variablen erforderlich. Neuladen und Neustart desselben Containers sind geprüft. Erhaltene Daten behalten ihr Passwort. Der Linux-Installer und `podman compose` sind dadurch nicht freigegeben. [Versionsstatus](RUNTIME-SUPPORT.de.md).
+
+The [named-volume CLI variant](acceptance/DESKTOP-1.0.1.md#additional-named-volume-cli-check) was also checked on macOS ARM64 with Podman client/VM engine 6.1.4. For a persistent local test with an explicitly named volume, use the Mac terminal
+(choose another container/volume name if occupied and a free localhost port; use the same port in the browser):
 
 ```sh
 podman run -d --name hue2lox-test \
@@ -78,10 +91,8 @@ Open **http://localhost:18443**. Keep the named volume for subsequent containers
 Existing data retains its changed password. This localhost-only example is for
 Mac testing, not access from a separate Loxone Miniserver.
 
-Podman Desktop on macOS runs containers in a Linux VM. Automatic multicast
-search may fail; manual bridge-IP access also depends on the VM's route to the LAN.
-If both fail, investigate connectivity rather than assuming manual entry will fix it.
-See [network checks and storage](CONTAINER-SETUP.md).
+
+See [storage and direct network diagnostics](CONTAINER-SETUP.md). Manual IP entry cannot bypass an unreachable VM-to-LAN route.
 
 ## Unraid (Compose Manager)
 
@@ -116,7 +127,7 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `PORT` | `8443` | Listen port |
-| `HUE_PUBLIC_URL` | unset: request address for direct localhost/private-IP access | Set the exact browser URL for a custom hostname/reverse proxy. Used for origin checks, cookies and generated Loxone URLs. |
+| `HUE_PUBLIC_URL` | unset | Direct localhost/private-IP HTTP(S) uses the actual browser address/mapped port in 1.0.1. Set an exact URL for a proxy/custom DNS; explicit HTTPS uses Secure cookies |
 | `HUE2LOX_ADMIN_PASSWORD` | `admin` | Initial admin password, applied only when no credentials exist yet |
 | `HUE_WRITES_ENABLED` | `1` | Allow switching and dimming (see Lamp control) |
 | `HUE_COLOR_ENABLED` | `1` | Allow RGB colour commands |

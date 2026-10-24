@@ -54,11 +54,51 @@ def check_installer_version(version, path=None):
         raise ValueError('Update install/release-image.json to the release version before tagging')
 
 
+
+STABLE_READINESS = Path(__file__).resolve().parents[1]/'compliance/stable-readiness.json'
+STABLE_CHECKS = ('documentation_review', 'published_user_flow', 'update_recovery', 'support_scope')
+
+
+def acceptance_source_digest(commit, cwd=None):
+    """Bind approval to all tracked content except the approval record itself."""
+    entries = run('git', '-c', 'core.quotePath=true', 'ls-tree', '--full-tree', '-r', commit, cwd=cwd).splitlines()
+    content = '\n'.join(line for line in entries
+                        if line.split('\t', 1)[1] != 'compliance/stable-readiness.json')
+    return hashlib.sha256(content.encode()).hexdigest()
+
+
+def check_stable_readiness(info, path=None):
+    """Fail closed before publication/promotion; RC preparation is still allowed."""
+    if info['prerelease']:
+        return
+    path = path or STABLE_READINESS
+    try:
+        record = json.loads(path.read_text())
+    except (OSError, ValueError):
+        raise ValueError('Stable blocked: missing/invalid stable-readiness.json') from None
+    if (type(record) is not dict or record.get('schema_version') != 1 or
+            record.get('version') != info['version'] or record.get('approved') is not True):
+        raise ValueError('Stable blocked: reviewed version-specific approval is required')
+    checks = record.get('checks')
+    if type(checks) is not dict:
+        raise ValueError('Stable blocked: acceptance evidence is required')
+    for name in STABLE_CHECKS:
+        check = checks.get(name)
+        if (type(check) is not dict or check.get('passed') is not True or
+                type(check.get('evidence')) is not list or not check['evidence'] or
+                any(type(link) is not str or not link.startswith('https://github.com/'+REPO+'/')
+                    for link in check['evidence'])):
+            raise ValueError('Stable blocked: incomplete '+name)
+    if record.get('source_sha256') != acceptance_source_digest(info['commit']):
+        raise ValueError('Stable blocked: source/docs changed since acceptance')
+
+
 def current_plan():
     event = json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
     commit = run('git', 'rev-parse', 'HEAD')
     result = plan(event, os.environ['GITHUB_EVENT_NAME'], os.environ['GITHUB_REPOSITORY'], commit)
     check_installer_version(result['version'])
+    check_stable_readiness(result)
     if commit != os.environ['GITHUB_SHA']:
         raise ValueError('Checkout does not match the release workflow commit')
     if run('git', 'rev-parse', result['tag'] + '^{commit}') != commit:
@@ -263,6 +303,7 @@ def verify_registry(info, image):
 
 
 def verify_public(info):
+    check_stable_readiness(info)
     # Verify BOTH registries before recording completion or moving ANY latest tag.
     registries = {image: verify_registry(info, image) for image in IMAGES}
     path = Path('container-digests.json')
@@ -283,12 +324,31 @@ def verify_public(info):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=('validate', 'prepare', 'publish', 'verify-public', 'source-packages'))
-    parser.add_argument('--version', help='Offline source-packages only; does not create a release')
+    parser.add_argument('command', choices=('validate', 'prepare', 'publish', 'verify-public', 'source-packages', 'check-readiness', 'source-fingerprint'))
+    parser.add_argument('--version', help='Offline source-packages/check-readiness; does not create a release')
     parser.add_argument('--commit', help='Offline source-packages only; defaults to HEAD')
     parser.add_argument('--output', type=Path, help='New local directory for offline packages')
     args = parser.parse_args()
     command = args.command
+    if command == 'source-fingerprint':
+        if args.version or args.commit or args.output:
+            parser.error('source-fingerprint accepts no extra options')
+        commit=run('git','rev-parse','HEAD')
+        print(json.dumps({'commit':commit,'source_sha256':acceptance_source_digest(commit),
+                          'dirty':bool(run('git','status','--porcelain'))},indent=2))
+        return
+    if command == 'check-readiness':
+        if args.commit or args.output:
+            parser.error('check-readiness accepts only --version')
+        version=args.version or json.loads((Path(__file__).resolve().parents[1]/'install/release-image.json').read_text())['version']
+        if not re.fullmatch(r'[0-9]+\.[0-9]+\.[0-9]+(?:-rc\.[1-9][0-9]*)?',version):
+            parser.error('Expected a version such as 1.0.2 or 1.0.2-rc.1')
+        try:
+            check_stable_readiness({'version':version,'prerelease':'-rc.' in version,'commit':run('git','rev-parse','HEAD')})
+        except ValueError as error:
+            parser.exit(1,str(error)+'\n')
+        print('Readiness check passed; no release, registry or installation changed.')
+        return
     if command == 'source-packages':
         if not args.version or not args.output:
             parser.error('source-packages requires --version and --output')

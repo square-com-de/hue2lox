@@ -4,6 +4,12 @@ Vor dem Containerstart: **[Anmeldung, dauerhafter Speicher, Netzwerkzugriff und 
 
 **Stable 1.0.1:** der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Der native Weg bleibt experimentell und ist in 1.0.1 enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Anleitung](docs/INSTALL-NATIVE.md).
 
+## Zuerst den passenden Weg wählen
+
+Der Installer auf dieser Seite läuft auf **Linux mit Docker Engine und dem Compose-Plugin (`docker compose`)** oder im ausdrücklich gewählten nativen Modus. **Podman ist kein Ersatz für Docker in diesem Installer.** Für den geprüften lokalen Desktop-Einstieg auf macOS ARM64 siehe [Podman Desktop](docs/DOCKER.md#podman-desktop-on-macos). Die unterstützten Versionen und Abnahmegrenzen stehen im [Runtime-Status](docs/RUNTIME-SUPPORT.de.md); Linux-Compose ist keine Abnahme für Docker Desktop, Podman unter Windows oder alle NAS-Systeme.
+
+Neue Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Ein gesunder Healthcheck bestätigt noch keinen erfolgreichen Login und keine Lampensteuerung. Beim Update Container/Dienst mit erhaltenen Daten nach [Docker-Update/Rollback](docs/UPDATE-DOCKER.de.md) bzw. [nativer Wartung](docs/INSTALL-NATIVE.md) wechseln. Nur `restart` übernimmt weder ein neues Image noch geänderte Umgebungsvariablen. RC5-Sperren bleiben bei einem normalen Update erhalten: [bewusste Recovery](docs/RECOVERY-CONTROL.de.md).
+
 [English installation guide](INSTALL.md) · [1.0.1-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1)
 
 - [Option 1: Einfach und komfortabel – der Installer](#option-1-einfach-und-komfortabel--der-installer)
@@ -107,7 +113,6 @@ Die kompakten Protokolle filtern erkennbare Zugangsdaten; vor dem Teilen trotzde
 auf persönliche Angaben prüfen. Linux-Pakete werden ohne optionale Empfehlungen
 installiert; benötigte Abhängigkeiten bleiben enthalten.
 
-
 Wähle zuerst **1 – System prüfen**. Danach kannst du die benötigten Schritte einzeln auswählen. Bereits eingerichtete Dienste musst du nicht erneut installieren.
 
 Das Menü bietet:
@@ -157,9 +162,7 @@ starte anschließend mit Schritt 6 des Installers auf dem Server. Bei HTTP erfol
 Zertifikatserneuerung am Proxy, nicht in Hue2Lox.
 
 
-
 # Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt
-
 
 ## 1. Voraussetzungen
 
@@ -293,7 +296,6 @@ curl --fail --location --output "$HOME/hue2lox-main.zip" \
 ```
 
 Die Datei wird direkt im persönlichen Ordner auf dem Server gespeichert; eine dort vorhandene Datei gleichen Namens wird ersetzt. **Kein Kopieren nötig:** Nach erfolgreichem Download direkt mit Schritt 6 „ZIP entpacken“ fortfahren.
-
 
 ### Alternativ: Download im Browser
 

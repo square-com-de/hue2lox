@@ -34,6 +34,9 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 ## Install and get started
 
+**Which path was tested?** [Runtime and version status](docs/RUNTIME-SUPPORT.md): Linux Docker/Compose, a scoped Podman Desktop test on macOS ARM64, experimental native deployment; no LoxBerry plugin yet. These are separate acceptance scopes.
+
+
 The shared **1.0.1 installer** offers Docker or native operation. The installation guides use the versioned 1.0.1 source ZIP and fixed images; verify checksums and successful release publication.
 
 | Installation method | Who is it for? | Guide |
@@ -87,6 +90,8 @@ See the [changelog](CHANGELOG.md), [historical RC6 preparation](docs/RC6-PREPARA
 | Joint hardware tests | [Acceptance plan](docs/ACCEPTANCE.md) |
 | Sources, icons and licensing | [Third-party notices](THIRD-PARTY-NOTICES.md) |
 | Release status and limits | [Release notes](RELEASE.md) |
+
+**After an update:** Recreate rather than only restart; retained data keeps its password and intentionally disabled controls. For RC5 state, read the [targeted recovery guide](docs/RECOVERY-CONTROL.md) first. [Lessons learned and open release gates](docs/LESSONS-LEARNED.md).
 
 ## Quality and security
 

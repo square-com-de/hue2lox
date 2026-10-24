@@ -34,6 +34,9 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 ## Installieren und loslegen
 
+**Welcher Weg ist geprüft?** [Runtime- und Versionsstatus](docs/RUNTIME-SUPPORT.de.md): Linux mit Docker/Compose, begrenzter Podman-Desktop-Test auf macOS ARM64, nativ experimentell; noch kein LoxBerry-Plugin. Das sind getrennte Abnahmen.
+
+
 Der gemeinsame **1.0.1-Installer** bietet Docker oder nativen Betrieb. Die Installationsanleitungen verwenden das versionierte 1.0.1-Quell-ZIP und feste Images; Prüfsummen und den erfolgreichen Release-Abschluss kontrollieren.
 
 | Installationsweg | Für wen? | Anleitung |
@@ -45,7 +48,7 @@ Der gemeinsame **1.0.1-Installer** bietet Docker oder nativen Betrieb. Die Insta
 1. **Installer starten:** Die [Anleitung](INSTALL.de.md) beschreibt Voraussetzungen, Paketprüfung und Auswahl des Installationswegs. Mac oder Windows-PC dienen zur Bedienung des Linux-Servers.
 2. **Hue2Lox einrichten:** Der Installer prüft Voraussetzungen; vorhandene funktionierende Docker-Installationen werden weiterverwendet. Neue Installationen erlauben die von der Lampe unterstützten Steuerfunktionen.
 3. **Anmelden:** Angezeigte Webadresse öffnen, bei direktem HTTPS Zertifikat prüfen. Erstlogin `admin/admin`, danach Passwort ändern. Hue Bridge hinzufügen und Lampen sowie Szenen einlesen.
-4. **Mit Loxone verbinden:** Die [bebilderte Anleitung](docs/TUTORIAL.de.md) Befehle und XML für Loxone Config.
+4. **Mit Loxone verbinden:** Die [bebilderte Anleitung](docs/TUTORIAL.de.md) erklärt Befehle und XML für Loxone Config.
 
 **[Installationsanleitung](INSTALL.de.md) · [1.0.1-Pakete und Prüfsummen](docs/DOWNLOADS.md) · [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md)**
 
@@ -87,6 +90,8 @@ Szenen in der Hue-App erstellen und bearbeiten. [Szenen Ein/Aus](docs/features/S
 | Was wir gemeinsam testen | [Abnahmeplan](docs/ACCEPTANCE.md) |
 | Quellen, Icons und Lizenzstatus | [Drittanbieterhinweise](THIRD-PARTY-NOTICES.md) |
 | Release-Stand und Grenzen | [Release-Hinweise](RELEASE.md) |
+
+**Nach einem Update:** Neuerstellen statt nur Neustarten; vorhandene Daten behalten ihr Passwort und absichtlich gesetzte Steuerungssperren. Bei RC5-Altbestand zuerst die [gezielte Recovery-Anleitung](docs/RECOVERY-CONTROL.de.md) lesen. [Lessons Learned und offene Freigabekriterien](docs/LESSONS-LEARNED.de.md).
 
 ## Tests und Sicherheit
 

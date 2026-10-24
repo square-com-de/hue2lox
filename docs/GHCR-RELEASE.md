@@ -169,3 +169,31 @@ Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version o
 `prepare` baut das native Archiv in einem sauberen lokalen Klon desselben Release-Commits wie das Quell-ZIP. Falsche Version/Commit-ID, unsaubere Identität, unerwartete Einträge oder falsche Dateihashes stoppen den Ablauf. Die gemeinsame `SHA256SUMS.txt` enthält das native Archiv; Upload und anonyme Byteprüfung verwenden denselben unveränderlichen Asset-Pfad wie das ZIP. Abweichende vorhandene Assets werden nicht überschrieben. Für den Paketbau sind weder pip-Pakete noch Container oder Hardwarezugriff nötig. Native Laufzeitunterstützung bleibt experimentell und auf amd64 begrenzt, unabhängig von ARM64-Containern.
 
 Use the [offline RC6 package check](RC6-PREPARATION.md#isolierte-paketprüfung--isolated-package-checks) before publication. / Vor Veröffentlichung die isolierte Paketprüfung verwenden. It creates no tag or release. / Sie erstellt keinen Tag und kein Release.
+
+## Stable acceptance gate
+
+**Applies to release commits containing this gate, after its PR is merged.** Published 1.0.0/1.0.1 and their older workflow checkouts are unchanged. The current `compliance/stable-readiness.json` deliberately approves no next version. Green CI alone cannot open it.
+
+Before creating a stable tag or publishing a GitHub stable release:
+
+1. Choose an unused SemVer from the actual releases/tags. Prepare the versioned README/install/Compose references and candidate code first. Keep it immutable while the Deployer tests the exact documented user flow, update/recovery and declared runtime scope. Record container/desktop versions, data state, exact commands or GUI clicks, image digest, observed login/restart and hardware boundaries.
+2. Obtain independent DE/EN documentation review and operator/user acceptance. Link public, sanitized GitHub evidence for `documentation_review`, `published_user_flow`, `update_recovery` and `support_scope`. The last check must describe missing/experimental platforms and hardware scope, not pretend every device passed. Do not publish private backup paths, keys or tokens as evidence. The validator checks the record and content binding, not the truth of a linked report; the reviewer must inspect actual observations rather than approve from links or green test counts.
+3. On the committed, clean accepted candidate, run:
+
+   ```sh
+   python3 scripts/release-image.py source-fingerprint
+   ```
+
+   Copy its `source_sha256` into `compliance/stable-readiness.json`, set the exact target `version`, each evidenced `passed` to `true`, and `approved` to `true` only after explicit release approval. Commit **only that approval record** after acceptance. Any other code/documentation change invalidates the fingerprint and requires renewed approval and validation of the affected scope. The fingerprint covers tracked content, excluding only the approval record; a version match alone is insufficient.
+4. Before tagging, run the offline check for the chosen version, for example:
+
+   ```sh
+   python3 scripts/release-image.py check-readiness --version 1.0.2
+   ```
+
+   The example is not an instruction to reuse an existing tag. A blocked result is a release stop, not an installer error. Do not bypass it or blindly mark missing checks passed. RC preparation/source packages stay available without stable approval and must remain prereleases; no `latest` promotion.
+5. Follow the existing immutable tag/material/public-pull process above. The workflow checks readiness before publication and again before public verification/latest promotion. Approval does not update production. Report source commit, version, assets/digests, tested scope and remaining limits separately.
+
+### Deutsch
+
+Das Gate gilt erst für neue Release-Commits nach Merge dieses PRs; alte Releases/Workflows bleiben unverändert. Der Datensatz ist bewusst geschlossen und nennt noch keine freigegebene nächste Version. Vor Stable-Tag/GitHub-Veröffentlichung: Version und endgültige Anleitungen vorbereiten, exakten Kandidaten unabhängig abnehmen lassen, DE/EN-Review und Betreiberfreigabe mit bereinigten GitHub-Nachweisen für die vier Prüfbereiche dokumentieren. `source-fingerprint` auf dem sauberen Commit ausführen; erst danach ausschließlich den Freigabedatensatz mit Version, Inhaltsfingerprint, Nachweisen und ausdrücklicher Genehmigung committen. Andere Code-/Dokuänderungen entwerten die Abnahme. `check-readiness --version GEWAEHLTE_VERSION` muss vor dem Taggen erfolgreich sein. Keine Checkliste automatisch aus grüner CI freischalten. Das Gate ersetzt keine Hardwareabnahme und erlaubt kein Produktivupdate; RC-/lokale Kandidatenvorbereitung bleibt möglich.

@@ -1,0 +1,23 @@
+{
+  "results": [
+    {
+      "version": "v1.0.0",
+      "health": 200,
+      "login": 403,
+      "error": "invalid_origin",
+      "configured_public_url": false,
+      "registry_empty": true,
+      "writes_enabled": false
+    },
+    {
+      "version": "v1.0.1",
+      "health": 200,
+      "login": 200,
+      "error": null,
+      "configured_public_url": false,
+      "registry_empty": true,
+      "writes_enabled": false
+    }
+  ],
+  "scope": "Loopback HTTP source processes, same synthetic credentials/empty registry; not a Podman GUI/hardware test"
+}
