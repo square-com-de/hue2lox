@@ -12,12 +12,25 @@ These notes apply to the published Hue2Lox image starting with **1.0.1**. A quic
 |---|---|
 | Image | `docker.io/dubctrl/hue2lox:1.0.1` or `ghcr.io/square-com-de/hue2lox:1.0.1` |
 | Storage | Named volume `hue2lox-data` → container path `/data`, writable |
-| Published port | Free host port such as `18443` → container TCP port `8443` |
+| Port | Linux Compose: service directly on host port `18443` (host networking); desktop port mappings are configured separately |
 | Browser | Without TLS, `http://SERVER-IP:18443`; on the same computer, `http://localhost:18443` also works |
 | First login | `admin` / `admin` with fresh data; then change the password in the UI |
 | Browser address | Direct localhost/private-IP access needs no `HUE_PUBLIC_URL`; set the exact browser URL for custom DNS names/reverse proxies |
 
 **A port number does not enable HTTPS.** Port 8443 still serves HTTP without TLS configuration. `localhost` means the computer running the browser; a Loxone Miniserver needs a server address it can reach.
+
+## Quick start with Docker Compose on Linux
+
+Prerequisites: Docker Engine and the Compose plugin running inside your Linux VM; port **18443** free. Save the [Compose file from this checkout](../docker/compose.image.yaml) as **compose.yaml** in a new dedicated folder. From that folder run (if your user lacks Docker permissions, use `su -` to become root, then change back to that folder):
+
+```sh
+docker compose up -d --wait
+docker compose ps
+```
+
+Open **http://SERVER-IP:18443** using the Linux VM’s actual LAN IP, sign in with **admin/admin** and change the password. The container must be healthy; also check browser login. Storage is created automatically, with no manual folder ownership or browser-address setting. Keep the same folder/project and volume when updating.
+
+This profile uses unencrypted HTTP on a trusted LAN. For HTTPS, use the guided installer or the TLS/proxy setup below. VLANs/firewalls can limit discovery; direct bridge connectivity is a separate check. This revised template still needs clean-VM acceptance and is not the unchanged file in the published `v1.0.1` archive.
 
 ## Where is my data?
 
@@ -29,12 +42,12 @@ For persistent use, choose a **named volume** and mount the same volume at `/dat
 
 ### Portainer (Docker Standalone)
 
-1. Select the correct environment and create `hue2lox-data` under **Volumes**.
-2. When creating the container, select that volume under **Volumes / volume mapping**; container path **`/data`**, writable.
-3. Configure ports/networking and any required environment variables, then deploy.
-4. Check **Inspect → Mounts**: `Destination: /data`, type `volume`, the selected volume and `RW: true`.
+1. Select the **Linux server’s Docker Standalone environment**, then **Stacks → Add stack**; name the stack `hue2lox`.
+2. Paste the complete [Compose file from this checkout](../docker/compose.image.yaml) into the web editor and choose **Deploy the stack**. Port **18443** must be free. Do not create another volume or port mapping: storage and Linux host networking are already defined.
+3. Open **http://SERVER-IP:18443**, using that Docker server’s LAN IP. Fresh data: **admin/admin**, then change the password. This is HTTP on a trusted LAN; see below for HTTPS.
+4. Under **Inspect → Mounts**, check `Destination: /data`, type `volume`, `RW: true`. The container must be healthy; also check browser login.
 
-Labels can differ between Portainer versions. Storage lives on the **Docker server managed by the selected environment**, not the computer displaying Portainer. Alternatively deploy the [Compose template](../docker/compose.image.yaml) as a stack; it already declares a named volume. Retain the stack name to preserve the mapping; a different stack name can create another volume.
+Keep the same stack and its volume during updates. A different stack name can create fresh data. Storage lives on the **Docker server managed by the selected environment**, not the browser computer. This is not a Swarm or Docker Desktop profile. The precise Portainer UI and this revised stack flow still need independent acceptance; the published `v1.0.1` tag’s Compose file remains unchanged.
 
 ### Podman Desktop and host folders
 

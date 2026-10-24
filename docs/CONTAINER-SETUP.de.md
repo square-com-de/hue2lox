@@ -12,12 +12,25 @@ Diese Hinweise gelten für das veröffentlichte Hue2Lox-Image ab **1.0.1**. Sie 
 |---|---|
 | Image | `docker.io/dubctrl/hue2lox:1.0.1` oder `ghcr.io/square-com-de/hue2lox:1.0.1` |
 | Speicher | Benanntes Volume `hue2lox-data` → Containerpfad `/data`, schreibbar |
-| Port bei Portweiterleitung | Freier Host-Port, etwa `18443` → Container-Port `8443` (TCP) |
+| Port | Linux-Compose: Dienst direkt auf Host-Port `18443` (Host-Netzwerk); Desktop-Portmapping separat konfigurieren |
 | Browser | Ohne TLS zunächst `http://SERVER-IP:18443`; auf demselben Computer auch `http://localhost:18443` |
 | Erste Anmeldung | `admin` / `admin` bei neuen Daten; anschließend Passwort in der Oberfläche ändern |
 | Browseradresse | Für direkte localhost/private-IP-Zugriffe keine `HUE_PUBLIC_URL` nötig; bei eigenem DNS-Namen/Reverse Proxy die genaue Browseradresse setzen |
 
 **Portnummern aktivieren kein HTTPS.** Auch Port 8443 spricht ohne TLS-Konfiguration HTTP. `localhost` meint immer den Computer, auf dem der Browser läuft; ein Loxone-Miniserver benötigt eine von ihm erreichbare Serveradresse.
+
+## Schnellstart mit Docker Compose auf Linux
+
+Voraussetzung: Docker Engine und Compose-Plugin laufen auf deiner Linux-VM; Port **18443** ist frei. Die [Compose-Datei dieses Checkouts](../docker/compose.image.yaml) als **compose.yaml** in einem neuen eigenen Ordner speichern. In diesem Ordner ausführen (bei fehlenden Docker-Rechten mit `su -` zu root wechseln und anschließend wieder in diesen Ordner gehen):
+
+```sh
+docker compose up -d --wait
+docker compose ps
+```
+
+**http://SERVER-IP:18443** mit der tatsächlichen LAN-IP der Linux-VM öffnen, mit **admin/admin** anmelden und Passwort ändern. Der Container muss gesund sein; zusätzlich den Browserlogin prüfen. Speicher wird automatisch angelegt, keine Ordnerrechte oder Browseradresse nachtragen. Für Updates denselben Ordner/Projektnamen und dasselbe Volume behalten.
+
+Dieses Profil verwendet unverschlüsseltes HTTP im vertrauenswürdigen LAN. Für HTTPS den geführten Installer oder die TLS-/Proxy-Einrichtung unten verwenden. Automatische Suche kann durch VLANs/Firewall begrenzt sein; direkter Bridge-Zugriff bleibt eine eigene Prüfung. Diese überarbeitete Vorlage benötigt noch die Clean-VM-Abnahme und ist nicht die unveränderte Datei aus dem veröffentlichten `v1.0.1`-Archiv.
 
 ## Wo bleiben meine Daten?
 
@@ -29,12 +42,12 @@ Für dauerhaften Betrieb ein **benanntes Volume** verwenden und bei Updates erne
 
 ### Portainer (Docker Standalone)
 
-1. In der richtigen Umgebung unter **Volumes** ein Volume `hue2lox-data` anlegen.
-2. Beim Erstellen des Containers unter **Volumes / volume mapping** dieses Volume auswählen; Containerpfad **`/data`**, schreibbar.
-3. Ports/Netzwerk und gegebenenfalls Umgebungsvariablen konfigurieren, dann deployen.
-4. Unter **Inspect → Mounts** prüfen: Ziel `Destination: /data`, Typ `volume`, das gewählte Volume und `RW: true`.
+1. Die **Docker-Standalone-Umgebung auf dem Linux-Server** auswählen, dann **Stacks → Add stack** öffnen; Stackname `hue2lox`.
+2. Die [Compose-Datei dieses Checkouts](../docker/compose.image.yaml) vollständig in den Webeditor kopieren und **Deploy the stack** wählen. Port **18443** muss frei sein. Kein zusätzliches Volume und keine Portfreigabe anlegen: die Datei enthält Speicher und Linux-Host-Netzwerk bereits.
+3. **http://SERVER-IP:18443** mit der LAN-IP dieses Docker-Servers öffnen. Frische Daten: **admin/admin**, danach Passwort ändern. Das ist HTTP im vertrauenswürdigen LAN; für HTTPS siehe unten.
+4. Unter **Inspect → Mounts** prüfen: `Destination: /data`, Typ `volume`, `RW: true`. Container muss gesund sein; Browserlogin zusätzlich prüfen.
 
-Die Beschriftungen können je nach Portainer-Version abweichen. Die Daten liegen auf dem **Docker-Server der ausgewählten Portainer-Umgebung**, nicht auf deinem Browser-PC. Alternativ die [Compose-Vorlage](../docker/compose.image.yaml) als Stack verwenden; sie enthält bereits ein benanntes Volume. Bei gleichem Stacknamen bleibt die Zuordnung erhalten. Ein anderer Stackname kann ein neues Volume erzeugen.
+Bei Updates denselben Stack und dessen Volume behalten. Ein anderer Stackname kann einen neuen Datenbestand erzeugen. Die Daten liegen auf dem **Docker-Server der ausgewählten Umgebung**, nicht auf dem Browser-PC. Das ist kein Swarm- oder Docker-Desktop-Profil. Die genaue Portainer-Oberfläche und dieser aktualisierte Stackweg benötigen noch eine unabhängige Abnahme; die Compose-Datei des veröffentlichten Tags `v1.0.1` bleibt unverändert.
 
 ### Podman Desktop und eigener Ordner
 

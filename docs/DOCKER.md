@@ -49,11 +49,16 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy the [1.0.1 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.1/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
+On a Linux server with Docker Engine and the Compose plugin, save the [Compose file from this checkout](../docker/compose.image.yaml) as `compose.yaml` in a new, dedicated folder. Port **18443** must be free. No browser-address variable, host-folder preparation or image build is needed for direct private-IP access. From that folder, run:
 
 ```sh
-docker compose up -d
+docker compose up -d --wait
+docker compose ps
 ```
+
+Open **http://SERVER-IP:18443** using the Linux server’s actual LAN IP. Fresh data: **admin / admin**, then change the password. The image healthcheck must become healthy; also verify browser login. HTTP is unencrypted: use this simple profile only on a trusted LAN. For HTTPS, use the guided installer or the TLS/proxy setup above. The Compose file automatically creates a writable named volume; keep the same folder/project or Portainer stack when updating.
+
+This revised template belongs to this checkout, not the unchanged `v1.0.1` source archive. Clean-VM acceptance of this exact template is pending.
 
 On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
 
