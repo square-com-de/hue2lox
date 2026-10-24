@@ -1,6 +1,6 @@
 # Scenes as on/off lighting circuits — development after RC6
 
-This optional extension belongs to the feature PR for [issue 42](https://github.com/square-com-de/hue2lox/issues/42), not the published RC6. Existing configurations are not migrated automatically. Hardware acceptance remains open.
+This optional extension belongs to the feature PR for [issue 42](https://github.com/square-com-de/hue2lox/issues/42), not the published RC6. Existing Loxone commands are not rewritten. Hardware acceptance remains open.
 
 ## Setup
 

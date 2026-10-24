@@ -1,6 +1,6 @@
 # Szenen als Ein/Aus-Lichtkreis — Entwicklung nach RC6
 
-Diese optionale Erweiterung gehört zum Feature-PR für [Issue 42](https://github.com/square-com-de/hue2lox/issues/42), nicht zum veröffentlichten RC6. Keine automatische Umstellung bestehender Konfigurationen. Hardwareabnahme noch offen.
+Diese optionale Erweiterung gehört zum Feature-PR für [Issue 42](https://github.com/square-com-de/hue2lox/issues/42), nicht zum veröffentlichten RC6. Bestehende Loxone-Befehle werden nicht umgeschrieben. Hardwareabnahme noch offen.
 
 ## Einrichtung
 
