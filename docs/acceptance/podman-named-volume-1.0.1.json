@@ -1,0 +1,19 @@
+{
+  "image": "docker.io/dubctrl/hue2lox:1.0.1",
+  "image_id": "5926b148c1529034f6f27ae0bc224470f06bda25cf1c20f7cfb4edcad56b70e6",
+  "runtime_cli": "podman version 6.1.4",
+  "named_volume_writable": true,
+  "fresh_login": true,
+  "restart_login": true,
+  "credentials_preserved": true,
+  "no_url_tls_overrides": true,
+  "registry_empty": true,
+  "hardware_calls": false,
+  "scope": "Documented named-volume CLI options, disposable unique names/free loopback port; no other container/volume/image changed",
+  "client_version": "6.1.4",
+  "server_version": "6.1.4",
+  "client_platform": "darwin/arm64",
+  "server_platform": "linux/arm64",
+  "macos_version": "27.0.1",
+  "cleanup_own_container_and_volume": true
+}

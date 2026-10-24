@@ -1,17 +1,41 @@
 # Hue2Lox auf Linux installieren
 
+**Bevorzugt ist Docker Compose auf einer Linux-VM:** [Container-Einrichtung](docs/CONTAINER-SETUP.de.md) · [Compose-Anleitung](docs/DOCKER.md#docker-compose) · [Teststatus](docs/RUNTIME-SUPPORT.de.md). Der nachfolgende geführte Installer ist eine Alternative; nativ bleibt experimentell. Der [getestete Download-/Startblock mit anschließendem Login](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) ist der Einstieg ohne Quellcode oder Modusauswahl. [Proxmox-Nachweis und verbleibende Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
+
+### Einfach starten
+
+Voraussetzung: Linux mit Docker Engine, Compose-Plugin und curl; Docker-Rechte (beispielsweise `su -`) und freier Port **18443**. Im gewünschten übergeordneten Verzeichnis ausführen. Der neue Ordner `hue2lox` darf noch nicht existieren; bestehende Installationen über den Updateweg warten.
+
+```sh
+mkdir hue2lox &&
+cd hue2lox &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+docker compose up -d --wait &&
+docker compose ps
+```
+
+Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht; HTTPS und weitere Einstellungen sind optional in der [Container-Anleitung](docs/CONTAINER-SETUP.de.md) erklärt. Die isolierte VM-Abnahme verwendete dieselbe Datei mit Testport **18444**, weil 18443 dort bereits belegt war; normale Vorgabe ist 18443.
+
+Vor dem Containerstart: **[Anmeldung, dauerhafter Speicher, Netzwerkzugriff und HTTP/HTTPS](docs/CONTAINER-SETUP.de.md)**. Mit Hinweisen für Portainer und Podman Desktop sowie zur automatischen Suche und zum manuellen Bridge-Zugriff.
+
 **Stable 1.0.1:** der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Der native Weg bleibt experimentell und ist in 1.0.1 enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Anleitung](docs/INSTALL-NATIVE.md).
+
+## Optional: geführter Installer oder native Installation
+
+Der Installer auf dieser Seite läuft auf **Linux mit Docker Engine und dem Compose-Plugin (`docker compose`)** oder im ausdrücklich gewählten nativen Modus. **Podman ist kein Ersatz für Docker in diesem Installer.** Für den geprüften lokalen Desktop-Einstieg auf macOS ARM64 siehe [Podman Desktop](docs/DOCKER.md#podman-desktop-on-macos). Die unterstützten Versionen und Abnahmegrenzen stehen im [Runtime-Status](docs/RUNTIME-SUPPORT.de.md); Linux-Compose ist keine Abnahme für Docker Desktop, Podman unter Windows oder alle NAS-Systeme.
+
+Neue Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Ein gesunder Healthcheck bestätigt noch keinen erfolgreichen Login und keine Lampensteuerung. Beim Update Container/Dienst mit erhaltenen Daten nach [Docker-Update/Rollback](docs/UPDATE-DOCKER.de.md) bzw. [nativer Wartung](docs/INSTALL-NATIVE.md) wechseln. Nur `restart` übernimmt weder ein neues Image noch geänderte Umgebungsvariablen. RC5-Sperren bleiben bei einem normalen Update erhalten: [bewusste Recovery](docs/RECOVERY-CONTROL.de.md).
 
 [English installation guide](INSTALL.md) · [1.0.1-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1)
 
 - [Option 1: Einfach und komfortabel – der Installer](#option-1-einfach-und-komfortabel--der-installer)
 - [Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt](#option-2-entwicklungsstand-main--manuelle-installation-schritt-für-schritt)
 
-Option 1 installiert **1.0.1** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den normalen Einstieg Option 1 verwenden.
+Option 1 installiert **1.0.1** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den geführten Installationsweg Option 1 verwenden.
 
 Hue2Lox ist für **Linux-Systeme mit Docker Engine und Docker Compose** vorgesehen – auf einem eigenen Rechner, in einer virtuellen Maschine oder auf einem Raspberry Pi. Als Plattformen kommen beispielsweise Ubuntu, Debian, DietPi oder Raspberry Pi OS (früher Raspbian) infrage, sofern Betriebssystemversion und CPU-Architektur die benötigten Pakete und Container unterstützen.
 
-**Für den einfachen Einstieg empfehlen wir Option 1: den Installer.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
+**Als geführte Alternative steht Option 1 zur Verfügung.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
 
 Beim 1.0.1-Paket lädst du die Hue2Lox-Quelldateien herunter. Der 1.0.1-Installer bietet das feste 1.0.1-Image oder einen lokalen Build aus dem Quell-ZIP an. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
 
@@ -105,7 +129,6 @@ Die kompakten Protokolle filtern erkennbare Zugangsdaten; vor dem Teilen trotzde
 auf persönliche Angaben prüfen. Linux-Pakete werden ohne optionale Empfehlungen
 installiert; benötigte Abhängigkeiten bleiben enthalten.
 
-
 Wähle zuerst **1 – System prüfen**. Danach kannst du die benötigten Schritte einzeln auswählen. Bereits eingerichtete Dienste musst du nicht erneut installieren.
 
 Das Menü bietet:
@@ -155,9 +178,7 @@ starte anschließend mit Schritt 6 des Installers auf dem Server. Bei HTTP erfol
 Zertifikatserneuerung am Proxy, nicht in Hue2Lox.
 
 
-
 # Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt
-
 
 ## 1. Voraussetzungen
 
@@ -291,7 +312,6 @@ curl --fail --location --output "$HOME/hue2lox-main.zip" \
 ```
 
 Die Datei wird direkt im persönlichen Ordner auf dem Server gespeichert; eine dort vorhandene Datei gleichen Namens wird ersetzt. **Kein Kopieren nötig:** Nach erfolgreichem Download direkt mit Schritt 6 „ZIP entpacken“ fortfahren.
-
 
 ### Alternativ: Download im Browser
 

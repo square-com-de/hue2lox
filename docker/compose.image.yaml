@@ -5,15 +5,16 @@
 # Host networking lets Hue2Lox discover bridges on the LAN; it listens on PORT.
 services:
   hue2lox:
-    # Pin the tested release candidate. No floating rc/latest tag is needed.
+    # Fixed release image; no build and no floating tag.
     image: ghcr.io/square-com-de/hue2lox:1.0.1
     container_name: hue2lox
     restart: unless-stopped
     network_mode: host
     environment:
       PORT: "18443"
-      # Address clients use to reach it (use https://... if a reverse proxy terminates TLS).
-      HUE_PUBLIC_URL: "http://192.168.0.10:18443"
+      # Direct private-IP access works without a configured browser address.
+      # Only for custom DNS/reverse proxy: uncomment and set the exact browser URL.
+      # HUE_PUBLIC_URL: "https://hue2lox.example.com"
       # Optional initial admin password (default: admin). Only used on first start.
       # HUE2LOX_ADMIN_PASSWORD: "change-me"
       # Lamp control is on by default (control token: see the admin interface).

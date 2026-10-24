@@ -230,7 +230,8 @@ class ReleaseTests(unittest.TestCase):
             finally:
                 os.chdir(previous)
 
-    def test_stable_promotion_requires_github_latest_and_public_verification(self):
+    @patch.object(m, 'check_stable_readiness')
+    def test_stable_promotion_requires_github_latest_and_public_verification(self, _readiness):
         info = m.plan(event('v1.0.0', False), 'release', m.REPO, SHA)
         manifests = [{'Descriptor': {'platform': {'architecture': a}, 'digest': 'sha256:' + a}}
                      for a in m.ARCHES]
@@ -292,7 +293,8 @@ class ReleaseTests(unittest.TestCase):
                     m.publish_registry(info, image)
                 self.assertFalse(any('push' in c.args[0] for c in commands.call_args_list))
 
-    def test_second_registry_failure_prevents_all_stable_promotion(self):
+    @patch.object(m, 'check_stable_readiness')
+    def test_second_registry_failure_prevents_all_stable_promotion(self, _readiness):
         info = m.plan(event('v1.0.0', False), 'release', m.REPO, SHA)
         with patch.object(m, 'verify_registry', side_effect=[{'amd64': 'digest'}, RuntimeError('Docker Hub unavailable')]), \
              patch.object(m, 'ensure_asset') as assets, \
