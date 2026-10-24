@@ -186,6 +186,8 @@ def apply_inventory(original, discovered, discovered_scenes=None, discovered_gro
                                 for scene in discovered_scenes]
         if discovered_groups is not None:
             bridge['scene_groups'] = discovered_groups
+            from scene_switch import apply_defaults
+            apply_defaults(bridge)
         bridge['last_scan'] = datetime.now(timezone.utc).isoformat()
         bridge['enabled'] = True
         return copy.deepcopy(bridge)

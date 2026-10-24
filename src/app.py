@@ -458,7 +458,7 @@ class Handler(BaseHTTPRequestHandler):
                 dashboard.invalidate()
                 self.send_json(200, {'status':'ok','miniserver':result})
             elif self.path == '/api/admin/scenes/switch':
-                scene_switch.configure(body.get('bridge_id'),body.get('scene_id'),body.get('group_id'),body.get('confirmation'))
+                scene_switch.configure(body.get('bridge_id'),body.get('scene_id'),body.get('group_id'),body.get('confirmation'),body.get('mode'))
                 self.send_json(200, {'status':'ok'})
             elif self.path in ('/api/admin/scenes/ignore','/api/admin/scenes/remove'):
                 result = bridge_admin.manage_scene(body.get('bridge_id'),body.get('scene_id'),self.path.rsplit('/',1)[1],body.get('ignored',True))
@@ -575,6 +575,7 @@ if __name__ == '__main__':
         context = tls_context(os.environ)
     except ValueError as error:
         raise SystemExit('Hue2Lox: ' + str(error))
+    scene_switch.initialize_defaults()
     server = BoundedHTTPSServer((os.environ.get('BIND_HOST', '0.0.0.0'),
                                 int(os.environ.get('PORT', '8443'))), Handler, context)
     print('Hue2Lox ' + ('HTTPS' if context else 'HTTP') + ' service ready', flush=True)

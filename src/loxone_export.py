@@ -68,7 +68,7 @@ def export_xml(keys, include_token, token=None, kind='lights', variants=None, la
     if kind not in ('lights','scenes'):
         raise ValueError('invalid export kind')
     source = lights() if kind == 'lights' else scenes.available_scenes()
-    candidates = {item['key']: item for item in source if item['available']}
+    candidates = {item['key']: item for item in source if item['available'] and not item.get('switch',{}).get('needs_group')}
     if any(key not in candidates for key in keys):
         raise ValueError('unknown or disabled lamp')
     if type(include_token) is not bool or (include_token and not token):

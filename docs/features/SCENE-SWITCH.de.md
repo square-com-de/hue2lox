@@ -4,13 +4,17 @@ Diese optionale Erweiterung gehört zum Feature-PR für [Issue 42](https://githu
 
 ## Einrichtung
 
-1. Unter **Szenen** die Inventur erneut einlesen. Dies aktiviert keine Szene.
-2. Bei der Szene **Verwaltung → Nutzungsart der Szene** öffnen. Standard bleibt **Nur aktivieren**.
-3. Zielgruppe auswählen und **alle aufgeführten Lampen** prüfen. Es werden auch ausgeblendete Lampen und überlappende Gruppen angezeigt. Angeboten werden nur vollständig zuordenbare Hue-Räume/Zonen, die alle Szenenlampen enthalten und einen eindeutigen Gruppenendpunkt besitzen.
-4. Ganze Gruppenwirkung ausdrücklich bestätigen und speichern. Eine zwischenzeitlich geänderte Inventur muss erneut bestätigt werden.
-5. XML neu exportieren und den **digitalen**, nicht analogen Ausgang als eigenen Lichtkreis im Loxone-Lichtbaustein verwenden. EIN sendet `{"on":true}`, AUS `{"on":false}` an `/api/scenes/<bridge>/<scene>/state`. Wiederholung bleibt 0. Bestehende Loxone-Projekte werden nicht automatisch geändert.
+**Ein/Aus ist direkt in jeder Szenenzeile sichtbar und der Standard.** Gibt es genau eine Gruppe mit exakt denselben Lampen wie die Szene, ordnet Hue2Lox sie beim Start bzw. bei der Inventur automatisch zu. Kein Haken, kein zusätzlicher Speichern-Schritt. Die Zuordnung wird lokal gespeichert; es wird keine Szene aktiviert.
 
-EIN aktiviert die gespeicherte Hue-Szene ohne zusätzlichen Dimmwert. AUS schaltet **die gesamte bestätigte Gruppe** aus, auch Lampen, die die Szene selbst nicht verändert. Es gibt keinen nativen Hue-Szene-AUS-Endpunkt. Änderungen an Gruppenmitgliedschaft oder Szenenzuordnung sperren den Ein/Aus-Endpunkt bis zur erneuten Bestätigung nach Inventur. Änderungen außerhalb Hue2Lox sind erst nach erneuter Inventur bekannt; deshalb nach Änderungen in Hue vor weiterer Nutzung neu einlesen.
+1. Szenen einlesen. Eine bereits bekannte, eindeutig passende Gruppe funktioniert nach dem Update ohne erneute Auswahl.
+2. Direkt neben **Steuerung: Ein/Aus** steht die Gruppe für AUS. Ihre Lampen einschließlich ausgeblendeter Lampen und Überschneidungen sind direkt sichtbar.
+3. Gibt es mehrere exakt passende Gruppen oder nur größere Gruppen, eine Gruppe auswählen. Die Auswahl wird unmittelbar gespeichert. Größere Gruppen werden nie automatisch gewählt; zusätzliche Lampen werden ausdrücklich mit Namen gezeigt. Bis zur Auswahl gibt es kein Ein/Aus-XML und keine irreführenden Ersatzbefehle.
+4. XML exportieren und den **digitalen**, nicht analogen Ausgang als eigenen Lichtkreis im Loxone-Lichtbaustein verwenden. EIN sendet `{"on":true}`, AUS `{"on":false}` an `/api/scenes/<bridge>/<scene>/state`. Wiederholung bleibt 0.
+5. Wer nur den bisherigen Szenenaufruf benötigt, wählt direkt **Nur aktivieren**. Diese Wahl bleibt nach Neustart und Inventur erhalten; der Export enthält dann wie bisher nur Recall.
+
+EIN aktiviert die gespeicherte Hue-Szene ohne zusätzlichen Dimmwert. AUS schaltet **die ganze zugeordnete Gruppe** aus, auch zusätzliche Lampen. Es gibt keinen nativen Hue-Szene-AUS-Endpunkt. Nach Änderungen in Hue erneut einlesen. Ändert sich die gespeicherte Gruppenmitgliedschaft oder Szenenzuordnung, wird nicht still eine neue Gruppe gewählt: Die Oberfläche zeigt die aktuellen Lampen und fordert zur erneuten Gruppenauswahl auf. Dabei erscheint der Auswahlplatzhalter, damit auch dieselbe geänderte Gruppe mit einer Auswahl neu übernommen werden kann. Eine zwischenzeitlich veraltete Auswahl wird abgewiesen; keine Bestätigungscheckbox.
+
+Vorhandene ausdrückliche Gruppenzuordnungen werden beibehalten. Bereits bestehende Recall-Endpunkte und importierte Loxone-Befehle funktionieren weiter und werden nicht umgeschrieben. Für neue Exporte gilt der angezeigte Modus. Ein Altstand ohne gespeicherten Modus/Gruppe gilt als unentschieden: Ein/Aus ist dort der neue Standard, automatisch nutzbar nur bei eindeutig exakter Gruppe. Der erste PR45-Stand hatte eine zurückgesetzte Recall-Wahl nicht gespeichert; solche früheren Entscheidungen sind nachträglich nicht erkennbar. Die neue ausdrückliche Recall-Wahl wird gespeichert. Produktion und veröffentlichte RC6-Pakete werden durch diesen PR nicht verändert.
 
 ## Szenenwechsel und Grenzen
 

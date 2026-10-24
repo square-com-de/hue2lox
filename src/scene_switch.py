@@ -1,4 +1,4 @@
-"""Opt-in scene/group switches. Ownership is command history, never lamp feedback.
+"""Scene/group switches with exact-match defaults. Ownership is command history, never lamp feedback.
 
 One lock orders accepted scene operations; no timers or background reactivation.
 Unknown ownership (restart, reconfiguration, uncertain bridge result) rejects OFF.
@@ -52,11 +52,17 @@ def describe(bridge, scene):
     candidates=[g for g in groups if scene.get('light_ids') and
                 set(scene['light_ids']).issubset(g['light_ids'])]
     chosen=next((g for g in candidates if g['id']==scene.get('switch_group')),None)
-    enabled=chosen is not None and scene.get('switch_confirmation')==fingerprint(bridge,scene,chosen)
+    recall=scene.get('switch_mode')=='recall'
+    exact=[g for g in candidates if set(g['light_ids'])==set(scene['light_ids'])]
+    enabled=not recall and chosen is not None and scene.get('switch_confirmation')==fingerprint(bridge,scene,chosen)
     lights={l['id']:l for l in bridge.get('lights',[])}
-    return {'enabled':enabled,'configured':bool(scene.get('switch_group')),
+    return {'enabled':enabled,'mode':'recall' if recall else 'switch',
+            'automatic':scene.get('switch_mode')=='auto',
+            'exact_group_id':exact[0]['id'] if len(exact)==1 else '',
+            'needs_group':not recall and not enabled,
+            'configured':bool(scene.get('switch_group')),
             'group_id':scene.get('switch_group',''),
-            'groups':[{**g,'confirmation':fingerprint(bridge,scene,g),'lamps':[{'id':i,'name':lights.get(i,{}).get('name',i),
+            'groups':[{**g,'extra_light_ids':sorted(set(g['light_ids'])-set(scene.get('light_ids',[]))),'confirmation':fingerprint(bridge,scene,g),'lamps':[{'id':i,'name':lights.get(i,{}).get('name',i),
                         'hidden':bool(lights.get(i,{}).get('ignored') or lights.get(i,{}).get('removed'))}
                         for i in g['light_ids']],
                        'overlaps':[other['name'] for other in groups if other['id']!=g['id'] and
@@ -64,22 +70,52 @@ def describe(bridge, scene):
                       for g in candidates]}
 
 
-def configure(bridge_id, scene_id, group_id, confirmation=None):
+def apply_defaults(bridge):
+    """Bind a unique exact match once; never silently replace a saved assignment."""
+    changed=False
+    for scene in bridge.get('scenes',[]):
+        if scene.get('switch_mode')=='recall' or scene.get('switch_group'):continue
+        state=describe(bridge,scene)
+        group=next((g for g in bridge.get('scene_groups',[]) if g['id']==state['exact_group_id']),None)
+        if group is not None:
+            scene.update(switch_mode='auto',switch_group=group['id'],
+                         switch_confirmation=fingerprint(bridge,scene,group))
+            changed=True
+    return changed
+
+
+def initialize_defaults():
+    """Upgrade only local metadata at startup; never call Hue or change old XML."""
+    with LOCK:
+        document=read_registry()
+        if not any(apply_defaults(bridge) for bridge in document['bridges']):return
+        def change(current):
+            for bridge in current['bridges']:apply_defaults(bridge)
+        update_registry(change)
+
+
+def configure(bridge_id, scene_id, group_id, confirmation=None, mode=None):
     if type(group_id) is not str:raise ValueError('invalid scene group')
+    if mode is None:mode='group' if group_id else 'recall'
+    if mode not in ('auto','group','recall'):raise ValueError('invalid scene mode')
     with LOCK:
         def change(document):
             bridge=next(b for b in document['bridges'] if b['id']==bridge_id)
             scene=next(s for s in bridge.get('scenes',[]) if s['id']==scene_id and
                        s.get('present') is not False and not s.get('removed'))
-            if not group_id:
+            state=describe(bridge,scene)
+            chosen_id=state['exact_group_id'] if mode=='auto' else group_id
+            if mode=='recall' or (mode=='auto' and not chosen_id):
                 scene.pop('switch_group',None);scene.pop('switch_confirmation',None)
+                scene['switch_mode']=mode
             else:
-                group=next((g for g in describe(bridge,scene)['groups'] if g['id']==group_id),None)
+                group=next((g for g in state['groups'] if g['id']==chosen_id),None)
                 if group is None or type(confirmation) is not str or confirmation!=group['confirmation']:
                     raise ValueError('group confirmation changed; reload inventory')
                 # Hash inventory data only, not UI-derived names/overlap details.
-                raw=next(g for g in bridge['scene_groups'] if g['id']==group_id)
-                scene['switch_group']=group_id
+                raw=next(g for g in bridge['scene_groups'] if g['id']==chosen_id)
+                scene['switch_mode']=mode
+                scene['switch_group']=chosen_id
                 scene['switch_confirmation']=fingerprint(bridge,scene,raw)
         try:update_registry(change)
         except StopIteration:raise ValueError('unknown scene') from None

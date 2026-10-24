@@ -92,4 +92,4 @@ Under **Usage & management → Light icon**, choose a shape per light. **Automat
 
 ### In development after RC6: scenes as on/off lighting circuits
 
-The optional extension and its limitations are described in [Scene on/off](features/SCENE-SWITCH.md). It is not part of the published RC6; existing scenes remain recall-only. Hardware acceptance is still pending.
+The optional extension and its limitations are described in [Scene on/off](features/SCENE-SWITCH.md). It is not part of the published RC6; existing recall commands continue to work. New exports use the directly visible mode, with on/off as the default for uniquely matching groups. Hardware acceptance is still pending.

@@ -92,4 +92,4 @@ Unter **Nutzung & Verwaltung → Lampensymbol** kannst du die Form pro Lampe wä
 
 ### In Entwicklung nach RC6: Szenen als Ein/Aus-Lichtkreis
 
-Die optionale Erweiterung und ihre Grenzen sind unter [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) beschrieben. Sie ist nicht Teil des veröffentlichten RC6; bestehende Szenen bleiben reine Aufrufe. Hardwareabnahme steht aus.
+Die optionale Erweiterung und ihre Grenzen sind unter [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) beschrieben. Sie ist nicht Teil des veröffentlichten RC6; bestehende Recall-Befehle funktionieren weiter. Neue Exporte verwenden den direkt sichtbaren Modus, mit Ein/Aus als Standard bei eindeutiger Zuordnung. Hardwareabnahme steht aus.

@@ -59,7 +59,7 @@ def available_scenes():
             switch = describe(bridge, scene)
             key=bridge['id']+'/'+reference
             result.append({'key':key,'name':scene['name'],'bridge':bridge['name'],'bridge_id':bridge['id'],
-                           'room':scene.get('room',''),'path':'/api/scenes/'+key+('/state' if switch['enabled'] else '/recall'),
+                           'room':scene.get('room',''),'path':'/api/scenes/'+key+('/state' if switch['mode']=='switch' else '/recall'),
                            'switch':switch,
                            'ignored':bool(scene.get('ignored')),
                            'available':bridge.get('enabled') is True and not scene.get('ignored'),
@@ -67,7 +67,7 @@ def available_scenes():
                            'hidden_light_count':len(hidden.intersection(scene.get('light_ids',[]))),
                            'commands':([{'id':'switch','name':'Szene Ein/Aus','body_on':'{"on":true}',
                                         'body_off':'{"on":false}','analog':False}] if switch['enabled'] else [{'id':'recall','name':'Szene aktivieren','body_on':'{"recall":true}',
-                                        'body_off':'','analog':False}])})
+                                        'body_off':'','analog':False}]) if not switch['needs_group'] else []})
     return result
 
 

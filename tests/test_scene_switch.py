@@ -197,26 +197,78 @@ class SwitchAPITests(test_scenes.SceneAPITests):
 
 
 class SwitchUITests(unittest.TestCase):
-    def test_actual_ui_requires_explicit_confirmation_and_posts_snapshot_in_both_languages(self):
+    def test_visible_default_without_checkbox_and_immediate_choice_in_both_languages(self):
         from pathlib import Path
         import subprocess
         root=Path(__file__).resolve().parent.parent
         for language in ('de','en'):
             script="""const assert=require('node:assert/strict');global.window={};
             global.navigator={languages:['LANG']};global.localStorage={getItem:()=>null};
-            class Element{constructor(tag,text){this.tag=tag;this.textContent=text||'';this.children=[];this.value='';}append(...items){this.children.push(...items);}addEventListener(){}setAttribute(){}replaceChildren(...items){this.children=items;}}
+            class Element{constructor(tag,text,cls){this.tag=tag;this.textContent=text||'';this.className=cls;this.children=[];this.value='';}append(...items){this.children.push(...items);}addEventListener(){}setAttribute(){}replaceChildren(...items){this.children=items;}}
             const message=new Element('p');global.document={documentElement:{},createTreeWalker:()=>({nextNode:()=>false}),querySelectorAll:()=>[],querySelector:()=>message};global.NodeFilter={SHOW_TEXT:4};
-            global.node=(tag,text)=>new Element(tag,text);global.adminSession='fixture';
+            global.node=(tag,text,cls)=>new Element(tag,text,cls);global.adminSession='fixture';
             """.replace('LANG',language)
             for f in ('locales/de.js','locales/en.js','i18n.js','scenes.js'):
                 script+=(root/'web'/f).read_text()+'\n'
             script+='''
             loadScenes=async()=>{};renderScenes=()=>{};const calls=[];
             global.adminRequest=async(path,body)=>{calls.push([path,body]);return {ok:true};};
-            const scene={key:'b/s',bridge_id:'b',switch:{enabled:true,configured:true,group_id:'room',groups:[{id:'room',name:'Living',confirmation:'snapshot-hash',lamps:[{name:'L1',hidden:true},{name:'L2',hidden:false}],overlaps:['Zone']}]}};
-            const box=sceneSwitchOptions(scene);const [title,select,warning,label,save]=box.children;
-            assert.equal(save.disabled,true);assert.ok(warning.textContent.includes('L1'));assert.ok(warning.textContent.includes('L2'));assert.ok(warning.textContent.includes('Zone'));
-            const check=label.children[0];check.checked=true;check.onchange();assert.equal(save.disabled,false);
-            (async()=>{await save.onclick();assert.equal(calls.length,1);assert.equal(calls[0][0],'/api/admin/scenes/switch');assert.equal(calls[0][1].confirmation,'snapshot-hash');assert.equal(calls[0][1].group_id,'room');assert.ok(message.textContent.includes(t('Nutzungsart gespeichert. XML neu exportieren; bestehende Loxone-Konfiguration bleibt unverändert.')));})().catch(e=>{console.error(e);process.exitCode=1;});
+            const group={id:'room',name:'Living',confirmation:'snapshot-hash',extra_light_ids:['l2'],lamps:[{id:'l1',name:'L1',hidden:true},{id:'l2',name:'L2',hidden:false}],overlaps:['Zone']};
+            const scene={available:true,key:'b/s',bridge_id:'b',switch:{mode:'switch',enabled:true,automatic:true,configured:true,exact_group_id:'room',group_id:'room',groups:[group]}};
+            const box=sceneSwitchOptions(scene),controls=box.children[0],mode=controls.children[0].children[0],target=controls.children[1].children[0];
+            const all=[];function visit(e){all.push(e);e.children.forEach(visit);}visit(box);
+            assert.equal(mode.value,'switch');assert.equal(target.value,'room');assert.equal(all.some(e=>e.tag==='input'||e.tag==='button'||e.tag==='details'),false);
+            const pending=sceneSwitchOptions({...scene,switch:{...scene.switch,enabled:false,group_id:''}});assert.ok(pending.children.some(e=>e.textContent.includes('L2')));
+            assert.ok(all.some(e=>e.textContent.includes('L1')));assert.ok(all.some(e=>e.textContent.includes('L2')));assert.ok(all.some(e=>e.textContent.includes('Zone')));
+            (async()=>{target.value='room';await target.onchange();assert.equal(calls.length,1);assert.equal(calls[0][1].mode,'group');assert.equal(calls[0][1].confirmation,'snapshot-hash');assert.equal(calls[0][1].group_id,'room');mode.value='recall';await mode.onchange();assert.equal(calls[1][1].mode,'recall');assert.equal(calls[1][1].group_id,'');})().catch(e=>{console.error(e);process.exitCode=1;});
             '''
             subprocess.run(['node','-e',script],check=True)
+
+
+class AutomaticDefaultsTests(unittest.TestCase):
+    setUp=test_bridges.BridgeTests.setUp
+    tearDown=test_bridges.BridgeTests.tearDown
+    def scan(self,resources=None):
+        with patch('bridge_admin.request_resources',return_value=resources or inventory()):bridge_admin.scan_bridge('eg1')
+    def item(self,sid='scene2'):
+        return next(s for s in scenes.available_scenes() if s['key']=='eg1/'+sid)
+    def test_unique_exact_group_defaults_to_on_off_and_xml_without_choice(self):
+        with patch('scene_switch.request_document') as write,patch('scenes.request_document') as recall:
+            self.scan();item=self.item();self.assertTrue(item['switch']['enabled']);self.assertTrue(item['switch']['automatic'])
+            self.assertEqual(item['path'],'/api/scenes/eg1/scene2/state');write.assert_not_called();recall.assert_not_called()
+        command=ET.fromstring(loxone_export.export_xml(['eg1/scene2'],False,kind='scenes')).find('VirtualOutCmd')
+        self.assertEqual(command.get('CmdOnPost'),'{"on":true}');self.assertEqual(command.get('CmdOffPost'),'{"on":false}')
+    def test_superset_requires_choice_not_silent_recall_or_bigger_group(self):
+        self.scan();item=self.item('scene1');self.assertEqual(item['switch']['mode'],'switch');self.assertTrue(item['switch']['needs_group'])
+        self.assertEqual(item['switch']['group_id'],'');self.assertEqual(len(item['switch']['groups'][0]['extra_light_ids']),2)
+        with self.assertRaises(ValueError):loxone_export.export_xml(['eg1/scene1'],False,kind='scenes')
+        self.assertIsNotNone(scenes.resolve_path('/api/scenes/eg1/scene1/recall'))
+    def test_ambiguous_exact_groups_do_not_pick_one(self):
+        resources=inventory();resources.extend([{'id':'group3','type':'grouped_light','owner':{'rid':'zone3','rtype':'zone'}},{'id':'zone3','type':'zone','metadata':{'name':'Same lamps'},'children':[{'rid':'light2','rtype':'light'}],'services':[{'rid':'group3','rtype':'grouped_light'}]}])
+        self.scan(resources);self.assertFalse(self.item()['switch']['enabled']);self.assertEqual(self.item()['switch']['exact_group_id'],'')
+    def test_explicit_recall_survives_restart_rescan_and_auto_can_be_reenabled(self):
+        self.scan();scene_switch.configure('eg1','scene2','',mode='recall');before=self.registry.read_bytes()
+        scene_switch.initialize_defaults();self.assertEqual(before,self.registry.read_bytes());self.scan()
+        item=self.item();self.assertEqual(item['switch']['mode'],'recall');self.assertEqual(item['commands'][0]['body_off'],'')
+        group=next(g for g in item['switch']['groups'] if g['id']=='zone1')
+        scene_switch.configure('eg1','scene2','zone1',group['confirmation'],mode='auto')
+        self.assertTrue(self.item()['switch']['enabled'])
+    def test_initial_upgrade_persists_once_then_changed_group_is_not_rebound(self):
+        self.scan()
+        def old(doc):
+            for s in doc['bridges'][0]['scenes']:
+                for k in ('switch_mode','switch_group','switch_confirmation'):s.pop(k,None)
+        bridge_store.update_registry(old);scene_switch.initialize_defaults();first=self.registry.read_bytes()
+        scene_switch.initialize_defaults();self.assertEqual(first,self.registry.read_bytes())
+        changed=inventory();next(r for r in changed if r['id']=='zone1')['children'].append({'rid':'light3','rtype':'light'})
+        self.scan(changed);item=self.item();self.assertFalse(item['switch']['enabled']);self.assertTrue(item['switch']['needs_group'])
+        scene_switch.initialize_defaults();self.assertFalse(self.item()['switch']['enabled'])
+    def test_existing_manual_group_is_preserved_even_when_default_is_exact(self):
+        self.scan();configure('eg1','scene2','room1');scene_switch.initialize_defaults();self.scan()
+        item=self.item();self.assertEqual(item['switch']['group_id'],'room1');self.assertFalse(item['switch']['automatic'])
+    def test_stale_auto_choice_cannot_enable_new_inventory(self):
+        self.scan();item=self.item();group=next(g for g in item['switch']['groups'] if g['id']=='zone1')
+        def change(doc):doc['bridges'][0]['scene_groups'][1]['name']='Renamed'
+        bridge_store.update_registry(change)
+        with self.assertRaisesRegex(ValueError,'confirmation changed'):
+            scene_switch.configure('eg1','scene2','zone1',group['confirmation'],mode='auto')

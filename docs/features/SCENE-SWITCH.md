@@ -4,13 +4,17 @@ This optional extension belongs to the feature PR for [issue 42](https://github.
 
 ## Setup
 
-1. Rescan the inventory under **Scenes**. This does not recall a scene.
-2. Open the scene's **Management → Scene usage mode**. **Recall only** remains the default.
-3. Select the target group and inspect **every listed lamp**, including hidden lamps and overlapping groups. Only fully resolvable Hue rooms/zones containing every scene lamp and having an unambiguous grouped-light endpoint are offered.
-4. Explicitly confirm the full-group effect and save. If the inventory changed in the meantime, review and confirm again.
-5. Export XML again and use the **digital**, not analog output as a lighting circuit in the Loxone Lighting Controller. ON sends `{"on":true}`, OFF sends `{"on":false}` to `/api/scenes/<bridge>/<scene>/state`. Repetition stays 0. Existing Loxone projects are not changed automatically.
+**On/off is visible directly in each scene row and is the default.** If exactly one group contains precisely the same lamps as the scene, Hue2Lox assigns it automatically at startup or during a scan. No checkbox or extra Save step. The assignment is stored locally without recalling a scene.
 
-ON recalls the saved Hue scene without any additional dimming value. OFF switches off **the entire confirmed group**, including lamps the scene does not change. There is no native Hue scene-OFF endpoint. Changed group membership or scene assignment blocks the on/off endpoint until reconfirmed after a rescan. Changes outside Hue2Lox become known only after rescanning; always rescan after changing the Hue configuration before using it again.
+1. Scan scenes. An already known, uniquely matching group works after the update without another selection.
+2. The OFF group appears beside **Control: On/off**. Its lamps, including hidden lamps and overlapping groups, are visible directly.
+3. If several groups match exactly, or only larger groups exist, choose a group. Selection saves immediately. Larger groups are never selected automatically; additional lamps are explicitly listed by name. Until a group is chosen there is no on/off XML or misleading fallback command.
+4. Export XML and use the **digital**, not analog output as a lighting circuit in the Loxone Lighting Controller. ON sends `{"on":true}`, OFF sends `{"on":false}` to `/api/scenes/<bridge>/<scene>/state`. Repetition stays 0.
+5. For the existing scene-recall behavior, choose **Recall only** directly. This preference survives restarts and scans; its export contains only recall, as before.
+
+ON recalls the saved Hue scene without an additional dimming value. OFF switches off **the entire assigned group**, including additional lamps. There is no native Hue scene-OFF endpoint. Rescan after changes in Hue. If saved group membership or scene assignment changes, no new group is silently selected: the UI shows current lamps and asks you to choose the group again. A placeholder allows choosing the same changed group again. Stale selections are rejected; no confirmation checkbox is needed.
+
+Existing explicit group assignments are retained. Existing recall endpoints and imported Loxone commands continue to work and are not rewritten. New exports use the displayed mode. Older records without a saved mode/group are considered undecided: on/off becomes the default, automatically usable only with a unique exact group. The first PR45 version did not store a reset-to-recall preference, so those old choices cannot be reconstructed. New explicit recall preferences are stored. This PR does not modify production or published RC6 packages.
 
 ## Scene changes and limitations
 
