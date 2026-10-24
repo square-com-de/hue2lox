@@ -36,7 +36,8 @@ The project name and alternate free port isolate this test from another acceptan
 | Earlier separate stack: real 1.0.0 → 1.0.1 update, cold backup, restore into new volume with 1.0.0, return to 1.0.1 | PASS | Successful retained-password login and identical data hashes |
 | Earlier HTTPS stack: host-published port from VM and external Mac | PASS | Health and authenticated API; certificate verified |
 | HTTPS browser login with self-signed certificate | NOT VERIFIED | Browser rejects the untrusted test certificate; warning not bypassed |
-| Quick-start external HTTP browser login | OPEN | Isolated test firewall currently allows only the earlier stack's destination/port |
+| Quick-start external HTTP browser login | PASS | Real browser on another LAN computer: admin/admin, dashboard, reload; changed password after restart |
+| Quick-start HTTP cold backup and restore into a second volume | PASS | Retained-password API and real browser login; identical password/token/registry hashes; original volume retained |
 | VM reboot for this combined acceptance | NOT TESTED | Shared acceptance host |
 | Real bridges, discovery and Loxone control | NOT TESTED | Production LAN intentionally blocked |
 | Portainer GUI deployment of this exact quick-start file | NOT TESTED | Same Compose format, not an independent GUI acceptance claim |
@@ -47,6 +48,6 @@ The test firewall limitation is specific to this intentionally isolated VM. It i
 
 329 source tests passed across the main run and the four test modules retried with the correct `PYTHONPATH`. The initial restricted run could not bind local test sockets; that is a harness limitation, not a passing app test. Syntax, translation keys, documentation links and diff checks passed. No application code changed for this quick start.
 
-Before final acceptance: enable the precise new isolated test endpoint through the infrastructure owner, then verify the real browser login for the HTTP quick start. HTTPS browser trust remains separate. Independent documentation review and the final clean-OS scope remain explicit gates. Do not infer hardware support or a production approval from these results.
+The infrastructure owner added a precise exception for the new isolated test endpoint. The HTTP quick-start browser gate passed without bypassing a browser warning. HTTP is intentional: this template sets no TLS variables, and its URL explicitly uses http://. Password change, old-password rejection, retained-password session, foreign-Origin rejection and HTTP cookie behavior passed. HTTPS browser trust remains separate. Independent documentation review and the final clean-OS scope remain explicit gates. Do not infer hardware support or a production approval from these results.
 
 Existing installations keep their current Compose file and volume mapping. Old volumes, TLS files and backups were preserved. No releases, registry tags or production installations changed during this acceptance.
