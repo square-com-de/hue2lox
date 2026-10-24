@@ -1,23 +1,23 @@
-**Release version: 1.0.0.** Use the fixed 1.0.0 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.0.md) describe the shared installer, discovery help and documented scene limits. The native adapter remains a separate experimental deployment path.
+**Release version: 1.0.1.** Use the fixed 1.0.1 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.1.md) describe the shared installer, discovery help and documented scene limits. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
 
 For Docker-native hosts (Unraid, Synology, Portainer, plain Docker). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-Stable 1.0.0 provides identical images at `docker.io/dubctrl/hue2lox:1.0.0` and
-`ghcr.io/square-com-de/hue2lox:1.0.0` for
+Stable 1.0.1 provides identical images at `docker.io/dubctrl/hue2lox:1.0.1` and
+`ghcr.io/square-com-de/hue2lox:1.0.1` for
 `linux/amd64` and `linux/arm64`. RC4 remains unchanged on GHCR; RC1–RC3 remain unchanged and ZIP-only.
-[1.0.0 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0).
+[1.0.1 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1).
 
 ## Image tags
 
-Use the exact version `1.0.0` for this release. There are no floating `rc`
-or minor-version tags. `latest` follows the latest successfully verified stable release. RC releases never move it. Pin `1.0.0` to avoid unintended version changes.
+Use the exact version `1.0.1` for this release. There are no floating `rc`
+or minor-version tags. `latest` follows the latest successfully verified stable release. RC releases never move it. Pin `1.0.1` to avoid unintended version changes.
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0
+docker pull ghcr.io/square-com-de/hue2lox:1.0.1
 # Alternatively, from Docker Hub:
-podman pull docker.io/dubctrl/hue2lox:1.0.0
+podman pull docker.io/dubctrl/hue2lox:1.0.1
 ```
 
 The release workflow publishes only after a GitHub release is published and all
@@ -45,7 +45,7 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Copy the [1.0.0 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.0/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
+Copy the [1.0.1 Compose file](https://github.com/square-com-de/hue2lox/blob/v1.0.1/docker/compose.image.yaml), save it as `compose.yaml`, set `PORT` and `HUE_PUBLIC_URL`, then:
 
 ```sh
 docker compose up -d
@@ -54,7 +54,7 @@ docker compose up -d
 On Linux, host networking is used so bridges can be discovered on the LAN; the service listens on `PORT`, so choose one that is free on the host.
 
 The Compose example uses GHCR. To use Docker Hub, change only its `image` value
-to `docker.io/dubctrl/hue2lox:1.0.0`; both registries must contain the same verified images.
+to `docker.io/dubctrl/hue2lox:1.0.1`; both registries must contain the same verified images.
 
 ## Podman Desktop on macOS
 
@@ -70,7 +70,7 @@ podman run -d --name hue2lox-rc6-test \
   -v hue2lox-rc6-data:/data \
   --read-only --tmpfs /tmp --cap-drop=ALL \
   --security-opt=no-new-privileges \
-  docker.io/dubctrl/hue2lox:1.0.0
+  docker.io/dubctrl/hue2lox:1.0.1
 ```
 
 Open **http://localhost:18443** exactly. Initial login is `admin` / `admin`
@@ -110,7 +110,7 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 
 **Installer-created deployments:** use the complete [update/rollback guide](UPDATE-DOCKER.md) / [deutsche Anleitung](UPDATE-DOCKER.de.md), including a cold backup and the exact previous image. It covers local builds and pinned release images.
 
-**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged 1.0.0 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
+**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged 1.0.1 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
 
 ## Settings
 
@@ -139,3 +139,11 @@ Findet die Containersuche keine Bridges, öffne **Bridges → Keine Bridge gefun
 Die Befehle fragen ausschließlich lokales mDNS ab, keinen Onlinedienst. macOS verwendet `dns-sd`, Windows PowerShell 5.1/PowerShell 7 den integrierten .NET-UDP-Client. Linux benötigt `avahi-browse` und einen laufenden Avahi-Dienst; Installationshinweise stehen im aufklappbaren Bereich. Der Browser zeigt und kopiert die Befehle, führt sie aber nicht aus.
 
 Computer oder Test-VM müssen die Bridges im lokalen Netzwerk erreichen und Multicast-Antworten empfangen können. Bei isoliertem VM-Netz, VPN, Gast-WLAN oder Firewall kann auch diese Suche scheitern. Dann die Bridge-Adresse im Router nachsehen. Die Firewall für die Suche nicht abschalten.
+
+## Podman Desktop: direct first start
+
+Pull `docker.io/dubctrl/hue2lox:1.0.1` (or `ghcr.io/square-com-de/hue2lox:1.0.1`). Choose **Run Image → Create and start**, keep the port mapping, then **Open Browser**. Fresh data signs in with **admin / admin**; no environment variables are required for direct localhost/private-IP HTTP access. Stop an older test container first if it occupies the same host port. Do not delete its volume. Existing containers keep their old image until recreated with the new version and their preserved volume.
+
+For a reverse proxy/custom hostname, set `HUE_PUBLIC_URL` to the exact browser URL. For Loxone on another machine use a server address reachable from that machine rather than localhost.
+
+Deutsch: Image laden → **Run Image → Create and start** → **Open Browser** → **admin / admin** bei frischen Daten. Für localhost/private IPs sind keine zusätzlichen Variablen nötig. Vorhandene Daten behalten das bestehende Passwort. Bereits laufende Container aktualisieren sich nicht automatisch.

@@ -9,12 +9,13 @@ import secrets
 import threading
 import time
 import tempfile
+from public_address import public_url
 
 
 
 def secure_cookies():
     """Secure cookies need an HTTPS public URL (built-in TLS or a reverse proxy); plain HTTP gets plain cookies."""
-    return os.environ.get('HUE_PUBLIC_URL', 'https://').lower().startswith('https://')
+    return public_url().lower().startswith('https://')
 
 
 def cookie_name():

@@ -434,5 +434,7 @@
   "Keine passende Gruppe bekannt. Szenen erneut einlesen oder „Nur aktivieren“ wählen.": "Keine passende Gruppe bekannt. Szenen erneut einlesen oder „Nur aktivieren“ wählen.",
   "Steuerung gespeichert. XML neu exportieren; bestehende Loxone-Befehle bleiben unverändert.": "Steuerung gespeichert. XML neu exportieren; bestehende Loxone-Befehle bleiben unverändert.",
   "Gruppe konnte nicht übernommen werden. Aktuelle Lampen prüfen und erneut auswählen.": "Gruppe konnte nicht übernommen werden. Aktuelle Lampen prüfen und erneut auswählen.",
-  "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.": "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten."
+  "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.": "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.",
+  "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.": "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.",
+  "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen."
 }

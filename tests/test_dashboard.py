@@ -57,6 +57,6 @@ class WebTests(unittest.TestCase):
             self.assertEqual(self.get(path)[0],404)
     def test_overview_and_health_do_not_write(self):
         with patch('app.overview',return_value={'status':'ok','bridges':[]}),patch('app.write_state') as write:
-            self.assertEqual(self.get('/api/overview')[0],403)
+            self.assertEqual(self.get('/api/overview')[0],401)  # Valid direct address, but no login.
             self.assertEqual(self.get('/health')[2],b'{"status":"ok"}')
             write.assert_not_called()

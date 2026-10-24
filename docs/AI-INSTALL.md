@@ -9,7 +9,7 @@ You need a Linux target server, its IP and username, SSH access and root/sudo ri
 ## Copyable prompt
 
 ```text
-This prompt is prepared for 1.0.0 after publication. First check whether 1.0.0 is actually published. If not, do not attempt downloads; use locally supplied verified packages for an isolated test.
+This prompt is prepared for 1.0.1 after publication. First check whether 1.0.1 is actually published. If not, do not attempt downloads; use locally supplied verified packages for an isolated test.
 
 Help me start the Hue2Lox installer. Keep it simple and guide me step by
 step through exactly this workflow:
@@ -22,14 +22,14 @@ step through exactly this workflow:
    use existing sudo access with sudo -i or switch to root with su -.
    If already root, skip the switch. Do not install sudo or change user groups.
 3. Follow the direct-download steps in
-   https://github.com/square-com-de/hue2lox/blob/v1.0.0/INSTALL.md.
+   https://github.com/square-com-de/hue2lox/blob/v1.0.1/INSTALL.md.
    As root on the target server, provide ca-certificates, curl and unzip.
-   Download the fixed hue2lox-v1.0.0.zip and SHA256SUMS.txt directly from
-   https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0.
+   Download the fixed hue2lox-v1.0.1.zip and SHA256SUMS.txt directly from
+   https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1.
    No workstation download or scp is needed. No main-branch ZIP.
-4. In a new download directory, verify with grep '  hue2lox-v1.0.0.zip$' SHA256SUMS.txt | sha256sum --check -.
+4. In a new download directory, verify with grep '  hue2lox-v1.0.1.zip$' SHA256SUMS.txt | sha256sum --check -.
    Only after verification succeeds, extract and start install-assistant.sh
-   from hue2lox-v1.0.0. Stop on errors and do not overwrite anything.
+   from hue2lox-v1.0.1. Stop on errors and do not overwrite anything.
    The installer menu takes over from here.
 
 Label each command block WORKSTATION or TARGET SERVER.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 — 2026-10-24
+
+Fix first login when an image is started directly in Podman Desktop without environment variables. Direct localhost/private-IP access now uses the actual HTTP/HTTPS address and mapped port; explicitly configured proxy URLs remain authoritative. Correct DE/EN errors distinguish address/configuration failures from bad credentials. Existing passwords and volumes are unchanged.
+
+Direkter Start in Podman Desktop ohne Zusatzkonfiguration: Anmeldung mit admin/admin bei frischen Daten funktioniert. Adressfehler werden nicht mehr als falsches Passwort gemeldet. Bestehende Passwörter und Daten bleiben unverändert.
+
+[Details / Hinweise](docs/RELEASE-NOTES-1.0.1.md)
+
 ## 1.0.0 — 2026-10-24
 
 First stable release / Erstes Stable-Release. Scene on/off with visible defaults and automatic exact-group assignment; immediate selection without confirmation checkbox. Existing recall commands remain compatible. / Szenen-Ein/Aus mit sichtbaren Defaults und automatischer exakter Gruppenzuordnung; direkte Auswahl ohne Bestätigungshaken. Bestehende Recall-Befehle bleiben kompatibel.
