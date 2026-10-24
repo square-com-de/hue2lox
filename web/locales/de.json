@@ -201,7 +201,6 @@
   "Link speichern": "Link speichern",
   "Link-Taste gedrückt · verbinden": "Link-Taste gedrückt · verbinden",
   "Liste aktualisieren": "Liste aktualisieren",
-  "Lokale Verwaltung · Version 2": "Lokale Verwaltung · Version 2",
   "Loxone öffnen ↗": "Loxone öffnen ↗",
   "Loxone-Befehle testen": "Loxone-Befehle testen",
   "Loxone-Einstellungen": "Loxone-Einstellungen",
@@ -436,5 +435,7 @@
   "Gruppe konnte nicht übernommen werden. Aktuelle Lampen prüfen und erneut auswählen.": "Gruppe konnte nicht übernommen werden. Aktuelle Lampen prüfen und erneut auswählen.",
   "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.": "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.",
   "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.": "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.",
-  "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen."
+  "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.",
+  "Lokale Verwaltung": "Lokale Verwaltung",
+  "Version unbekannt": "Version unbekannt"
 }

@@ -7,7 +7,7 @@ copy_runtime() {
     done
     umask 077
     mkdir -p "$backup"
-    for item in src docker config web catalog trust compose.yaml .dockerignore LICENSE NOTICE THIRD-PARTY-NOTICES.md; do
+    for item in src docker config web catalog trust install compose.yaml .dockerignore LICENSE NOTICE THIRD-PARTY-NOTICES.md; do
         if [ -e "$dst/$item" ]; then cp -a "$dst/$item" "$backup/"; fi
     done
     printf 'Rollback files: %s\n' "$backup"
@@ -17,6 +17,8 @@ copy_runtime() {
         find "$dst/$directory" -type d -exec chmod 755 {} \;
         find "$dst/$directory" -type f -exec chmod 644 {} \;
     done
+    install -d -m 755 "$dst/install"
+    install -m 644 "$src/install/release-image.json" "$dst/install/release-image.json"
     install -d -m 755 "$dst/config"
     if [ ! -f "$dst/config/registry.json" ]; then
         if [ -f "$dst/registry.json" ]; then

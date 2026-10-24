@@ -6,6 +6,7 @@ RUN python -m pip uninstall --yes pip \
 WORKDIR /app/src
 COPY LICENSE NOTICE THIRD-PARTY-NOTICES.md /app/
 COPY src/ /app/src/
+COPY install/release-image.json /app/install/release-image.json
 ARG REGISTRY_SOURCE=config/registry.json
 COPY ${REGISTRY_SOURCE} /app/config/registry.json
 COPY web/ /app/web/

@@ -201,7 +201,6 @@
   "Link speichern": "Save link",
   "Link-Taste gedrückt · verbinden": "Link button pressed · connect",
   "Liste aktualisieren": "Refresh list",
-  "Lokale Verwaltung · Version 2": "Local management · Version 2",
   "Loxone öffnen ↗": "Open Loxone ↗",
   "Loxone-Befehle testen": "Test Loxone commands",
   "Loxone-Einstellungen": "Loxone settings",
@@ -436,5 +435,7 @@
   "Gruppe konnte nicht übernommen werden. Aktuelle Lampen prüfen und erneut auswählen.": "Could not apply the group. Check the current lamps and select again.",
   "EIN aktiviert die Szene. AUS schaltet die gesamte zugeordnete Gruppe aus. Keine Zustandsrückmeldung an Loxone. Nach Neustart zuerst EIN senden. Überlappende Gruppen zuerst ausschalten.": "ON recalls the scene. OFF switches off the entire assigned group. No lamp state feedback to Loxone. Send ON first after restart. Switch overlapping groups off first.",
   "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.": "This browser address does not match the server configuration. Use the configured address or adjust HUE_PUBLIC_URL.",
-  "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Login failed. Please check the server configuration and connection."
+  "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Login failed. Please check the server configuration and connection.",
+  "Lokale Verwaltung": "Local management",
+  "Version unbekannt": "Version unknown"
 }

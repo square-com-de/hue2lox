@@ -16,6 +16,7 @@ import bridge_admin
 import dashboard
 import admin_auth
 import public_address
+import release_version
 import loxone_export
 from urllib.parse import urlsplit
 from hue_client import read_status, state_payload, write_state, BridgeRequestError, decode_json_document
@@ -175,6 +176,9 @@ class Handler(BaseHTTPRequestHandler):
                 body = buffer.getvalue()
             else:
                 body = (Path(__file__).resolve().parent.parent / 'web' / filename).read_bytes()
+            if self.path == '/':
+                version = release_version.installed_version() or 'Version unbekannt'
+                body = body.replace(b'__HUE2LOX_RELEASE__', version.encode('utf-8'))
             self.send_response(200)
             self.send_header('Content-Type', content_type)
             if self.path == '/assets/hue-models.zip':

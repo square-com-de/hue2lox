@@ -39,3 +39,5 @@ class RuntimeLayoutTests(unittest.TestCase):
             self.assertEqual(json.loads((dest/'config/registry.json').read_text()), {'legacy': True})
             self.assertEqual((dest/'src/app.py').read_bytes(), (ROOT/'src/app.py').read_bytes())
             self.assertTrue((dest/'docker/Dockerfile.status').is_file())
+            self.assertEqual((dest/'install/release-image.json').read_bytes(),
+                             (ROOT/'install/release-image.json').read_bytes())
