@@ -1,5 +1,7 @@
 # Install Hue2Lox on Linux
 
+Before starting a container: **[login, persistent storage, network access and HTTP/HTTPS](docs/CONTAINER-SETUP.md)**. Includes Portainer and Podman Desktop; explains why discovery and manual bridge access are different checks.
+
 **Stable 1.0.1:** the shared installer offers Docker/native deployment. [Deployment acceptance passed](docs/DEPLOYMENT-ACCEPTANCE.md); [1.0.1 release notes](docs/RELEASE-NOTES-1.0.1.md). Native operation remains experimental and is included in 1.0.1; use the separate native archive with the source-ZIP assistant. See the [native guide](docs/INSTALL-NATIVE.en.md).
 
 [Deutsch](INSTALL.de.md) · [1.0.1 release and ZIP](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1) · [English manual](docs/MANUAL.md)
