@@ -40,7 +40,7 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 
 | Installationsweg | Einordnung | Anleitung |
 | --- | --- | --- |
-| **Docker Compose auf Linux-VM** | Bevorzugter Containerweg, feste Version **1.0.1**, dauerhaftes Volume und zur Browseradresse passende Konfiguration. | [Container-Anleitung](docs/DOCKER.md#docker-compose) · [Einrichtung DE](docs/CONTAINER-SETUP.de.md) |
+| **Docker Compose auf Linux-VM** | Bevorzugter Containerweg, feste Version **1.0.2**, dauerhaftes Volume und zur Browseradresse passende Konfiguration. | [Container-Anleitung](docs/DOCKER.md#docker-compose) · [Einrichtung DE](docs/CONTAINER-SETUP.de.md) |
 | Geführter Docker-Installer | Alternative für geführte Einrichtung mit direktem HTTPS; festes Image oder lokaler Build. | [Linux-Installer](INSTALL.de.md) |
 | Podman Desktop auf macOS ARM64 | Separat geprüfter lokaler Testweg, keine pauschale LAN-/Proxmox-Freigabe. | [Geprüfter Ablauf und Grenzen](docs/DOCKER.md#podman-desktop-on-macos) |
 | Nativ ohne Docker | Experimentelle Alternative für ausdrücklich geprüfte amd64-systemd-Ziele. | [Native Anleitung](docs/INSTALL-NATIVE.md) |
@@ -52,7 +52,7 @@ Voraussetzung: Linux mit Docker Engine, Compose-Plugin und curl; Docker-Rechte (
 ```sh
 mkdir hue2lox &&
 cd hue2lox &&
-curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
 docker compose up -d --wait &&
 docker compose ps
 ```
@@ -64,7 +64,7 @@ Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. F
 3. **Bridge einrichten:** Container muss die Bridge im LAN erreichen können. Fehlende Multicast-Suche und fehlender direkter Netzwerkzugriff sind unterschiedliche Probleme; eine manuelle IP umgeht keine Netzsperre.
 4. **Mit Loxone verbinden:** [Bebilderte Anleitung](docs/TUTORIAL.de.md) für Befehle und XML. Für Szenen-AUS die neuen digitalen Befehle übernehmen; alte Recall-Ausgänge bleiben unverändert.
 
-**Bereits installiert?** [Backup, Update und Rollback](docs/UPDATE-DOCKER.de.md) statt Neuinstallation. `pull` und `restart` ersetzen keinen bestehenden Container. Eigene Portainer-/Compose-Stacks getrennt behandeln; keine bewusst gesperrten Funktionen oder gespeicherten Passwörter überschreiben. [1.0.1-Download/Prüfsummen](docs/DOWNLOADS.md) · [Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Ein LoxBerry-Plugin gibt es noch nicht.
+**Bereits installiert?** [Backup, Update und Rollback](docs/UPDATE-DOCKER.de.md) statt Neuinstallation. `pull` und `restart` ersetzen keinen bestehenden Container. Eigene Portainer-/Compose-Stacks getrennt behandeln; keine bewusst gesperrten Funktionen oder gespeicherten Passwörter überschreiben. [1.0.2-Download/Prüfsummen](docs/DOWNLOADS.md) · [Release-Hinweise](docs/RELEASE-NOTES-1.0.2.md). Ein LoxBerry-Plugin gibt es noch nicht.
 
 ## Feedback & Kontakt
 
@@ -78,9 +78,9 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Stable 1.0.1.** Enthält den gemeinsamen Installer, lokale Suchhilfen und Szenen-Ein/Aus. Die Nutzerabnahme umfasst TV-Strip-Lumitech-Farbe, warmes/kaltes Weiß, Dimmen, AUS, Szenenwechsel und abschließendes AUS. Docker-/native Lebenszyklustests auf Ubuntu und DietPi prüfen Neustart, Update/Rollback und Datenerhalt. Siehe [Release-Hinweise und Grenzen](docs/RELEASE-NOTES-1.0.1.md).
+**Hue2Lox1.0.2.** Enthält gemeinsamen Installer, lokale Suchhilfen, Szenen-Ein/Aus und die Anzeige der installierten Version. Die bisherige Hardwareabnahme gehört zu1.0.0/1.0.1; sie ist kein neuer1.0.2-Hardwaretest. Siehe [Release-Hinweise und tatsächlichen Prüfumfang](docs/RELEASE-NOTES-1.0.2.md). Versionierte Downloadbefehle erst nach erfolgreichem1.0.2-Veröffentlichungsabschluss verwenden.
 
-Versioniertes ZIP oder `1.0.1`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.1` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
+Versioniertes ZIP oder `1.0.2`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.2` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
 
 Szenen in der Hue-App erstellen und bearbeiten. [Szenen Ein/Aus](docs/features/SCENE-SWITCH.de.md) aktiviert eine Szene und schaltet ihre zugeordnete Gruppe aus. Bestehende Recall-Befehle bleiben nutzbar; für AUS die neuen digitalen Befehle importieren. Eine Rückmeldung des tatsächlichen Lampenzustands in den Loxone-Lichtbaustein ist nicht enthalten.
 

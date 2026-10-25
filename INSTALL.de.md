@@ -1,3 +1,5 @@
+**Use the1.0.2 downloads only after its publication workflow succeeds. / Die1.0.2-Downloads erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
+
 # Hue2Lox auf Linux installieren
 
 **Bevorzugt ist Docker Compose auf einer Linux-VM:** [Container-Einrichtung](docs/CONTAINER-SETUP.de.md) · [Compose-Anleitung](docs/DOCKER.md#docker-compose) · [Teststatus](docs/RUNTIME-SUPPORT.de.md). Der nachfolgende geführte Installer ist eine Alternative; nativ bleibt experimentell. Der [getestete Download-/Startblock mit anschließendem Login](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) ist der Einstieg ohne Quellcode oder Modusauswahl. [Proxmox-Nachweis und verbleibende Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
@@ -9,7 +11,7 @@ Voraussetzung: Linux mit Docker Engine, Compose-Plugin und curl; Docker-Rechte (
 ```sh
 mkdir hue2lox &&
 cd hue2lox &&
-curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/bd8b4d172cafd8db9e602c992ec3e9704a4ce420/docker/compose.quickstart.yaml &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
 docker compose up -d --wait &&
 docker compose ps
 ```
@@ -18,7 +20,7 @@ Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. F
 
 Vor dem Containerstart: **[Anmeldung, dauerhafter Speicher, Netzwerkzugriff und HTTP/HTTPS](docs/CONTAINER-SETUP.de.md)**. Mit Hinweisen für Portainer und Podman Desktop sowie zur automatischen Suche und zum manuellen Bridge-Zugriff.
 
-**Stable 1.0.1:** der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [1.0.1-Release-Hinweise](docs/RELEASE-NOTES-1.0.1.md). Der native Weg bleibt experimentell und ist in 1.0.1 enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Anleitung](docs/INSTALL-NATIVE.md).
+**Stable 1.0.2:** der gemeinsame Installer bietet Docker/nativ. [Deployment-Abnahme bestanden](docs/DEPLOYMENT-ACCEPTANCE.md), [1.0.2-Release-Hinweise](docs/RELEASE-NOTES-1.0.2.md). Der native Weg bleibt experimentell und ist in 1.0.2 enthalten; zum Quell-ZIP gehört das separate native Archiv. Siehe [native Anleitung](docs/INSTALL-NATIVE.md).
 
 ## Optional: geführter Installer oder native Installation
 
@@ -26,18 +28,18 @@ Der Installer auf dieser Seite läuft auf **Linux mit Docker Engine und dem Comp
 
 Neue Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Ein gesunder Healthcheck bestätigt noch keinen erfolgreichen Login und keine Lampensteuerung. Beim Update Container/Dienst mit erhaltenen Daten nach [Docker-Update/Rollback](docs/UPDATE-DOCKER.de.md) bzw. [nativer Wartung](docs/INSTALL-NATIVE.md) wechseln. Nur `restart` übernimmt weder ein neues Image noch geänderte Umgebungsvariablen. RC5-Sperren bleiben bei einem normalen Update erhalten: [bewusste Recovery](docs/RECOVERY-CONTROL.de.md).
 
-[English installation guide](INSTALL.md) · [1.0.1-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1)
+[English installation guide](INSTALL.md) · [1.0.2-Download](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2)
 
 - [Option 1: Einfach und komfortabel – der Installer](#option-1-einfach-und-komfortabel--der-installer)
 - [Option 2: Entwicklungsstand main — Manuelle Installation Schritt für Schritt](#option-2-entwicklungsstand-main--manuelle-installation-schritt-für-schritt)
 
-Option 1 installiert **1.0.1** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den geführten Installationsweg Option 1 verwenden.
+Option 1 installiert **1.0.2** direkt auf dem Linux-Server. Option 2 ist der getrennte Entwicklungsweg von `main`. [Version, Paket und Prüfsumme](docs/DOWNLOADS.md) gehören immer zusammen; für den geführten Installationsweg Option 1 verwenden.
 
 Hue2Lox ist für **Linux-Systeme mit Docker Engine und Docker Compose** vorgesehen – auf einem eigenen Rechner, in einer virtuellen Maschine oder auf einem Raspberry Pi. Als Plattformen kommen beispielsweise Ubuntu, Debian, DietPi oder Raspberry Pi OS (früher Raspbian) infrage, sofern Betriebssystemversion und CPU-Architektur die benötigten Pakete und Container unterstützen.
 
 **Als geführte Alternative steht Option 1 zur Verfügung.** Er erkennt die unterstützten Systeme und wählt die passende Paketquelle. Die manuelle Anleitung unter Option 2 verwendet Ubuntu 24.04 als Beispiel.
 
-Beim 1.0.1-Paket lädst du die Hue2Lox-Quelldateien herunter. Der 1.0.1-Installer bietet das feste 1.0.1-Image oder einen lokalen Build aus dem Quell-ZIP an. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
+Beim 1.0.2-Paket lädst du die Hue2Lox-Quelldateien herunter. Der 1.0.2-Installer bietet das feste 1.0.2-Image oder einen lokalen Build aus dem Quell-ZIP an. Ein fertiges Hue2Lox-Image musst du nicht separat herunterladen.
 
 | System (64 Bit) | Automatische Einrichtung | Praktischer Teststatus |
 |---|---|---|
@@ -47,7 +49,7 @@ Beim 1.0.1-Paket lädst du die Hue2Lox-Quelldateien herunter. Der 1.0.1-Installe
 | DietPi auf Debian 12 / 13 | amd64 und arm64; Debian-Basis automatisch erkannt | Main: DietPi 13 amd64 Docker/nativ mit echtem Update/Rollback und Neustart abgenommen; DietPi 12/ARM separat |
 | Andere Linux-Systeme | Voraussetzungen manuell; vorhandenes Docker + Compose nutzbar | Kein allgemeines Funktionsversprechen |
 
-Die Tabelle unterscheidet automatische Plattformunterstützung von realen Tests. Neue VM-Nachweise gelten für den in der [Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) genannten main-Stand, nicht rückwirkend für das 1.0.1-ZIP.
+Die Tabelle unterscheidet automatische Plattformunterstützung von realen Tests. Neue VM-Nachweise gelten für den in der [Abnahme](docs/DEPLOYMENT-ACCEPTANCE.md) genannten main-Stand, nicht rückwirkend für das 1.0.2-ZIP.
 
 **64 Bit bezieht sich auf das installierte Betriebssystem**, nicht nur auf den Prozessor. 32-Bit-Systeme und unbekannte Versionen werden bei der automatischen Paketinstallation abgelehnt. Der Installer ersetzt keine unvollständige Docker-Installation und entfernt keine vorhandenen Pakete. Läuft Docker mit Compose bereits, überspringt er die Docker-Installation auch auf anderen Distributionen. Für Hue2Lox muss Docker lokal auf dem Linux-Server laufen.
 
@@ -57,11 +59,11 @@ Alle Schritte der Reihe nach ausführen. Bei einem Fehler zunächst stoppen und 
 
 ## Installer: Docker/nativ und fertige Images
 
-Der Installer lädt standardmäßig eine feste Release-Version von Docker Hub. GHCR und lokales Bauen stehen als Alternativen zur Auswahl. Diese Auswahl ist im 1.0.1-Quell-ZIP enthalten. Dieses Release bindet `1.0.1`; für die normale Installation das feste Image verwenden, geprüfte Änderungen aus `main` mit **lokal bauen** testen. Details: [Image-Auswahl und Vorbereitung per Befehl](docs/INSTALLER-IMAGES.md#deutsch).
+Der Installer lädt standardmäßig eine feste Release-Version von Docker Hub. GHCR und lokales Bauen stehen als Alternativen zur Auswahl. Diese Auswahl ist im 1.0.2-Quell-ZIP enthalten. Dieses Release bindet `1.0.2`; für die normale Installation das feste Image verwenden, geprüfte Änderungen aus `main` mit **lokal bauen** testen. Details: [Image-Auswahl und Vorbereitung per Befehl](docs/INSTALLER-IMAGES.md#deutsch).
 
 # Option 1: Einfach und komfortabel – der Installer
 
-Nach der Sprachwahl bietet der Installer **Docker** oder **nativ**. Die folgenden Schritte erklären Docker; für nativ die [1.0.1-Archivübergabe](docs/INSTALL-NATIVE.md#stable-quell-zip-und-natives-archiv) verwenden. Der Installer führt dich über ein Menü durch die Einrichtung. Er prüft vorhandene Software und kann fehlende Pakete installieren. **Du brauchst einen Linux-Server, seinen Benutzernamen und seine IP-Adresse sowie Root-Zugang oder vorhandene sudo-Rechte.** Der Installer erkennt die Systeme aus der Tabelle oben, zeigt die erkannte Basis an und wählt die passende Docker-Paketquelle. Mit einem Root-Konto kannst du die Befehle ohne `sudo` ausführen.
+Nach der Sprachwahl bietet der Installer **Docker** oder **nativ**. Die folgenden Schritte erklären Docker; für nativ die [1.0.2-Archivübergabe](docs/INSTALL-NATIVE.md#stable-quell-zip-und-natives-archiv) verwenden. Der Installer führt dich über ein Menü durch die Einrichtung. Er prüft vorhandene Software und kann fehlende Pakete installieren. **Du brauchst einen Linux-Server, seinen Benutzernamen und seine IP-Adresse sowie Root-Zugang oder vorhandene sudo-Rechte.** Der Installer erkennt die Systeme aus der Tabelle oben, zeigt die erkannte Basis an und wählt die passende Docker-Paketquelle. Mit einem Root-Konto kannst du die Befehle ohne `sudo` ausführen.
 
 ### A. Am Server anmelden
 
@@ -89,21 +91,21 @@ apt install -y --no-install-recommends ca-certificates curl unzip
 
 Das gilt für die oben genannten Ubuntu-/Debian-basierten Systeme. Auf anderen Systemen diese drei Werkzeuge mit dem dortigen Paketmanager bereitstellen. Bei einem Fehler stoppen; bei „Not live until“ zuerst die Uhrzeit prüfen.
 
-### C. 1.0.1 direkt herunterladen, prüfen und starten
+### C. 1.0.2 direkt herunterladen, prüfen und starten
 
-**Weiterhin auf dem Server als Root.** Diesen Block vollständig kopieren. Er erstellt einen neuen Downloadordner, lädt das feste 1.0.1-Paket samt SHA-256-Prüfsumme, prüft und entpackt es und startet danach den Installer. Bestehende Ordner werden nicht überschrieben.
+**Weiterhin auf dem Server als Root.** Diesen Block vollständig kopieren. Er erstellt einen neuen Downloadordner, lädt das feste 1.0.2-Paket samt SHA-256-Prüfsumme, prüft und entpackt es und startet danach den Installer. Bestehende Ordner werden nicht überschrieben.
 
 ```sh
 HUE2LOX_DOWNLOAD_DIR=$(mktemp -d "$HOME/hue2lox-rc6-XXXXXXXX") &&
 cd "$HUE2LOX_DOWNLOAD_DIR" &&
-curl --fail --location --output hue2lox-v1.0.1.zip \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/hue2lox-v1.0.1.zip &&
+curl --fail --location --output hue2lox-v1.0.2.zip \
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/hue2lox-v1.0.2.zip &&
 curl --fail --location --output SHA256SUMS.txt \
-  https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/SHA256SUMS.txt &&
-(grep '  hue2lox-v1.0.1.zip$' SHA256SUMS.txt | sha256sum --check -) &&
-unzip -tq hue2lox-v1.0.1.zip &&
-unzip -q hue2lox-v1.0.1.zip &&
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.1/install-assistant.sh"
+  https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/SHA256SUMS.txt &&
+(grep '  hue2lox-v1.0.2.zip$' SHA256SUMS.txt | sha256sum --check -) &&
+unzip -tq hue2lox-v1.0.2.zip &&
+unzip -q hue2lox-v1.0.2.zip &&
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.2/install-assistant.sh"
 ```
 
 Nur bei erfolgreicher Prüfung geht es weiter. Bei `FAILED`, Downloadfehler oder Entpackfehler stoppen; den Installer nicht separat starten. Die Prüfsumme gehört zum ZIP aus demselben Release. `Code → Download ZIP` lädt dagegen den Entwicklungsstand.
@@ -122,7 +124,7 @@ wie „Not live until“ zuerst Datum und Zeitsynchronisation des Servers prüfe
 Für die vollständige direkte Ausgabe in derselben Root-Sitzung:
 
 ```sh
-bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.1/install-assistant.sh" --verbose
+bash "$HUE2LOX_DOWNLOAD_DIR/hue2lox-v1.0.2/install-assistant.sh" --verbose
 ```
 
 Die kompakten Protokolle filtern erkennbare Zugangsdaten; vor dem Teilen trotzdem
@@ -147,7 +149,7 @@ Beim Start **Deutsch oder English** auswählen. Jeder verändernde Schritt fragt
 
 ### HTTP oder HTTPS im Installer
 
-1.0.1 enthält diese Auswahl. Das ältere RC3-ZIP bleibt unverändert.
+1.0.2 enthält diese Auswahl. Das ältere RC3-ZIP bleibt unverändert.
 In Schritt 5 wählst du:
 
 1. **HTTPS direkt (Standard):** Der Installer erzeugt ein selbstsigniertes Zertifikat
@@ -298,7 +300,7 @@ sudo docker compose version
 
 Erwartet: `Hello from Docker!` und eine Compose-Versionsnummer. Wir verwenden stets `sudo docker compose` mit Leerzeichen, nicht das alte `docker-compose`.
 
-> **Nur Entwicklung:** Die folgenden manuellen Downloads und Dateipfade gelten für `main`, nicht für 1.0.1. Für die veröffentlichte Version Option 1 und [DOWNLOADS](docs/DOWNLOADS.md) verwenden.
+> **Nur Entwicklung:** Die folgenden manuellen Downloads und Dateipfade gelten für `main`, nicht für 1.0.2. Für die veröffentlichte Version Option 1 und [DOWNLOADS](docs/DOWNLOADS.md) verwenden.
 
 ## 5. Hue2Lox herunterladen
 

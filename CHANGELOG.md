@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.2 — prepared, not yet published / vorbereitet, noch nicht veröffentlicht
+## 1.0.2
 
 - Consolidate DE/EN runtime support and installation guidance; distinguish tested Podman Desktop 1.30.5/macOS ARM64 from Linux Docker/Compose and experimental native deployment.
 - Remove obsolete contradictory Podman workaround; retain existing passwords, explicit URLs, origin/CSRF checks and control restrictions.

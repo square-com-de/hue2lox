@@ -2,6 +2,7 @@
 """Test unpublished source/native assets from one commit on isolated empty state."""
 import argparse
 import hashlib
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -14,7 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version', default='1.0.1')
+    parser.add_argument('--version', default=json.loads((ROOT / 'install/release-image.json').read_text())['version'])
     parser.add_argument('--docker', action='store_true', help='Disposable CI runner/root only')
     args = parser.parse_args()
     if args.docker and (os.environ.get('CI') != 'true' or os.getuid() != 0):
