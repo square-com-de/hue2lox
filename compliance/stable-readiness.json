@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "version": null,
+  "approved": false,
+  "checks": {
+    "documentation_review": {
+      "passed": false,
+      "evidence": []
+    },
+    "published_user_flow": {
+      "passed": false,
+      "evidence": []
+    },
+    "update_recovery": {
+      "passed": false,
+      "evidence": []
+    },
+    "support_scope": {
+      "passed": false,
+      "evidence": []
+    }
+  },
+  "source_sha256": null
+}

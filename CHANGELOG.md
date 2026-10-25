@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — installation evidence and stable acceptance gate
+
+- Consolidate DE/EN runtime support and installation guidance; distinguish tested Podman Desktop 1.30.5/macOS ARM64 from Linux Docker/Compose and experimental native deployment.
+- Remove obsolete contradictory Podman workaround; retain existing passwords, explicit URLs, origin/CSRF checks and control restrictions.
+- Record RC5 defaults/test-expectation errors, retained-state recovery, scene usability and desktop-login lessons with owners and evidence.
+- Block future stable publication/latest promotion until version-specific documentation/user-flow/recovery/scope acceptance is explicitly approved and bound to the exact tracked source/docs. Existing releases remain unchanged.
+
 ## 1.0.1 — 2026-10-24
 
 Fix first login when an image is started directly in Podman Desktop without environment variables. Direct localhost/private-IP access now uses the actual HTTP/HTTPS address and mapped port; explicitly configured proxy URLs remain authoritative. Correct DE/EN errors distinguish address/configuration failures from bad credentials. Existing passwords and volumes are unchanged.

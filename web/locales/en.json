@@ -437,5 +437,6 @@
   "Diese Browseradresse passt nicht zur Serverkonfiguration. Verwende die konfigurierte Adresse oder passe HUE_PUBLIC_URL an.": "This browser address does not match the server configuration. Use the configured address or adjust HUE_PUBLIC_URL.",
   "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Login failed. Please check the server configuration and connection.",
   "Lokale Verwaltung": "Local management",
-  "Version unbekannt": "Version unknown"
+  "Version unbekannt": "Version unknown",
+  "Hue2Lox · Entwicklungsbuild": "Hue2Lox · Development build"
 }

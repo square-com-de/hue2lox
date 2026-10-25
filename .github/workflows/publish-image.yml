@@ -21,6 +21,23 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - name: Select release identity only for an exact tag checkout
+        id: build-identity
+        env:
+          BUILD_REF: ${{ github.ref }}
+          SOURCE_COMMIT: ${{ github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_COMMIT"
+          version=""
+          case "$BUILD_REF" in
+            refs/tags/v*)
+              test "$(git rev-parse "$BUILD_REF^{commit}")" = "$SOURCE_COMMIT"
+              version="${BUILD_REF#refs/tags/v}"
+              ;;
+          esac
+          python3 src/release_version.py --write-build /tmp/hue2lox-build-info.json \
+            --version "$version" --revision "$SOURCE_COMMIT"
+          printf 'version=%s\n' "$version" >> "$GITHUB_OUTPUT"
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
@@ -29,6 +46,9 @@ jobs:
           push: false
           load: true
           tags: hue2lox-candidate:inventory
+          build-args: |
+            HUE2LOX_BUILD_VERSION=${{ steps.build-identity.outputs.version }}
+            HUE2LOX_BUILD_REVISION=${{ github.sha }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -47,6 +67,14 @@ jobs:
             -B - < scripts/image-inventory.py > evidence/inventory.json
           cp Dockerfile evidence/
           cp compliance/base-image.json evidence/
+      - name: Verify immutable in-image build identity
+        env:
+          BUILD_VERSION: ${{ steps.build-identity.outputs.version }}
+          SOURCE_COMMIT: ${{ github.sha }}
+        run: |
+          docker run --rm --network none --read-only --entrypoint python \
+            -e EXPECTED_VERSION="$BUILD_VERSION" -e EXPECTED_REVISION="$SOURCE_COMMIT" \
+            hue2lox-candidate:inventory -c 'import json,os,release_version; from pathlib import Path; expected=release_version.build_identity(os.environ["EXPECTED_VERSION"],os.environ["EXPECTED_REVISION"]); assert json.loads(Path("/app/build-info.json").read_text())==expected; assert release_version.installed_version()==("Hue2Lox "+expected["version"] if expected["kind"]=="release" else "Hue2Lox · Entwicklungsbuild")'
       - name: Boot the exact platform candidate and check HTTP health
         env:
           ARCH: ${{ matrix.arch }}
