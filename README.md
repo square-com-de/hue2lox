@@ -57,7 +57,7 @@ docker compose up -d --wait &&
 docker compose ps
 ```
 
-Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN; HTTPS and other optional settings are described in the [container guide](docs/CONTAINER-SETUP.md). The isolated VM acceptance used the same file with test port **18444**, because 18443 was occupied there; the normal default is 18443.
+Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN; HTTPS and other optional settings are described in the [container guide](docs/CONTAINER-SETUP.md). Historical 1.0.1 VM acceptance used test port18444 in one fixture; the default remains18443. The1.0.2 artifact has its own acceptance scope in the release notes.
 
 1. **Prepare the container:** Start the [Compose quick-start file](docker/compose.quickstart.yaml) using the [short guide](docs/CONTAINER-SETUP.md). Docker/Compose must be installed and port 18443 free. Browser login and persistence were independently checked; see [exact test scope and limits](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
@@ -78,7 +78,7 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Hue2Lox1.0.2.** Includes the shared installer, local discovery help, scene on/off and an installed-version display. Prior hardware acceptance belongs to1.0.0/1.0.1; it is not a new1.0.2 hardware test. See [release notes and actual acceptance scope](docs/RELEASE-NOTES-1.0.2.md). Use the versioned download commands below only after1.0.2 publication completes.
+**Hue2Lox 1.0.2.** Includes the shared installer, local discovery help, scene on/off and an installed-version display. Prior hardware acceptance belongs to 1.0.0/1.0.1; it is not a new 1.0.2 hardware test. See [release notes and actual acceptance scope](docs/RELEASE-NOTES-1.0.2.md). Use the versioned download commands below only after 1.0.2 publication completes.
 
 Use the versioned ZIP or `1.0.2` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.2` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
 

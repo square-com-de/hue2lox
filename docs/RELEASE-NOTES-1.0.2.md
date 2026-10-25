@@ -1,4 +1,4 @@
-# Hue2Lox1.0.2
+# Hue2Lox 1.0.2
 
 Use versioned assets only after the publication workflow succeeds. / Versionierte Dateien erst nach erfolgreichem Veröffentlichungsworkflow verwenden.
 
@@ -20,6 +20,6 @@ The sidebar displays the installed package/build version instead of “Version2�
 
 Existing scene on/off group control and stale-OFF protection, recall-only scenes, RGB/Lumitech/white/dimming, the shared installer, local discovery help and DE/EN interface are retained. No Loxone state feedback or LoxBerry plugin is added.
 
-Linux Docker is preferred; native remains experimental/amd64. Podman claims remain limited to documented evidence. Historical1.0.1 results are not1.0.2 artifact acceptance. Actual new registry/VM/production checks must use the delivered digest; hardware actions remain human-owned.
+Linux Docker is preferred; native remains experimental/amd64. Podman claims remain limited to documented evidence. Historical 1.0.1 results are not1.0.2 artifact acceptance. Actual new registry/VM/production checks must use the delivered digest; hardware actions remain human-owned.
 
 Keep the same volume, disabled flags and credentials; take a cold data/configuration/exact-image backup and restore the matching old set if needed. [Update and rollback](UPDATE-DOCKER.md). Offline ZIP reproduction still requiresUTC ([Issue44](https://github.com/square-com-de/hue2lox/issues/44)); old releases remain immutable.

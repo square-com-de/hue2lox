@@ -1,6 +1,6 @@
-**Use the1.0.2 downloads only after its publication workflow succeeds. / Die1.0.2-Downloads erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
+**Use the 1.0.2 downloads only after its publication workflow succeeds. / Die 1.0.2-Downloads erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
 
-**Release version: 1.0.2.** Use the fixed 1.0.2 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.2.md) describe the direct desktop login fix. The native adapter remains a separate experimental deployment path.
+**Release version: 1.0.2.** Use the fixed 1.0.2 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.2.md) describe the installed-version display; the direct desktop login fix from 1.0.1 is retained. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
 
@@ -51,13 +51,13 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Use the single [quick-start procedure](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server) / [deutscher Schnellstart](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server). It downloads the immutable, publicly available tested Compose file, starts the fixed 1.0.2 image and creates persistent storage automatically. Open **http://SERVER-IP:18443**, sign in with **admin/admin** for fresh data and change the password. Portainer Docker Standalone uses that same file as a Stack.
+Use the single [quick-start procedure](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server) / [deutscher Schnellstart](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server). After publication it downloads the versioned Compose file and starts the fixed 1.0.2 image and creates persistent storage automatically. Open **http://SERVER-IP:18443**, sign in with **admin/admin** for fresh data and change the password. Portainer Docker Standalone uses that same file as a Stack.
 
 HTTP is intentional and for a trusted LAN. HTTPS requires the [certificate/proxy setup](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by container networking; use local discovery help or the bridge IP. Direct bridge access still needs a network route. The guided installer and `compose.image.yaml` remain Linux host-network alternatives; they are not a second default installation path.
 
 ## Podman Desktop on macOS
 
-**Verified scope:** Podman Desktop **1.30.5, macOS ARM64**, public `1.0.2` ARM64 image, fresh data, actual GUI pull/create/login/reload/restart. This is a local desktop test, not certification of Linux/Windows Podman, `podman compose`, multicast discovery or Loxone LAN access. [Evidence and limits](RUNTIME-SUPPORT.md).
+**Historical verified scope:** Podman Desktop **1.30.5, macOS ARM64**, public `1.0.1` ARM64 image, fresh data, actual GUI pull/create/login/reload/restart. The instructions below target 1.0.2 after publication; they do not turn that historical evidence into a 1.0.2 public-image test. This is a local desktop test, not certification of Linux/Windows Podman, `podman compose`, multicast discovery or Loxone LAN access. [Evidence and limits](RUNTIME-SUPPORT.md).
 
 1. In **Images → Pull an image**, enter `docker.io/dubctrl/hue2lox:1.0.2` (or the identical GHCR reference).
 2. Choose **Run Image → Create and start**. Keep the displayed defaults and port mapping. Stop an older test container if its host port is occupied; keep its data volume.
@@ -68,7 +68,7 @@ For custom DNS/reverse proxies, set `HUE_PUBLIC_URL` to the exact browser URL an
 
 Podman Desktop uses a Linux VM. Multicast may not cross its network. If discovery finds nothing, use **Bridges → No bridge found?** or enter the bridge IP; do not infer that a working GUI proves LAN discovery. A localhost URL cannot be used by a separate Loxone Miniserver. Pairing and real lamp effects need their own acceptance.
 
-Deutsch: **Podman Desktop 1.30.5 auf macOS ARM64** wurde mit dem öffentlichen 1.0.2-Image geprüft: **Images → Pull an image → Run Image → Create and start → Open Browser → admin/admin** bei frischen Daten. Standard-Portzuordnung beibehalten, tatsächlich angezeigte HTTP-Adresse verwenden; keine zusätzlichen URL-/TLS-Variablen erforderlich. Neuladen und Neustart desselben Containers sind geprüft. Erhaltene Daten behalten ihr Passwort. Der Linux-Installer und `podman compose` sind dadurch nicht freigegeben. [Versionsstatus](RUNTIME-SUPPORT.de.md).
+Deutsch: **Podman Desktop 1.30.5 auf macOS ARM64** wurde mit dem öffentlichen 1.0.1-Image geprüft; die folgenden Installationsangaben zielen nach Veröffentlichungsabschluss auf 1.0.2. Das ist noch keine 1.0.2-Registryabnahme: **Images → Pull an image → Run Image → Create and start → Open Browser → admin/admin** bei frischen Daten. Standard-Portzuordnung beibehalten, tatsächlich angezeigte HTTP-Adresse verwenden; keine zusätzlichen URL-/TLS-Variablen erforderlich. Neuladen und Neustart desselben Containers sind geprüft. Erhaltene Daten behalten ihr Passwort. Der Linux-Installer und `podman compose` sind dadurch nicht freigegeben. [Versionsstatus](RUNTIME-SUPPORT.de.md).
 
 The [named-volume CLI variant](acceptance/DESKTOP-1.0.1.md#additional-named-volume-cli-check) was also checked on macOS ARM64 with Podman client/VM engine 6.1.4. For a persistent local test with an explicitly named volume, use the Mac terminal
 (choose another container/volume name if occupied and a free localhost port; use the same port in the browser):

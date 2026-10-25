@@ -78,7 +78,7 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Hue2Lox1.0.2.** Enthält gemeinsamen Installer, lokale Suchhilfen, Szenen-Ein/Aus und die Anzeige der installierten Version. Die bisherige Hardwareabnahme gehört zu1.0.0/1.0.1; sie ist kein neuer1.0.2-Hardwaretest. Siehe [Release-Hinweise und tatsächlichen Prüfumfang](docs/RELEASE-NOTES-1.0.2.md). Versionierte Downloadbefehle erst nach erfolgreichem1.0.2-Veröffentlichungsabschluss verwenden.
+**Hue2Lox 1.0.2.** Enthält gemeinsamen Installer, lokale Suchhilfen, Szenen-Ein/Aus und die Anzeige der installierten Version. Die bisherige Hardwareabnahme gehört zu 1.0.0/1.0.1; sie ist kein neuer 1.0.2-Hardwaretest. Siehe [Release-Hinweise und tatsächlichen Prüfumfang](docs/RELEASE-NOTES-1.0.2.md). Versionierte Downloadbefehle erst nach erfolgreichem1.0.2-Veröffentlichungsabschluss verwenden.
 
 Versioniertes ZIP oder `1.0.2`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.2` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
 

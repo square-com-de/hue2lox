@@ -1,4 +1,4 @@
-**Use1.0.2 links only after its publication workflow succeeds. / Die1.0.2-Links erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
+**Use 1.0.2 links only after its publication workflow succeeds. / Die 1.0.2-Links erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
 
 **Release-Version / Release version: 1.0.2.** Der erfolgreiche Veröffentlichungsworkflow bestätigt Downloads, Prüfsummen und beide Registries; [Release-Hinweise](RELEASE-NOTES-1.0.2.md). / The successful publication workflow verifies downloads, checksums and both registries; see the release notes.
 
@@ -57,4 +57,4 @@ Die ZIP-Prüfbefehle oben wählen gezielt den ZIP-Eintrag aus der gemeinsamen Pr
 
 [RC5](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.5) remains published and unchanged at commit `45237512dcd18db9aaf3611173ce91ad8c654450`. [RC1](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.0-rc.1) remains unchanged at `1d631cd1231d7cf004c6452c1fad0c262ff92bfd`. / RC5 und RC1 bleiben unter ihren ursprünglichen Tags unverändert.
 
-Use the source commit and checksums recorded on the 1.0.2 release. Successful public verification must match these artifacts to the tested images. The scene on/off hardware acceptance on24October2026 belongs to1.0.0/1.0.1, not a new1.0.2 qualification. / Quellcommit und Prüfsummen beim 1.0.2-Release verwenden. Die öffentliche Prüfung muss diese Dateien den geprüften Images zuordnen. Die Szenen-Hardwareabnahme vom24.10.2026 gehört zu1.0.0/1.0.1, nicht zu einer neuen1.0.2-Abnahme.
+Use the source commit and checksums recorded on the 1.0.2 release. Successful public verification must match these artifacts to the tested images. The scene on/off hardware acceptance on24October2026 belongs to 1.0.0/1.0.1, not a new 1.0.2 qualification. / Quellcommit und Prüfsummen beim 1.0.2-Release verwenden. Die öffentliche Prüfung muss diese Dateien den geprüften Images zuordnen. Die Szenen-Hardwareabnahme vom24.10.2026 gehört zu 1.0.0/1.0.1, nicht zu einer neuen1.0.2-Abnahme.

@@ -4,11 +4,11 @@ Bevorzugt: Docker Compose innerhalb einer Linux-VM, etwa auf Proxmox. [Teststatu
 
 [English](CONTAINER-SETUP.md) · [Container-Anleitung](DOCKER.md) · [Linux-Installer](../INSTALL.de.md)
 
-Diese Hinweise gelten für das veröffentlichte Hue2Lox-Image ab **1.0.1**. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.
+Diese Schritte zielen auf **1.0.2 nach Veröffentlichungsabschluss**. Historische Abnahmen bleiben 1.0.1 zugeordnet; für das neue Artefakt gelten die 1.0.2-Nachweise. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.
 
 ## Schnellstart: Docker auf einem Linux-Server
 
-Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Die Befehle in diesem Ordner mit Docker-Rechten ausführen (etwa nach `su -` und anschließendem Wechsel in den Ordner). Der Download verwendet die öffentlich verfügbare, getestete Datei an einem festen Commit; er überschreibt keine bestehende Installation, wenn du wie beschrieben einen neuen Ordner verwendest:
+Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Die Befehle in diesem Ordner mit Docker-Rechten ausführen (etwa nach `su -` und anschließendem Wechsel in den Ordner). Der folgende Download bindet die Datei an den1.0.2-Release-Tag. Erst verwenden, wenn Tag, Datei und Image öffentlich verfügbar sind und der Veröffentlichungsworkflow erfolgreich ist. Ein neuer Ordner verhindert das Überschreiben einer bestehenden Installation. Historische1.0.1-Ablauftests sind separat dokumentiert:
 
 ```sh
 curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
