@@ -1,17 +1,19 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 # Container setup: login, storage, networking and HTTPS
 
 Preferred: Docker Compose inside a Linux VM, for example on Proxmox. [Test status and limits](RUNTIME-SUPPORT.md).
 
 [Deutsch](CONTAINER-SETUP.de.md) · [Container guide](DOCKER.md) · [Linux installer](../INSTALL.md)
 
-These steps target **1.0.2 after publication**. Historical acceptance remains tied to 1.0.1; use the 1.0.2 release evidence for new-artifact acceptance. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.
+These steps target **1.0.3 after publication**. Historical acceptance remains tied to 1.0.1; use the 1.0.3 release evidence for new-artifact acceptance. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.
 
 ## Quick start: Docker on a Linux server
 
-Docker Engine and Docker Compose must already be installed. Use a new directory and a free TCP port 18443. Run these commands from that directory with Docker permissions (for example, use `su -`, then change into the directory). The download below is bound to the1.0.2 release tag. Run it only after that tag, file and image are public and the publication workflow has succeeded; using a new directory avoids overwriting an existing installation. Historical1.0.1 procedure tests are documented separately:
+Docker Engine and Docker Compose must already be installed. Use a new directory and a free TCP port 18443. Run these commands from that directory with Docker permissions (for example, use `su -`, then change into the directory). The download below is bound to the1.0.3 release tag. Run it only after that tag, file and image are public and the publication workflow has succeeded; using a new directory avoids overwriting an existing installation. Historical1.0.1 procedure tests are documented separately:
 
 ```sh
-curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.3/docker/compose.quickstart.yaml &&
 docker compose up -d --wait &&
 docker compose ps
 ```
@@ -28,7 +30,7 @@ If port 18443 is already occupied, choose a free port with `HUE2LOX_HTTP_PORT=18
 
 | Setting | Value |
 |---|---|
-| Image | `docker.io/dubctrl/hue2lox:1.0.2` or `ghcr.io/square-com-de/hue2lox:1.0.2` |
+| Image | `docker.io/dubctrl/hue2lox:1.0.3` or `ghcr.io/square-com-de/hue2lox:1.0.3` |
 | Storage | Compose creates named volume `<project>_data` → container path `/data`, writable |
 | Published port | Free host port such as `18443` → container TCP port `8443` |
 | Browser | Without TLS, `http://SERVER-IP:18443`; on the same computer, `http://localhost:18443` also works |

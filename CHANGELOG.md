@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3 — unreleased / unveröffentlicht
+
+- Sidebar: retain only the dynamic Hue2Lox version; remove the green dot and redundant local-network/administration labels (#54).
+- Make offline source ZIP bytes independent of the host timezone using UTC for git archive; cross-timezone regression compares actual ZIP/native bytes (#55, fixes #44).
+- Explain HTTP container defaults, native HTTPS, exact configuration locations and a complete existing-Traefik Compose example in DE/EN (#56).
+- Simplify installation to Docker, Podman and a native installer; remove the AI installation prompts. Existing Docker-installer maintenance remains available.
+- Keine neue Lampenfunktion, Datenmigration oder Plattformfreigabe. No new lighting feature, data migration or platform certification. Historical releases remain unchanged.
+
 ## 1.0.2
 
 - Consolidate DE/EN runtime support and installation guidance; distinguish tested Podman Desktop 1.30.5/macOS ARM64 from Linux Docker/Compose and experimental native deployment.

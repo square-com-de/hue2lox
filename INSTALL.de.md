@@ -1,3 +1,5 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 # Hue2Lox installieren
 
 [English](INSTALL.md)
@@ -23,18 +25,18 @@ Auf dem Linux-Server zuerst `su -` ausführen und das Rootpasswort eingeben (Ubu
 ```sh
 apt update &&
 apt install -y --no-install-recommends ca-certificates curl unzip python3 openssl &&
-mkdir /root/hue2lox-native-1.0.2 &&
-cd /root/hue2lox-native-1.0.2 &&
-curl --fail --location --output hue2lox-v1.0.2.zip https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/hue2lox-v1.0.2.zip &&
-curl --fail --location --output hue2lox-1.0.2-native.tar.gz https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/hue2lox-1.0.2-native.tar.gz &&
-curl --fail --location --output SHA256SUMS.txt https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/SHA256SUMS.txt &&
-grep '  hue2lox-v1.0.2.zip$' SHA256SUMS.txt | sha256sum --check - &&
-grep '  hue2lox-1.0.2-native.tar.gz$' SHA256SUMS.txt | sha256sum --check - &&
-unzip -q hue2lox-v1.0.2.zip &&
-cd hue2lox-v1.0.2 &&
+mkdir /root/hue2lox-native-1.0.3 &&
+cd /root/hue2lox-native-1.0.3 &&
+curl --fail --location --output hue2lox-v1.0.3.zip https://github.com/square-com-de/hue2lox/releases/download/v1.0.3/hue2lox-v1.0.3.zip &&
+curl --fail --location --output hue2lox-1.0.3-native.tar.gz https://github.com/square-com-de/hue2lox/releases/download/v1.0.3/hue2lox-1.0.3-native.tar.gz &&
+curl --fail --location --output SHA256SUMS.txt https://github.com/square-com-de/hue2lox/releases/download/v1.0.3/SHA256SUMS.txt &&
+grep '  hue2lox-v1.0.3.zip$' SHA256SUMS.txt | sha256sum --check - &&
+grep '  hue2lox-1.0.3-native.tar.gz$' SHA256SUMS.txt | sha256sum --check - &&
+unzip -q hue2lox-v1.0.3.zip &&
+cd hue2lox-v1.0.3 &&
 bash install-assistant.sh --deployment native \
-  --native-package /root/hue2lox-native-1.0.2/hue2lox-1.0.2-native.tar.gz \
-  --native-sha256 "$(sha256sum /root/hue2lox-native-1.0.2/hue2lox-1.0.2-native.tar.gz | cut -d ' ' -f1)"
+  --native-package /root/hue2lox-native-1.0.3/hue2lox-1.0.3-native.tar.gz \
+  --native-sha256 "$(sha256sum /root/hue2lox-native-1.0.3/hue2lox-1.0.3-native.tar.gz | cut -d ' ' -f1)"
 ```
 
 Beide Dateien müssen vor dem Start `OK` anzeigen. Im Menü Voraussetzungen prüfen, Grundpakete bei Bedarf installieren, Paket prüfen und nativ mit der LAN-IP des Servers sowie einem freien Port installieren. Die ausgegebene HTTPS-Adresse öffnen, Zertifikatsfingerabdruck prüfen, mit `admin/admin` anmelden und das Passwort ändern. Erhaltene Daten behalten das bisherige Passwort.

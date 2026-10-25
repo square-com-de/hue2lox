@@ -188,7 +188,7 @@ Before creating a stable tag or publishing a GitHub stable release:
 4. Before tagging, run the offline check for the chosen version, for example:
 
    ```sh
-   python3 scripts/release-image.py check-readiness --version 1.0.2
+   python3 scripts/release-image.py check-readiness --version 1.0.3
    ```
 
    The example is not an instruction to reuse an existing tag. A blocked result is a release stop, not an installer error. Do not bypass it or blindly mark missing checks passed. RC preparation/source packages stay available without stable approval and must remain prereleases; no `latest` promotion.

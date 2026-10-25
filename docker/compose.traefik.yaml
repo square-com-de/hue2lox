@@ -4,7 +4,7 @@
 # Save as compose.yaml in your Hue2Lox project; preserve its existing data volume.
 services:
   hue2lox:
-    image: ghcr.io/square-com-de/hue2lox:1.0.2
+    image: ghcr.io/square-com-de/hue2lox:1.0.3
     restart: unless-stopped
     environment:
       HUE_PUBLIC_URL: "https://hue2lox.example.de"

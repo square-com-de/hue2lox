@@ -1,17 +1,19 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 # Container einrichten: Anmeldung, Speicher, Netzwerk und HTTPS
 
 Bevorzugt: Docker Compose innerhalb einer Linux-VM, etwa auf Proxmox. [Teststatus und Grenzen](RUNTIME-SUPPORT.de.md).
 
 [English](CONTAINER-SETUP.md) · [Container-Anleitung](DOCKER.md) · [Linux-Installer](../INSTALL.de.md)
 
-Diese Schritte zielen auf **1.0.2 nach Veröffentlichungsabschluss**. Historische Abnahmen bleiben 1.0.1 zugeordnet; für das neue Artefakt gelten die 1.0.2-Nachweise. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.
+Diese Schritte zielen auf **1.0.3 nach Veröffentlichungsabschluss**. Historische Abnahmen bleiben 1.0.1 zugeordnet; für das neue Artefakt gelten die 1.0.3-Nachweise. Sie unterscheiden einen schnellen Desktop-Test vom dauerhaften Betrieb. Ein Image-Download allein aktualisiert keinen vorhandenen Container.
 
 ## Schnellstart: Docker auf einem Linux-Server
 
-Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Die Befehle in diesem Ordner mit Docker-Rechten ausführen (etwa nach `su -` und anschließendem Wechsel in den Ordner). Der folgende Download bindet die Datei an den1.0.2-Release-Tag. Erst verwenden, wenn Tag, Datei und Image öffentlich verfügbar sind und der Veröffentlichungsworkflow erfolgreich ist. Ein neuer Ordner verhindert das Überschreiben einer bestehenden Installation. Historische1.0.1-Ablauftests sind separat dokumentiert:
+Docker Engine und Docker Compose müssen bereits installiert sein. Verwende einen neuen Ordner und einen freien TCP-Port 18443. Die Befehle in diesem Ordner mit Docker-Rechten ausführen (etwa nach `su -` und anschließendem Wechsel in den Ordner). Der folgende Download bindet die Datei an den1.0.3-Release-Tag. Erst verwenden, wenn Tag, Datei und Image öffentlich verfügbar sind und der Veröffentlichungsworkflow erfolgreich ist. Ein neuer Ordner verhindert das Überschreiben einer bestehenden Installation. Historische1.0.1-Ablauftests sind separat dokumentiert:
 
 ```sh
-curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.3/docker/compose.quickstart.yaml &&
 docker compose up -d --wait &&
 docker compose ps
 ```
@@ -28,7 +30,7 @@ Ist Port 18443 bereits belegt, wähle einen freien Port mit `HUE2LOX_HTTP_PORT=1
 
 | Einstellung | Was eintragen? |
 |---|---|
-| Image | `docker.io/dubctrl/hue2lox:1.0.2` oder `ghcr.io/square-com-de/hue2lox:1.0.2` |
+| Image | `docker.io/dubctrl/hue2lox:1.0.3` oder `ghcr.io/square-com-de/hue2lox:1.0.3` |
 | Speicher | Compose legt das benannte Volume `<Projekt>_data` an → Containerpfad `/data`, schreibbar |
 | Port bei Portweiterleitung | Freier Host-Port, etwa `18443` → Container-Port `8443` (TCP) |
 | Browser | Ohne TLS zunächst `http://SERVER-IP:18443`; auf demselben Computer auch `http://localhost:18443` |

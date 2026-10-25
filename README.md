@@ -1,3 +1,5 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 <p align="center"><a href="README.de.md">Deutsch</a> | <a href="README.md">English</a></p>
 
 <p align="center">
@@ -40,7 +42,7 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 
 | Installation path | Status | Guide |
 | --- | --- | --- |
-| **Docker Compose in a Linux VM** | Preferred container path: fixed **1.0.2**, persistent volume and matching browser URL. | [Container guide](docs/DOCKER.md#docker-compose) · [Setup](docs/CONTAINER-SETUP.md) |
+| **Docker Compose in a Linux VM** | Preferred container path: fixed **1.0.3**, persistent volume and matching browser URL. | [Container guide](docs/DOCKER.md#docker-compose) · [Setup](docs/CONTAINER-SETUP.md) |
 | Podman Desktop on macOS ARM64 | Separately tested local path, not blanket LAN/Proxmox acceptance. | [Accepted flow and limits](docs/DOCKER.md#podman-desktop-on-macos) |
 | Native without Docker | Guided native installer; experimental on explicitly tested amd64/systemd targets. | [Native guide](docs/INSTALL-NATIVE.en.md) |
 
@@ -51,19 +53,19 @@ Prerequisites: Linux with Docker Engine, the Compose plugin and curl; Docker per
 ```sh
 mkdir hue2lox &&
 cd hue2lox &&
-curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.3/docker/compose.quickstart.yaml &&
 docker compose up -d --wait &&
 docker compose ps
 ```
 
-Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN. For HTTPS with Traefik, see [configuration locations and the complete example](docs/CONTAINER-SETUP.md#http-or-https). Historical 1.0.1 VM acceptance used test port18444 in one fixture; the default remains18443. The1.0.2 artifact has its own acceptance scope in the release notes.
+Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN. For HTTPS with Traefik, see [configuration locations and the complete example](docs/CONTAINER-SETUP.md#http-or-https). Historical 1.0.1 VM acceptance used test port18444 in one fixture; the default remains18443. The1.0.3 artifact has its own acceptance scope in the release notes.
 
 1. **Prepare the container:** Start the [Compose quick-start file](docker/compose.quickstart.yaml) using the [short guide](docs/CONTAINER-SETUP.md). Docker/Compose must be installed and port 18443 free. Browser login and persistence were independently checked; see [exact test scope and limits](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
 3. **Configure the bridge:** it must be reachable from the container. Failed multicast discovery differs from failed direct connectivity; manual IP entry cannot bypass a network block.
 4. **Connect Loxone:** use the [illustrated commands/XML guide](docs/TUTORIAL.md). Import new digital commands for scene OFF; existing recall outputs are not rewritten.
 
-**Already installed?** Use [backup, update and rollback](docs/UPDATE-DOCKER.md), not the fresh installer. Pull and restart do not replace an existing container. Handle custom Portainer/Compose stacks separately; preserve passwords and intentionally disabled controls. [1.0.2 downloads/checksums](docs/DOWNLOADS.md) · [Release notes](docs/RELEASE-NOTES-1.0.2.md). There is no dedicated LoxBerry plugin yet.
+**Already installed?** Use [backup, update and rollback](docs/UPDATE-DOCKER.md), not the fresh installer. Pull and restart do not replace an existing container. Handle custom Portainer/Compose stacks separately; preserve passwords and intentionally disabled controls. [1.0.3 downloads/checksums](docs/DOWNLOADS.md) · [Release notes](docs/RELEASE-NOTES-1.0.3.md). There is no dedicated LoxBerry plugin yet.
 
 ## Feedback & contact
 
@@ -77,9 +79,9 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Hue2Lox 1.0.2.** Includes the native installation path, local discovery help, scene on/off and an installed-version display. Prior hardware acceptance belongs to 1.0.0/1.0.1; it is not a new 1.0.2 hardware test. See [release notes and actual acceptance scope](docs/RELEASE-NOTES-1.0.2.md). Use the versioned download commands below only after 1.0.2 publication completes.
+**Hue2Lox 1.0.3 — in Vorbereitung / unreleased.** Includes the native installation path, local discovery help, scene on/off and an installed-version display. Prior hardware acceptance belongs to 1.0.0/1.0.1; it is not a new 1.0.3 hardware test. See [release notes and actual acceptance scope](docs/RELEASE-NOTES-1.0.3.md). Use the versioned download commands below only after 1.0.3 publication completes.
 
-Use the versioned ZIP or `1.0.2` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.2` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
+Use the versioned ZIP or `1.0.3` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.3` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
 
 Create and edit scenes in the Hue app. [Scene on/off](docs/features/SCENE-SWITCH.md) activates a scene and switches off its assigned group. Existing recall commands keep working; import the new digital commands to use OFF. Actual light-state feedback into the Loxone Lighting Controller is not included.
 
