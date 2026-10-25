@@ -40,9 +40,7 @@
       },
       "valid_token_write_blocked": true,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
-        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": true
@@ -61,9 +59,7 @@
       },
       "valid_token_write_blocked": true,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
-        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": true
@@ -82,9 +78,7 @@
       },
       "valid_token_write_blocked": true,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
-        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": true
@@ -103,9 +97,7 @@
       },
       "valid_token_write_blocked": true,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
-        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": true
@@ -124,9 +116,7 @@
       },
       "valid_token_write_blocked": true,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "465ce1538663506bb182589224375d2bc896c6c0d03424c57913404bc6adad5c",
-        "secrets/control_token": "3e53cf9e5d7dd1b47c2b917506e4fbd3108083202e8ba52048b0165ceda099cb"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": true
@@ -145,9 +135,7 @@
       },
       "valid_token_write_blocked": null,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "e94bbdd84271095d26f59b3b686f1579a2b5154e0d5b46c5aebb0f68f210a5d1",
-        "secrets/control_token": "d79ed84592c0ded4ffd4592139b27398a0d6f413f513a5df40605e5e602ebe04"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": false
@@ -166,9 +154,7 @@
       },
       "valid_token_write_blocked": null,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "f44e6bfb85efffb6e2907f540a7befb81cd71eda20fcbc3a2408f06d98ac19d4",
-        "secrets/control_token": "fd890eb57e4e825e9f5efc760dca8a749539019a7634a29df12b918967b9b823"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": false
@@ -187,9 +173,7 @@
       },
       "valid_token_write_blocked": null,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "f44e6bfb85efffb6e2907f540a7befb81cd71eda20fcbc3a2408f06d98ac19d4",
-        "secrets/control_token": "fd890eb57e4e825e9f5efc760dca8a749539019a7634a29df12b918967b9b823"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": false
@@ -208,9 +192,7 @@
       },
       "valid_token_write_blocked": null,
       "state_hashes": {
-        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57",
-        "admin_auth.json": "f44e6bfb85efffb6e2907f540a7befb81cd71eda20fcbc3a2408f06d98ac19d4",
-        "secrets/control_token": "fd890eb57e4e825e9f5efc760dca8a749539019a7634a29df12b918967b9b823"
+        "registry.json": "f615765423de4ee9408a070a5466aafd99fa62b33164e62ea0e6b19f29fd4b57"
       },
       "data_writable": true,
       "public_url": false
@@ -319,5 +301,10 @@
   "release_published": false,
   "isolation_preserved": true,
   "executed_checker_sha256": "75fedbd92c5111ade3bb7adcac6ab13564c80c55becc5251c57bfacfc0886aed",
-  "executed_recovery_script_sha256": "2c16a05118272b9f4daf35f1438c24e32498587be616f030e7fd77614c4ff092"
+  "executed_recovery_script_sha256": "2c16a05118272b9f4daf35f1438c24e32498587be616f030e7fd77614c4ff092",
+  "public_evidence_redaction": {
+    "credential_file_digests_omitted": true,
+    "private_original_receipts_retained": true,
+    "note": "Credential-file SHA256 values omitted from public receipts. Existing boolean lifecycle assertions and non-credential integrity receipts retained."
+  }
 }
