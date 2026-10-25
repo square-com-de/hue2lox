@@ -158,7 +158,8 @@ def prepare_source_packages(info, assets):
     assets = assets.resolve()
     source_name = 'hue2lox-' + info['tag']
     subprocess.run(['git', '-c', 'safe.directory=' + source, 'archive', '--format=zip', '--prefix=' + source_name + '/',
-                    '--output=' + str(assets / (source_name + '.zip')), info['commit']], check=True)
+                    '--output=' + str(assets / (source_name + '.zip')), info['commit']],
+                   check=True, env={**os.environ, 'TZ': 'UTC'})
     # A clean local clone excludes dirty/untracked files and artifact downloads.
     # Do not mutate the release checkout or manufacture a commit for a ZIP tree.
     with tempfile.TemporaryDirectory(prefix='hue2lox-release-native-') as temporary:
