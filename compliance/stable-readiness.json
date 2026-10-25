@@ -1,24 +1,42 @@
 {
   "schema_version": 1,
-  "version": null,
-  "approved": false,
+  "version": "1.0.2",
+  "approved": true,
   "checks": {
     "documentation_review": {
-      "passed": false,
-      "evidence": []
+      "passed": true,
+      "evidence": [
+        "https://github.com/square-com-de/hue2lox/pull/48",
+        "https://github.com/square-com-de/hue2lox/pull/52"
+      ],
+      "scope": "Independent review of accepted1.0.2content including final DE/EN scope corrections and exact download/image versions."
     },
     "published_user_flow": {
-      "passed": false,
-      "evidence": []
+      "passed": true,
+      "evidence": [
+        "https://github.com/square-com-de/hue2lox/pull/48",
+        "https://github.com/square-com-de/hue2lox/issues/51"
+      ],
+      "scope": "Actual unpublished1.0.2candidate login/version/restart and DE/EN browser checks, tied to accepted source content. Anonymous final registry/assets verification and actual-final-artifact deployment checks remain mandatory after publication; no1.0.1test relabelled."
     },
     "update_recovery": {
-      "passed": false,
-      "evidence": []
+      "passed": true,
+      "evidence": [
+        "https://github.com/square-com-de/hue2lox/issues/51",
+        "https://github.com/square-com-de/hue2lox/pull/48",
+        "https://github.com/square-com-de/hue2lox/pull/52"
+      ],
+      "scope": "Actual1.0.2candidate existing-password/data preservation, restart, rollback to1.0.1and return; current CI update/package/systemd checks. Historical disabled-flag evidence remains separately scoped; no new hardware claim."
     },
     "support_scope": {
-      "passed": false,
-      "evidence": []
+      "passed": true,
+      "evidence": [
+        "https://github.com/square-com-de/hue2lox/pull/48",
+        "https://github.com/square-com-de/hue2lox/issues/51"
+      ],
+      "scope": "Linux Docker preferred; native experimental/amd64; Podman only documented historical scope. Real hardware remains human-owned; this is authorized patch publication/rollout, not blanket hardware/platform qualification."
     }
   },
-  "source_sha256": null
+  "source_sha256": "a7452a5490ea7084070da242323d7446f51d5a6cae7ad406be9dc31f3a88284f",
+  "approval_basis": "Explicit operator instruction to finish the complete agreed update on test and production; independent final source review, green CI and new candidate lifecycle acceptance. Preserve old releases and verify final new artifact identities separately."
 }
