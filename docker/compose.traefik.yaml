@@ -1,0 +1,40 @@
+# Example for an EXISTING Traefik Docker provider on the same Docker host.
+# Replace the hostname, websecure entrypoint and actual external network name.
+# Traefik must already have a trusted certificate (or a configured resolver).
+# Save as compose.yaml in your Hue2Lox project; preserve its existing data volume.
+services:
+  hue2lox:
+    image: ghcr.io/square-com-de/hue2lox:1.0.2
+    restart: unless-stopped
+    environment:
+      HUE_PUBLIC_URL: "https://hue2lox.example.de"
+      # No TLS_CERT/TLS_KEY: Traefik terminates TLS, backend uses HTTP on 8443.
+    volumes:
+      - data:/data
+    networks:
+      - proxy
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "proxy"
+      traefik.http.routers.hue2lox.rule: "Host(`hue2lox.example.de`)"
+      traefik.http.routers.hue2lox.entrypoints: "websecure"
+      traefik.http.routers.hue2lox.tls: "true"
+      # Optional: use the name of an ALREADY configured certificate resolver.
+      # traefik.http.routers.hue2lox.tls.certresolver: "letsencrypt"
+      traefik.http.routers.hue2lox.service: "hue2lox"
+      traefik.http.services.hue2lox.loadbalancer.server.port: "8443"
+      traefik.http.services.hue2lox.loadbalancer.server.scheme: "http"
+      traefik.http.services.hue2lox.loadbalancer.passhostheader: "true"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  data:
+networks:
+  proxy:
+    external: true
+    name: proxy

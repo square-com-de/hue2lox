@@ -22,8 +22,8 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 - Lampen und Szenen nach Bridge und Raum filtern, ignorieren und wieder einblenden.
 - Loxone-HTTP-Befehle kopieren oder eine Auswahl als XML exportieren.
 - Loxone-Anfragen mit einem zeitlich begrenzten, bereinigten HTTP-Monitor prüfen.
-- Lokal über HTTPS verwalten – ohne Cloudkonto für den laufenden Betrieb.
-- Gemeinsamer Docker-/nativer Installer und lokale Suchhilfen für macOS, Windows und Linux.
+- Lokal verwalten: HTTP im Container, optional HTTPS über einen Reverse Proxy; nativ mit HTTPS.
+- Docker- und Podman-Container, nativer Installer sowie lokale Suchhilfen für macOS, Windows und Linux.
 - Szenen als digitale Ein/Aus-Lichtkreise mit automatisch zugeordneten, eindeutig passenden Gruppen.
 
 ## So sieht es aus
@@ -41,9 +41,8 @@ Alles bleibt übersichtlich: mehrere Bridges, deine Lampen und Szenen in einer O
 | Installationsweg | Einordnung | Anleitung |
 | --- | --- | --- |
 | **Docker Compose auf Linux-VM** | Bevorzugter Containerweg, feste Version **1.0.2**, dauerhaftes Volume und zur Browseradresse passende Konfiguration. | [Container-Anleitung](docs/DOCKER.md#docker-compose) · [Einrichtung DE](docs/CONTAINER-SETUP.de.md) |
-| Geführter Docker-Installer | Alternative für geführte Einrichtung mit direktem HTTPS; festes Image oder lokaler Build. | [Linux-Installer](INSTALL.de.md) |
 | Podman Desktop auf macOS ARM64 | Separat geprüfter lokaler Testweg, keine pauschale LAN-/Proxmox-Freigabe. | [Geprüfter Ablauf und Grenzen](docs/DOCKER.md#podman-desktop-on-macos) |
-| Nativ ohne Docker | Experimentelle Alternative für ausdrücklich geprüfte amd64-systemd-Ziele. | [Native Anleitung](docs/INSTALL-NATIVE.md) |
+| Nativ ohne Docker | Geführter nativer Installer; experimentell auf ausdrücklich geprüften amd64-systemd-Zielen. | [Native Anleitung](docs/INSTALL-NATIVE.md) |
 
 ### Einfach starten
 
@@ -57,7 +56,7 @@ docker compose up -d --wait &&
 docker compose ps
 ```
 
-Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht; HTTPS und weitere Einstellungen sind optional in der [Container-Anleitung](docs/CONTAINER-SETUP.de.md) erklärt. Eine historische 1.0.1-VM-Abnahme verwendete Testport **18444**; die normale Vorgabe bleibt 18443. Für das 1.0.2-Artefakt gilt der eigene Prüfumfang der Release-Hinweise.
+Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht. Für HTTPS mit Traefik: [Konfigurationsort und vollständiges Beispiel](docs/CONTAINER-SETUP.de.md#http-oder-https). Eine historische 1.0.1-VM-Abnahme verwendete Testport **18444**; die normale Vorgabe bleibt 18443. Für das 1.0.2-Artefakt gilt der eigene Prüfumfang der Release-Hinweise.
 
 1. **Container vorbereiten:** Die [Compose-Schnellstartdatei](docker/compose.quickstart.yaml) nach der [kurzen Anleitung](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) starten. Docker/Compose müssen vorhanden und Port 18443 frei sein. Browserlogin und Datenerhalt sind unabhängig geprüft; [genauer Testumfang und Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Anmelden:** Angezeigte HTTP-/HTTPS-Adresse verwenden; Port 8443 allein bedeutet kein HTTPS. Frische Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Bei HTTPS das Zertifikat prüfen.
@@ -78,7 +77,7 @@ Bei Problemen helfen die Hue2Lox-Version, eine kurze Beschreibung und gegebenenf
 
 ## Release-Status und technische Hinweise
 
-**Hue2Lox 1.0.2.** Enthält gemeinsamen Installer, lokale Suchhilfen, Szenen-Ein/Aus und die Anzeige der installierten Version. Die bisherige Hardwareabnahme gehört zu 1.0.0/1.0.1; sie ist kein neuer 1.0.2-Hardwaretest. Siehe [Release-Hinweise und tatsächlichen Prüfumfang](docs/RELEASE-NOTES-1.0.2.md). Versionierte Downloadbefehle erst nach erfolgreichem1.0.2-Veröffentlichungsabschluss verwenden.
+**Hue2Lox 1.0.2.** Enthält den nativen Installationsweg, lokale Suchhilfen, Szenen-Ein/Aus und die Anzeige der installierten Version. Die bisherige Hardwareabnahme gehört zu 1.0.0/1.0.1; sie ist kein neuer 1.0.2-Hardwaretest. Siehe [Release-Hinweise und tatsächlichen Prüfumfang](docs/RELEASE-NOTES-1.0.2.md). Versionierte Downloadbefehle erst nach erfolgreichem1.0.2-Veröffentlichungsabschluss verwenden.
 
 Versioniertes ZIP oder `1.0.2`-Images von Docker Hub/GHCR verwenden (AMD64/ARM64). `latest` folgt dem neuesten erfolgreich geprüften Stable-Release; für reproduzierbare Installationen `1.0.2` fest einstellen. Nativ bleibt experimentell und auf amd64 beschränkt. Frühere RC-Pakete bleiben unverändert.
 

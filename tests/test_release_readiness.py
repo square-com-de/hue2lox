@@ -12,7 +12,7 @@ class ReleaseReadinessTests(unittest.TestCase):
         version = json.loads((ROOT / 'install/release-image.json').read_text())['version']
         self.assertIn('ghcr.io/square-com-de/hue2lox:' + version,
                       (ROOT / 'docker/compose.image.yaml').read_text())
-        for name in ('INSTALL.md', 'INSTALL.de.md', 'docs/AI-INSTALL.md', 'docs/AI-INSTALL.de.md', 'docs/DOWNLOADS.md'):
+        for name in ('INSTALL.md', 'INSTALL.de.md', 'docs/DOWNLOADS.md'):
             with self.subTest(name=name):
                 self.assertIn('hue2lox-v' + version + '.zip', (ROOT / name).read_text())
         for name in ('docs/INSTALL-NATIVE.md', 'docs/INSTALL-NATIVE.en.md'):

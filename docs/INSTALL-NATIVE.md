@@ -1,39 +1,24 @@
 # Native Linux-Installation ohne Docker
 
-Die Web-App enthält auch die optionale lokale Discovery-Hilfe für macOS, Windows und Linux. Sie ist in nativen Paketen und lokalen Docker-Builds dieses Entwicklungsstands enthalten. Ein über den Assistenten ausgewähltes veröffentlichtes RC5-Image enthält diese neue Hilfe noch nicht. Die Hilfsbefehle werden bewusst auf dem Rechner im lokalen Netz ausgeführt; der Installer startet keine Gerätesuche.
+[English](INSTALL-NATIVE.en.md) · [Alle Installationswege](../INSTALL.de.md)
 
-[English](INSTALL-NATIVE.en.md) · [Dockerinstallation](../INSTALL.de.md)
+Nativ verwendet denselben Anwendungskern und dieselbe Oberfläche wie die Container. Der native Weg bleibt experimentell: Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe. Docker und Podman werden direkt als Container eingerichtet, der Assistent wird für nativ angeboten.
 
-Dieser zusätzliche Betriebsweg auf main verwendet denselben Anwendungskern und dieselbe Oberfläche wie Docker. RC1 bleibt unverändert. Für 1.0.2 das versionierte native Archiv samt Prüfsumme zusätzlich zum Quell-ZIP verwenden; Details im 1.0.2-Abschnitt unten. **Der native Weg ist experimentell.** Explizite Testziele sind Debian 12/13, Ubuntu 24.04/26.04 und DietPi auf Debian 12/13, derzeit nur amd64. Ein Testziel ist keine bestätigte Hardwarefreigabe.
+## Nativer interaktiver Installer
 
-## Gemeinsamer interaktiver Installer (Entwicklung)
-
-RC5 bleibt unverändert und enthält diesen nativen Installer nicht. Verwende einen sauberen, geprüften main-Checkout nach Integration von PR #18 und notiere die genaue Commit-ID. Kein veränderlicher main-Download gilt als freigegebenes natives Paket. Den vorhandenen Assistenten als root starten (`su -`, auf Ubuntu gegebenenfalls `sudo -i`):
-
-```sh
-bash /absoluter/pfad/zu/hue2lox/install-assistant.sh
-```
-
-Nach der Sprachwahl **Mit Docker** oder **Nativ, ohne Docker** wählen. Der Dockerweg behält seine vorhandene HTTP-/HTTPS- und Proxy-Auswahl. Das native Menü bietet:
-
-1. Plattform und Voraussetzungen nur lesend anzeigen.
-2. SSH bei Bedarf einrichten.
-3. Grundpakete ausdrücklich installieren (kein Docker-Repository und keine Docker-Installation).
-4. Entwicklungspaket lokal aus dem sauberen Git-Checkout vorbereiten. Der Assistent erfasst den Commit, berechnet und prüft die Paketprüfsumme und entfernt sein temporäres Paketverzeichnis beim Beenden.
-5. Nach IP-/HTTPS-Port-Auswahl und Bestätigung nativ installieren. Für direkten Browserzugriff die LAN-Adresse des Servers verwenden; Loopback ist über die manuelle Adresseingabe möglich. Ein Tunnel ist nur für Fernzugriff auf einen Loopback-Listener erforderlich.
-6. HTTPS des vorhandenen nativen Dienstes mit Zertifikatsprüfung testen (keine Gerätekopplung).
-7. Wartung: Update mit Sicherung, Wiederinstallation mit Datenerhalt, ausdrückliches Rollback oder Deinstallation mit Datenerhalt. Rollback stellt auch den früheren Passwortstand wieder her. Das Menü bietet keine vollständige Datenlöschung an.
-
-Für ein separat erhaltenes natives Archiv dessen unabhängig geprüfte SHA-256 übergeben:
+Für die veröffentlichte Version **1.0.2** zuerst [Quell-ZIP und natives Archiv herunterladen und prüfen](../INSTALL.de.md#nativer-installer). Mit `--deployment native` startet der Assistent direkt im nativen Modus, ohne Docker-Auswahl:
 
 ```sh
 bash /absoluter/pfad/zu/hue2lox/install-assistant.sh --deployment native \
-  --native-package /absoluter/pfad/native.tar.gz --native-sha256 GEPRUEFTER_SHA256
+  --native-package /absoluter/pfad/hue2lox-1.0.2-native.tar.gz \
+  --native-sha256 GEPRUEFTER_SHA256
 ```
 
-Ein Quell-ZIP ohne Git-Identität erfindet keinen Commit und lädt kein main nach. Der native Paketschritt fragt stattdessen nach einem geprüften Archiv und dessen SHA-256. Es gibt noch kein veröffentlichtes natives Release-Asset. Ein vorbereitetes Entwicklungspaket heißt `0.0.0-dev.<commit>`; es ist kein Release. Bei einem Codeupdate den Assistenten aus dem neu geprüften Checkout neu starten. Wiederinstallation benötigt dieselbe Paketidentität wie der erhaltene Datenstand; gegebenenfalls das frühere geprüfte Archiv verwenden. Native Datenpfade bleiben fest und sind unabhängig vom Docker-Installationsordner.
+Das Menü prüft Voraussetzungen, richtet bei Bedarf Grundpakete ein, prüft das Archiv und installiert nach IP-/Port-Auswahl. Es bietet auch HTTPS-Prüfung, Update mit Sicherung, Wiederinstallation mit Datenerhalt, Rollback und Deinstallation mit Datenerhalt. Rollback stellt den damaligen Passwortstand wieder her. Der Assistent startet keine Gerätesuche.
 
-Die optionale Auswahl `--check --deployment native` ist nur lesend. Backend-Auswahl und Statusanzeige allein ändern keine Installation. Die reale Ubuntu-26.04-/DietPi-13-amd64-Abnahme ist bestanden, einschließlich echtem Codewechsel und Rollback. Sie gilt für den exakt protokollierten Stand; native Hardwaretests bleiben separat offen. Siehe [aktuelle Deployment-Abnahme](https://github.com/square-com-de/hue2lox/blob/main/docs/DEPLOYMENT-ACCEPTANCE.md).
+Das native Standardprofil verwendet direktes HTTPS mit selbstsigniertem Zertifikat. Konfiguration: `/etc/hue2lox/settings.env`. Die Verwaltungswerkzeuge erwarten HTTPS an der konfigurierten IPv4-Adresse; für Traefik den [Containerweg](CONTAINER-SETUP.de.md#http-oder-https) verwenden. Ein natives Proxyprofil ist derzeit nicht enthalten.
+
+Für Entwicklungspakete aus einem sauberen, geprüften Git-Checkout kann derselbe Assistent lokal ein `0.0.0-dev.<commit>`-Paket vorbereiten. Das ist kein Release. Ein Quell-ZIP erfindet keine Git-Identität und lädt kein main nach. Wiederinstallation benötigt dieselbe Paketidentität wie der erhaltene Datenstand. [Protokollierte Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md).
 
 ## Voraussetzungen und Grenzen
 
@@ -43,7 +28,7 @@ Der native Installer richtet einen Systemdienst und Systemverzeichnisse ein. Nic
 
 ## Paket vorbereiten
 
-Bis ein natives Release verfügbar ist, erstellt ein Entwickler aus einem geprüften Checkout ein Paket:
+Nur für Entwicklung: Ein Entwickler erstellt aus einem geprüften Checkout ein Paket:
 
 ```sh
 python3 scripts/build-native-package.py --version VERSION --output /tmp/hue2lox-native-package

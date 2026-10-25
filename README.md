@@ -22,8 +22,8 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 - Filter by bridge and room; ignore and restore lights or scenes.
 - Copy Loxone HTTP commands or export a selection as XML.
 - Inspect incoming requests in a temporary, sanitized HTTP monitor.
-- Manage locally over HTTPS without a cloud account for normal operation.
-- Shared Docker/native installer and local discovery helpers for macOS, Windows and Linux.
+- Manage locally over HTTP, optionally HTTPS through a reverse proxy; native installations use HTTPS.
+- Docker and Podman containers, a native installer and local discovery helpers for macOS, Windows and Linux.
 - Scenes as digital on/off circuits, with automatic assignment of uniquely matching groups.
 
 ## Preview
@@ -41,9 +41,8 @@ Keep everything in view: multiple bridges, your lights and scenes in one interfa
 | Installation path | Status | Guide |
 | --- | --- | --- |
 | **Docker Compose in a Linux VM** | Preferred container path: fixed **1.0.2**, persistent volume and matching browser URL. | [Container guide](docs/DOCKER.md#docker-compose) · [Setup](docs/CONTAINER-SETUP.md) |
-| Guided Docker installer | Alternative guided setup with direct HTTPS, fixed image or local build. | [Linux installer](INSTALL.md) |
 | Podman Desktop on macOS ARM64 | Separately tested local path, not blanket LAN/Proxmox acceptance. | [Accepted flow and limits](docs/DOCKER.md#podman-desktop-on-macos) |
-| Native without Docker | Experimental alternative for explicitly tested amd64/systemd targets. | [Native guide](docs/INSTALL-NATIVE.en.md) |
+| Native without Docker | Guided native installer; experimental on explicitly tested amd64/systemd targets. | [Native guide](docs/INSTALL-NATIVE.en.md) |
 
 ### Simple start
 
@@ -57,7 +56,7 @@ docker compose up -d --wait &&
 docker compose ps
 ```
 
-Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN; HTTPS and other optional settings are described in the [container guide](docs/CONTAINER-SETUP.md). Historical 1.0.1 VM acceptance used test port18444 in one fixture; the default remains18443. The1.0.2 artifact has its own acceptance scope in the release notes.
+Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN. For HTTPS with Traefik, see [configuration locations and the complete example](docs/CONTAINER-SETUP.md#http-or-https). Historical 1.0.1 VM acceptance used test port18444 in one fixture; the default remains18443. The1.0.2 artifact has its own acceptance scope in the release notes.
 
 1. **Prepare the container:** Start the [Compose quick-start file](docker/compose.quickstart.yaml) using the [short guide](docs/CONTAINER-SETUP.md). Docker/Compose must be installed and port 18443 free. Browser login and persistence were independently checked; see [exact test scope and limits](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
@@ -78,7 +77,7 @@ For problems, include your Hue2Lox version, a short description and, if useful, 
 
 ## Release status and technical notes
 
-**Hue2Lox 1.0.2.** Includes the shared installer, local discovery help, scene on/off and an installed-version display. Prior hardware acceptance belongs to 1.0.0/1.0.1; it is not a new 1.0.2 hardware test. See [release notes and actual acceptance scope](docs/RELEASE-NOTES-1.0.2.md). Use the versioned download commands below only after 1.0.2 publication completes.
+**Hue2Lox 1.0.2.** Includes the native installation path, local discovery help, scene on/off and an installed-version display. Prior hardware acceptance belongs to 1.0.0/1.0.1; it is not a new 1.0.2 hardware test. See [release notes and actual acceptance scope](docs/RELEASE-NOTES-1.0.2.md). Use the versioned download commands below only after 1.0.2 publication completes.
 
 Use the versioned ZIP or `1.0.2` images from Docker Hub/GHCR (AMD64/ARM64). `latest` follows the latest successfully verified stable release; pin `1.0.2` for reproducible deployments. Native operation remains experimental and amd64-only. Earlier RC packages stay unchanged.
 

@@ -1,39 +1,24 @@
 # Native Linux installation without Docker
 
-The web app also includes optional local discovery help for macOS, Windows and Linux. It is included in native packages and local Docker builds of this development checkout. A published RC5 image selected in the assistant does not yet include this new help. Users explicitly run the helper commands on their computer on the local network; the installer does not start device discovery.
+[Deutsch](INSTALL-NATIVE.md) · [All installation paths](../INSTALL.md)
 
-[Deutsch](INSTALL-NATIVE.md) · [Docker installation](../INSTALL.md)
+Native uses the same application core and interface as the containers. It remains experimental: Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, amd64 only. A test target is not hardware certification. Docker and Podman run directly as containers; the assistant is offered for native installation.
 
-This additional deployment on main uses the same application and interface as Docker. RC1 remains unchanged. For 1.0.2, use the versioned native archive and checksum alongside the source ZIP; see the 1.0.2 section below. **The native path is experimental.** Explicit test targets are Debian 12/13, Ubuntu 24.04/26.04 and DietPi on Debian 12/13, currently amd64 only. This is not hardware approval.
+## Native interactive installer
 
-## Shared interactive installer (development)
-
-RC5 remains unchanged and does not include this native installer. Use a clean, reviewed main checkout after the PR #18 merge and record its exact commit. Do not use a mutable main download as a released native package. Start the existing assistant as root (`su -`, or `sudo -i` on Ubuntu):
-
-```sh
-bash /absolute/path/to/hue2lox/install-assistant.sh
-```
-
-After language selection choose **With Docker** or **Native, without Docker**. The Docker menu retains its existing HTTP/HTTPS and proxy options. The native menu provides:
-
-1. Read-only platform/prerequisite status.
-2. Optional SSH setup.
-3. Explicit base-package installation (no Docker repository or Docker installation).
-4. Local preparation of a development package from the clean Git checkout. The assistant records the commit, computes and verifies the package checksum and removes its temporary package directory when it exits.
-5. Native installation after IP/HTTPS-port selection and explicit confirmation. Use the server's LAN address for direct browser access; loopback is also available via manual address entry. A tunnel is required only for remote access to a loopback listener.
-6. Verified HTTPS check of the existing native service (does not pair devices).
-7. Maintenance: update with backup, reinstall retaining data, explicit rollback, or uninstall retaining data. Rollback restores the historical private data including passwords. There is no purge option in the menu.
-
-For a separately obtained native archive, pass its independently checked SHA-256:
+For published **1.0.2**, first [download and verify the source ZIP and native archive](../INSTALL.md#native-installer). `--deployment native` opens the native mode directly without Docker selection:
 
 ```sh
 bash /absolute/path/to/hue2lox/install-assistant.sh --deployment native \
-  --native-package /absolute/path/native.tar.gz --native-sha256 VERIFIED_SHA256
+  --native-package /absolute/path/hue2lox-1.0.2-native.tar.gz \
+  --native-sha256 VERIFIED_SHA256
 ```
 
-A source ZIP without Git identity does not fabricate a source commit or download main. The native package step instead asks for a verified archive and its SHA-256. No native release asset is published yet. A prepared development package uses `0.0.0-dev.<commit>`; it is not a release. Restart the assistant from the newly reviewed checkout when updating code. Reinstall requires the same package identity as the retained data; use the old verified archive when necessary. Native data paths remain fixed and are independent of the Docker installation directory.
+The menu checks prerequisites, optionally installs base packages, verifies the archive and installs after IP/port selection. It also provides HTTPS checks, update with backup, reinstall retaining data, rollback and uninstall retaining data. Rollback restores the historical password state. The assistant does not discover devices.
 
-The optional `--check --deployment native` is read-only. No installation changes occur merely by selecting a backend or viewing status. Real Ubuntu 26.04/DietPi 13 amd64 acceptance passed, including actual code update and rollback. It applies to the recorded commit; native hardware tests remain separately open. See [current deployment acceptance](https://github.com/square-com-de/hue2lox/blob/main/docs/DEPLOYMENT-ACCEPTANCE.md).
+The native default profile uses direct HTTPS with a self-signed certificate. Configuration lives in `/etc/hue2lox/settings.env`. Management tools require HTTPS at the configured IPv4 address; use the [container path for Traefik](CONTAINER-SETUP.md#http-or-https). A native proxy profile is currently not included.
+
+For development, the assistant can prepare a local `0.0.0-dev.<commit>` package from a clean reviewed Git checkout. This is not a release. A source ZIP does not fabricate Git identity or download main. Reinstall requires the same package identity as retained data. [Recorded deployment acceptance](DEPLOYMENT-ACCEPTANCE.md).
 
 ## Requirements and limits
 
@@ -43,7 +28,7 @@ The installer creates a system service and system directories. Do not try it on 
 
 ## Prepare a package
 
-Until a native release exists, a developer builds a package from a reviewed checkout:
+For development only, a developer builds a package from a reviewed checkout:
 
 ```sh
 python3 scripts/build-native-package.py --version VERSION --output /tmp/hue2lox-native-package

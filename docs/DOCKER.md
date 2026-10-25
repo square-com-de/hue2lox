@@ -6,7 +6,7 @@
 
 **Start here:** [Storage, login, networking and HTTPS](CONTAINER-SETUP.md) · [Speicher, Anmeldung, Netzwerk und HTTPS (Deutsch)](CONTAINER-SETUP.de.md).
 
-For Linux Docker Engine hosts; Unraid/Synology examples below are integration examples, not independent platform acceptance. See the [runtime matrix](RUNTIME-SUPPORT.md). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
+For Linux Docker Engine hosts. See the [runtime matrix](RUNTIME-SUPPORT.md). For installation without containers, use the [native installer](../INSTALL.md#native-installer).
 
 Stable 1.0.2 provides identical images at `docker.io/dubctrl/hue2lox:1.0.2` and
 `ghcr.io/square-com-de/hue2lox:1.0.2` for
@@ -30,11 +30,13 @@ publish images. See [GHCR-RELEASE.md](GHCR-RELEASE.md).
 
 ## HTTP and HTTPS
 
+**Where to configure it:** edit `environment:` in your Hue2Lox `compose.yaml`, or the container environment in Podman Desktop. See the [exact configuration locations and complete Traefik template](CONTAINER-SETUP.md#http-or-https). `HUE_PUBLIC_URL` does not enable TLS by itself. The native installer defaults to direct HTTPS.
+
 In 1.0.2, direct localhost/private-IP access can leave `HUE_PUBLIC_URL` unset. Explicit values remain authoritative; forwarded headers cannot override them. Use [runtime-specific instructions](RUNTIME-SUPPORT.md).
 
 The image serves **plain HTTP**. Like most self-hosted apps, it does not manage certificates: if you want HTTPS, terminate TLS in a reverse proxy in front of it and set `HUE_PUBLIC_URL` to the `https://` address. The proxy must forward the original `Host` header: the admin interface rejects requests whose `Host` or `Origin` differs from `HUE_PUBLIC_URL`. Without a proxy, the admin login and control token cross your network unencrypted, so only expose it on a network you trust.
 
-Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_CERT` and `TLS_KEY` to certificate and key files mounted into the container. Set both or neither: if only one is set, or either is empty, the container exits with an error instead of falling back to HTTP.
+Built-in HTTPS (as used by `install-assistant.sh`) is available for custom configurations: set `TLS_CERT` and `TLS_KEY` to certificate and key files mounted into the container. Set both or neither: if only one is set, or either is empty, the container exits with an error instead of falling back to HTTP.
 
 ## Data volume
 
@@ -53,7 +55,7 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 Use the single [quick-start procedure](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server) / [deutscher Schnellstart](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server). After publication it downloads the versioned Compose file and starts the fixed 1.0.2 image and creates persistent storage automatically. Open **http://SERVER-IP:18443**, sign in with **admin/admin** for fresh data and change the password. Portainer Docker Standalone uses that same file as a Stack.
 
-HTTP is intentional and for a trusted LAN. HTTPS requires the [certificate/proxy setup](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by container networking; use local discovery help or the bridge IP. Direct bridge access still needs a network route. The guided installer and `compose.image.yaml` remain Linux host-network alternatives; they are not a second default installation path.
+HTTP is intentional and for a trusted LAN. HTTPS requires the [certificate/proxy setup](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by container networking; use local discovery help or the bridge IP. Direct bridge access still needs a network route. `compose.image.yaml` remains an optional Linux host-network variant. The guided installer is offered for native installation; existing Docker-installer deployments retain their maintenance tools.
 
 ## Podman Desktop on macOS
 
@@ -88,16 +90,6 @@ Mac testing, not access from a separate Loxone Miniserver.
 
 
 See [storage and direct network diagnostics](CONTAINER-SETUP.md). Manual IP entry cannot bypass an unreachable VM-to-LAN route.
-
-## Unraid (Compose Manager)
-
-Create a stack and paste the contents of `docker/compose.image.yaml`. The named volume works as is. To keep the data under appdata instead, prepare the folder from the Unraid terminal, then replace `hue2lox-data:/data` with the path and delete the `volumes:` block at the bottom:
-
-```sh
-mkdir -p /mnt/user/appdata/hue2lox/data && chown 10001:10001 /mnt/user/appdata/hue2lox/data
-```
-
-No source checkout or local build is needed.
 
 ## Lamp control
 

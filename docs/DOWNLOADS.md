@@ -4,7 +4,7 @@
 
 # 1.0.2: Download und Prüfsumme / Download and checksum
 
-Für die normale Installation verwenden Deutsch, Englisch und der KI-Prompt dasselbe **1.0.2-Paket**. / The German, English and AI guides use the same **1.0.2 package** for normal installation.
+Für die normale Installation verwenden die deutsche und englische Anleitung dasselbe **1.0.2-Paket**. / The German and English guides use the same **1.0.2 package** for normal installation.
 
 | Merkmal / Field | Wert / Value |
 | --- | --- |
@@ -16,9 +16,9 @@ Für die normale Installation verwenden Deutsch, Englisch und der KI-Prompt dass
 
 ## Direkt auf dem Server installieren / Install directly on the server
 
-[Deutsche Anleitung](../INSTALL.de.md#option-1-einfach-und-komfortabel--der-installer) · [English guide](../INSTALL.md)
+[Deutsche Anleitung](../INSTALL.de.md) · [English guide](../INSTALL.md)
 
-Beide Anleitungen laden das ZIP und seine Prüfsumme mit `curl` direkt auf den Linux-Server. Erst nach erfolgreichem `grep '  hue2lox-v1.0.2.zip$' SHA256SUMS.txt | sha256sum --check -` wird entpackt und gestartet. Ein vorheriger Download auf Mac/PC oder Kopieren per `scp` ist nicht nötig. / Both guides use `curl` to download the ZIP and checksum directly to the Linux server. Extraction and startup happen only after successful verification. No prior download on your Mac/PC or transfer with `scp` is needed.
+Für nativ laden beide Anleitungen das ZIP, das native Archiv und die Prüfsummen mit `curl` direkt auf den Linux-Server. Erst nach erfolgreichem `grep '  hue2lox-v1.0.2.zip$' SHA256SUMS.txt | sha256sum --check -` wird entpackt und gestartet. Ein vorheriger Download auf Mac/PC oder Kopieren per `scp` ist nicht nötig. / For native installation both guides use `curl` to download the ZIP, native archive and checksums directly to the Linux server. Extraction and startup happen only after successful verification. No prior download on your Mac/PC or transfer with `scp` is needed.
 
 ## Optional: im Browser herunterladen / Download in a browser
 

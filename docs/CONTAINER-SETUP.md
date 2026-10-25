@@ -72,6 +72,55 @@ For a browser-address/configuration mismatch, compare the exact browser URL, inc
 
 ## HTTP or HTTPS?
 
+### What is enabled by default?
+
+| Path | Browser connection | Configuration |
+| --- | --- | --- |
+| Docker quickstart / Podman image | **HTTP**; quickstart `http://SERVER-IP:18443` | No TLS variables; internal HTTP port 8443 |
+| Container behind Traefik | **HTTPS** to proxy, **HTTP** from proxy to container | `HUE_PUBLIC_URL` on the Hue2Lox service; certificate at Traefik |
+| Native installer | **HTTPS**, self-signed by default | `/etc/hue2lox/settings.env` and `/etc/hue2lox/certs/` |
+
+`HUE_PUBLIC_URL` defines the permitted browser address and generated URLs. **It does not create certificates, enable HTTPS or configure a proxy.** Port numbers 8443/18443 do not imply encryption. Bridge connection verification is independent.
+
+### Where do I set HUE_PUBLIC_URL?
+
+**Docker Compose:** Edit `compose.yaml` in the project directory from which you started Hue2Lox. Add to the `hue2lox` service:
+
+```yaml
+services:
+  hue2lox:
+    # Keep existing image, volumes and other settings.
+    environment:
+      HUE_PUBLIC_URL: "https://hue2lox.example.de"
+```
+
+Replace the hostname. Use scheme, hostname and optional port, without a path or trailing slash. This is a fragment, not a complete Compose file. If `environment:` already exists, add the entry there. **An `export HUE_PUBLIC_URL=...` in your terminal alone is insufficient:** the value must reach the container. A `.env` beside Compose only works when Compose explicitly references it, for example `HUE_PUBLIC_URL: "${HUE_PUBLIC_URL}"`. The quickstart currently does not do this automatically.
+
+In the same project directory run `docker compose up -d --wait`; `restart` does not apply environment changes. Retain the volume and project name. Then use the configured browser address and sign in again. `docker compose config` displays resolved configuration and may include private values; do not share it unchecked.
+
+**Portainer is a Docker UI:** Add the setting under `environment:` in the existing Stack and select **Update the stack**. A Stack variable alone does not reach Hue2Lox unless referenced in Compose.
+
+**Podman Desktop:** When creating a container, add `HUE_PUBLIC_URL` under **Environment variables** with value `https://hue2lox.example.de`. With the CLI add `--env HUE_PUBLIC_URL=https://hue2lox.example.de` to `podman run`. Recreate existing containers using the same data volume and other settings; restarting is insufficient.
+
+**Native:** systemd loads `/etc/hue2lox/settings.env`; changes require `systemctl restart hue2lox`. The current native installer and its update/healthchecks require direct HTTPS to the configured IPv4 address. Do not simply replace it with a Traefik hostname: this is currently not a supported native proxy profile. Use the container path below for Traefik.
+
+**Include Loxone in the plan:** The configured address is also used for generated control URLs. The Miniserver must resolve the hostname, reach Traefik and accept its HTTPS certificate. Previously imported commands do not change automatically; check new exports before adopting them. This template exposes no alternative direct HTTP port.
+
+### Complete example with existing Traefik
+
+Connection: **Browser → HTTPS/443 → Traefik → HTTP/8443 → Hue2Lox**.
+
+Use the complete [Traefik Compose template](../docker/compose.traefik.yaml). Prerequisites: Traefik on the same Docker host with Docker provider enabled, an HTTPS entrypoint, a matching certificate and a shared Docker network. DNS for the hostname must point to Traefik. Replace:
+
+1. Both occurrences of `hue2lox.example.de` with your hostname.
+2. `websecure` with your HTTPS entrypoint name.
+3. `proxy` in `traefik.docker.network` and `networks.proxy.name` with the actual existing Traefik network name. Traefik must also be attached to it.
+4. If Traefik issues certificates using a resolver, uncomment `tls.certresolver` and enter the **already configured** resolver name. The template installs neither Traefik nor a certificate authority.
+
+Save the template as `compose.yaml` in the Hue2Lox project directory. For an existing installation first back up configuration and data, then preserve its exact volume mapping; a different project directory can create an empty volume. The template publishes no direct host port. Run `docker compose up -d --wait` there and open **https://YOUR-HOSTNAME**. Omit `TLS_CERT` and `TLS_KEY` entirely from Hue2Lox. Traefik forwards the original Host header. The backend HTTP connection is unencrypted within the shared container network.
+
+This template uses the Docker provider. Traefik on another server, or Podman without that provider, needs a separately configured route to a reachable backend; Docker labels alone are insufficient. Without host networking automatic bridge discovery may be unavailable; use local discovery help/manual IP and ensure a route to the bridge.
+
 - **Local HTTP test:** Leave TLS variables unset and open `http://...`. Credentials are unencrypted on that connection; use an appropriate trusted test network.
 - **HTTPS through Traefik or another reverse proxy:** The proxy manages the browser certificate and forwards internally to Hue2Lox HTTP. Set `HUE_PUBLIC_URL=https://hue2lox.example.de` to the actual URL. Forward the original `Host` header. Omit `TLS_CERT` and `TLS_KEY` in Hue2Lox. No certificate private key needs to be mounted into Hue2Lox for this mode.
 - **HTTPS directly in Hue2Lox:** Mount the certificate and key read-only, for example under `/certs`. Set `TLS_CERT=/certs/server.crt` and `TLS_KEY=/certs/server.key`. Both files must be readable by container UID 10001; keep the key private. The certificate must cover the address, be trusted by the client, and be renewed before expiry. The Linux installer offers direct certificate setup; a self-signed certificate is not automatically trusted by every browser.
@@ -95,3 +144,5 @@ If manual addition fails too, save the exact error and compare reachability of t
 Back up the data volume, configuration, custom certificates and previous image first. Start the new image using **the same** volume; do not use `down -v`. Verify the existing password, bridge inventory and saved settings afterward. See [update and recovery](UPDATE-DOCKER.md).
 
 Sources: [Docker volumes](https://docs.docker.com/engine/storage/volumes/), [Podman machine](https://podman-desktop.io/docs/podman/creating-a-podman-machine).
+
+Traefik reference: [Docker routing and service labels](https://doc.traefik.io/traefik/reference/routing-configuration/other-providers/docker/).
