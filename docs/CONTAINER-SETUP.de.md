@@ -72,6 +72,55 @@ Bei „Browseradresse passt nicht zur Serverkonfiguration“ die genaue URL eins
 
 ## HTTP oder HTTPS?
 
+### Was ist standardmäßig aktiv?
+
+| Weg | Verbindung im Browser | Konfiguration |
+| --- | --- | --- |
+| Docker-Schnellstart / Podman-Image | **HTTP**; Schnellstart `http://SERVER-IP:18443` | Keine TLS-Variablen; intern HTTP-Port 8443 |
+| Container hinter Traefik | **HTTPS** zum Proxy, **HTTP** vom Proxy zum Container | `HUE_PUBLIC_URL` im Hue2Lox-Service; Zertifikat bei Traefik |
+| Nativer Installer | **HTTPS**, standardmäßig selbstsigniert | `/etc/hue2lox/settings.env` und `/etc/hue2lox/certs/` |
+
+`HUE_PUBLIC_URL` legt die erlaubte Browseradresse und die erzeugten URLs fest. **Es erzeugt kein Zertifikat, aktiviert kein HTTPS und richtet keinen Proxy ein.** Port 8443/18443 allein sagt nichts über Verschlüsselung aus. Die Bridge-Verbindung wird davon unabhängig geprüft.
+
+### Wo trage ich HUE_PUBLIC_URL ein?
+
+**Docker Compose:** Öffne die `compose.yaml` in dem Ordner, aus dem du Hue2Lox mit `docker compose` gestartet hast. Ergänze beim Service `hue2lox`:
+
+```yaml
+services:
+  hue2lox:
+    # Vorhandene image-, volumes- und weitere Einstellungen beibehalten.
+    environment:
+      HUE_PUBLIC_URL: "https://hue2lox.example.de"
+```
+
+Den Hostnamen ersetzen. Die URL besteht aus Schema, Host und gegebenenfalls Port, ohne Pfad oder abschließenden Schrägstrich. Das ist ein Ausschnitt, keine vollständige Compose-Datei. Falls `environment:` schon existiert, den Eintrag dort ergänzen. **Nicht nur `export HUE_PUBLIC_URL=...` im Terminal setzen:** Der Wert muss in den Container gelangen. Eine `.env` neben der Compose-Datei wirkt nur, wenn diese den Wert ausdrücklich mit `HUE_PUBLIC_URL: "${HUE_PUBLIC_URL}"` übernimmt. Die Schnellstartdatei tut das bisher nicht automatisch.
+
+Im selben Projektordner anschließend `docker compose up -d --wait` ausführen; `restart` übernimmt die Änderung nicht. Volume und Projektname beibehalten. Danach nur die konfigurierte Browseradresse verwenden und neu anmelden. `docker compose config` zeigt die aufgelöste Konfiguration; darin können eigene Geheimnisse stehen, daher nicht ungeprüft teilen.
+
+**Portainer ist eine Docker-Oberfläche:** Den Eintrag im vorhandenen Stack unter `environment:` ergänzen und **Update the stack** wählen. Eine Stack-Variable allein wird ohne Bezug in der Compose-Datei nicht an Hue2Lox weitergegeben.
+
+**Podman Desktop:** Beim Anlegen des Containers unter **Environment variables** den Namen `HUE_PUBLIC_URL` und als Wert `https://hue2lox.example.de` eintragen. Für CLI-Aufrufe `--env HUE_PUBLIC_URL=https://hue2lox.example.de` zu `podman run` hinzufügen. Bestehende Container mit demselben Datenvolume und denselben übrigen Einstellungen neu erstellen; ein Neustart reicht nicht.
+
+**Nativ:** systemd lädt `/etc/hue2lox/settings.env`; Änderungen benötigen `systemctl restart hue2lox`. Der aktuelle native Installer und seine Update-/Healthchecks erwarten direktes HTTPS zur konfigurierten IPv4-Adresse. Nicht einfach auf eine Traefik-Domain ändern: Das ist derzeit kein unterstütztes natives Proxyprofil. Für Traefik den Containerweg unten verwenden.
+
+**Loxone mit berücksichtigen:** Die konfigurierte Adresse wird auch für erzeugte Steuerungs-URLs verwendet. Der Miniserver muss diesen Hostnamen auflösen, Traefik erreichen und dessen HTTPS-Zertifikat akzeptieren können. Vorhandene importierte Befehle ändern sich nicht automatisch; neue Exporte vor der Übernahme prüfen. Die Vorlage öffnet keinen alternativen direkten HTTP-Port.
+
+### Vollständiges Beispiel mit vorhandenem Traefik
+
+Der Verbindungsweg lautet: **Browser → HTTPS/443 → Traefik → HTTP/8443 → Hue2Lox**.
+
+Verwende die vollständige [Traefik-Compose-Vorlage](../docker/compose.traefik.yaml). Voraussetzungen: Traefik läuft auf demselben Docker-Host mit aktiviertem Docker-Provider, HTTPS-Entrypoint, passendem Zertifikat und einem gemeinsamen Docker-Netzwerk. DNS für die gewünschte Adresse zeigt auf Traefik. Ersetze in der Vorlage:
+
+1. `hue2lox.example.de` an beiden Stellen durch deinen Hostnamen.
+2. `websecure` durch den Namen deines HTTPS-Entrypoints.
+3. `proxy` bei `traefik.docker.network` und `networks.proxy.name` durch den tatsächlichen Namen des vorhandenen Traefik-Netzwerks. Traefik muss ebenfalls Mitglied dieses Netzes sein.
+4. Falls Traefik Zertifikate über einen Resolver ausstellt: die kommentierte `tls.certresolver`-Zeile aktivieren und den **bereits eingerichteten** Resolvernamen einsetzen. Das Beispiel installiert weder Traefik noch eine Zertifizierungsstelle.
+
+Speichere die Vorlage als `compose.yaml` im Hue2Lox-Projektordner. Bei Umstellung einer vorhandenen Installation zuerst Konfiguration und Daten sichern, dann unbedingt dieselbe Volume-Zuordnung übernehmen; ein anderer Projektordner kann ein leeres Volume erzeugen. Die Vorlage veröffentlicht keinen direkten Host-Port. Im Projektordner `docker compose up -d --wait` starten und **https://DEIN-HOSTNAME** öffnen. `TLS_CERT` und `TLS_KEY` im Hue2Lox-Container vollständig weglassen. Traefik gibt den ursprünglichen Host-Header weiter. Die zusätzliche HTTP-Strecke ist im gemeinsamen Containernetz unverschlüsselt.
+
+Die Vorlage verwendet das Docker-Provider-Modell. Traefik auf einem anderen Server oder Podman ohne Docker-Provider benötigt eine separat konfigurierte Route zum erreichbaren Backend. Docker-Labels allein reichen dort nicht. Bei Containern ohne Host-Netz kann die automatische Bridge-Suche fehlen; lokale Suchhilfe/manuelle IP verwenden und die Route zur Bridge sicherstellen.
+
 - **Lokaler Test über HTTP:** Keine TLS-Variablen setzen. Der Browser verwendet `http://...`. Zugangsdaten sind auf dieser Verbindung unverschlüsselt; nur im passenden vertrauenswürdigen Testnetz verwenden.
 - **HTTPS über Traefik oder anderen Reverse Proxy:** Der Proxy verwaltet das Browser-Zertifikat und leitet intern an Hue2Lox-HTTP weiter. In Hue2Lox `HUE_PUBLIC_URL=https://hue2lox.example.de` auf die echte Adresse setzen. Der Proxy muss den ursprünglichen `Host`-Header weitergeben. Im Container `TLS_CERT` und `TLS_KEY` weglassen. Kein Zertifikatsschlüssel muss in diesem Fall in den Hue2Lox-Container.
 - **HTTPS direkt in Hue2Lox:** Zertifikat und Schlüssel schreibgeschützt einbinden, z. B. unter `/certs`. `TLS_CERT=/certs/server.crt` und `TLS_KEY=/certs/server.key` setzen. Beide Dateien müssen für Container-UID 10001 lesbar sein; der Schlüssel bleibt privat. Das Zertifikat muss zur verwendeten Adresse passen, vom Client als vertrauenswürdig anerkannt und rechtzeitig erneuert werden. Der Linux-Installer bietet die direkte Zertifikatseinrichtung an; ein selbstsigniertes Zertifikat wird nicht automatisch von jedem Browser vertraut.
@@ -95,3 +144,5 @@ Wenn auch die manuelle IP scheitert: genaue Fehlermeldung sichern und Erreichbar
 Vor dem Update Datenvolume, Konfiguration, eigene Zertifikate und bisheriges Image sichern. Neues Image mit **demselben** Volume starten; nicht `down -v` verwenden. Danach vorhandenes Passwort, Bridge-Inventar und gespeicherte Einstellungen prüfen. Details: [Update und Wiederherstellung](UPDATE-DOCKER.de.md).
 
 Quellen: [Docker-Volumes](https://docs.docker.com/engine/storage/volumes/), [Podman-Machine](https://podman-desktop.io/docs/podman/creating-a-podman-machine).
+
+Traefik-Referenz: [Docker routing and service labels](https://doc.traefik.io/traefik/reference/routing-configuration/other-providers/docker/).

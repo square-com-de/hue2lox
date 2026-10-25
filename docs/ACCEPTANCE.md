@@ -30,7 +30,6 @@ English: installation, actual code changes, exact code/data rollback, personal p
 ## 3 — Endgültiges Releasepaket auf einem frischen Zielsystem
 
 - [ ] Öffentlichen Quellstand mit dokumentierter Version herunterladen oder klonen; Anleitung ausschließlich aus [INSTALL.md](../INSTALL.de.md) befolgen.
-- [ ] KI-Installationsprompt mit Voraussetzungen erproben; tatsächlichen Assistenten/Zugriffsmodus und Abweichungen protokollieren.
 - [ ] Keine privaten Dateien der bisherigen Installation übernehmen.
 - [ ] Leere Testinstallation mit eigenem Verzeichnis, Compose-Projekt und freiem Port vorbereiten.
 - [ ] Docker-Image auf der tatsächlich verwendeten Architektur bauen; Start und Healthcheck prüfen.
