@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # RC6 preparation / RC6-Vorbereitung
 
 **Unpublished prepared candidate branch / Unveröffentlichter vorbereiteter Kandidatenbranch — 23.10.2026.** This document authorizes no tag, release, registry push or production deployment. / Dieses Dokument gibt keinen Tag, kein Release, keinen Registry-Push und kein Produktionsdeployment frei.

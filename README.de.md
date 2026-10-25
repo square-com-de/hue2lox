@@ -58,7 +58,11 @@ Szenen-AUS betrifft die gesamte zugeordnete Gruppe. Hue2Lox meldet **keine gemes
 
 **Bereits installiert?** [Backup, Update und Rollback](docs/UPDATE-DOCKER.de.md) oder [native Wartung](docs/INSTALL-NATIVE.md) verwenden. Vollständiges Datenvolume und Konfiguration sichern; Pull/Neustart allein ersetzt keinen Container. Ein eigenes LoxBerry-Plugin ist noch nicht verfügbar.
 
+**Entwicklung:** 1.0.3 wird getrennt vorbereitet und ist noch nicht veröffentlicht. Der Schnellstart oben bleibt bewusst bei 1.0.2. [Kandidatenstatus](docs/PREPARATION-1.0.3.md).
+
 ## Dokumentation und Hilfe
+
+[Alle Anleitungen und historischen Berichte](docs/INDEX.md).
 
 [Handbuch und Fehlerbehebung](docs/MANUAL.de.md) · [Loxone-Anleitung](docs/TUTORIAL.de.md) · [Zertifikate und Wiederherstellung](docs/MAINTENANCE.de.md) · [Changelog](CHANGELOG.md) · [Lessons Learned](docs/LESSONS-LEARNED.de.md).
 

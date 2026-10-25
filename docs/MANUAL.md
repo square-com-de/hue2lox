@@ -1,12 +1,10 @@
-**Main status:** Docker/native deployment acceptance passed; [evidence and limits](DEPLOYMENT-ACCEPTANCE.md). Use [Docker update/rollback](UPDATE-DOCKER.md) or [native maintenance](INSTALL-NATIVE.en.md), separately from unchanged RC5. [RC6 release notes](RELEASE-NOTES-RC6.md); RC6 is not a stable release.
-
 # Hue2Lox – user manual
 
 [Home](../README.md) · [Deutsch](MANUAL.de.md) · [Installation](../INSTALL.md)
 
 ## Access and language
 
-Open your installation's HTTPS address. New installations use `admin` / `admin`; change the password in the header. Verify the certificate fingerprint on the server before trusting its public certificate on a client. Every new installation generates its own certificate; see [certificate renewal, IP changes, backup and recovery](MAINTENANCE.md).
+Open the actual configured HTTP or HTTPS address. Docker/Podman use HTTP without TLS configuration; the Compose quickstart uses `http://SERVER-IP:18443`. The native installer configures HTTPS with a self-signed certificate. See [configuration and examples](CONTAINER-SETUP.md#http-or-https) for Traefik or direct container HTTPS. Fresh data uses `admin/admin`; change the password in the header. Retained data keeps its existing password. For HTTPS verify the certificate/fingerprint; browser trust does not automatically establish Miniserver trust.
 
 Select Deutsch or English. The browser's language is used initially. Switching language reloads the page: your login and saved control modes remain, but unsaved form inputs and temporary XML selections reset.
 
@@ -31,15 +29,14 @@ For multiple lights, select their checkboxes and **Export selection as XML**. A 
 
 ## Scenes
 
-Create, edit and delete scenes in the Hue app. Use **Scan scenes** to synchronize inventory. **Commands** and **XML** provide a command to **activate** the scene. Management allows ignoring, restoring and removing only from Hue2Lox.
+Create, edit and delete scenes in the Hue app. **Scan scenes** synchronizes saved metadata. Each scene row directly shows its control mode:
 
-**Important: a Hue scene is not an on/off lighting circuit here.** It sets its member lights to stored values. Hue2Lox provides no scene OFF command and does not restore previous light states. Switch lights off separately through their light outputs or a deliberately configured common room-off command in Loxone. That command must actually switch off the relevant lights; recalling a scene does not create it automatically.
+- **On/off:** Default for new or previously undecided records. ON recalls the Hue scene; OFF switches off the entire assigned Hue group. A unique exact-match group is assigned automatically. For ambiguous/larger groups choose explicitly and inspect the listed lamps. Export is blocked without a valid assignment.
+- **Recall only:** Scene activation without OFF. Configure a digital output with an ON pulse, repetition 0 and empty OFF fields. Another recall on switch-off would turn the lamps back on.
 
-Scene recall sends **no light-state feedback to the Loxone Lighting Controller**. Its displayed state, active mood and switch-off behaviour can therefore differ from the physical lights. Connecting the same lights separately does not automatically synchronize an externally recalled Hue scene either. For moods managed by the Lighting Controller, connect the lights through Hue2Lox and create the moods in Loxone.
+For **On/off**, copy/import the new digital ON **and** OFF commands, with no dimming value. Updating does not modify existing recall commands. OFF does not restore previous values and may affect additional or hidden lamps in the assigned group.
 
-In Loxone, configure the scene command as a **digital output** and trigger it with an **ON pulse/push button**; set repetition to `0` and leave the **OFF command, OFF header and OFF body empty**. Another recall needs a new ON edge. An analog scene output or an additional scene recall while switching off can turn the lights back on. The HTTP monitor must show no scene `/recall` request when only switching off. Detailed [scene configuration guide (German)](SCENES.md).
-
-Scenes can still control ignored/removed lights included in their Hue definition.
+For A → B on the same group, superseded A OFF is ignored if B has already been accepted. Switch overlapping groups off first. After restart send ON first; OFF without known ownership is rejected. Ownership is command history, **not measured state feedback to the Loxone Lighting Controller**. The Hue app and other control paths are not synchronized automatically. [Scene on/off details and limits](features/SCENE-SWITCH.md) · [Scene interfaces (German)](SCENES.md).
 
 ## Loxone
 
@@ -65,31 +62,20 @@ Start the **HTTP monitor**, then trigger one command. Recording lasts at most te
 
 ## Update, backup and restore
 
-Stop the service briefly and back up the **entire installation directory**, preserving permissions. Include `.env`, Compose files, `data/`, `certs/`, `secrets/` and the source version. Paired bridge keys live in `data/bridge-keys/`. A Git clone is not a private-state backup.
+Stop the affected instance for maintenance and back up its data, configuration and exact old image/native package together. Backup contents depend on deployment:
 
-For the isolated test instance in INSTALL.md, as root:
+| Installation | Complete backup |
+| --- | --- |
+| Docker/Podman named volume | Entire volume mounted at `/data`, Compose/container configuration, exact image and separately mounted certificates |
+| Existing Docker installer | Installation directory including `.env`, Compose, `data/`, `secrets/`, `certs/`, plus exact image |
+| Native | `/etc/hue2lox`, `/var/lib/hue2lox`, package/source identity and matching update backup |
 
-```sh
-cd /opt/hue2lox-test
-docker compose stop
-install -d -m 700 /opt/hue2lox-private-backups
-umask 077
-tar -czpf /opt/hue2lox-private-backups/test-backup.tar.gz -C /opt hue2lox-test
-docker compose start
-```
+**Archiving only the Compose directory does not back up a named volume.** Podman Desktop volumes live in its Linux VM; back them up before resetting/deleting it. There is no database: registry, pairing data, password hash and settings are protected files. Sessions and the temporary HTTP monitor live only in memory.
 
-Choose a new archive filename for each backup. Store archives encrypted/offline, never on GitHub. File backups do not contain Docker images: record the exact image version/digest and save the image separately if offline rollback is needed.
-
-Rehearse restoration on an isolated target: stop containers, retain the current state separately, restore files with their permissions, check paths/address/port and UID/GID 10001 ownership of private directories, then start. A changed address needs a matching certificate. Verify health, login, inventory, token and finally a deliberate light command. The full restore rehearsal is still pending joint acceptance testing.
-
-The prototype updater's limited rollback copy is not a complete backup. A general public updater/rollback mechanism is not released yet.
+[Docker/stack update and rollback](UPDATE-DOCKER.md) · [Native maintenance](INSTALL-NATIVE.en.md) · [Storage locations](CONTAINER-SETUP.md#where-is-my-data). Rollback restores the matching old code/image **and** historical data, including the password at backup time. Keep backups private and separate; `down -v` and pruning are not update procedures. Rehearse restoration in isolation. Physical effects and Miniserver certificate trust are separate tests.
 
 ## Limits and licensing
 
 See [release readiness](../RELEASE.md) and [third-party notices](../THIRD-PARTY-NOTICES.md). Original project code and original SVG icons are licensed under [Apache License 2.0](../LICENSE); third-party materials retain their respective terms.
 
 Under **Usage & management → Light icon**, choose a shape per light. **Automatic** uses model and bridge metadata; unknown devices receive a bulb symbol. The choice survives restarts and rescans and does not change Loxone commands.
-
-### Since Stable 1.0.0: scenes as on/off lighting circuits
-
-The optional extension and its limitations are described in [Scene on/off](features/SCENE-SWITCH.md). It is included in Stable 1.0.0; existing recall commands continue to work. New exports use the directly visible mode, with on/off as the default for uniquely matching groups. Scene switching and OFF have passed user acceptance with Hue/Loxone.

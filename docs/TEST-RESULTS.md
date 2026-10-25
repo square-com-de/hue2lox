@@ -1,6 +1,6 @@
-# Aktueller Nachweis / Current evidence — 23.10.2026
+# Historische Testprotokolle / Historical test records
 
-Die [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) des integrierten PR-18-Stands ist bestanden. Hardware- und finale RC6-Paketabnahme bleiben offen. / Deployment acceptance of the merged PR #18 code passed; hardware and final RC6 package checks remain open.
+Für den aktuellen unveröffentlichten Kandidaten gelten [1.0.3-Vorbereitung](PREPARATION-1.0.3.md) und [Runtime-Status](RUNTIME-SUPPORT.de.md). Dieser Verlauf enthält keine neue 1.0.3-Abnahme. / See the preparation and runtime status for current scope; the records below are not new 1.0.3 acceptance.
 
 **Historie / History:** Alle nachfolgenden Berichte behalten ihren ursprünglichen Commit-, Datums- und Prüfumfang; damalige Offen-Punkte sind keine aktuelle Gesamtliste. / The following reports retain their original commit, date and scope; their pending items are not the current overall checklist.
 

@@ -38,7 +38,7 @@ not merely package license identifiers. Hue2Lox's own license/catalog notices
 remain in the application source release. The Hue trust bundle stays unchanged
 as agreed; this work makes no new claim about its redistribution rights.
 
-### At the first image publication
+### At each image publication
 
 Attach this bundle and checksum as permanent, anonymously downloadable release
 assets alongside the application source. Record the final published image digests,
@@ -63,11 +63,11 @@ Lizenztexte, Copyrightangaben und Hinweise in Quelldateien bleiben erhalten;
 fehlende Urheberangaben werden nicht erfunden.
 
 [CONTAINER-SOURCES.md](CONTAINER-SOURCES.md) beschreibt Inhalt und Archivbau.
-Beim ersten öffentlichen Image-Release müssen Archiv und Prüfsumme als dauerhafte
+Bei jedem öffentlichen Image-Release müssen Archiv und Prüfsumme als dauerhafte
 Downloads neben dem passenden Anwendungsquellcode angehängt und von der Registry
-verlinkt werden. Der RC5-Release-Workflow prüft diese Downloads vor dem
+verlinkt werden. Der Release-Workflow prüft diese Downloads vor dem
 Upload zu GHCR und Docker Hub. Beide Registries erhalten dieselben geprüften Images.
-CI-Artefakte ersetzen diesen dauerhaften Download nicht. RC3 und laufende
+CI-Artefakte ersetzen diesen dauerhaften Download nicht. Bestehende Releases und laufende
 Installationen bleiben unverändert; die Hue-CA bleibt wie vereinbart enthalten.
 
 ## Runtime package tooling / Paketwerkzeuge im Laufzeitimage

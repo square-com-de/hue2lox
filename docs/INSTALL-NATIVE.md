@@ -1,3 +1,5 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 # Native Linux-Installation ohne Docker
 
 [English](INSTALL-NATIVE.en.md) · [Alle Installationswege](../INSTALL.de.md)
@@ -6,11 +8,11 @@ Nativ verwendet denselben Anwendungskern und dieselbe Oberfläche wie die Contai
 
 ## Nativer interaktiver Installer
 
-Für die veröffentlichte Version **1.0.2** zuerst [Quell-ZIP und natives Archiv herunterladen und prüfen](../INSTALL.de.md#nativer-installer). Mit `--deployment native` startet der Assistent direkt im nativen Modus, ohne Docker-Auswahl:
+Für die veröffentlichte Version **1.0.3** zuerst [Quell-ZIP und natives Archiv herunterladen und prüfen](../INSTALL.de.md#nativer-installer). Mit `--deployment native` startet der Assistent direkt im nativen Modus, ohne Docker-Auswahl:
 
 ```sh
 bash /absoluter/pfad/zu/hue2lox/install-assistant.sh --deployment native \
-  --native-package /absoluter/pfad/hue2lox-1.0.2-native.tar.gz \
+  --native-package /absoluter/pfad/hue2lox-1.0.3-native.tar.gz \
   --native-sha256 GEPRUEFTER_SHA256
 ```
 
@@ -178,11 +180,11 @@ Die im gemeinsamen Installer gewählte Sprache gilt auch für die eigenen Python
 
 ## Stable-Quell-ZIP und natives Archiv
 
-**Natives 1.0.2-Archiv.** Zusätzlich zum `hue2lox-v1.0.2.zip` wird `hue2lox-1.0.2-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; die versionierten Release-Dateien nach erfolgreichem Veröffentlichungsabschluss verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
+**Natives 1.0.3-Archiv.** Zusätzlich zum `hue2lox-v1.0.3.zip` wird `hue2lox-1.0.3-native.tar.gz` benötigt. Beide Prüfsummen aus derselben `SHA256SUMS.txt` prüfen; die versionierten Release-Dateien nach erfolgreichem Veröffentlichungsabschluss verwenden. Das Archiv nicht mit dem Inhalt des Quell-ZIP verwechseln. Im entpackten Quell-ZIP als root starten:
 
 ```sh
 bash install-assistant.sh --deployment native \
-  --native-package /absoluter/pfad/hue2lox-1.0.2-native.tar.gz \
+  --native-package /absoluter/pfad/hue2lox-1.0.3-native.tar.gz \
   --native-sha256 GEPRUEFTER_SHA256
 ```
 

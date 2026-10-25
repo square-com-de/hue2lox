@@ -1,4 +1,4 @@
-Historical prototype implementation record. For the current source layout see CONTRIBUTING.md and scripts/install-status.sh; the selective copy/rollback commands below refer to the old layout.
+Historical prototype implementation record. For current installation and architecture see INSTALL.md and docs/CONTAINER.md; the selective copy/rollback commands below refer to the old layout.
 
 Read-only Hue Go update. No PUT, POST or control endpoint exists.
 GET /health remains exactly {"status":"ok"} and does not depend on bridge state.

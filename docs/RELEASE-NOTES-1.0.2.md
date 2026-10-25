@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # Hue2Lox 1.0.2
 
 Use versioned assets only after the publication workflow succeeds. / Versionierte Dateien erst nach erfolgreichem Veröffentlichungsworkflow verwenden.

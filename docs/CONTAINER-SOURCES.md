@@ -34,7 +34,7 @@ Choose a new output directory. Every download is checked against the committed
 lock files. The script creates a tar.gz, an outer SHA256 checksum and an internal
 file checksum list. It refuses missing inputs and incomplete component mappings.
 
-### Delivery with a future image release
+### Delivery with each image release
 
 The [GHCR release runbook](https://github.com/square-com-de/hue2lox/blob/main/docs/GHCR-RELEASE.md) describes automated attachment and
 anonymous verification of these assets before image upload.
@@ -57,10 +57,8 @@ enthaltenen Bibliotheken sind erfasst. Copyrightangaben werden unverändert aus
 den Originalen übernommen; fehlende Urheberangaben werden nicht erfunden.
 
 Der oben genannte Befehl erzeugt das Archiv erneut und prüft alle Downloads.
-Die Beilage ist noch keine Image-Veröffentlichung. Beim ersten Image-Release
-werden Archiv und Prüfsumme dauerhaft neben dem passenden Hue2Lox-Quellcode
-veröffentlicht und von der Registry aus verlinkt. Befristete CI-Artefakte ersetzen
-diesen Download nicht. RC3 und laufende Installationen bleiben unverändert.
+Der Archivbau veröffentlicht kein Image. Zu jedem Image-Release gehören Archiv und Prüfsumme dauerhaft neben dem passenden Hue2Lox-Quellcode, von der Registry aus verlinkt. Befristete CI-Artefakte ersetzen
+diesen Download nicht. Bestehende Releases und laufende Installationen bleiben unverändert.
 
 ## Runtime package tooling / Paketwerkzeuge im Laufzeitimage
 

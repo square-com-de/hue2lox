@@ -4,7 +4,14 @@
 
 Dieser Ablauf gilt für **Standardinstallationen des gemeinsamen Installers**, sowohl lokaler Build als auch festes Release-Image. Native Installationen verwenden die [native Wartung](INSTALL-NATIVE.md). Eigenständige Compose-/Portainer-Installationen mit `/data` verwenden ihren eigenen Stack und vollständige Volume-Sicherungen; das Vorbereitungswerkzeug unten ist dafür nicht geeignet.
 
-RC1 und RC5 werden nicht verändert. Das Werkzeug ist seit dem Merge von PR #18 auf main enthalten; die [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) ist bestanden. Die RC6-Version ist fest im geprüften Quellpaket gebunden; den erfolgreichen Release-Abschluss vor einem Image-Update prüfen. Ein erneutes `pull` desselben Versions-Tags ist **kein Versionswechsel**. Ein veröffentlichtes RC5-Image enthält auch nach diesem Vorgang keine Änderungen des PRs. Updates zwischen inkompatiblen Datenschemata werden hier nicht zugesichert; Release-Hinweise prüfen.
+RC1 und RC5 werden nicht verändert. Das Werkzeug ist seit dem Merge von PR #18 auf main enthalten; die [Deployment-Abnahme](DEPLOYMENT-ACCEPTANCE.md) ist bestanden. Die Zielversion ist im jeweils geprüften Quellpaket gebunden; den erfolgreichen Release-Abschluss vor einem Image-Update prüfen. Ein erneutes `pull` desselben Versions-Tags ist **kein Versionswechsel**. Ein veröffentlichtes RC5-Image enthält auch nach diesem Vorgang keine Änderungen des PRs. Updates zwischen inkompatiblen Datenschemata werden hier nicht zugesichert; Release-Hinweise prüfen.
+
+## Welcher Updateweg passt?
+
+- **Docker-/Portainer-Stack mit benanntem Volume:** [Stack-Update und vollständiger Rückweg](DOCKER.md#updating). Das gesamte Volume, Compose-/Proxy-Konfiguration und das exakte alte Image kalt sichern. Nicht den unten beschriebenen Installer-Staging-Helfer verwenden.
+- **Podman:** Container mit derselben Volume-Zuordnung und neuer fester Image-Version neu erstellen; vorher Daten, Containerkonfiguration und exaktes altes Image sichern. Die Docker-Werkzeuge unten nicht unter einem Podman-Alias ausführen. [Containerweg und Grenzen](DOCKER.md#podman-desktop-on-macos).
+- **Bestehender Docker-Installer:** Nur dafür gilt der folgende Ablauf. Angepasste Mounts/Overrides gesondert prüfen.
+- **Nativ:** [Native Wartung und Rollback](INSTALL-NATIVE.md).
 
 ## Voraussetzungen und Zielstand
 

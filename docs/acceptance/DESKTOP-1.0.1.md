@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](../INDEX.md) · [1.0.3-Vorbereitung / preparation](../PREPARATION-1.0.3.md).
+
 # Public Podman Desktop flow — 1.0.1
 
 Recorded 24 October 2026 by the deployment task, independently reconciled with release metadata. This is a manual GUI record, not an inference from the unit tests. No real Hue/Loxone control was exercised.

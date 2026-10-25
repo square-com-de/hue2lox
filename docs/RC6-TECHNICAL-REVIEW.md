@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # RC6 technical preparation / Technische Vorbereitung — 23.10.2026
 
 **Unpublished candidate branch; no hardware, production or publication action. / Unveröffentlichter Kandidatenbranch; keine Hardware-/Produktions-/Veröffentlichungsaktion.** Base: main `61023fddb4c9d7c93b3c70ddefe034f479ede0a1`. The exact candidate commit, package checksums and successful CI links are recorded in the preparation PR and local handoff; no future tag SHA is fabricated in this document.

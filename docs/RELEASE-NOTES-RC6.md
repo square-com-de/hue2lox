@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # Hue2Lox 1.0.0-rc.6 — Release Candidate
 
 **Release Candidate, not Stable 1.0.** Publication is complete only when the release workflow and anonymous download/image verification succeed. / Veröffentlichung erst nach erfolgreichem Workflow und öffentlicher Download-/Imageprüfung abgeschlossen.

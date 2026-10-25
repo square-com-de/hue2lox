@@ -25,7 +25,7 @@ Only detected modes enabled on the server are offered. For Tunable White, use **
 ## 2. Create a virtual output
 
 1. Select **Virtual Outputs** in Loxone Config and create a **Virtual Output**, named for example `Hue2Lox`.
-2. Enter your Hue2Lox base address, for example `https://192.0.2.96:8443`.
+2. Enter your Hue2Lox base address, for example `http://SERVER-IP:18443` with the Compose quickstart. With HTTPS/Traefik use its configured address.
 3. Add a **Virtual Output Command** beneath it.
 
 Use the address of your own Hue2Lox server. Do not add a light path or `/health` to this base address.
@@ -65,7 +65,7 @@ Import the template under Virtual Outputs in Loxone Config, then check the base 
 
 ## 4. Test from the Miniserver
 
-Connect the command to a suitable test output, save the program to the Miniserver and trigger it deliberately. Start the **HTTP monitor** to inspect the response. HTTP 200 confirms that Hue accepted the request; verify the effect on the light itself.
+Connect the command to a suitable test output, save the program to the Miniserver and trigger it deliberately. Start the **HTTP monitor** to inspect the response. HTTP 200 confirms processing; an obsolete scene command may have been explicitly ignored. Read the result text and verify the actual effect on the light.
 
 ![Successful response in the HTTP monitor (German interface)](../web/tutorial-monitor.png)
 
@@ -77,7 +77,9 @@ For connection failures, check the address, port and certificate. Trusting a cer
 
 ## Scenes
 
-Create and edit scenes in the Hue app. Under **Scenes**, scan the list and use the command or XML. Trigger a scene using an ON pulse; leave OFF fields empty. Ignored or removed lights can still be controlled by a scene that includes them in Hue.
+Create and edit scenes in the Hue app. Under **Scenes**, scan and check the visible mode. **On/off** recalls the scene on ON and switches off the entire assigned group on OFF. Use a digital output and copy/import both commands, repetition 0. A unique exact group is assigned automatically; otherwise choose explicitly and inspect additional lamps. After restart send ON first.
+
+**Recall only** instead exports an activation command: ON pulse, repetition 0 and empty OFF fields. Existing Loxone commands are not automatically modified. There is no measured state feedback to the Lighting Controller. Switch overlapping groups off first and avoid competing control paths for the same lamps. Scenes/groups may affect hidden lamps. [Scene changes and limits](features/SCENE-SWITCH.md).
 
 ## Short light paths
 

@@ -55,7 +55,7 @@ Methoden an erkennbaren Steuerungspfaden werden als HTTP 405 mit `Allow: PUT`
 beantwortet. Normale Healthchecks, Statusabfragen, Anmeldungen und Admin-Anfragen
 erscheinen nicht im Testprotokoll.
 
-HTTP 200 bedeutet eine erfolgreiche API-Antwort für den Steuerungsaufruf. Es ist
+HTTP 200 bedeutet eine erfolgreiche Verarbeitung. Ein überholter Szenenbefehl kann dabei ausdrücklich ohne Hue-Aufruf ignoriert worden sein; den Ergebnistext beachten. Es ist
 kein unabhängiger Nachweis, dass eine Lampe sichtbar leuchtet. TLS-Handshake-Fehler,
 fehlgeschlagene Netzwerkverbindungen vor HTTP und ungültige Requests vor Eintritt
 in den Handler können hier nicht gezeigt werden. Bei leerem Monitor zusätzlich

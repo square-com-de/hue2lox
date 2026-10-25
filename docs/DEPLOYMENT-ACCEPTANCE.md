@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # Deployment acceptance / Deployment-Abnahme — 23.10.2026
 
 [Deutsch](#deutsch) · [English](#english) · [Hardware plan / Hardwareplan](ACCEPTANCE.md)

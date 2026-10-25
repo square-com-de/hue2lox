@@ -1,6 +1,6 @@
 # Hue2Lox – third-party notices / Quellen und Lizenzen
 
-Reviewed: 23 October 2026 for the unpublished RC6 preparation. Original Hue2Lox code, documentation and project assets are licensed under Apache License 2.0, to the extent applicable rights exist. See LICENSE and NOTICE. Third-party components retain their own licenses; the project license does not replace the terms below.
+Documentation status: 25 October 2026, unpublished 1.0.3 preparation; original third-party license texts and pinned sources remain unchanged. Original Hue2Lox code, documentation and project assets are licensed under Apache License 2.0, to the extent applicable rights exist. See LICENSE and NOTICE. Third-party components retain their own licenses; the project license does not replace the terms below.
 
 ## Sidebar navigation icons – Iconoir
 
@@ -34,7 +34,7 @@ The Docker image uses official `python:3.15-alpine`, pinned by digest in both Do
 
 No application pip packages are installed. pip and ensurepip, including vendored wheels, are removed from the final Docker runtime. Their original sources/notices remain in the source-material bundle as non-runtime provenance. Actual AMD64/ARM64 inventories, SPDX SBOMs and scans are compared with the checksum-locked component/source records. See [container sources](docs/CONTAINER-SOURCES.md) and [compliance evidence](docs/IMAGE-COMPLIANCE.md).
 
-RC5 already distributes prebuilt images through Docker Hub and GHCR with permanent source/license assets on its unchanged release page. RC6 is unpublished preparation. Its source ZIP, native archive, exact container candidates and corresponding source/license evidence must share the release commit. The publication workflow checks inventories and downloads and refuses differing existing version assets. CI artifacts alone are not the permanent source-delivery channel. No VM/appliance image is offered.
+Published releases including 1.0.2 distribute images through Docker Hub and GHCR with permanent source/license assets on their unchanged release pages. The 1.0.3 candidate is not published. Every new source ZIP, native archive, container candidate and source/license bundle must share its release commit. The publication workflow checks inventories and downloads and refuses differing existing version assets. CI artifacts alone are not the permanent source-delivery channel. No VM/appliance image is offered.
 
 ## Branding and screenshots
 
@@ -44,7 +44,7 @@ The octopus assets were generated with Imagegen for this project; provenance is 
 
 Eigene Bestandteile stehen unter Apache 2.0. Iconoir-Symbole, Modellkatalog und das unverändert aus dem MIT-lizenzierten Raycast-Quellstand übernommene öffentliche CA-Bundle behalten ihre Originalhinweise. Vollständige MIT-Texte sind beigefügt; die eigene Lizenz ersetzt diese nicht. Oktopus-Grafiken und geometrische Lampensymbole wurden für das Projekt erstellt; fremde Marken bezeichnen kompatible Produkte und keine offizielle Verbindung.
 
-Docker verwendet Python 3.15 auf Alpine, gepinnt und mit Inventar-/Quellenabgleich für AMD64/ARM64. Nativ verwendet Hue2Lox das unterstützte System-Python ab 3.11 und bleibt experimentell. pip/ensurepip sind nicht im fertigen Docker-Laufzeitimage enthalten. RC5-Images und ihre Quellenbeilagen sind veröffentlicht; RC6 samt nativem Archiv ist noch unveröffentlicht. Die finalen Beilagen und tatsächlichen anonymen Downloads werden im Release-Ablauf geprüft. Hardware- und Stable-Freigabe sind davon getrennt.
+Docker verwendet Python 3.15 auf Alpine, gepinnt und mit Inventar-/Quellenabgleich für AMD64/ARM64. Nativ verwendet Hue2Lox das unterstützte System-Python ab 3.11 und bleibt experimentell. pip/ensurepip sind nicht im fertigen Docker-Laufzeitimage enthalten. Images und Quellenbeilagen veröffentlichter Releases einschließlich 1.0.2 bleiben verfügbar. 1.0.3 samt neuem nativem Archiv ist noch unveröffentlicht. Die finalen Beilagen und tatsächlichen anonymen Downloads werden im Release-Ablauf geprüft. Hardware- und Stable-Freigabe sind davon getrennt.
 
 The standalone catalog download bundles CSV, source notice and full upstream MIT license. Pinned catalog source commit: `499535e092401a6c21e8c3b5e3aeca8062c11841`.
 

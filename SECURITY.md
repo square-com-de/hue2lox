@@ -1,8 +1,8 @@
 # Security / Sicherheit
 
-Hue2Lox is currently a development project; there is no released version with a security support commitment yet. It is intended for a trusted local network. Do not expose the admin interface directly to the Internet.
+Hue2Lox has published stable releases; 1.0.2 is currently published and 1.0.3 is unreleased preparation. No fixed security-support period or response-time commitment is offered. It is intended for a trusted local network. Do not expose the admin interface directly to the Internet.
 
-Fresh installations generate their own control token and TLS key. The initial login is `admin` / `admin`; change it in the web interface before wider use. Keep private backups protected. Use a verified certificate or trust setup; do not permanently disable TLS verification.
+Fresh installations generate their own control token. Docker/Podman default to plain HTTP; built-in HTTPS requires explicitly configured certificate/key files, while a reverse proxy manages its own TLS. The native installer generates a self-signed certificate/key. The initial login is `admin` / `admin`; change it in the web interface before wider use. Keep private backups protected. Use HTTPS when transport encryption is required, with a verified certificate or trust setup; do not permanently disable TLS verification.
 
 Do not report credentials, unredacted HTTP headers, private keys or exploitable vulnerability details in a public issue. Use GitHub private vulnerability reporting if enabled for this repository; otherwise contact the maintainer through an existing private channel before sharing details. No response-time guarantee is offered.
 

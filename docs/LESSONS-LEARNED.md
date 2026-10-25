@@ -1,8 +1,10 @@
+> **Disposition, 25 October 2026:** The cases below retain their original evidence. The gate was integrated before 1.0.2 and approved for that exact content; [software/rollout closure #51](https://github.com/square-com-de/hue2lox/issues/51). Earlier clean-OS/recovery/Portainer tasks [completed for 1.0.1](acceptance/FINAL-CONTAINER-2026-10-25.md). The new candidate follows [1.0.3 preparation](PREPARATION-1.0.3.md), with approval still closed. Historically pending items below are not the current overall checklist.
+
 # Lessons learned: installation, usability and release approval
 
 [Deutsch / detailed evidence](LESSONS-LEARNED.de.md) · [Runtime status](RUNTIME-SUPPORT.md) · [Stable gate](GHCR-RELEASE.md#stable-acceptance-gate)
 
-24 October 2026. Published 1.0.1 predates this additional source-level gate. It cannot be blocked retroactively; merge and satisfy the gate before another stable approval. Historical releases remain unchanged. PLX has its own project review; these findings concern Hue2Lox.
+24 October 2026. Published 1.0.1 predates this additional source-level gate. It cannot be blocked retroactively; merge and satisfy the gate before another stable approval. Historical releases remain unchanged.
 
 | Case → user impact | Established cause | Detection gap | Implemented prevention | Owner | Evidence / open acceptance |
 |---|---|---|---|---|---|

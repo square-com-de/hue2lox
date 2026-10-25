@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # Container acceptance — 1.0.1
 
 **Follow-up 25.10.2026:** [Fresh OS, disabled-flag recovery and actual Portainer GUI completed](acceptance/FINAL-CONTAINER-2026-10-25.md). The historical scope below is retained; hardware remains separate.

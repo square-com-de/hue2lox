@@ -2,7 +2,7 @@
 
 [English](RUNTIME-SUPPORT.md) · [Installation](../INSTALL.de.md) · [Lessons Learned](LESSONS-LEARNED.de.md)
 
-Stand 24.10.2026, veröffentlichte Version **1.0.1**, Commit `f245a4ddd8857706f6ded748fb6945ea5aa88a38`. „Image startet“, „Login funktioniert“, „Lebenszyklus geprüft“ und „echte Lampenwirkung bestätigt“ sind unterschiedliche Nachweise.
+Stand 25.10.2026: veröffentlicht ist **1.0.2**, Commit `2af13f603c97064fd01585ea04d893a5fdad1081`; **1.0.3 ist unveröffentlichte Vorbereitung**. [1.0.2-Software-/Rolloutnachweis](https://github.com/square-com-de/hue2lox/issues/51) · [1.0.3-Vorbereitung](PREPARATION-1.0.3.md). Die folgenden älteren Plattformabnahmen bleiben ihren ausdrücklich genannten Versionen zugeordnet. „Image startet“, „Login funktioniert“, „Lebenszyklus geprüft“ und „echte Lampenwirkung bestätigt“ sind unterschiedliche Nachweise.
 
 | Weg | Belegter Umfang | Grenze |
 |---|---|---|
@@ -13,12 +13,12 @@ Stand 24.10.2026, veröffentlichte Version **1.0.1**, Commit `f245a4ddd8857706f6
 | LoxBerry | Bestehender Linux-/Docker-Weg auf einer konkreten LoxBerry-VM wurde separat betrieben | **Kein eigenes LoxBerry-Plugin und kein Plugin-ZIP.** Native Basis ist keine Plugin-Abnahme. |
 | Unraid/Synology, Docker Desktop auf Mac/Windows, weitere Derivate | Container-/Compose-Beispiele sind Integrationshinweise | Keine pauschale Plattformfreigabe aus Linux-CI oder dem Mac-Podman-Test ableiten. Eigene Abnahme nötig. |
 
-Die Distributionserkennung des Installers ist keine Hardwareabnahme. Die [Installationsmatrix](../INSTALL.de.md) nennt erkannte OS-Versionen; diese Tabelle begrenzt die tatsächlich nachgewiesenen Wege. Ein `amd64`-Image ist kein ARM-Image; ein 64-Bit-Prozessor mit 32-Bit-OS reicht nicht.
+Die Distributionserkennung des Installers ist keine Hardwareabnahme. Die [native Anleitung](INSTALL-NATIVE.md) nennt die nativen OS-Ziele; diese Tabelle begrenzt die tatsächlich nachgewiesenen Wege. Ein `amd64`-Image ist kein ARM-Image; ein 64-Bit-Prozessor mit 32-Bit-OS reicht nicht.
 
 ## Den richtigen Einstieg verwenden
 
-- Linux: [versioniertes Quell-ZIP und geführter Installer](../INSTALL.de.md), oder [feste Compose-Datei](DOCKER.md#docker-compose). Den Docker-Installer nicht mit einem Podman-Alias ausführen.
-- Geprüfter Mac-Desktop-Weg: [vier konkrete GUI-Schritte](DOCKER.md#podman-desktop-on-macos). Für localhost/private IP ist in 1.0.1 keine zusätzliche Browseradresse nötig. Eigene DNS-Namen/Reverse Proxy erfordern eine passende `HUE_PUBLIC_URL`.
+- Docker auf Linux: [feste Compose-Datei](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server), ohne Hue2Lox-Installer. Vorbereitete 1.0.3-Befehle erst nach Veröffentlichung verwenden; bis dahin ist 1.0.2 veröffentlicht.
+- Geprüfter Mac-Desktop-Weg: [vier konkrete GUI-Schritte](DOCKER.md#podman-desktop-on-macos). Seit 1.0.1 ist für localhost/private IP keine zusätzliche Browseradresse nötig. Eigene DNS-Namen/Reverse Proxy erfordern eine passende `HUE_PUBLIC_URL`.
 - Nativ: [separates natives Archiv](INSTALL-NATIVE.md), dessen Version/Commit zum Quell-ZIP passt; keine Container-Flags auf einen systemd-Dienst übertragen.
 
 ## Update ist nicht Neustart
@@ -27,14 +27,12 @@ Eine neue Image-Version wird erst mit einem **neu erstellten Container** wirksam
 
 Frische Daten verwenden `admin/admin`. Erhaltene Daten behalten das bisherige Passwort, die Bridge-Keys und absichtlich gesetzte Steuerungssperren. Für RC5-Altbestand erklärt die [gezielte Recovery](RECOVERY-CONTROL.de.md), warum ein gewöhnliches Update `0` nicht still in `1` umwandelt. Tokenpflicht und Lampenfähigkeiten gelten auch nach Freigabe.
 
-`1.0.1` statt `latest` pinnen, oder den veröffentlichten Digest verwenden. Der [Digest-Nachweis](https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/container-digests.json) bindet Plattform und Commit. Alte Releases bleiben unverändert.
+Die gewählte veröffentlichte Version statt `latest` pinnen oder ihren Digest verwenden. Der [1.0.2-Digest-Nachweis](https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/container-digests.json) bindet Plattform und Commit. Alte Releases bleiben unverändert.
 
-## Neue Proxmox-Teilabnahme
+## Historische Proxmox-Abnahme für 1.0.1
 
 Ubuntu **26.04.1 amd64**, Docker **29.9.2**, Compose **5.6.1**: Image-/API-Login, Datenerhalt, Update und Restore/Rollback bestanden. Die exakte Quickstart-Datei ist inzwischen auch auf neuem Betriebssystem mit leerem Docker geprüft; Recovery mit deaktivierten Flags und echte Portainer-GUI bestanden. Reale Hardware bleibt separat. [Abschlussnachweis](acceptance/FINAL-CONTAINER-2026-10-25.md). [Nachweise und Grenzen](acceptance/PROXMOX-1.0.1.md). Die früheren fehlenden Runtime-Versionen sind damit für diese neue Teilabnahme erfasst.
 
-## Vor der nächsten Stable-Freigabe
+## Offene Freigabe für 1.0.3
 
-Die zusätzlich beauftragten Clean-OS-, Flag-Recovery- und Portainer-Prüfungen sind bestanden. Noch offen sind die gesonderte Hardwareabnahme, finale versionsgebundene Releaseentscheidung für einen neuen Kandidaten. Die neuen Nachweise wurden separat lesend geprüft, ohne Befund. Runtime-Versionen, tatsächliche Befehle und erhaltenes Passwort sind im neuen Deployer-Bericht belegt. Hardwareumfang explizit protokollieren; keine neuen Lampen-/Miniserver-Erfolge aus Mocks ableiten. Maintainer öffnet das [technische Stable-Gate](GHCR-RELEASE.md#stable-acceptance-gate) erst anhand dieser Nachweise. Die bereits veröffentlichten 1.0.0/1.0.1 werden nicht umgeschrieben.
-
-**Zusatzabnahme:** Die [Proxmox-Teilabnahme](CONTAINER-ACCEPTANCE-1.0.1.md) enthält jetzt Runtime-Versionen, unveränderte Quickstart-Datei, Browser- und Lifecycle-Nachweise. Die [Abschlussabnahme](acceptance/FINAL-CONTAINER-2026-10-25.md) schließt Clean-OS, Flags und Portainer für den genannten1.0.1-Stand; übrige Plattform-/Hardwaregrenzen bleiben ausdrücklich aufgeführt. Owner dieser Abschlussabnahme: Engineer; Koordination über den PM.
+Die alten Clean-OS-, Flag-Recovery-, Portainer- und Deployment-Ergebnisse werden nicht als neue 1.0.3-Abnahme umetikettiert. Für den endgültigen Kandidaten gelten [Vorbereitung und offene Freigaben](PREPARATION-1.0.3.md). Die Veröffentlichungssperre bleibt geschlossen. Gemeinsame Hardwareprüfungen sind getrennt in [#42](https://github.com/square-com-de/hue2lox/issues/42) erfasst. Keine pauschale Plattform-, Miniserver-TLS- oder Hardwarefreigabe aus grüner CI ableiten.

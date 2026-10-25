@@ -58,7 +58,11 @@ Scene OFF affects the entire assigned group. Hue2Lox does **not** feed measured 
 
 **Already installed?** Use [backup, update and rollback](docs/UPDATE-DOCKER.md) or [native maintenance](docs/INSTALL-NATIVE.en.md). Back up the full data volume and configuration; pulling/restarting alone does not replace a container. No dedicated LoxBerry plugin is available.
 
+**Development:** 1.0.3 is being prepared separately and is not published. The quick start above intentionally stays on 1.0.2. [Candidate status](docs/PREPARATION-1.0.3.md).
+
 ## Documentation and help
+
+[All documentation and historical records](docs/INDEX.md).
 
 [Manual and troubleshooting](docs/MANUAL.md) · [Loxone tutorial](docs/TUTORIAL.md) · [Certificates and recovery](docs/MAINTENANCE.md) · [Changelog](CHANGELOG.md) · [Lessons learned](docs/LESSONS-LEARNED.md).
 

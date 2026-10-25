@@ -38,7 +38,7 @@ Der Body lautet auch hier `{"loxone_lumitech":<v>}`. Lumitech RGB + Weiß nutzt
 ## 2. Virtuellen Ausgang anlegen
 
 1. In Loxone Config **Virtuelle Ausgänge** markieren und einen **Virtuellen Ausgang** anlegen, etwa `Hue2Lox`.
-2. Als Adresse die Hue2Lox-Basisadresse eintragen, beispielsweise `https://192.0.2.96:8443`.
+2. Als Adresse die Hue2Lox-Basisadresse eintragen, beim Compose-Schnellstart etwa `http://SERVER-IP:18443`. Mit HTTPS/Traefik die dafür konfigurierte Adresse verwenden.
 3. Darunter einen **Virtuellen Ausgang Befehl** anlegen.
 
 Die Adresse gehört zum Hue2Lox-Server. Lampenpfad und `/health` gehören nicht in
@@ -102,8 +102,7 @@ diese Datei enthält Zugangsdaten und gehört nicht in öffentliche Ablagen.
 
 Den Befehl mit einem passenden Testausgang verbinden, das Programm im Miniserver
 speichern und gezielt auslösen. Im **HTTP-Monitor** die Antwort kontrollieren:
-HTTP 200 bestätigt einen erfolgreichen Aufruf. Erst die sichtbare Reaktion der
-Lampe bestätigt die gewünschte Wirkung.
+HTTP 200 bestätigt die Verarbeitung; bei Szenen kann ein überholter Befehl ausdrücklich ignoriert worden sein. Den Ergebnistext lesen. Erst die sichtbare Lampenreaktion bestätigt die gewünschte Wirkung.
 
 ![Beispiel einer erfolgreichen Antwort im HTTP-Monitor](../web/tutorial-monitor.png)
 
@@ -118,16 +117,16 @@ Parser akzeptiert auch ganzzahlige JSON-Zahlen wie `84013.0`; Werte mit echtem
 Nachkommaanteil werden abgelehnt. Deshalb den empfangenen Body prüfen, statt aus
 der Anzeigeformatierung allein auf die Ursache zu schließen.
 
- Bei Verbindungsproblemen Adresse, tatsächlich konfigurierten Port (Installer-Vorgabe 18443) und Zertifikat prüfen.
+Bei Verbindungsproblemen Schema (HTTP/HTTPS), Adresse und tatsächlich konfigurierten Port prüfen. Für HTTPS zusätzlich Zertifikat und Miniserver-Vertrauen prüfen.
 Die temporäre Logfunktion unter **HTTP-Monitor** zeigt eingegangene
 Befehle ohne Tokens. Ein Browser-Zertifikatsvertrauen gilt nicht automatisch für
 den Miniserver; dessen HTTPS-Aufruf muss separat funktionieren.
 
 ## Szenen
 
-Szenen werden in der Hue App erstellt und geändert. Unter **Szenen** die Liste
-synchronisieren und den angezeigten Abrufbefehl oder XML verwenden. Eine Szene
-wird per EIN-Impuls abgerufen; AUS-Felder bleiben leer.
+Szenen werden in der Hue-App erstellt und geändert. Unter **Szenen** einlesen und die direkt sichtbare Steuerung prüfen. **Ein/Aus** aktiviert mit EIN die Szene und schaltet mit AUS die gesamte zugeordnete Gruppe aus. Den digitalen Ausgang verwenden und beide Befehle aus den Kopierfeldern oder XML übernehmen, Wiederholung 0. Bei eindeutiger exakter Gruppe erfolgt die Zuordnung automatisch; sonst ausdrücklich wählen und zusätzliche Lampen beachten. Nach Neustart zuerst EIN senden.
+
+**Nur aktivieren** exportiert stattdessen einen Recall-Befehl: EIN-Impuls, Wiederholung 0, AUS-Felder leer. Bestehende Loxone-Befehle werden nicht automatisch angepasst. Es gibt keine gemessene Zustandsrückmeldung an den Lichtbaustein. Überlappende Gruppen zuerst ausschalten; keine konkurrierenden Steuerwege auf dieselben Lampen legen. [Szenenwechsel und Grenzen](features/SCENE-SWITCH.de.md).
 
 ## Kurze Lampenpfade
 
@@ -136,4 +135,4 @@ Den Befehlspfad direkt aus der Lampenkarte kopieren. GUI und XML verwenden
 nach Umbenennen oder erneutem Einlesen stabil. Alte lange Pfade und der bisherige
 Hue-Go-Pfad funktionieren weiterhin. Vorhandene Loxone-Befehle werden nicht
 automatisch geändert; zum Vergleich nur den Pfad ersetzen, Header und Body
-unverändert lassen. Ob damit das CR/LF-Problem verschwindet, muss der Test zeigen.
+unverändert lassen. Kurze Pfade sind kein allgemeiner Fix für fehlerhafte HTTP-Bodies; Headerformat und Monitoreinträge prüfen.

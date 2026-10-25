@@ -1,17 +1,19 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 # Container setup: login, storage, networking and HTTPS
 
 Preferred: Docker Compose inside a Linux VM, for example on Proxmox. [Test status and limits](RUNTIME-SUPPORT.md).
 
 [Deutsch](CONTAINER-SETUP.de.md) · [Container guide](DOCKER.md) · [Linux installer](../INSTALL.md)
 
-These steps target **1.0.2 after publication**. Historical acceptance remains tied to 1.0.1; use the 1.0.2 release evidence for new-artifact acceptance. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.
+These steps target **1.0.3 after publication**. Historical acceptance remains tied to 1.0.1; use the 1.0.3 release evidence for new-artifact acceptance. A quick desktop test and a persistent deployment need different preparation. Downloading an image does not update an existing container.
 
 ## Quick start: Docker on a Linux server
 
-Docker Engine and Docker Compose must already be installed. Use a new directory and a free TCP port 18443. Run these commands from that directory with Docker permissions (for example, use `su -`, then change into the directory). The download below is bound to the1.0.2 release tag. Run it only after that tag, file and image are public and the publication workflow has succeeded; using a new directory avoids overwriting an existing installation. Historical1.0.1 procedure tests are documented separately:
+Docker Engine and Docker Compose must already be installed. Use a new directory and a free TCP port 18443. Run these commands from that directory with Docker permissions (for example, use `su -`, then change into the directory). The download below is bound to the1.0.3 release tag. Run it only after that tag, file and image are public and the publication workflow has succeeded; using a new directory avoids overwriting an existing installation. Historical1.0.1 procedure tests are documented separately:
 
 ```sh
-curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.2/docker/compose.quickstart.yaml &&
+curl --fail --location --output compose.yaml https://raw.githubusercontent.com/square-com-de/hue2lox/v1.0.3/docker/compose.quickstart.yaml &&
 docker compose up -d --wait &&
 docker compose ps
 ```
@@ -28,7 +30,7 @@ If port 18443 is already occupied, choose a free port with `HUE2LOX_HTTP_PORT=18
 
 | Setting | Value |
 |---|---|
-| Image | `docker.io/dubctrl/hue2lox:1.0.2` or `ghcr.io/square-com-de/hue2lox:1.0.2` |
+| Image | `docker.io/dubctrl/hue2lox:1.0.3` or `ghcr.io/square-com-de/hue2lox:1.0.3` |
 | Storage | Compose creates named volume `<project>_data` → container path `/data`, writable |
 | Published port | Free host port such as `18443` → container TCP port `8443` |
 | Browser | Without TLS, `http://SERVER-IP:18443`; on the same computer, `http://localhost:18443` also works |
@@ -126,6 +128,47 @@ This template uses the Docker provider. Traefik on another server, or Podman wit
 - **HTTPS directly in Hue2Lox:** Mount the certificate and key read-only, for example under `/certs`. Set `TLS_CERT=/certs/server.crt` and `TLS_KEY=/certs/server.key`. Both files must be readable by container UID 10001; keep the key private. The certificate must cover the address, be trusted by the client, and be renewed before expiry. The Linux installer offers direct certificate setup; a self-signed certificate is not automatically trusted by every browser.
 
 Set both TLS variables or omit both. Empty values do not disable TLS; partial configuration prevents startup. After replacing certificates, reload them by restarting the service.
+
+### Add HTTPS directly, without Traefik
+
+Retain the existing `compose.yaml` and data volume. Put `server.crt` and `server.key` in `certs/` within that project directory. The certificate must match the browser address. The standard image healthcheck also verifies `https://127.0.0.1:8443/health`, so this direct certificate must include `127.0.0.1` as an IP SAN. A DNS-only certificate does not satisfy that default healthcheck. Traefik is the documented path here for publicly issued DNS certificates.
+
+Example for a **new self-signed certificate** on a Linux Docker host. In a root shell within the existing Compose directory, replace both occurrences of `192.168.1.50` with the fixed VM IP. `certs` must not exist yet, preventing replacement of an existing certificate:
+
+```sh
+mkdir -m 700 certs &&
+openssl req -x509 -newkey rsa:2048 -sha256 -nodes -days 365 \
+  -keyout certs/server.key -out certs/server.crt \
+  -subj /CN=192.168.1.50 \
+  -addext 'subjectAltName=IP:192.168.1.50,IP:127.0.0.1,DNS:localhost' \
+  -addext extendedKeyUsage=serverAuth &&
+chown -R 10001:10001 certs &&
+chmod 600 certs/server.key &&
+chmod 644 certs/server.crt
+```
+
+Stop on errors. Merge the following entries into the **existing** service; do not add duplicate `environment:` or `volumes:` blocks. `data:/data` represents your existing volume mapping; retain its actual name. Keep the `18443:8443` port mapping:
+
+```yaml
+services:
+  hue2lox:
+    environment:
+      HUE_PUBLIC_URL: "https://192.168.1.50:18443"
+      TLS_CERT: "/certs/server.crt"
+      TLS_KEY: "/certs/server.key"
+    volumes:
+      - data:/data
+      - ./certs:/certs:ro
+```
+
+Replace the VM IP here too. Run `docker compose up -d --wait` in the same directory. Then use **https://YOUR-VM-IP:18443**; HTTP no longer works on that port. Check the fingerprint on the server:
+
+```sh
+openssl x509 -in certs/server.crt -noout -fingerprint -sha256
+curl --noproxy '*' --fail --cacert certs/server.crt https://127.0.0.1:18443/health
+```
+
+Browsers and Miniservers do not automatically trust self-signed certificates. Configure the appropriate trust and verify actual HTTPS access separately. Renew before expiry and restart the container to load the new certificate. This example targets Linux Docker; Podman Desktop also has Linux-VM file-sharing and user-mapping rules. Do not apply the container UID to native service files.
 
 **The Hue Bridge certificate is separate.** Hue2Lox ships the Hue CA for bridge TLS verification. Do not disable certificate verification or replace browser certificates to fix discovery.
 

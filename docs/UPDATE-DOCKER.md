@@ -2,7 +2,14 @@
 
 [Deutsch](UPDATE-DOCKER.de.md)
 
-For **standard deployments created by the shared installer**, with either local builds or pinned release images. Native deployments use [native maintenance](INSTALL-NATIVE.en.md). Standalone Compose/Portainer stacks using `/data` need their own stack and complete volume backup; the staging tool below does not manage them. RC1 and RC5 remain unchanged. This tool is merged into main from PR #18; [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) passed, and RC6 uses a fixed version; pulling the same pinned tag is not a version upgrade. Published RC5 images do not acquire PR features. Review release compatibility before changing versions; arbitrary data-schema migrations are not guaranteed.
+For **standard deployments created by the shared installer**, with either local builds or pinned release images. Native deployments use [native maintenance](INSTALL-NATIVE.en.md). Standalone Compose/Portainer stacks using `/data` need their own stack and complete volume backup; the staging tool below does not manage them. RC1 and RC5 remain unchanged. This tool is merged into main from PR #18; [deployment acceptance](DEPLOYMENT-ACCEPTANCE.md) passed, and each reviewed source package pins its own target version; pulling the same pinned tag is not a version upgrade. Published RC5 images do not acquire PR features. Review release compatibility before changing versions; arbitrary data-schema migrations are not guaranteed.
+
+## Select the matching update path
+
+- **Docker/Portainer stack with a named volume:** [Stack update and full rollback](DOCKER.md#updating). Cold-back up the entire volume, Compose/proxy configuration and exact old image. Do not use the installer staging helper below.
+- **Podman:** Recreate the container with the same volume mapping and a new fixed image version; first back up data, container configuration and exact old image. Do not run the Docker helpers below through a Podman alias. [Container path and limits](DOCKER.md#podman-desktop-on-macos).
+- **Existing Docker installer:** The procedure below applies only here; review custom mounts/overrides separately.
+- **Native:** [Native maintenance and rollback](INSTALL-NATIVE.en.md).
 
 ## Select a reviewed target and stop the existing deployment
 

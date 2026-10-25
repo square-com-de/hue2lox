@@ -1,8 +1,10 @@
+> **Einordnung 25.10.2026:** Die folgenden Fälle behalten ihre damaligen Belege. Das Gate wurde vor 1.0.2 integriert und für dessen exakten Inhalt freigegeben; [Software-/Rolloutabschluss #51](https://github.com/square-com-de/hue2lox/issues/51). Frühere Clean-OS-/Recovery-/Portainer-Aufgaben sind [für 1.0.1 abgeschlossen](acceptance/FINAL-CONTAINER-2026-10-25.md). Für den neuen Kandidaten gilt die gesonderte [1.0.3-Vorbereitung](PREPARATION-1.0.3.md), deren Freigabe geschlossen bleibt. Die unten historisch „offenen“ Punkte sind keine aktuelle Gesamtcheckliste.
+
 # Lessons Learned: Installation, Bedienung und Freigabe
 
 [English](LESSONS-LEARNED.md) · [Runtime-Status](RUNTIME-SUPPORT.de.md) · [Release-Gate](GHCR-RELEASE.md#stable-acceptance-gate)
 
-Stand 24.10.2026. Diese Aufarbeitung ändert keine alten Releases. 1.0.1 wurde bereits veröffentlicht, bevor dieses zusätzliche Gate im Quellstand eingeführt wird. Das Gate verhindert keine rückwirkende Veröffentlichung; es muss vor einer weiteren Freigabe gemergt und erfüllt sein. PLX wird im eigenen Projekt aufgearbeitet; hier stehen ausschließlich Hue2Lox-Belege.
+Stand 24.10.2026. Diese Aufarbeitung ändert keine alten Releases. 1.0.1 wurde bereits veröffentlicht, bevor dieses zusätzliche Gate im Quellstand eingeführt wird. Das Gate verhindert keine rückwirkende Veröffentlichung; es muss vor einer weiteren Freigabe gemergt und erfüllt sein.
 
 ## 1. RC5 installierte eine blockierte Steuerung
 

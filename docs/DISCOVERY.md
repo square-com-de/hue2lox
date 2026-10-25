@@ -44,22 +44,9 @@ nur vorhandene, nicht ignorierte oder lokal entfernte Szenen aktivierter Bridges
 - Gespeichert wird der Link in `/data/registry.json`; Netzwerkresultate bleiben
   vorübergehend im Browser. Es gibt keinen zusätzlichen Dienst oder Container.
 
-**Neue Linux-Installationen:** `docker/compose.install.yaml` verwendet Host-Netzwerk, sodass die Suche direkt im LAN der VM erfolgt. Web-IP, Port und HTTPS-Healthcheck folgen den Installationswerten. Die tatsächliche Suche im LAN muss weiterhin getestet werden; Details und Umstellung bestehender Testinstallationen stehen in [INSTALL.md](../INSTALL.md).
+**Netzwerk nach Installationsweg:** Der Compose-Schnellstart nutzt Portweiterleitung; Multicast aus dem LAN erreicht den Container dort möglicherweise nicht. `docker/compose.image.yaml` ist eine optionale Host-Netzvariante für Linux. Bestehende Docker-Installer verwenden ebenfalls Host-Netzwerk. Podman Desktop betreibt Container in einer Linux-VM; deren Netz ist nicht das physische Mac-/Windows-LAN. Nativ hängt die Suche vom Netzwerk des Zielsystems ab.
 
-**Ältere Installationen und Netzwerkgrenzen:** Broadcast/Multicast kann im Docker-Bridge-Netz,
-bei VLANs oder Firewalls fehlen. Ein erfolgreicher Test auf Mac oder LoxBerry-Host
-beweist nicht, dass die Suche auch im Container Antworten erhält. Deshalb zeigt
-die Oberfläche bei ausbleibenden Ergebnissen die manuelle Alternative an. Dieses
-Update ändert weder Docker-Netzwerkmodus noch Firewall oder Portfreigaben.
-Der Betrieb der Suche im tatsächlichen Container muss nach Installation geprüft
-werden; `loxberry` besitzt keine Docker-Berechtigung.
-
-Optional als root nach Installation prüfen (nur Suchpakete):
-
-```sh
-cd /opt/loxberry/hue2lox-prototype
-docker compose exec -T hue2lox python -c 'import json,discovery; print(json.dumps({k:discovery.search(k) for k in ("miniserver","hue")}))'
-```
+Die Oberfläche bietet unter **Bridges → Keine Bridge gefunden?** lokale Suchbefehle für macOS, Windows und Linux. Diese werden auf einem Rechner im LAN ausgeführt, nicht im Container. Eine manuelle IP umgeht fehlende Multicast-Suche, aber keine gesperrte direkte Route zur Bridge. [Diagnose und Voraussetzungen](CONTAINER-SETUP.de.md#bridge-suche-und-direkter-zugriff-sind-zwei-verschiedene-tests). Ein erfolgreicher Browserlogin beweist keinen LAN-Zugriff. Die Anwendung ändert weder Firewall noch Netzwerkmodus automatisch.
 
 ## Entwicklung und Prüfung am 18.10.2026
 

@@ -28,6 +28,8 @@ Die Zuordnung ist **Befehlshistorie, kein gemessener Lampenzustand** und keine R
 
 Hue-App, physische Schalter, normale Lampenausgänge und andere Integrationen können Lampen unabhängig verändern. Diese Änderungen werden nicht in die Szenen-Befehlshistorie zurückgeführt. Für konsistentes Verhalten die Ein/Aus-Szenenkreise nicht mit parallelen Steuerwegen derselben Lampen mischen. Bestehende reine Recall-Endpunkte und Recall-XML bleiben verfügbar.
 
-## Noch abzunehmen
+## Kandidatenbezogene Abnahme
 
 Automatisierte Tests verwenden ausschließlich künstliche Bridge-Antworten und prüfen beide Reihenfolgen, schnelle Wechsel, Wiederholungen, abschließendes AUS, Gruppenisolierung/Überlappung, Gleichzeitigkeit, Neustart, Timeout/Teilfehler, Token/CSRF und XML. Das ist kein Nachweis realer Hue- oder Loxone-Reihenfolgen. Vor Freigabe in einer ausdrücklich gewählten Testumgebung reale A/B-Wechsel, schnelle A/B/C-Wechsel, finales AUS und die sichtbare Gruppenwirkung prüfen; Monitorbelege ohne Token/Schlüssel erfassen. Keine Produktionsmessung oder automatische Migration.
+
+Die Nutzerbeobachtung vom 24.10.2026 oben gilt für den damaligen 1.0.0/1.0.1-Stand. Sie ist keine neue 1.0.3-Abnahme. [Offene Hardwareliste #42](https://github.com/square-com-de/hue2lox/issues/42).

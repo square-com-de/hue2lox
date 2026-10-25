@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](INDEX.md) · [1.0.3-Vorbereitung / preparation](PREPARATION-1.0.3.md).
+
 # Stable review status / Stable-Review-Stand — 23.10.2026
 
 **Main: `9a1e3ebcb4fa61c391588a2b29b7e998ee1c3278`. RC5 veröffentlicht, RC6 in Vorbereitung; kein Stable. / RC5 published, RC6 being prepared; no stable release.**

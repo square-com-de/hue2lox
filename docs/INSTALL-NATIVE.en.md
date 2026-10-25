@@ -1,3 +1,5 @@
+> **1.0.3 in Vorbereitung / preparation only:** Noch nicht veröffentlicht. Download-/Image-Befehle für 1.0.3 erst nach erfolgreicher Veröffentlichung verwenden. / Not published; use 1.0.3 download/image commands only after successful publication. [Aktuell veröffentlicht / currently published: 1.0.2](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
+
 # Native Linux installation without Docker
 
 [Deutsch](INSTALL-NATIVE.md) · [All installation paths](../INSTALL.md)
@@ -6,11 +8,11 @@ Native uses the same application core and interface as the containers. It remain
 
 ## Native interactive installer
 
-For published **1.0.2**, first [download and verify the source ZIP and native archive](../INSTALL.md#native-installer). `--deployment native` opens the native mode directly without Docker selection:
+For published **1.0.3**, first [download and verify the source ZIP and native archive](../INSTALL.md#native-installer). `--deployment native` opens the native mode directly without Docker selection:
 
 ```sh
 bash /absolute/path/to/hue2lox/install-assistant.sh --deployment native \
-  --native-package /absolute/path/hue2lox-1.0.2-native.tar.gz \
+  --native-package /absolute/path/hue2lox-1.0.3-native.tar.gz \
   --native-sha256 VERIFIED_SHA256
 ```
 
@@ -178,11 +180,11 @@ The language selected in the shared assistant also applies to its own Python hel
 
 ## Stable source ZIP and native archive
 
-**1.0.2 native archive.** Supply `hue2lox-1.0.2-native.tar.gz` alongside `hue2lox-v1.0.2.zip`. Verify both hashes from the same `SHA256SUMS.txt`; use the versioned release assets after publication completes. The native archive is separate from the extracted source ZIP. From the extracted source ZIP as root:
+**1.0.3 native archive.** Supply `hue2lox-1.0.3-native.tar.gz` alongside `hue2lox-v1.0.3.zip`. Verify both hashes from the same `SHA256SUMS.txt`; use the versioned release assets after publication completes. The native archive is separate from the extracted source ZIP. From the extracted source ZIP as root:
 
 ```sh
 bash install-assistant.sh --deployment native \
-  --native-package /absolute/path/hue2lox-1.0.2-native.tar.gz \
+  --native-package /absolute/path/hue2lox-1.0.3-native.tar.gz \
   --native-sha256 VERIFIED_SHA256
 ```
 

@@ -4,7 +4,7 @@
 
 This is the maintainer runbook for versioned releases. Merging this workflow does
 not push an image or update an installation. RC1–RC5 releases, tags and assets
-remain unchanged. RC6 is published on both registries; Stable 1.0.0 follows the same verified workflow. See [Stable release notes](RELEASE-NOTES-1.0.0.md).
+remain unchanged. 1.0.2 is published on both registries. 1.0.3 is preparation only; see [candidate status](PREPARATION-1.0.3.md). No publication or production action is authorized by this runbook.
 
 ### Before publishing
 
@@ -13,9 +13,9 @@ remain unchanged. RC6 is published on both registries; Stable 1.0.0 follows the 
    review the [container compliance evidence](IMAGE-COMPLIANCE.md). Prepare the
    version-specific installation/Compose references in that commit before tagging;
    the release ZIP preserves that exact source and cannot be corrected afterward.
-2. Create a new tag, for example `v1.0.0`, at that commit. Never move an
+2. Create a new tag, for example `v1.0.3`, at that commit. Never move an
    existing release tag. Create a draft GitHub release with short release notes.
-   For an RC, select **Set as a pre-release**; for `v1.0.0`, leave that unchecked.
+   For an RC, select **Set as a pre-release**; for a stable tag, leave that unchecked.
 3. In the notes, link the installation guide and explain that the same version
    will be available as an installer ZIP and a multi-platform image in GHCR and Docker Hub. Link
    the release assets for corresponding sources, notices and platform evidence.
@@ -68,11 +68,11 @@ Only after every gate passes does the publisher:
 - For a stable release only, move `latest` if this is also GitHub's latest stable
   release. **An RC never creates or changes `latest`.**
 
-For Stable 1.0.0, the version tag is `1.0.0` (without the leading `v`):
+For the planned Stable 1.0.3, the version tag is `1.0.3` (without the leading `v`):
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.0
-podman pull docker.io/dubctrl/hue2lox:1.0.0
+docker pull ghcr.io/square-com-de/hue2lox:1.0.3
+podman pull docker.io/dubctrl/hue2lox:1.0.3
 ```
 
 Use these versioned commands after the release publication workflow succeeds. Docker selects AMD64 or
@@ -106,7 +106,7 @@ cannot prove registry write permissions or package visibility.
 
 Dies ist der Maintainer-Ablauf für versionierte Releases. Das Zusammenführen
 des PR veröffentlicht keine Images und ändert weder RC1–RC5 noch laufende
-Installationen. RC6 ist auf Docker Hub und GHCR veröffentlicht. Stable 1.0.0 verwendet denselben geprüften Ablauf; siehe [Release-Hinweise](RELEASE-NOTES-1.0.0.md).
+Installationen. 1.0.2 ist auf beiden Registries veröffentlicht. 1.0.3 ist nur Vorbereitung; [Kandidatenstatus](PREPARATION-1.0.3.md). Dieser Ablauf gibt keine Veröffentlichung oder Produktionsänderung frei.
 
 Vorher das öffentliche Docker-Hub-Repository `dubctrl/hue2lox` anlegen und im
 GitHub-Repository unter Settings → Secrets and variables → Actions die Secrets
@@ -122,7 +122,7 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    auswählen und die Abnahme mit echten Geräten sowie die Lizenzbeilagen prüfen.
    Versionsbezogene Installations-/Compose-Verweise vor dem Tag im Quellstand
    vorbereiten: Das Release-ZIP enthält exakt diesen Stand.
-2. Einen neuen Tag wie `v1.0.0` an diesem Commit und einen Release-Entwurf
+2. Einen neuen Tag wie `v1.0.3` an diesem Commit und einen Release-Entwurf
    anlegen. Beim RC **Set as a pre-release** aktivieren. Bestehende Tags bleiben
    unverändert. ZIP und Prüfsummen werden vom Workflow erzeugt.
 3. Erst **Publish release** startet die Veröffentlichung. PRs, normale Pushes,
@@ -138,8 +138,8 @@ Release-, Quellen- und Lizenzbeilagen verweisen.
    **Public** stellen und bei fehlgeschlagener öffentlicher Prüfung **Re-run
    failed jobs** wählen. Den gesamten Build dafür nicht erneut starten.
 
-Stable 1.0.0 erhält `ghcr.io/square-com-de/hue2lox:1.0.0` und
-`docker.io/dubctrl/hue2lox:1.0.0` ; diese Referenzen erst nach erfolgreicher Veröffentlichung verwenden. Beide Registries müssen vor einer
+Geplant ist Stable 1.0.3 mit `ghcr.io/square-com-de/hue2lox:1.0.3` und
+`docker.io/dubctrl/hue2lox:1.0.3` ; diese Referenzen erst nach erfolgreicher Veröffentlichung verwenden. Beide Registries müssen vor einer
 Stable-Promotion erfolgreich geprüft sein. Uploads in zwei Registries sind nicht
 atomar; bei Teilfehlern bleiben vorhandene Ergebnisse bestehen und der
 fehlgeschlagene Job wird mit denselben Artefakten wiederholt. `latest` wird ausschließlich
@@ -158,9 +158,9 @@ befristete CI-Artefakte ersetzen diese Downloads nicht.
 
 ## Installer version for the next release / Installer-Version
 
-Before creating a new release tag, set `install/release-image.json` to the same version without the leading `v` (for example, tag `v1.0.0` → version `1.0.0`). Release publication refuses a mismatch so a new ZIP cannot silently install the previous release image. Do not retag or replace RC5. During development, the file continues to name the last published version; select local build to test `main`.
+Before creating a new release tag, set `install/release-image.json` to the same version without the leading `v` (for example, tag `v1.0.3` → version `1.0.3`). Release publication refuses a mismatch so a new ZIP cannot silently install the previous release image. Do not retag or replace RC5. A preparation branch may pin an unpublished candidate only with an explicit availability warning; use local builds/offline packages until that version is published. Ordinary development must not silently select an unavailable image.
 
-Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version ohne führendes `v` enthalten. Die Veröffentlichung stoppt bei Abweichungen, damit ein neues ZIP nicht unbemerkt das vorherige Image installiert. RC5 nicht neu taggen oder ersetzen. Während der Entwicklung bleibt die letzte veröffentlichte Version eingetragen; Änderungen aus `main` mit lokalem Build testen.
+Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version ohne führendes `v` enthalten. Die Veröffentlichung stoppt bei Abweichungen, damit ein neues ZIP nicht unbemerkt das vorherige Image installiert. RC5 nicht neu taggen oder ersetzen. Ein Vorbereitungsbranch darf eine unveröffentlichte Version nur mit ausdrücklichem Verfügbarkeitshinweis binden; bis zur Veröffentlichung lokale Builds/Offline-Pakete verwenden. Normale Entwicklung darf nicht still auf ein fehlendes Image wechseln.
 
 ## Native release asset / Natives Release-Asset
 
@@ -168,11 +168,11 @@ Vor einem neuen Release-Tag muss `install/release-image.json` dieselbe Version o
 
 `prepare` baut das native Archiv in einem sauberen lokalen Klon desselben Release-Commits wie das Quell-ZIP. Falsche Version/Commit-ID, unsaubere Identität, unerwartete Einträge oder falsche Dateihashes stoppen den Ablauf. Die gemeinsame `SHA256SUMS.txt` enthält das native Archiv; Upload und anonyme Byteprüfung verwenden denselben unveränderlichen Asset-Pfad wie das ZIP. Abweichende vorhandene Assets werden nicht überschrieben. Für den Paketbau sind weder pip-Pakete noch Container oder Hardwarezugriff nötig. Native Laufzeitunterstützung bleibt experimentell und auf amd64 begrenzt, unabhängig von ARM64-Containern.
 
-Use the [offline RC6 package check](RC6-PREPARATION.md#isolierte-paketprüfung--isolated-package-checks) before publication. / Vor Veröffentlichung die isolierte Paketprüfung verwenden. It creates no tag or release. / Sie erstellt keinen Tag und kein Release.
+Use the [version-specific offline package checks](PREPARATION-1.0.3.md#isolierte-technische-prüfung) before publication. / Vor Veröffentlichung die isolierte Paketprüfung verwenden. It creates no tag or release. / Sie erstellt keinen Tag und kein Release.
 
 ## Stable acceptance gate
 
-**Applies to release commits containing this gate, after its PR is merged.** Published 1.0.0/1.0.1 and their older workflow checkouts are unchanged. The current `compliance/stable-readiness.json` deliberately approves no next version. Green CI alone cannot open it.
+**Applies to new release commits containing this gate.** Published releases including 1.0.2 and their workflow checkouts remain unchanged. The current `compliance/stable-readiness.json` deliberately approves no next version. Green CI alone cannot open it.
 
 Before creating a stable tag or publishing a GitHub stable release:
 
@@ -188,7 +188,7 @@ Before creating a stable tag or publishing a GitHub stable release:
 4. Before tagging, run the offline check for the chosen version, for example:
 
    ```sh
-   python3 scripts/release-image.py check-readiness --version 1.0.2
+   python3 scripts/release-image.py check-readiness --version 1.0.3
    ```
 
    The example is not an instruction to reuse an existing tag. A blocked result is a release stop, not an installer error. Do not bypass it or blindly mark missing checks passed. RC preparation/source packages stay available without stable approval and must remain prereleases; no `latest` promotion.
