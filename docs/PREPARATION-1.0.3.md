@@ -4,7 +4,7 @@ Basis: main `3493f5f22fdfc3d31a24c2a668e879b54118dafd`, einschließlich PR #54, 
 
 ## Inhalt und Grenzen
 
-[DE/EN-Release-Hinweise](RELEASE-NOTES-1.0.3.md). Versionsgebunden sind Installer-Manifest, Compose-Vorlagen, DE/EN-Einstiege und Downloadnamen. Bereits veröffentlichte 1.0.2-/RC-Dateien bleiben unverändert. Die Traefik-Datei ist ein Beispiel für vorhandenen Traefik; sie installiert keinen Proxy und bescheinigt keine praktische Traefik-Abnahme. Anwendungskern und Datenformat werden nicht geändert.
+[DE/EN-Release-Hinweise](RELEASE-NOTES-1.0.3.md). Versionsgebunden sind Installer-Manifest, Compose-Vorlagen, DE/EN-Installationsanleitungen und Downloadnamen. Die öffentlich orientierten READMEs übernehmen die in PR #58 eingeführte Struktur und behalten ihren funktionierenden 1.0.2-Schnellstart bis zu einer ausdrücklich genehmigten neuen Veröffentlichung. Der 1.0.3-Kandidatenstatus und seine Anleitungen sind separat verlinkt. Bereits veröffentlichte 1.0.2-/RC-Dateien bleiben unverändert. Die Traefik-Datei ist ein Beispiel für vorhandenen Traefik; sie installiert keinen Proxy und bescheinigt keine praktische Traefik-Abnahme. Anwendungskern und Datenformat werden nicht geändert.
 
 ## Isolierte technische Prüfung
 
