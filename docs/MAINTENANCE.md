@@ -6,6 +6,8 @@ This guide applies to installations prepared with `prepare-install.py` and a sou
 
 **Operational acceptance pending:** This procedure remains unconfirmed for real browser/Miniserver connections. Automated tests are not operational approval.
 
+**Scope:** Existing direct-HTTPS Docker-installer deployments with `certs/`, `health-test.crt` and the matching `.env` only. Do not apply to the named-volume quickstart or Podman. Traefik certificates are renewed at the proxy. Native uses its [own certificate maintenance](INSTALL-NATIVE.en.md#certificate-renewal-and-address-changes). [Configure direct container HTTPS](CONTAINER-SETUP.md#http-or-https).
+
 ## Stop and take a complete backup
 
 `INSTANCE` is the installation directory selected in the installer; `SOURCE` is the extracted new source tree. Become root using `sudo -i` or `su -`. Stop only this Compose installation and pause any external restart automation during maintenance.
@@ -13,7 +15,7 @@ This guide applies to installations prepared with `prepare-install.py` and a sou
 ```sh
 sudo -i
 INSTANCE=/opt/hue2lox
-SOURCE=/home/lance/hue2lox-main
+SOURCE=/path/to/reviewed/hue2lox-source
 cd "$INSTANCE"
 docker compose down
 BACKUP="/root/hue2lox-backup-$(date +%Y%m%d-%H%M%S)"

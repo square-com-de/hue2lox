@@ -2,7 +2,7 @@
 
 [Deutsch](RUNTIME-SUPPORT.de.md) · [Installation](../INSTALL.md) · [Lessons learned](LESSONS-LEARNED.md)
 
-As of 24 October 2026: published **1.0.1**, commit `f245a4ddd8857706f6ded748fb6945ea5aa88a38`. Image startup, working login, lifecycle acceptance and observed lamp effects are different evidence scopes.
+As of 25 October 2026: published **1.0.2**, commit `2af13f603c97064fd01585ea04d893a5fdad1081`; **1.0.3 is unreleased preparation**. [1.0.2 software/rollout evidence](https://github.com/square-com-de/hue2lox/issues/51) · [1.0.3 preparation](PREPARATION-1.0.3.md). Older platform checks below remain bound to their explicitly stated versions. Image startup, working login, lifecycle acceptance and observed lamp effects are different evidence scopes.
 
 | Path | Observed scope | Limit |
 |---|---|---|
@@ -13,12 +13,12 @@ As of 24 October 2026: published **1.0.1**, commit `f245a4ddd8857706f6ded748fb69
 | LoxBerry | Existing Linux/Docker deployment on a specific LoxBerry VM was operated separately | **No dedicated LoxBerry plugin or plugin ZIP.** A native foundation is not plugin acceptance. |
 | Unraid/Synology, Docker Desktop on Mac/Windows, other derivatives | Container/Compose examples are integration guidance | Linux CI and a Mac Podman test do not certify all platforms. Separate acceptance is needed. |
 
-Installer distribution detection is not hardware acceptance. The [installation matrix](../INSTALL.md) lists recognized OS versions; this table limits the evidenced paths. An amd64 image is not an ARM image; a 64-bit CPU with a 32-bit OS is insufficient.
+Installer distribution detection is not hardware acceptance. The [native guide](INSTALL-NATIVE.en.md) lists native OS targets; this table limits the evidenced paths. An amd64 image is not an ARM image; a 64-bit CPU with a 32-bit OS is insufficient.
 
 ## Choose the correct entry point
 
-- Linux: [versioned source ZIP and guided installer](../INSTALL.md), or the [fixed Compose file](DOCKER.md#docker-compose). Do not run the Docker installer through a Podman alias.
-- Accepted Mac desktop flow: [four GUI steps](DOCKER.md#podman-desktop-on-macos). Direct localhost/private-IP access in 1.0.1 needs no additional browser URL. Custom DNS/reverse proxies need a matching `HUE_PUBLIC_URL`.
+- Docker on Linux: [fixed Compose file](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server), without a Hue2Lox installer. Use prepared 1.0.3 commands only after publication; 1.0.2 remains published meanwhile.
+- Accepted Mac desktop flow: [four GUI steps](DOCKER.md#podman-desktop-on-macos). Since 1.0.1, direct localhost/private-IP access needs no additional browser URL. Custom DNS/reverse proxies need a matching `HUE_PUBLIC_URL`.
 - Native: [separate archive](INSTALL-NATIVE.en.md) matching the source ZIP's version/commit; container settings are not systemd settings.
 
 ## Updating is not restarting
@@ -27,14 +27,12 @@ A new image version requires a **recreated container**, as do changed environmen
 
 Fresh data uses `admin/admin`. Retained data keeps its existing password, bridge keys and intentionally disabled controls. For RC5 state, [targeted recovery](RECOVERY-CONTROL.md) explains why ordinary updates do not silently change `0` to `1`. Token and lamp capability checks still apply.
 
-Pin `1.0.1` instead of `latest`, or use its published digest. The [digest record](https://github.com/square-com-de/hue2lox/releases/download/v1.0.1/container-digests.json) binds platform and commit. Historical releases remain unchanged.
+Pin the chosen published version instead of `latest`, or use its digest. The [1.0.2 digest record](https://github.com/square-com-de/hue2lox/releases/download/v1.0.2/container-digests.json) binds platform and commit. Historical releases remain unchanged.
 
-## New partial Proxmox acceptance
+## Historical Proxmox acceptance for 1.0.1
 
 Ubuntu **26.04.1 amd64**, Docker **29.9.2**, Compose **5.6.1**: image/API login, persistence, update and restore/rollback passed. The exact quick-start file now also passed on a new OS with empty Docker; disabled-flag recovery and actual Portainer GUI passed. Real hardware remains separate. [Final evidence](acceptance/FINAL-CONTAINER-2026-10-25.md). [Evidence and limits](acceptance/PROXMOX-1.0.1.md). Runtime versions are now recorded for this new partial acceptance.
 
-## Before the next stable approval
+## Open 1.0.3 approval
 
-The additional clean-OS, disabled-flag recovery and Portainer checks passed. Separate hardware acceptance, final version-bound release decision for a new candidate remain open. The new records passed a separate read-only review. Runtime versions, executed commands and retained-password checks are recorded in the new Deployer report. Record hardware scope explicitly; mocks establish no new lamp/Miniserver acceptance. The maintainer opens the [technical stable gate](GHCR-RELEASE.md#stable-acceptance-gate) only using that evidence. Published 1.0.0/1.0.1 are not rewritten.
-
-**Additional acceptance:** The [partial Proxmox report](CONTAINER-ACCEPTANCE-1.0.1.md) now records runtime versions, the unchanged quick-start file, browser and lifecycle evidence. The [final acceptance](acceptance/FINAL-CONTAINER-2026-10-25.md) closes clean-OS, flags and Portainer for the stated1.0.1 identity; other platform and hardware limits remain explicit. Owner of this final acceptance: Engineer; coordination through the PM.
+Historical clean-OS, disabled-flag, Portainer and deployment evidence is not reclassified as 1.0.3 acceptance. See [preparation and remaining approval](PREPARATION-1.0.3.md) for the final candidate. Publication remains blocked. Joint hardware tests are tracked separately in [#42](https://github.com/square-com-de/hue2lox/issues/42). Green CI establishes no blanket platform, Miniserver TLS or hardware certification.

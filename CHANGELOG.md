@@ -6,6 +6,7 @@
 - Make offline source ZIP bytes independent of the host timezone using UTC for git archive; cross-timezone regression compares actual ZIP/native bytes (#55, fixes #44).
 - Explain HTTP container defaults, native HTTPS, exact configuration locations and a complete existing-Traefik Compose example in DE/EN (#56).
 - Simplify installation to Docker, Podman and a native installer; remove the AI installation prompts. Existing Docker-installer maintenance remains available.
+- Clean up manuals, generated tutorials, architecture/security/runtime references and backup scope; separate current instructions from dated acceptance and prototype records in a documentation index.
 - Keine neue Lampenfunktion, Datenmigration oder Plattformfreigabe. No new lighting feature, data migration or platform certification. Historical releases remain unchanged.
 
 ## 1.0.2

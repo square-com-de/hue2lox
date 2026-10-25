@@ -1,6 +1,6 @@
 # Hue2Lox 1.0.3 — unveröffentlichte Vorbereitung
 
-Basis: main `3493f5f22fdfc3d31a24c2a668e879b54118dafd`, einschließlich PR #54, #55 und #56. Die genaue Kandidaten-Commit-ID und CI-Ergebnisse stehen im zugehörigen Vorbereitungs-PR. Kein Tag und kein GitHub-Release wird in diesem Arbeitsschritt angelegt. Keine Images werden gepusht, `latest` bleibt unverändert und es gibt keinen Produktionsrollout.
+Basis: main `3493f5f22fdfc3d31a24c2a668e879b54118dafd`, einschließlich PR #54, #55 und #56. Anschließend im selben Vorbereitungs-PR: vollständiger Dokumentationsdurchgang mit aktualisiertem Handbuch, beiden Tutorials, Architektur-/Sicherheits-/Runtime-Referenzen und klarem historischem Index. Die genaue Kandidaten-Commit-ID und CI-Ergebnisse stehen im zugehörigen Vorbereitungs-PR. Kein Tag und kein GitHub-Release wird in diesem Arbeitsschritt angelegt. Keine Images werden gepusht, `latest` bleibt unverändert und es gibt keinen Produktionsrollout.
 
 ## Inhalt und Grenzen
 

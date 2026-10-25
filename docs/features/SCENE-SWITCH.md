@@ -28,6 +28,8 @@ Ownership is **command history, not observed lamp state**, and provides no state
 
 The Hue app, physical switches, ordinary lamp outputs and other integrations may change lamps independently. These changes are not reflected in scene command ownership. Avoid parallel control paths for the same lamps when relying on scene on/off circuits. Existing recall-only endpoints and XML remain available.
 
-## Acceptance still required
+## Candidate-specific acceptance
 
 Automated tests use synthetic bridge responses only, covering both orders, rapid changes, repetitions, final OFF, group isolation/overlap, concurrency, restart, timeout/partial errors, token/CSRF and XML. They do not establish actual Hue or Loxone command ordering. Before approval, use an explicitly chosen test environment to check real A/B and rapid A/B/C changes, final OFF and visible full-group effects. Record monitor evidence without tokens or keys. No production measurements or automatic migration.
+
+The user observation of 24 October 2026 applies to the recorded 1.0.0/1.0.1 revision, not a new 1.0.3 qualification. [Open hardware checklist #42](https://github.com/square-com-de/hue2lox/issues/42).

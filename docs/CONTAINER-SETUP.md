@@ -129,6 +129,47 @@ This template uses the Docker provider. Traefik on another server, or Podman wit
 
 Set both TLS variables or omit both. Empty values do not disable TLS; partial configuration prevents startup. After replacing certificates, reload them by restarting the service.
 
+### Add HTTPS directly, without Traefik
+
+Retain the existing `compose.yaml` and data volume. Put `server.crt` and `server.key` in `certs/` within that project directory. The certificate must match the browser address. The standard image healthcheck also verifies `https://127.0.0.1:8443/health`, so this direct certificate must include `127.0.0.1` as an IP SAN. A DNS-only certificate does not satisfy that default healthcheck. Traefik is the documented path here for publicly issued DNS certificates.
+
+Example for a **new self-signed certificate** on a Linux Docker host. In a root shell within the existing Compose directory, replace both occurrences of `192.168.1.50` with the fixed VM IP. `certs` must not exist yet, preventing replacement of an existing certificate:
+
+```sh
+mkdir -m 700 certs &&
+openssl req -x509 -newkey rsa:2048 -sha256 -nodes -days 365 \
+  -keyout certs/server.key -out certs/server.crt \
+  -subj /CN=192.168.1.50 \
+  -addext 'subjectAltName=IP:192.168.1.50,IP:127.0.0.1,DNS:localhost' \
+  -addext extendedKeyUsage=serverAuth &&
+chown -R 10001:10001 certs &&
+chmod 600 certs/server.key &&
+chmod 644 certs/server.crt
+```
+
+Stop on errors. Merge the following entries into the **existing** service; do not add duplicate `environment:` or `volumes:` blocks. `data:/data` represents your existing volume mapping; retain its actual name. Keep the `18443:8443` port mapping:
+
+```yaml
+services:
+  hue2lox:
+    environment:
+      HUE_PUBLIC_URL: "https://192.168.1.50:18443"
+      TLS_CERT: "/certs/server.crt"
+      TLS_KEY: "/certs/server.key"
+    volumes:
+      - data:/data
+      - ./certs:/certs:ro
+```
+
+Replace the VM IP here too. Run `docker compose up -d --wait` in the same directory. Then use **https://YOUR-VM-IP:18443**; HTTP no longer works on that port. Check the fingerprint on the server:
+
+```sh
+openssl x509 -in certs/server.crt -noout -fingerprint -sha256
+curl --noproxy '*' --fail --cacert certs/server.crt https://127.0.0.1:18443/health
+```
+
+Browsers and Miniservers do not automatically trust self-signed certificates. Configure the appropriate trust and verify actual HTTPS access separately. Renew before expiry and restart the container to load the new certificate. This example targets Linux Docker; Podman Desktop also has Linux-VM file-sharing and user-mapping rules. Do not apply the container UID to native service files.
+
 **The Hue Bridge certificate is separate.** Hue2Lox ships the Hue CA for bridge TLS verification. Do not disable certificate verification or replace browser certificates to fix discovery.
 
 ## Bridge discovery and direct access are separate tests

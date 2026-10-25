@@ -6,6 +6,8 @@ Diese Anleitung gilt für die mit `prepare-install.py` vorbereitete Installation
 
 **Betriebsabnahme noch offen:** Der Ablauf ist für echte Browser-/Miniserververbindungen noch unbestätigt. Automatische Tests sind keine Betriebsfreigabe.
 
+**Geltungsbereich:** Nur bestehende direkte HTTPS-Installationen des früheren Docker-Installers mit `certs/`, `health-test.crt` und passender `.env`. Nicht auf den heutigen Named-Volume-Schnellstart oder Podman übertragen. Bei Traefik wird das Zertifikat am Proxy erneuert. Nativ gilt die [eigene Zertifikatspflege](INSTALL-NATIVE.md#zertifikatserneuerung-und-ip-wechsel). [Direktes Container-HTTPS einrichten](CONTAINER-SETUP.de.md#http-oder-https).
+
 ## Vorbereiten und vollständig sichern
 
 `INSTANCE` ist der vom Installer gewählte Zielordner, `SOURCE` der entpackte neue Quellstand. Als root anmelden (`sudo -i` oder `su -`). Nur diese Compose-Installation stoppen; keine globalen Docker-Neustarts. Auch externe Neustart-Automationen für die Wartung pausieren.
@@ -13,7 +15,7 @@ Diese Anleitung gilt für die mit `prepare-install.py` vorbereitete Installation
 ```sh
 sudo -i
 INSTANCE=/opt/hue2lox
-SOURCE=/home/lance/hue2lox-main
+SOURCE=/path/to/reviewed/hue2lox-source
 cd "$INSTANCE"
 docker compose down
 BACKUP="/root/hue2lox-backup-$(date +%Y%m%d-%H%M%S)"

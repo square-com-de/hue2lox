@@ -129,6 +129,47 @@ Die Vorlage verwendet das Docker-Provider-Modell. Traefik auf einem anderen Serv
 
 Beide TLS-Variablen setzen oder beide weglassen. Leere Werte sind keine Deaktivierung; unvollständige Konfiguration führt zum Startfehler. Nach Zertifikatstausch muss der Dienst das neue Zertifikat laden, etwa durch Neustart.
 
+### HTTPS ohne Traefik nachträglich einrichten
+
+Für direktes HTTPS die vorhandene `compose.yaml` und das bestehende Datenvolume behalten. Im Projektordner `certs/server.crt` und `certs/server.key` bereitstellen. Das Zertifikat muss zur Browseradresse passen. Der Standard-Image-Healthcheck prüft außerdem `https://127.0.0.1:8443/health`; dafür muss das direkt verwendete Zertifikat auch `127.0.0.1` als IP-SAN enthalten. Ein Zertifikat nur für einen DNS-Namen genügt diesem Standard-Healthcheck nicht. Für öffentlich ausgestellte DNS-Zertifikate ist Traefik der hier dokumentierte Weg.
+
+Beispiel für ein **neues selbstsigniertes Zertifikat** auf einem Linux-Docker-Host. In einer Root-Shell im bisherigen Compose-Ordner ausführen; `192.168.1.50` an beiden Stellen durch die feste VM-IP ersetzen. `certs` darf noch nicht existieren, damit kein vorhandenes Zertifikat überschrieben wird:
+
+```sh
+mkdir -m 700 certs &&
+openssl req -x509 -newkey rsa:2048 -sha256 -nodes -days 365 \
+  -keyout certs/server.key -out certs/server.crt \
+  -subj /CN=192.168.1.50 \
+  -addext 'subjectAltName=IP:192.168.1.50,IP:127.0.0.1,DNS:localhost' \
+  -addext extendedKeyUsage=serverAuth &&
+chown -R 10001:10001 certs &&
+chmod 600 certs/server.key &&
+chmod 644 certs/server.crt
+```
+
+Bei einem Fehler stoppen. Anschließend folgende Einträge in den **vorhandenen** Service ergänzen, nicht einen zweiten `environment:`-/`volumes:`-Block daneben anlegen. `data:/data` steht hier für die bestehende Volume-Zuordnung; bei deiner Installation deren tatsächlichen Namen beibehalten. Portweiterleitung `18443:8443` bleibt bestehen:
+
+```yaml
+services:
+  hue2lox:
+    environment:
+      HUE_PUBLIC_URL: "https://192.168.1.50:18443"
+      TLS_CERT: "/certs/server.crt"
+      TLS_KEY: "/certs/server.key"
+    volumes:
+      - data:/data
+      - ./certs:/certs:ro
+```
+
+Auch hier die VM-IP ersetzen. Dann im selben Ordner `docker compose up -d --wait` ausführen. Die Adresse ist danach **https://DEINE-VM-IP:18443**; HTTP funktioniert auf diesem Port dann nicht mehr. Fingerabdruck am Server prüfen:
+
+```sh
+openssl x509 -in certs/server.crt -noout -fingerprint -sha256
+curl --noproxy '*' --fail --cacert certs/server.crt https://127.0.0.1:18443/health
+```
+
+Ein selbstsigniertes Zertifikat wird nicht automatisch vom Browser oder Miniserver vertraut. Vertrauen passend einrichten und tatsächliche HTTPS-Verbindung gesondert prüfen. Zertifikat rechtzeitig erneuern und danach den Container neu starten. Das Beispiel gilt für Docker auf Linux; bei Podman Desktop gelten zusätzlich Dateifreigabe und Benutzerzuordnung der Linux-VM. Keine Container-UID auf native Dienstdateien anwenden.
+
 **Das Zertifikat der Hue Bridge ist ein anderes Thema.** Hue2Lox bringt die Hue-CA zur Prüfung der Bridge-Verbindung mit. Für eine fehlgeschlagene Bridge-Suche weder Zertifikatsprüfung deaktivieren noch Browserzertifikate austauschen.
 
 ## Bridge-Suche und direkter Zugriff sind zwei verschiedene Tests

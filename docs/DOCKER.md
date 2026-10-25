@@ -1,6 +1,6 @@
 **Use the 1.0.3 downloads only after its publication workflow succeeds. / Die 1.0.3-Downloads erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
 
-**Release version: 1.0.3.** Use the fixed 1.0.3 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.3.md) describe the installed-version display; the direct desktop login fix from 1.0.1 is retained. The native adapter remains a separate experimental deployment path.
+**Unreleased candidate: 1.0.3.** Use the fixed 1.0.3 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.3.md) describe the installed-version display; the direct desktop login fix from 1.0.1 is retained. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
 
@@ -8,14 +8,14 @@
 
 For Linux Docker Engine hosts. See the [runtime matrix](RUNTIME-SUPPORT.md). For installation without containers, use the [native installer](../INSTALL.md#native-installer).
 
-Stable 1.0.3 provides identical images at `docker.io/dubctrl/hue2lox:1.0.3` and
+After successful publication, 1.0.3 will provide identical images at `docker.io/dubctrl/hue2lox:1.0.3` and
 `ghcr.io/square-com-de/hue2lox:1.0.3` for
 `linux/amd64` and `linux/arm64`. RC4 remains unchanged on GHCR; RC1–RC3 remain unchanged and ZIP-only.
 [1.0.3 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.3).
 
 ## Image tags
 
-Use the exact version `1.0.3` for this release. There are no floating `rc`
+After publication, use the exact version `1.0.3` for this release. There are no floating `rc`
 or minor-version tags. `latest` follows the latest successfully verified stable release. RC releases never move it. Pin `1.0.3` to avoid unintended version changes.
 
 ```sh
@@ -32,11 +32,11 @@ publish images. See [GHCR-RELEASE.md](GHCR-RELEASE.md).
 
 **Where to configure it:** edit `environment:` in your Hue2Lox `compose.yaml`, or the container environment in Podman Desktop. See the [exact configuration locations and complete Traefik template](CONTAINER-SETUP.md#http-or-https). `HUE_PUBLIC_URL` does not enable TLS by itself. The native installer defaults to direct HTTPS.
 
-In 1.0.3, direct localhost/private-IP access can leave `HUE_PUBLIC_URL` unset. Explicit values remain authoritative; forwarded headers cannot override them. Use [runtime-specific instructions](RUNTIME-SUPPORT.md).
+Since 1.0.1, direct localhost/private-IP access can leave `HUE_PUBLIC_URL` unset. Explicit values remain authoritative; forwarded headers cannot override them. Use [runtime-specific instructions](RUNTIME-SUPPORT.md).
 
-The image serves **plain HTTP**. Like most self-hosted apps, it does not manage certificates: if you want HTTPS, terminate TLS in a reverse proxy in front of it and set `HUE_PUBLIC_URL` to the `https://` address. The proxy must forward the original `Host` header: the admin interface rejects requests whose `Host` or `Origin` differs from `HUE_PUBLIC_URL`. Without a proxy, the admin login and control token cross your network unencrypted, so only expose it on a network you trust.
+The image serves **plain HTTP**. It does not automatically issue or renew certificates: if you want HTTPS, terminate TLS in a reverse proxy in front of it and set `HUE_PUBLIC_URL` to the `https://` address. The proxy must forward the original `Host` header: the admin interface rejects requests whose `Host` or `Origin` differs from `HUE_PUBLIC_URL`. Without a proxy, the admin login and control token cross your network unencrypted, so only expose it on a network you trust.
 
-Built-in HTTPS (as used by `install-assistant.sh`) is available for custom configurations: set `TLS_CERT` and `TLS_KEY` to certificate and key files mounted into the container. Set both or neither: if only one is set, or either is empty, the container exits with an error instead of falling back to HTTP.
+Built-in container HTTPS is available for custom configurations: set `TLS_CERT` and `TLS_KEY` to certificate and key files mounted into the container. Set both or neither: if only one is set, or either is empty, the container exits with an error instead of falling back to HTTP.
 
 ## Data volume
 
@@ -63,7 +63,7 @@ HTTP is intentional and for a trusted LAN. HTTPS requires the [certificate/proxy
 
 1. In **Images → Pull an image**, enter `docker.io/dubctrl/hue2lox:1.0.3` (or the identical GHCR reference).
 2. Choose **Run Image → Create and start**. Keep the displayed defaults and port mapping. Stop an older test container if its host port is occupied; keep its data volume.
-3. Choose **Open Browser** and use the actual mapped **HTTP** URL. With a fresh writable `/data` volume, sign in with **admin / admin**. No URL/TLS environment variables are needed for direct localhost/private-IP access in 1.0.3.
+3. Choose **Open Browser** and use the actual mapped **HTTP** URL. With a fresh writable `/data` volume, sign in with **admin / admin**. No URL/TLS environment variables are needed for direct localhost/private-IP access since 1.0.1.
 4. Reload, restart the same container through Podman Desktop, and sign in again. Existing data always retains its previous password; pulling a newer image does not update an existing container.
 
 For custom DNS/reverse proxies, set `HUE_PUBLIC_URL` to the exact browser URL and keep the original Host header. An address mismatch now has its own configuration error, not an incorrect-password message. Do not disable origin/CSRF checks or reset retained passwords to work around it.
@@ -114,7 +114,7 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `PORT` | `8443` | Listen port |
-| `HUE_PUBLIC_URL` | unset | Direct localhost/private-IP HTTP(S) uses the actual browser address/mapped port in 1.0.3. Set an exact URL for a proxy/custom DNS; explicit HTTPS uses Secure cookies |
+| `HUE_PUBLIC_URL` | unset | Direct localhost/private-IP HTTP(S) uses the actual browser address/mapped port since 1.0.1. Set an exact URL for a proxy/custom DNS; explicit HTTPS uses Secure cookies |
 | `HUE2LOX_ADMIN_PASSWORD` | `admin` | Initial admin password, applied only when no credentials exist yet |
 | `HUE_WRITES_ENABLED` | `1` | Allow switching and dimming (see Lamp control) |
 | `HUE_COLOR_ENABLED` | `1` | Allow RGB colour commands |

@@ -5,6 +5,12 @@ liest gespeicherte Hue-v2-Ressourcen vom Typ `scene` ein und ruft sie statisch a
 Smart Scenes (z. B. natürliches Licht mit Tagesverlauf), dynamische Wiedergabe,
 Szenenerstellung, Änderung und Löschung sind nicht Teil dieser Erweiterung.
 
+## Zwei Nutzungsarten
+
+**Ein/Aus** ist der Standard bei neuen bzw. unentschiedenen Einträgen: EIN ruft die Szene auf, AUS schaltet die ganze ausdrücklich zugeordnete Hue-Gruppe aus. Eine eindeutige exakt passende Gruppe wird automatisch gewählt; bei größeren/mehrdeutigen Gruppen ist eine Auswahl nötig. Digitales XML enthält `{"on":true}` und `{"on":false}` für `/api/scenes/<bridge>/<scene>/state`. Kein Dimmermodus und keine gemessene Zustandsrückmeldung. Gruppenwirkung und überschneidende Lampen prüfen; nach Neustart zuerst EIN senden. [Vollständige Einrichtung und Grenzen](features/SCENE-SWITCH.de.md) · [English](features/SCENE-SWITCH.md).
+
+**Nur aktivieren** behält den bisherigen Recall-Endpunkt ohne AUS. Die folgende manuelle Recall-Anleitung gilt ausschließlich für diesen Modus. Bestehende Loxone-Befehle bleiben unverändert.
+
 ## Webinterface
 
 Unter **Szenen → Szenen einlesen** werden Lampen und Szenen aller aktivierten,
@@ -27,7 +33,7 @@ sie aus seiner Liste und sperrt ihren Export und Steuerungspfad. Im Szenenbereic
 liest auch der obere Button **Aktualisieren** die Bridges neu ein. Scheitert
 eine Inventur, bleiben vorherige Daten erhalten; sie sind dann ggf. veraltet.
 
-## Loxone Config
+## Loxone Config: Nur aktivieren (Recall)
 
 XML als virtuelle Ausgänge importieren oder Werte aus **Befehle anzeigen** übernehmen:
 
@@ -47,7 +53,7 @@ Hue2Lox speichert oder ändert keine Loxone-Konfiguration automatisch.
 **Keine Zustandsrückmeldung an den Lichtbaustein:** Der Szenenaufruf übermittelt
 keine Lampenwerte oder aktive Stimmung an Loxone. Anzeige und Ausschaltverhalten
 des Lichtbausteins können deshalb vom tatsächlichen Lichtzustand abweichen.
-Die Szene ist kein schaltbarer Lichtkreis, und ein Taster löst diese Grenze
+Im Modus **Nur aktivieren** ist die Szene kein schaltbarer Lichtkreis; ein Taster löst diese Grenze
 nicht. Einen gemeinsamen Raum-Aus-Befehl separat für die richtigen Lampen
 konfigurieren; der Szenenaufruf erzeugt ihn nicht. Für vollständig im
 Lichtbaustein verwaltete Stimmungen die Lampen über Hue2Lox anbinden und die
@@ -79,8 +85,7 @@ https://developers.meethue.com/develop/hue-api-v2/api-reference/#resource_scene_
 
 Automatische Tests verwenden ausschließlich simulierte Hue-Antworten. Im Browser
 wurden Einlesen, Auswahl, Befehlsansicht und XML-Download mit Testdaten geprüft.
-Keine echte Szene wurde während der Entwicklung aktiviert. Der reale Aufruf und
-XML-Import in Loxone Config müssen nach der Installation geprüft werden.
+Historische Nutzerabnahmen sind in [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) ihrem damaligen Stand zugeordnet. Die Abnahme des neuen Kandidaten bleibt separat; ein Mock bestätigt keine physische Lampenwirkung.
 
 ## Ignorieren und lokal entfernen
 

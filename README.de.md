@@ -58,7 +58,7 @@ docker compose up -d --wait &&
 docker compose ps
 ```
 
-Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht. Für HTTPS mit Traefik: [Konfigurationsort und vollständiges Beispiel](docs/CONTAINER-SETUP.de.md#http-oder-https). Eine historische 1.0.1-VM-Abnahme verwendete Testport **18444**; die normale Vorgabe bleibt 18443. Für das 1.0.3-Artefakt gilt der eigene Prüfumfang der Release-Hinweise.
+Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht. Für HTTPS mit Traefik: [Konfigurationsort und vollständiges Beispiel](docs/CONTAINER-SETUP.de.md#http-oder-https).
 
 1. **Container vorbereiten:** Die [Compose-Schnellstartdatei](docker/compose.quickstart.yaml) nach der [kurzen Anleitung](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) starten. Docker/Compose müssen vorhanden und Port 18443 frei sein. Browserlogin und Datenerhalt sind unabhängig geprüft; [genauer Testumfang und Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Anmelden:** Angezeigte HTTP-/HTTPS-Adresse verwenden; Port 8443 allein bedeutet kein HTTPS. Frische Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Bei HTTPS das Zertifikat prüfen.
@@ -87,9 +87,11 @@ Szenen in der Hue-App erstellen und bearbeiten. [Szenen Ein/Aus](docs/features/S
 
 **Bestehende Installationen:** Für Standard-Docker-Installationen gilt der [gesicherte Update-/Rollbackweg](docs/UPDATE-DOCKER.de.md), für native Installationen die [native Wartung](docs/INSTALL-NATIVE.md). Angepasste Compose-/Prototyp-Installationen separat prüfen. Eine Neuinstallation ist kein allgemeiner Updater.
 
-Änderungen stehen im [Changelog](CHANGELOG.md), der [historischen RC6-Vorbereitung](docs/RC6-PREPARATION.md) und den [Release-Hinweisen](RELEASE.md).
+Änderungen und offene Freigaben: [Changelog](CHANGELOG.md) · [Release-Hinweise](RELEASE.md) · [1.0.3-Vorbereitung](docs/PREPARATION-1.0.3.md). Historische Berichte sind im [Dokumentationsindex](docs/INDEX.md) getrennt aufgeführt.
 
 ## Dokumentation
+
+[Alle Anleitungen, technische Referenzen und historische Berichte](docs/INDEX.md).
 
 | Thema | Einstieg |
 | --- | --- |

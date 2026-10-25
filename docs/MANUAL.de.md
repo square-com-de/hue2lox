@@ -1,12 +1,10 @@
-**Stand main:** Docker-/native Deployment-Abnahme bestanden; [Nachweise und Grenzen](DEPLOYMENT-ACCEPTANCE.md). [Docker-Update/Rollback](UPDATE-DOCKER.de.md) und [native Wartung](INSTALL-NATIVE.md) getrennt vom unveränderten RC5 behandeln. [RC6-Release-Hinweise](RELEASE-NOTES-RC6.md); RC6 ist kein Stable-Release.
-
 # Hue2Lox – Handbuch
 
 [Startseite](../README.de.md) · [English](MANUAL.md) · [Installation](../INSTALL.de.md)
 
 ## 1. Zugang und Sprache
 
-Öffne die HTTPS-Adresse deiner Installation. Bei einer neuen Einrichtung gilt `admin` / `admin`; das Passwort kann im Kopfbereich geändert werden. Die Browserwarnung verschwindet erst, wenn das passende Zertifikat als vertrauenswürdig eingerichtet wurde. Den Fingerabdruck am Server prüfen; eine neue Installation bekommt ihr eigenes Zertifikat. Details: [Zertifikat erneuern, IP wechseln, sichern und wiederherstellen](MAINTENANCE.de.md).
+Öffne die tatsächlich konfigurierte HTTP- oder HTTPS-Adresse. Docker/Podman verwenden ohne TLS-Konfiguration HTTP; der Compose-Schnellstart nutzt `http://SERVER-IP:18443`. Nativ richtet der Installer HTTPS mit selbstsigniertem Zertifikat ein. Für Traefik und direktes Container-HTTPS siehe [Konfiguration und Beispiele](CONTAINER-SETUP.de.md#http-oder-https). Bei frischen Daten gilt `admin/admin`; das Passwort im Kopfbereich ändern. Erhaltene Daten behalten ihr bisheriges Passwort. Bei HTTPS Zertifikat und Fingerabdruck prüfen; Browservertrauen gilt nicht automatisch für den Miniserver.
 
 Deutsch oder Englisch oben auswählen. Die erste Sprache wird aus dem Browser ermittelt. Ein Wechsel lädt die Seite neu; Anmeldung und gespeicherte Nutzungsarten bleiben erhalten, ungespeicherte Eingaben und temporäre XML-Auswahlen werden zurückgesetzt.
 
@@ -31,15 +29,14 @@ Für mehrere Lampen die Checkboxen verwenden und **Auswahl als XML** wählen. Ei
 
 ## 4. Szenen
 
-Szenen in der Hue-App erstellen, bearbeiten und löschen. In Hue2Lox **Szenen einlesen** wählen, um den Bestand abzugleichen. **Befehle** und **XML** liefern einen Befehl zum **Aktivieren** der Szene. Verwaltung bietet Ignorieren, Wiederherstellen und Entfernen nur für Hue2Lox.
+Szenen in der Hue-App erstellen, bearbeiten und löschen. **Szenen einlesen** gleicht die gespeicherten Daten ab. Die Steuerungsart steht direkt in jeder Szenenzeile:
 
-**Wichtig: Eine Hue-Szene ist hier kein Ein/Aus-Lichtkreis.** Sie setzt die zugehörigen Lampen auf gespeicherte Werte. Hue2Lox bietet dafür keinen AUS-Befehl und stellt auch keinen vorherigen Lampenzustand wieder her. Ausschalten erfolgt separat über die Lampenausgänge oder einen in Loxone eigens eingerichteten gemeinsamen Raum-Aus-Befehl. Dieser muss die betreffenden Lampen tatsächlich ausschalten; der Szenenaufruf richtet ihn nicht automatisch ein.
+- **Ein/Aus:** Standard für neue bzw. bisher unentschiedene Einträge. EIN aktiviert die Hue-Szene; AUS schaltet die gesamte zugeordnete Hue-Gruppe aus. Eine genau passende, eindeutige Gruppe wird automatisch zugeordnet. Bei Mehrdeutigkeit oder zusätzlichen Lampen die Gruppe ausdrücklich wählen und die angezeigten Lampen prüfen. Ohne gültige Zuordnung ist der Export gesperrt.
+- **Nur aktivieren:** Reiner Szenenaufruf ohne AUS. In Loxone als Digitalausgang per EIN-Impuls aufrufen, Wiederholung 0 und AUS-Felder leer lassen. Ein zusätzlicher Recall beim Ausschalten würde die Lampen erneut einschalten.
 
-Der Szenenaufruf meldet **keine Lampenzustände an den Loxone-Lichtbaustein zurück**. Dessen Anzeige, aktive Stimmung und Ausschaltverhalten können deshalb vom tatsächlichen Lichtzustand abweichen. Auch das zusätzliche Anbinden derselben Lampen synchronisiert eine extern aufgerufene Hue-Szene nicht automatisch. Für im Lichtbaustein verwaltete Stimmungen die Lampen über Hue2Lox anbinden und die Stimmungen in Loxone anlegen.
+Für **Ein/Aus** die neuen digitalen EIN- **und** AUS-Befehle aus XML oder den Kopierfeldern übernehmen; kein Dimmerwert. Bestehende Recall-Befehle werden durch ein Update nicht geändert. AUS stellt keine früheren Lampenwerte wieder her und kann auch zusätzliche oder in Hue2Lox ausgeblendete Lampen der Gruppe betreffen.
 
-In Loxone den Szenenbefehl als **Digitalausgang** konfigurieren und mit einem **EIN-Impuls/Taster** aufrufen; Wiederholung auf `0`, **AUS-Befehl, AUS-Header und AUS-Body leer lassen**. Für einen erneuten Aufruf braucht es eine neue EIN-Flanke. Ein analoger Szenenausgang oder ein zusätzlicher Szenenaufruf beim Ausschalten kann die gerade ausgeschalteten Lampen wieder einschalten. Im HTTP-Monitor darf beim reinen Ausschalten kein Szenen-`/recall` erscheinen. Details: [Szenen und Loxone-Konfiguration](SCENES.md).
-
-Eine Hue-Szene kann auch Lampen schalten, die in Hue2Lox ignoriert oder entfernt wurden. Maßgeblich ist ihre Zusammensetzung in Hue.
+Bei A → B auf derselben Gruppe wird ein überholtes A-AUS ignoriert, wenn B bereits übernommen wurde. Überlappende Gruppen zuerst ausschalten. Nach Neustart zunächst EIN senden; ohne bekannte Zuordnung wird AUS abgewiesen. Die Zuordnung ist Befehlshistorie, **keine gemessene Zustandsrückmeldung an den Loxone-Lichtbaustein**. Hue-App oder andere Steuerwege werden nicht automatisch synchronisiert. Details und Grenzen: [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) · [Szenenschnittstellen](SCENES.md).
 
 ## 5. Loxone verbinden
 
@@ -65,31 +62,20 @@ Unter **HTTP-Monitor** das Testprotokoll starten, dann gezielt einen Loxone-Befe
 
 ## 7. Update, Backup und Wiederherstellung
 
-Vor Updates den Dienst kurz stoppen und das **vollständige Installationsverzeichnis** geschützt sichern. Es enthält `.env`, Compose-Dateien, `data/`, `certs/`, `secrets/` und den verwendeten Quellstand. Insbesondere neue Bridge-Keys liegen in `data/bridge-keys/`. Nicht nur das GitHub-Repo sichern: Private Dateien gehören absichtlich nicht hinein.
+Vor Wartung die betroffene Instanz stoppen und Daten, Konfiguration sowie das exakte bisherige Image bzw. native Paket zusammen sichern. Die richtige Sicherung hängt vom Installationsweg ab:
 
-Beispiel für die separate Testinstallation aus INSTALL.de.md, als root; Backup-Ziel außerhalb des Installationsordners wählen:
+| Installation | Vollständig sichern |
+| --- | --- |
+| Docker/Podman mit benanntem Volume | Gesamtes an `/data` eingebundenes Volume, Compose-/Containerkonfiguration und exaktes Image; separat eingebundene Zertifikate zusätzlich |
+| Älterer Docker-Installer | Installationsordner einschließlich `.env`, Compose, `data/`, `secrets/`, `certs/` sowie das exakte Image |
+| Nativ | `/etc/hue2lox`, `/var/lib/hue2lox`, Paketidentität/Programmstand und die zugehörige Updatesicherung |
 
-```sh
-cd /opt/hue2lox-test
-docker compose stop
-install -d -m 700 /opt/hue2lox-private-backups
-umask 077
-tar -czpf /opt/hue2lox-private-backups/test-backup.tar.gz -C /opt hue2lox-test
-docker compose start
-```
+**Ein Archiv nur des Compose-Ordners enthält ein benanntes Volume nicht.** In Podman Desktop liegt dieses Volume in der Linux-VM. Vor deren Löschen/Zurücksetzen separat sichern. Es gibt keine Datenbank; Registry, Kopplungsdaten, Passwort-Hash und Einstellungen liegen in geschützten Dateien. Sitzungen und der temporäre HTTP-Monitor sind nur im Arbeitsspeicher.
 
-Einen neuen Backup-Dateinamen wählen, um ältere Sicherungen zu behalten. Archive verschlüsselt/offline verwahren und nie auf GitHub hochladen. Ein Dateibackup enthält kein Docker-Image: zusätzlich die verwendete Image-Version bzw. den Digest dokumentieren; für vollständig offline verfügbare Rückkehr das Image separat sichern.
-
-Wiederherstellung zuerst auf einem getrennten Ziel testen: Container stoppen, vorhandenen Stand beiseite sichern, Archiv mit erhaltenen Rechten entpacken, Compose-Pfade/IP/Port prüfen, Eigentümer der privaten Verzeichnisse UID/GID 10001 kontrollieren und erst dann starten. Bei geänderter Adresse ein passendes Zertifikat erzeugen; einen verlorenen privaten Schlüssel nicht aus GitHub erwarten. Health, Anmeldung, Inventar, Token und danach einen kontrollierten Lampentest prüfen. Die vollständige Wiederherstellungsprobe ist noch Teil unserer gemeinsamen Abnahme.
-
-Das bestehende Prototyp-Update legt nur eine begrenzte Rückrollkopie an; sie ersetzt kein vollständiges Backup. Ein allgemeiner öffentlicher Update-/Rollback-Mechanismus steht noch aus.
+[Docker-/Stack-Update und Rollback](UPDATE-DOCKER.de.md) · [Native Wartung](INSTALL-NATIVE.md#aktualisieren-und-rückweg) · [Speicherorte](CONTAINER-SETUP.de.md#wo-bleiben-meine-daten). Rückweg immer mit zusammengehörigem altem Code/Image **und** damaligen Daten durchführen; Passwortänderungen seit der Sicherung werden dabei ebenfalls zurückgenommen. Sicherungen privat und getrennt aufbewahren; `down -v` und Pruning sind kein Updateweg. Wiederherstellung zuerst isoliert prüfen. Hardwarewirkung und Miniserver-Zertifikatsvertrauen bleiben gesonderte Tests.
 
 ## 8. Grenzen und Quellen
 
 Die [Release-Checkliste](../RELEASE.md) nennt offene Prüfungen. Eigener Projektcode und eigene SVG-Symbole stehen unter der [Apache License 2.0](../LICENSE); Drittanbieterbestandteile behalten ihre jeweiligen Bedingungen. [Quellen und Lizenztexte](../THIRD-PARTY-NOTICES.md) sind auch über den Footer erreichbar.
 
 Unter **Nutzung & Verwaltung → Lampensymbol** kannst du die Form pro Lampe wählen. **Automatisch** verwendet Modell und Bridge-Daten; unbekannte Geräte erhalten ein Glühbirnensymbol. Die Auswahl bleibt bei Neustarts und erneutem Einlesen erhalten und verändert keine Loxone-Befehle.
-
-### Seit Stable 1.0.0: Szenen als Ein/Aus-Lichtkreis
-
-Die optionale Erweiterung und ihre Grenzen sind unter [Szenen Ein/Aus](features/SCENE-SWITCH.de.md) beschrieben. Sie ist seit Stable 1.0.0 enthalten; bestehende Recall-Befehle funktionieren weiter. Neue Exporte verwenden den direkt sichtbaren Modus, mit Ein/Aus als Standard bei eindeutiger Zuordnung. Szenenwechsel und AUS wurden vom Nutzer mit Hue/Loxone bestätigt.

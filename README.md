@@ -58,7 +58,7 @@ docker compose up -d --wait &&
 docker compose ps
 ```
 
-Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN. For HTTPS with Traefik, see [configuration locations and the complete example](docs/CONTAINER-SETUP.md#http-or-https). Historical 1.0.1 VM acceptance used test port18444 in one fixture; the default remains18443. The1.0.3 artifact has its own acceptance scope in the release notes.
+Open **http://SERVER-IP:18443** using the Linux server’s private IP. Fresh data: **admin / admin**, then change the password. Storage is created automatically; retain the folder/project and volume during updates. HTTP is for a trusted LAN. For HTTPS with Traefik, see [configuration locations and the complete example](docs/CONTAINER-SETUP.md#http-or-https).
 
 1. **Prepare the container:** Start the [Compose quick-start file](docker/compose.quickstart.yaml) using the [short guide](docs/CONTAINER-SETUP.md). Docker/Compose must be installed and port 18443 free. Browser login and persistence were independently checked; see [exact test scope and limits](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Sign in:** use the actual HTTP/HTTPS URL; port 8443 alone does not mean HTTPS. Fresh data: `admin/admin`; retained data: the existing password. Verify the certificate when using HTTPS.
@@ -87,9 +87,11 @@ Create and edit scenes in the Hue app. [Scene on/off](docs/features/SCENE-SWITCH
 
 **Existing installations:** use the [backup/update/rollback procedure](docs/UPDATE-DOCKER.md) for standard Docker deployments or [native maintenance](docs/INSTALL-NATIVE.en.md). Inspect custom Compose/prototype installations separately. Fresh setup is not a general updater.
 
-See the [changelog](CHANGELOG.md), [historical RC6 preparation](docs/RC6-PREPARATION.md) and [release overview](RELEASE.md).
+Changes and remaining approval: [changelog](CHANGELOG.md) · [release overview](RELEASE.md) · [1.0.3 preparation](docs/PREPARATION-1.0.3.md). Historical reports are listed separately in the [documentation index](docs/INDEX.md).
 
 ## Documentation
+
+[All guides, technical references and historical reports](docs/INDEX.md).
 
 | Topic | Start here |
 | --- | --- |

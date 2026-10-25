@@ -1,6 +1,6 @@
 # Web-Interface mit lokaler Anmeldung
 
-18.10.2026. Übersicht, Lampensuche/Bridge-Filter, Bridge-Verwaltung und geschützte Loxone-Einrichtung. Kein Schalten durch UI oder XML-Export. Oktopus, Modell-Symbole und „by square | com“ liegen lokal im Image, ohne CDN.
+Aktuelle Funktionsübersicht mit ausdrücklich datierten historischen Prüfabschnitten. Übersicht, Lampensuche/Bridge-Filter, Bridge-Verwaltung und geschützte Loxone-Einrichtung. Kein Schalten durch UI oder XML-Export. Oktopus, Modell-Symbole und „by square | com“ liegen lokal im Image, ohne CDN.
 
 ## Verwaltung
 
@@ -21,7 +21,7 @@ Statusabfragen werden je aktiver Bridge gebündelt, mit vier parallelen Bridge-A
 
 ## Historischer Prüfstand vom 18.10.2026
 
-Der folgende Bericht dokumentiert den damaligen Ausbau, nicht die Abnahme des heutigen Release-Kandidaten. Aktuelle Rückmeldungen: [TEST-RESULTS.md](TEST-RESULTS.md).
+Der folgende Bericht dokumentiert den damaligen Ausbau, nicht die Abnahme des heutigen Release-Kandidaten. Historische Rückmeldungen: [TEST-RESULTS.md](TEST-RESULTS.md); aktueller Kandidat: [1.0.3-Vorbereitung](PREPARATION-1.0.3.md).
 
 45 lokale Tests bestanden, darunter bestehende Steuer-/Farbtests und neue Bridge-Prüfungen. Browser mit Testdaten: Login, Tokenkopie, einklappbare Befehle, Export, Hinzufügen, Kopplung und Inventur geprüft. Echte EG-Bridge rein lesend mit Zertifikats- und Identitätsprüfung erkannt. Produktive Kopplung, Vollinventur und Container-Betrieb des neuen Ausbaus bleiben bis zur Installation offen.
 
@@ -44,6 +44,8 @@ und CSRF-Schutz und senden keine Änderung an die Hue Bridge. Steuerungswege
 importierte Loxone-Konfigurationen werden nicht automatisch geändert.
 
 ## Szenen
+
+Die direkt sichtbaren Modi **Ein/Aus** und **Nur aktivieren** unterscheiden Gruppen-AUS und reinen Recall. Ein/Aus ist nur mit gültiger Gruppenzuordnung exportierbar. Details: [Szenen Ein/Aus](features/SCENE-SWITCH.de.md).
 
 Eigener Bereich mit Suche, Einlesen aller gekoppelten aktiven Bridges,
 aufklappbaren HTTP-Befehlen, Header-Kopierfunktion und Einzel-/Mehrfach-XML.
@@ -143,7 +145,7 @@ standardmäßig eine pro Lampe. Bestehende UUID- und Kurzpfade bleiben bestehen.
 Tunable White verwendet den Lumitech-Body und den entsprechenden Loxone-Aktortyp
 im Weißmodus; RGB muss dafür serverseitig nicht freigeschaltet sein.
 
-Der Download **Hue-Modelltabelle (CSV)** umfasst 949 recherchierte Modellkennungen.
+Der Download **Hue-Modelltabelle (ZIP mit Lizenz)** enthält eine CSV mit 949 recherchierten Modellkennungen samt Quellenhinweis und Originallizenz.
 Quelle, Lizenz und Grenzen sind in `catalog/README.md` dokumentiert. Kein
 Vollständigkeitsversprechen; unbekannte Modelle bleiben anhand der Bridge nutzbar.
 
@@ -177,9 +179,7 @@ Bestehende EIN-/AUS-Header nach dem Update neu kopieren; vorhandene Loxone-Befeh
 werden nicht automatisch geändert. Der Miniserver-Livetest muss anschließend
 korrekte Byte-Längen und eine erfolgreiche Antwort bestätigen.
 
-Der CSV-Download lädt die Datei zunächst per Fetch und übergibt sie als lokale
-Blob-Datei an den Browser, wie beim XML-Export. Die Antwort setzt zusätzlich
-`Content-Disposition` mit `Hue-Modelltabelle.csv`. Ladefehler werden direkt neben
+Der Katalogdownload liefert ein ZIP mit CSV, Quellenhinweis und Originallizenz. Der Browser erhält es als lokale Blob-Datei, wie beim XML-Export. Ladefehler werden direkt neben
 dem Button angezeigt; ein gestarteter Download ist keine Bestätigung, dass der
 Browser die Datei bereits auf die Festplatte gespeichert hat.
 

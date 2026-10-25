@@ -1,18 +1,18 @@
 # Bridge-Verwaltung, Kopplung und automatische Lampenerkennung
 
-Stand: 18.10.2026.
+Aktuelle Funktionsbeschreibung; historische Prüfungen sind unten ausdrücklich datiert.
 
 ## Ablauf im Webinterface
 
 1. Als Administrator anmelden und „Bridges“ öffnen.
-2. Neue Bridge: Namen und lokale IPv4-Adresse eingeben, „Bridge prüfen und hinzufügen“ wählen. Vorbereitete Einträge für OG und UG können direkt gekoppelt werden.
+2. Neue Bridge: Namen und lokale IPv4-Adresse eingeben, „Bridge prüfen und hinzufügen“ wählen. Frische Installationen beginnen mit einer leeren Registry.
 3. „Koppeln“ wählen. An genau dieser Bridge die physische Link-Taste drücken und anschließend „Link-Taste gedrückt · verbinden“ wählen. Wenn die Taste noch nicht erkannt wurde, erscheint eine entsprechende Meldung; danach erneut versuchen.
 4. Nach erfolgreicher Kopplung werden alle vorhandenen Hue-v2-Lichtressourcen dieser Bridge automatisch eingelesen. Räume, Namen, Modellkennung, Produkttyp und Fähigkeiten erscheinen in der Lampenliste und der Loxone-Exportliste.
-5. Bereits eingerichtete EG-Bridge: „Lampen einlesen“ verwenden; ihr vorhandener Key wird weiterverwendet. Neue Lampen später mit derselben Schaltfläche nachladen.
+5. Bereits gekoppelte Bridge: „Lampen & Szenen einlesen“ verwenden; der vorhandene Key wird weiterverwendet.
 
 „Neu koppeln“ ermöglicht die Erneuerung einer ungültig gewordenen Hue-Berechtigung. Dazu ist wieder die physische Taste nötig. Vorhandene Schlüsseldateien unter `/run/secrets` werden nicht überschrieben, und andere Hue-Anwendungen werden nicht widerrufen. Beim regulären erneuten Einlesen wird kein neuer Hue-Key erzeugt.
 
-Die Verwaltung findet bereits in der Hue Bridge vorhandene Lampen. Sie startet keine Zigbee-Suche, setzt keine Lampen zurück und sendet keine Lichtbefehle. Räume werden nur übernommen, nicht verändert. Bridge-Adressen werden manuell eingegeben; es findet kein automatischer Scan des gesamten LANs und keine Cloud-Abfrage statt.
+Die Verwaltung findet bereits in der Hue Bridge vorhandene Lampen. Sie startet keine Zigbee-Suche, setzt keine Lampen zurück und sendet keine Lichtbefehle. Räume werden nur übernommen, nicht verändert. Adressen kommen aus lokaler mDNS-Suche oder manueller IP-Eingabe. Es gibt keinen vollständigen Subnetz-Portscan und keine Cloud-Abfrage.
 
 ## Was wird übernommen?
 
@@ -24,21 +24,9 @@ Die Statusübersicht liest danach je aktiver Bridge eine Sammlung von Lichtzust�
 
 ## Speicherung und Migration
 
-Im Container bleibt das Root-Dateisystem read-only. Hinzu kommt genau ein schreibbarer Bind-Mount:
+Container speichern Registry, Admin-Passworthash, Steuerungstoken und neue Kopplungsschlüssel im persistenten `/data`. Der Compose-Schnellstart verwendet ein benanntes Volume; bestehende Docker-Installer können stattdessen einen Hostordner und separate Secrets-/Zertifikats-Mounts verwenden. Nativ liegen Registry und neue Bridge-Keys unter `/var/lib/hue2lox`, Konfiguration und Token unter `/etc/hue2lox`. [Genauer Speicheraufbau](CONTAINER.md#persistente-dateien).
 
-```text
-Host: data/                         Container: /data/
-  admin_auth.json                   Admin-Passwort-Hash für Web-Passwortwechsel
-  registry.json                     Aktive Bridge-/Lampenregistry
-  registry.previous.json            Metadaten vor der letzten Änderung
-  bridge-keys/<bridge-id>.key        Neu erzeugte Hue-Anwendungsschlüssel
-```
-
-Der Root-Installer legt den Host-Ordner mit UID/GID 10001 und Modus 700 an. Beim ersten Update wird die bisherige lokale `registry.json` einmal übernommen. Bei späteren Updates wird die Runtime-Registry nicht überschrieben. Neue Schlüssel haben Modus 600 und werden dem Browser nie ausgegeben. `data/` ist sowohl in `.gitignore` als auch `.dockerignore` ausgeschlossen. Die bisherigen Read-only-Mounts für EG-Hue-Key, Steuerungstoken und HTTPS-Zertifikat bleiben bestehen. Der Admin-Hash wird für den Passwortwechsel in den geschützten `/data`-Mount migriert.
-
-`HUE_STATE_DIR=/data` und `HUE_REGISTRY_FILE=/data/registry.json` werden durch Compose gesetzt. Bridge-Schlüssel, Registry und letztes Metadatenbackup werden atomar ersetzt; konkurrierende Änderungen an verschiedenen Bridges werden zusammengeführt. Je Bridge läuft nur ein Kopplungs-/Inventurvorgang gleichzeitig. Misslingt die Inventur nach erfolgreicher Kopplung, bleibt die Key-Referenz gespeichert; ein erneuter Versuch erstellt dadurch keinen zusätzlichen Key.
-
-Ein Backup der vollständigen Bridge-Verwaltung benötigt `data/` einschließlich seiner Schlüssel, zusätzlich zu den vorhandenen Zertifikats-/Secret-Dateien. Dieses Backup privat und geschützt aufbewahren, niemals ins Git-Repository laden. Das Installationsbackup enthält von `/data` nur eine Kopie der Registry-Metadaten, keine neuen Bridge-Key-Inhalte.
+Neue Schlüssel sind geschützte Dateien und werden dem Browser nicht ausgegeben. Registry und Keys werden atomar gespeichert. Ein Metadatenbackup `registry.previous.json` enthält keine vollständige Sicherung der Kopplungsschlüssel. Immer den gesamten Zustand samt separater Konfiguration/Zertifikaten sichern. Ein erneutes Einlesen überschreibt keine privaten Keys und setzt kein Passwort zurück. Je Bridge läuft nur ein Kopplungs-/Inventurvorgang gleichzeitig. Misslingt die Inventur nach erfolgreicher Kopplung, bleibt die Key-Referenz für einen neuen Versuch erhalten.
 
 ## Zugriff und TLS
 
@@ -55,12 +43,12 @@ Bei einer neuen IP ist die Bridge-ID zunächst unbekannt: Der erste TLS-Verbindu
 
 Der Kopplungsaufruf ist ausschließlich `POST /api` mit einem Hue2Lox-App-Namen. Er erzeugt einen Anwendungsschlüssel nach Link-Tastendruck; `clientkey` für Entertainment wird nicht angefordert. Keine Hue-Light-PUTs oder DELETEs durch Hinzufügen/Kopplung/Inventur. Die existierenden globalen Schreib-/Farb-/Weißfreigaben bleiben für spätere Loxone-Steuerbefehle maßgeblich.
 
-## Tests und Grenzen
+## Historische Prüfungen und aktuelle Grenzen
 
 - Automatisierte Tests mit simulierten Bridges: IP-Grenzen, TLS-Identitätslernen, Zertifikatsfehler, Link-Taste, Schlüsselrechte/Redaktion, Wiederverwendung/Erneuerung, Inventur, Raum-/Modellzuordnung, fehlende Ressourcen, unveränderte Hue-Go-Aliase, Zugriffsschutz und gebündelte Statusabfragen.
 - Browser mit ausschließlich Testdaten: Bridge hinzufügen, Kopplungsschritte, automatische Inventur und Übernahme in die Loxone-Auswahlliste geprüft.
-- Echte lesende Prüfung auf LoxBerry: EG-Bridge `192.0.2.253`, ID `001788FFFE000001`, BSB002, Firmware `1978418030`, Zertifikatsprüfung erfolgreich. Zertifikat-SHA256: `2A:41:4C:25:34:78:62:ED:00:0E:66:DF:74:99:B9:24:7E:8D:CB:AA:AA:C0:30:75:BC:10:11:75:4E:E8:B2:F0`.
-- Keine reale neue Kopplung oder Inventur aller produktiven Lampen durch die Entwicklung. Root-Installation, Link-Tastendruck und anschließende Live-Prüfung bleiben erforderlich.
+- Historische lesende Prüfung vom 18.10.2026 auf LoxBerry: EG-Bridge `192.0.2.253`, ID `001788FFFE000001`, BSB002, Firmware `1978418030`, Zertifikatsprüfung erfolgreich. Zertifikat-SHA256: `2A:41:4C:25:34:78:62:ED:00:0E:66:DF:74:99:B9:24:7E:8D:CB:AA:AA:C0:30:75:BC:10:11:75:4E:E8:B2:F0`.
+- Diese Entwicklungsprüfungen sind keine neue 1.0.3-Hardwareabnahme. Nutzerabnahmen und offene Prüfungen bleiben dem jeweiligen Stand zugeordnet: [Abnahmeplan](ACCEPTANCE.md).
 - Hue-v2/HTTPS vorausgesetzt. Hue Bridge v1 und andere Zertifikatsprofile sind nicht als unterstützt/testbestätigt ausgewiesen. Lokale mDNS-Suche ist implementiert; siehe [DISCOVERY.md](DISCOVERY.md). IPv6, Cloud-Discovery, Widerrufen von Bridge-Keys auf der Bridge und SSE sind nicht enthalten.
 
 Herstellerreferenz für den Link-Tasten-Ablauf:

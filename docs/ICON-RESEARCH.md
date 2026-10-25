@@ -1,6 +1,6 @@
 # Lamp icon research — 19 October 2026
 
-The source registry contains only the original Hue Go. Full live installation coverage has not been verified. This update extends generic shapes and model-family assignments from the existing local model catalog. Manual overrides retain priority; no user-assigned lamp names are guessed from.
+Historical research snapshot from 19 October 2026; the early source registry then contained the original Hue Go. Current fresh installations start with an empty registry. Full live installation coverage was not established by this research. This update extends generic shapes and model-family assignments from the existing local model catalog. Manual overrides retain priority; no user-assigned lamp names are guessed from.
 
 ## Official visual/product references
 

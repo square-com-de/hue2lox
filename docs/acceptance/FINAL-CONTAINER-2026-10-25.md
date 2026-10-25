@@ -1,3 +1,5 @@
+> **Historischer Stand / Historical record:** Aussagen, Befehle und offene Punkte unten gelten ausschließlich für den genannten damaligen Stand, nicht als aktuelle Installationsanleitung oder 1.0.3-Abnahme. / Statements, commands and pending checks below apply only to the recorded revision. [Aktuelle Dokumentation / current documentation](../INDEX.md) · [1.0.3-Vorbereitung / preparation](../PREPARATION-1.0.3.md).
+
 # Abschließende Container-Abnahmen / Final container acceptance
 
 25.10.2026 — **die drei beauftragten Software-Abnahmen bestanden; keine Release- oder Hardwarefreigabe.** / All three commissioned software checks passed; no release or hardware approval.
