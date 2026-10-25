@@ -1,5 +1,7 @@
 # Container acceptance — 1.0.1
 
+**Follow-up 25.10.2026:** [Fresh OS, disabled-flag recovery and actual Portainer GUI completed](acceptance/FINAL-CONTAINER-2026-10-25.md). The historical scope below is retained; hardware remains separate.
+
 Status: **partial acceptance; no new release or production approval**. Recorded 24 October 2026; coordinated VM reboot verified 25 October 2026 (Europe/Berlin).
 
 ## Tested identities

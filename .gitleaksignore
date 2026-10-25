@@ -3,3 +3,25 @@
 # allowlist and no history rewrite. See docs/RC6-TECHNICAL-REVIEW.md.
 132737ba7e6d4cc18e3f04c6503e65ecc386a1bf:tests/test_monitor.py:generic-api-key:48
 b9c8418fc0ef88fde7060850b5affff15814120b:test_monitor.py:generic-api-key:48
+
+# Human-approved 2026-10-25: exactly 18 historical SHA256 receipt false positives.
+# CI job 121105541801 confirmed these locations; current receipts are redacted.
+# Exact commit/file/rule/line fingerprints only; no path or rule exemption.
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:44
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:45
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:65
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:66
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:86
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:87
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:107
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:108
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:128
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:129
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:149
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:150
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:170
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:171
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:191
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:192
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:212
+26b5b9c24deb848a3eb3400b98786ebd1a88ee28:docs/acceptance/FINAL-CONTAINER-2026-10-25.json:generic-api-key:213

@@ -1,11 +1,14 @@
 # Changelog
 
-## Unreleased — installation evidence and stable acceptance gate
+## 1.0.2 — prepared, not yet published / vorbereitet, noch nicht veröffentlicht
 
 - Consolidate DE/EN runtime support and installation guidance; distinguish tested Podman Desktop 1.30.5/macOS ARM64 from Linux Docker/Compose and experimental native deployment.
 - Remove obsolete contradictory Podman workaround; retain existing passwords, explicit URLs, origin/CSRF checks and control restrictions.
 - Record RC5 defaults/test-expectation errors, retained-state recovery, scene usability and desktop-login lessons with owners and evidence.
 - Block future stable publication/latest promotion until version-specific documentation/user-flow/recovery/scope acceptance is explicitly approved and bound to the exact tracked source/docs. Existing releases remain unchanged.
+
+- Display the installed Hue2Lox package/build version in the sidebar instead of the static “Version2”. Container release identity is generated at build time from exact-tag CI metadata; development images are labelled explicitly. Native packages use their own manifest; invalid metadata is shown as unknown.
+- Anzeige der installierten Paket-/Buildversion statt „Version2“; Entwicklungsbuilds werden ausdrücklich gekennzeichnet. Bestehende Daten und veröffentlichte Releases bleiben unverändert.
 
 ## 1.0.1 — 2026-10-24
 
