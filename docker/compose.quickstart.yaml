@@ -1,9 +1,9 @@
-# Hue2Lox 1.0.1: direct LAN access over HTTP on port 18443.
+# Hue2Lox 1.0.2: direct LAN access over HTTP on port 18443.
 # First login with fresh data: admin / admin. Change the password after login.
 # Use only on a trusted LAN. For HTTPS see docs/CONTAINER-SETUP.md.
 services:
   hue2lox:
-    image: ghcr.io/square-com-de/hue2lox:1.0.1
+    image: ghcr.io/square-com-de/hue2lox:1.0.2
     restart: unless-stopped
     ports:
       - "${HUE2LOX_HTTP_PORT:-18443}:8443"

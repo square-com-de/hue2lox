@@ -6,6 +6,13 @@ RUN python -m pip uninstall --yes pip \
 WORKDIR /app/src
 COPY LICENSE NOTICE THIRD-PARTY-NOTICES.md /app/
 COPY src/ /app/src/
+COPY install/release-image.json /app/install/release-image.json
+ARG HUE2LOX_BUILD_VERSION=""
+ARG HUE2LOX_BUILD_REVISION=""
+RUN python /app/src/release_version.py --write-build /app/build-info.json \
+    --version "$HUE2LOX_BUILD_VERSION" --revision "$HUE2LOX_BUILD_REVISION"
+LABEL org.opencontainers.image.version=$HUE2LOX_BUILD_VERSION \
+      org.opencontainers.image.revision=$HUE2LOX_BUILD_REVISION
 ARG REGISTRY_SOURCE=config/registry.json
 COPY ${REGISTRY_SOURCE} /app/config/registry.json
 COPY web/ /app/web/

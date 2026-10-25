@@ -1,4 +1,6 @@
-**Release version: 1.0.1.** Use the fixed 1.0.1 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.1.md) describe the direct desktop login fix. The native adapter remains a separate experimental deployment path.
+**Use the 1.0.2 downloads only after its publication workflow succeeds. / Die 1.0.2-Downloads erst nach erfolgreichem Veröffentlichungsworkflow verwenden.**
+
+**Release version: 1.0.2.** Use the fixed 1.0.2 Docker Hub or GHCR image after release publication completes. [Release notes](RELEASE-NOTES-1.0.2.md) describe the installed-version display; the direct desktop login fix from 1.0.1 is retained. The native adapter remains a separate experimental deployment path.
 
 # Running the container image
 
@@ -6,20 +8,20 @@
 
 For Linux Docker Engine hosts; Unraid/Synology examples below are integration examples, not independent platform acceptance. See the [runtime matrix](RUNTIME-SUPPORT.md). Linux hosts that prefer a guided setup can still use `install-assistant.sh` ([INSTALL.md](../INSTALL.md)).
 
-Stable 1.0.1 provides identical images at `docker.io/dubctrl/hue2lox:1.0.1` and
-`ghcr.io/square-com-de/hue2lox:1.0.1` for
+Stable 1.0.2 provides identical images at `docker.io/dubctrl/hue2lox:1.0.2` and
+`ghcr.io/square-com-de/hue2lox:1.0.2` for
 `linux/amd64` and `linux/arm64`. RC4 remains unchanged on GHCR; RC1–RC3 remain unchanged and ZIP-only.
-[1.0.1 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.1).
+[1.0.2 release, sources and license materials](https://github.com/square-com-de/hue2lox/releases/tag/v1.0.2).
 
 ## Image tags
 
-Use the exact version `1.0.1` for this release. There are no floating `rc`
-or minor-version tags. `latest` follows the latest successfully verified stable release. RC releases never move it. Pin `1.0.1` to avoid unintended version changes.
+Use the exact version `1.0.2` for this release. There are no floating `rc`
+or minor-version tags. `latest` follows the latest successfully verified stable release. RC releases never move it. Pin `1.0.2` to avoid unintended version changes.
 
 ```sh
-docker pull ghcr.io/square-com-de/hue2lox:1.0.1
+docker pull ghcr.io/square-com-de/hue2lox:1.0.2
 # Alternatively, from Docker Hub:
-podman pull docker.io/dubctrl/hue2lox:1.0.1
+podman pull docker.io/dubctrl/hue2lox:1.0.2
 ```
 
 The release workflow publishes only after a GitHub release is published and all
@@ -28,7 +30,7 @@ publish images. See [GHCR-RELEASE.md](GHCR-RELEASE.md).
 
 ## HTTP and HTTPS
 
-In 1.0.1, direct localhost/private-IP access can leave `HUE_PUBLIC_URL` unset. Explicit values remain authoritative; forwarded headers cannot override them. Use [runtime-specific instructions](RUNTIME-SUPPORT.md).
+In 1.0.2, direct localhost/private-IP access can leave `HUE_PUBLIC_URL` unset. Explicit values remain authoritative; forwarded headers cannot override them. Use [runtime-specific instructions](RUNTIME-SUPPORT.md).
 
 The image serves **plain HTTP**. Like most self-hosted apps, it does not manage certificates: if you want HTTPS, terminate TLS in a reverse proxy in front of it and set `HUE_PUBLIC_URL` to the `https://` address. The proxy must forward the original `Host` header: the admin interface rejects requests whose `Host` or `Origin` differs from `HUE_PUBLIC_URL`. Without a proxy, the admin login and control token cross your network unencrypted, so only expose it on a network you trust.
 
@@ -49,24 +51,24 @@ Built-in HTTPS (as used by `install-assistant.sh`) is still available: set `TLS_
 
 ## Docker Compose
 
-Use the single [quick-start procedure](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server) / [deutscher Schnellstart](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server). It downloads the immutable, publicly available tested Compose file, starts the fixed 1.0.1 image and creates persistent storage automatically. Open **http://SERVER-IP:18443**, sign in with **admin/admin** for fresh data and change the password. Portainer Docker Standalone uses that same file as a Stack.
+Use the single [quick-start procedure](CONTAINER-SETUP.md#quick-start-docker-on-a-linux-server) / [deutscher Schnellstart](CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server). After publication it downloads the versioned Compose file and starts the fixed 1.0.2 image and creates persistent storage automatically. Open **http://SERVER-IP:18443**, sign in with **admin/admin** for fresh data and change the password. Portainer Docker Standalone uses that same file as a Stack.
 
 HTTP is intentional and for a trusted LAN. HTTPS requires the [certificate/proxy setup](CONTAINER-SETUP.md#http-or-https). Bridge discovery can be limited by container networking; use local discovery help or the bridge IP. Direct bridge access still needs a network route. The guided installer and `compose.image.yaml` remain Linux host-network alternatives; they are not a second default installation path.
 
 ## Podman Desktop on macOS
 
-**Verified scope:** Podman Desktop **1.30.5, macOS ARM64**, public `1.0.1` ARM64 image, fresh data, actual GUI pull/create/login/reload/restart. This is a local desktop test, not certification of Linux/Windows Podman, `podman compose`, multicast discovery or Loxone LAN access. [Evidence and limits](RUNTIME-SUPPORT.md).
+**Historical verified scope:** Podman Desktop **1.30.5, macOS ARM64**, public `1.0.1` ARM64 image, fresh data, actual GUI pull/create/login/reload/restart. The instructions below target 1.0.2 after publication; they do not turn that historical evidence into a 1.0.2 public-image test. This is a local desktop test, not certification of Linux/Windows Podman, `podman compose`, multicast discovery or Loxone LAN access. [Evidence and limits](RUNTIME-SUPPORT.md).
 
-1. In **Images → Pull an image**, enter `docker.io/dubctrl/hue2lox:1.0.1` (or the identical GHCR reference).
+1. In **Images → Pull an image**, enter `docker.io/dubctrl/hue2lox:1.0.2` (or the identical GHCR reference).
 2. Choose **Run Image → Create and start**. Keep the displayed defaults and port mapping. Stop an older test container if its host port is occupied; keep its data volume.
-3. Choose **Open Browser** and use the actual mapped **HTTP** URL. With a fresh writable `/data` volume, sign in with **admin / admin**. No URL/TLS environment variables are needed for direct localhost/private-IP access in 1.0.1.
+3. Choose **Open Browser** and use the actual mapped **HTTP** URL. With a fresh writable `/data` volume, sign in with **admin / admin**. No URL/TLS environment variables are needed for direct localhost/private-IP access in 1.0.2.
 4. Reload, restart the same container through Podman Desktop, and sign in again. Existing data always retains its previous password; pulling a newer image does not update an existing container.
 
 For custom DNS/reverse proxies, set `HUE_PUBLIC_URL` to the exact browser URL and keep the original Host header. An address mismatch now has its own configuration error, not an incorrect-password message. Do not disable origin/CSRF checks or reset retained passwords to work around it.
 
 Podman Desktop uses a Linux VM. Multicast may not cross its network. If discovery finds nothing, use **Bridges → No bridge found?** or enter the bridge IP; do not infer that a working GUI proves LAN discovery. A localhost URL cannot be used by a separate Loxone Miniserver. Pairing and real lamp effects need their own acceptance.
 
-Deutsch: **Podman Desktop 1.30.5 auf macOS ARM64** wurde mit dem öffentlichen 1.0.1-Image geprüft: **Images → Pull an image → Run Image → Create and start → Open Browser → admin/admin** bei frischen Daten. Standard-Portzuordnung beibehalten, tatsächlich angezeigte HTTP-Adresse verwenden; keine zusätzlichen URL-/TLS-Variablen erforderlich. Neuladen und Neustart desselben Containers sind geprüft. Erhaltene Daten behalten ihr Passwort. Der Linux-Installer und `podman compose` sind dadurch nicht freigegeben. [Versionsstatus](RUNTIME-SUPPORT.de.md).
+Deutsch: **Podman Desktop 1.30.5 auf macOS ARM64** wurde mit dem öffentlichen 1.0.1-Image geprüft; die folgenden Installationsangaben zielen nach Veröffentlichungsabschluss auf 1.0.2. Das ist noch keine 1.0.2-Registryabnahme: **Images → Pull an image → Run Image → Create and start → Open Browser → admin/admin** bei frischen Daten. Standard-Portzuordnung beibehalten, tatsächlich angezeigte HTTP-Adresse verwenden; keine zusätzlichen URL-/TLS-Variablen erforderlich. Neuladen und Neustart desselben Containers sind geprüft. Erhaltene Daten behalten ihr Passwort. Der Linux-Installer und `podman compose` sind dadurch nicht freigegeben. [Versionsstatus](RUNTIME-SUPPORT.de.md).
 
 The [named-volume CLI variant](acceptance/DESKTOP-1.0.1.md#additional-named-volume-cli-check) was also checked on macOS ARM64 with Podman client/VM engine 6.1.4. For a persistent local test with an explicitly named volume, use the Mac terminal
 (choose another container/volume name if occupied and a free localhost port; use the same port in the browser):
@@ -77,7 +79,7 @@ podman run -d --name hue2lox-test \
   -v hue2lox-data:/data \
   --read-only --tmpfs /tmp --cap-drop=ALL \
   --security-opt=no-new-privileges \
-  docker.io/dubctrl/hue2lox:1.0.1
+  docker.io/dubctrl/hue2lox:1.0.2
 ```
 
 Open **http://localhost:18443**. Keep the named volume for subsequent containers.
@@ -113,14 +115,14 @@ To run read-only (commands answer `403 writes_disabled` and nothing is sent to y
 
 **Installer-created deployments:** use the complete [update/rollback guide](UPDATE-DOCKER.md) / [deutsche Anleitung](UPDATE-DOCKER.de.md), including a cold backup and the exact previous image. It covers local builds and pinned release images.
 
-**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged 1.0.1 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
+**Standalone Compose stacks using `/data`:** first stop the service and back up the complete named volume/bind mount, Compose/env/proxy/TLS configuration and exact current image. Change `image:` explicitly to the reviewed target release tag before `docker compose pull` and `docker compose up -d --no-build --wait`. Pulling the unchanged 1.0.2 tag is not a version upgrade. Verify health, image identity and login with the existing password. For rollback restore the saved Compose settings, exact old image and matching pre-update volume contents while stopped; image-only downgrades can leave incompatible data. Never use `down -v` or delete the only volume copy. Follow the stack provider's volume backup/restore procedure; the installer staging tool is not for standalone stacks.
 
 ## Settings
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `PORT` | `8443` | Listen port |
-| `HUE_PUBLIC_URL` | unset | Direct localhost/private-IP HTTP(S) uses the actual browser address/mapped port in 1.0.1. Set an exact URL for a proxy/custom DNS; explicit HTTPS uses Secure cookies |
+| `HUE_PUBLIC_URL` | unset | Direct localhost/private-IP HTTP(S) uses the actual browser address/mapped port in 1.0.2. Set an exact URL for a proxy/custom DNS; explicit HTTPS uses Secure cookies |
 | `HUE2LOX_ADMIN_PASSWORD` | `admin` | Initial admin password, applied only when no credentials exist yet |
 | `HUE_WRITES_ENABLED` | `1` | Allow switching and dimming (see Lamp control) |
 | `HUE_COLOR_ENABLED` | `1` | Allow RGB colour commands |

@@ -10,7 +10,8 @@ work=$(mktemp -d /tmp/hue2lox-native-ci.XXXXXXXX)
 container="hue2lox-native-ci-$$"
 cleanup() { docker rm -f "$container" >/dev/null 2>&1 || true; rm -rf -- "$work"; }
 trap cleanup EXIT HUP INT TERM
-(cd "$repo" && python3 scripts/release-image.py source-packages --version 1.0.1 --output "$work/packages")
+package_version=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$repo/install/release-image.json")
+(cd "$repo" && python3 scripts/release-image.py source-packages --version "$package_version" --output "$work/packages")
 python3 "$repo/scripts/build-native-package.py" --version 0.0.0-ci.2 --output "$work/packages"
 # Internet is used only to prepare this generic OS image, before the application runs.
 cat > "$work/Dockerfile" <<'EOF'
@@ -36,6 +37,6 @@ for attempt in $(seq 1 60); do
 done
 [ "$ready" = true ] || { docker logs "$container"; echo 'Real systemd did not start.'; exit 1; }
 docker exec "$container" sh -c 'test "$(uname -m)" = x86_64; cat /etc/os-release; python3 --version'
-docker exec -e CI=true -e HUE2LOX_CI_BASE_PACKAGE=/packages/hue2lox-1.0.1-native.tar.gz \
+docker exec -e CI=true -e "HUE2LOX_CI_BASE_PACKAGE=/packages/hue2lox-$package_version-native.tar.gz" \
     "$container" python3 /source/scripts/check-native-lifecycle.py
 printf '%s\n' 'PASS: isolated Linux amd64 container with real systemd; no external network or hardware.'
