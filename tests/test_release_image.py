@@ -171,7 +171,8 @@ class ReleaseTests(unittest.TestCase):
 
                 with patch.object(m.subprocess, 'run', side_effect=command), \
                      patch.object(m, 'verify_inventory', return_value='image-id'):
-                    assets = m.prepare(info)
+                    with patch.dict(os.environ, {'TZ': 'Pacific/Honolulu'}):
+                        assets = m.prepare(info)
                 with zipfile.ZipFile(assets / 'hue2lox-v1.0.0-rc.6.zip') as archive:
                     self.assertEqual(archive.read('hue2lox-v1.0.0-rc.6/README.md'), b'committed source')
                     self.assertFalse(any('private-untracked' in name for name in archive.namelist()))
@@ -186,7 +187,8 @@ class ReleaseTests(unittest.TestCase):
                     for name, expected in manifest['files'].items():
                         self.assertEqual(hashlib.sha256(archive.extractfile('hue2lox-native/' + name).read()).hexdigest(), expected)
                 Path('second').mkdir()
-                m.prepare_source_packages(info, Path('second'))
+                with patch.dict(os.environ, {'TZ': 'Asia/Tokyo'}):
+                    m.prepare_source_packages(info, Path('second'))
                 self.assertEqual((assets / native_name).read_bytes(), (Path('second') / native_name).read_bytes())
                 self.assertEqual((assets / 'hue2lox-v1.0.0-rc.6.zip').read_bytes(), (Path('second') / 'hue2lox-v1.0.0-rc.6.zip').read_bytes())
                 for line in (assets / 'SHA256SUMS.txt').read_text().splitlines():

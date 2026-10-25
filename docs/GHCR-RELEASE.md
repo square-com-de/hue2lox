@@ -197,3 +197,9 @@ Before creating a stable tag or publishing a GitHub stable release:
 ### Deutsch
 
 Das Gate gilt erst für neue Release-Commits nach Merge dieses PRs; alte Releases/Workflows bleiben unverändert. Der Datensatz ist bewusst geschlossen und nennt noch keine freigegebene nächste Version. Vor Stable-Tag/GitHub-Veröffentlichung: Version und endgültige Anleitungen vorbereiten, exakten Kandidaten unabhängig abnehmen lassen, DE/EN-Review und Betreiberfreigabe mit bereinigten GitHub-Nachweisen für die vier Prüfbereiche dokumentieren. `source-fingerprint` auf dem sauberen Commit ausführen; erst danach ausschließlich den Freigabedatensatz mit Version, Inhaltsfingerprint, Nachweisen und ausdrücklicher Genehmigung committen. Andere Code-/Dokuänderungen entwerten die Abnahme. `check-readiness --version GEWAEHLTE_VERSION` muss vor dem Taggen erfolgreich sein. Keine Checkliste automatisch aus grüner CI freischalten. Das Gate ersetzt keine Hardwareabnahme und erlaubt kein Produktivupdate; RC-/lokale Kandidatenvorbereitung bleibt möglich.
+
+### Reproduzierbare Offline-Archive / reproducible offline archives
+
+Der Release-Builder setzt für `git archive` ausdrücklich `TZ=UTC`, damit dieselbe Commit-ID unabhängig von der Zeitzone des Build-Hosts dasselbe Quellcode-ZIP erzeugt. Für historische RC6-Stände ohne diese Normalisierung muss bei manueller Reproduktion `TZ=UTC` gesetzt werden. Bestehende Release-Dateien werden nicht ersetzt.
+
+The release builder explicitly sets `TZ=UTC` for `git archive` so the same commit produces identical source ZIP bytes regardless of the build host timezone. When manually reproducing historical RC6 sources without this normalization, set `TZ=UTC`. Existing release assets remain unchanged.
