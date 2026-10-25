@@ -52,7 +52,7 @@ Für dauerhaften Betrieb ein **benanntes Volume** verwenden und bei Updates erne
 3. **http://SERVER-IP:18443** mit der LAN-IP dieses Docker-Servers öffnen. Frische Daten: **admin/admin**, danach Passwort ändern. Das ist HTTP im vertrauenswürdigen LAN; für HTTPS siehe unten.
 4. Unter **Inspect → Mounts** prüfen: `Destination: /data`, Typ `volume`, `RW: true`. Container muss gesund sein; Browserlogin zusätzlich prüfen.
 
-Bei Updates denselben Stack und dessen Volume behalten. Ein anderer Stackname kann einen neuen Datenbestand erzeugen. Die Daten liegen auf dem **Docker-Server der ausgewählten Umgebung**, nicht auf dem Browser-PC. Das ist kein Swarm- oder Docker-Desktop-Profil. Die genaue Portainer-Oberfläche und dieser aktualisierte Stackweg benötigen noch eine unabhängige Abnahme; die Compose-Datei des veröffentlichten Tags `v1.0.1` bleibt unverändert.
+Bei Updates denselben Stack und dessen Volume behalten. Ein anderer Stackname kann einen neuen Datenbestand erzeugen. Die Daten liegen auf dem **Docker-Server der ausgewählten Umgebung**, nicht auf dem Browser-PC. Das ist kein Swarm- oder Docker-Desktop-Profil. Der Stackweg ist mit Portainer CE2.45.3 LTS auf Ubuntu26.04.1/Docker29.9.2 praktisch geprüft ([Nachweis](acceptance/FINAL-CONTAINER-2026-10-25.md)); die Compose-Datei des veröffentlichten Tags `v1.0.1` bleibt unverändert.
 
 ### Podman Desktop und eigener Ordner
 

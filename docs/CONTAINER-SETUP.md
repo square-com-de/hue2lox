@@ -52,7 +52,7 @@ For persistent use, choose a **named volume** and mount the same volume at `/dat
 3. Open **http://SERVER-IP:18443**, using that Docker server’s LAN IP. Fresh data: **admin/admin**, then change the password. This is HTTP on a trusted LAN; see below for HTTPS.
 4. Under **Inspect → Mounts**, check `Destination: /data`, type `volume`, `RW: true`. The container must be healthy; also check browser login.
 
-Keep the same stack and its volume during updates. A different stack name can create fresh data. Storage lives on the **Docker server managed by the selected environment**, not the browser computer. This is not a Swarm or Docker Desktop profile. The precise Portainer UI and this revised stack flow still need independent acceptance; the published `v1.0.1` tag’s Compose file remains unchanged.
+Keep the same stack and its volume during updates. A different stack name can create fresh data. Storage lives on the **Docker server managed by the selected environment**, not the browser computer. This is not a Swarm or Docker Desktop profile. The actual stack flow passed with Portainer CE2.45.3 LTS on Ubuntu26.04.1/Docker29.9.2 ([evidence](acceptance/FINAL-CONTAINER-2026-10-25.md)); the published `v1.0.1` tag’s Compose file remains unchanged.
 
 ### Podman Desktop and host folders
 
