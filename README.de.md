@@ -57,7 +57,7 @@ docker compose up -d --wait &&
 docker compose ps
 ```
 
-Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht; HTTPS und weitere Einstellungen sind optional in der [Container-Anleitung](docs/CONTAINER-SETUP.de.md) erklärt. Die isolierte VM-Abnahme verwendete dieselbe Datei mit Testport **18444**, weil 18443 dort bereits belegt war; normale Vorgabe ist 18443.
+Dann **http://SERVER-IP:18443** mit der privaten IP des Linux-Servers öffnen. Frische Daten: **admin / admin**, danach Passwort ändern. Das Volume entsteht automatisch; Ordner/Projekt und Volume bei Updates behalten. HTTP ist für ein vertrauenswürdiges LAN gedacht; HTTPS und weitere Einstellungen sind optional in der [Container-Anleitung](docs/CONTAINER-SETUP.de.md) erklärt. Eine historische 1.0.1-VM-Abnahme verwendete Testport **18444**; die normale Vorgabe bleibt 18443. Für das 1.0.2-Artefakt gilt der eigene Prüfumfang der Release-Hinweise.
 
 1. **Container vorbereiten:** Die [Compose-Schnellstartdatei](docker/compose.quickstart.yaml) nach der [kurzen Anleitung](docs/CONTAINER-SETUP.de.md#schnellstart-docker-auf-einem-linux-server) starten. Docker/Compose müssen vorhanden und Port 18443 frei sein. Browserlogin und Datenerhalt sind unabhängig geprüft; [genauer Testumfang und Grenzen](docs/CONTAINER-ACCEPTANCE-1.0.1.md).
 2. **Anmelden:** Angezeigte HTTP-/HTTPS-Adresse verwenden; Port 8443 allein bedeutet kein HTTPS. Frische Daten: `admin/admin`; erhaltene Daten: bisheriges Passwort. Bei HTTPS das Zertifikat prüfen.
