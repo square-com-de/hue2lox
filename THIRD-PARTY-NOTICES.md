@@ -4,7 +4,7 @@ Reviewed: 23 October 2026 for the unpublished RC6 preparation. Original Hue2Lox 
 
 ## Navigation and header icons – Iconoir
 
-Twelve Regular icons from Iconoir v7.12.1: dashboard, light-bulb, sparks, network, activity, settings, refresh, key, log-out, arrow-right, eye and eye-closed. Original geometry is combined into the local SVG symbol sprite `web/sidebar-icons.svg` and the inline login arrow in `web/index.html`; no CDN, font or JavaScript dependency is used. These navigation icons are separate from the original Hue2Lox lamp-shape icons below.
+Thirteen Regular icons from Iconoir v7.12.1: dashboard, light-bulb, sparks, network, activity, settings, refresh, key, log-out, arrow-right, eye, eye-closed and user. Original geometry is combined into the local SVG symbol sprite `web/sidebar-icons.svg` and the inline login arrow in `web/index.html`; no CDN, font or JavaScript dependency is used. These navigation icons are separate from the original Hue2Lox lamp-shape icons below.
 
 - Source: https://github.com/iconoir-icons/iconoir/tree/v7.12.1/icons/regular
 - Copyright (c) 2021 Luca Burgio. License: MIT. The complete original notice is retained in `web/sidebar-icons-LICENSE.txt` and served at `/assets/sidebar-icons-license.txt`.
