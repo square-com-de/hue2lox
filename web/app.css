@@ -169,3 +169,36 @@ header>div{min-width:0}
 #login-form .login-password-field input{padding-right:44px}
 #login-form #toggle-login-password{position:absolute;right:1px;top:8px;width:40px;height:40px;min-height:0;padding:0;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:6px;color:var(--muted)}
 #login-form #toggle-login-password:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
+
+/* Shared suite sidebar: live session identity and release, original Hue branding. */
+body>aside{width:240px;padding:24px;background:#173b30;color:#b8cbc1;overflow-y:auto}
+aside .brand{height:174px;flex-shrink:0;margin-bottom:24px;justify-content:center}
+.brand-logo-crop{position:relative;display:block;width:192px;height:112.34px;overflow:hidden;flex-shrink:0}
+aside .brand .brand-logo{position:absolute;width:206.33px;max-width:none;height:auto;left:-7.45px;top:-12.04px}
+aside nav{display:flex;flex-direction:column;gap:8px;margin-top:0}
+aside nav button{min-height:50px;width:100%;gap:14px;padding:11px 14px;font-size:14px;line-height:20px;font-weight:500;color:#b8cbc1;flex-shrink:0}
+aside nav button>span{flex:1;min-width:0;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;word-break:normal}
+aside nav .sidebar-icon{width:20px;height:20px;flex:0 0 20px}
+aside nav button.active{background:#2d5141;color:#c4e98b}
+aside nav button:hover{background:#2d5141}
+aside .sidefoot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:18px;border-top:1px solid #b8cbc12e;white-space:nowrap;color:#b8cbc1;flex-shrink:0}
+aside nav{padding-bottom:24px}
+.signed-in{display:flex;align-items:center;gap:6px;min-width:0;flex:1;font-size:12px;line-height:20px;font-weight:500}
+.signed-in svg{width:17px;height:17px;flex-shrink:0}
+.signed-in #admin-user{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-release{font-size:11px;line-height:18px;font-weight:400;color:#94afa1;flex-shrink:0;max-width:calc(100% - 32px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body>main{margin-left:240px}
+@media(max-width:700px){body>aside{position:static;width:auto}aside nav{flex-direction:row;flex-wrap:wrap}aside nav button{width:auto;flex:1 1 150px}aside .sidefoot{margin-top:0}body>main{margin-left:0}}
+
+/* Compact app header; login language controls keep their existing layout. */
+main>header{align-items:flex-start;gap:12px;margin-bottom:20px}
+main>header h1{font-size:28px;line-height:1.2;letter-spacing:-.6px;margin:0}
+main>header #subtitle{font-size:12px;line-height:18px;margin:6px 0 0;color:var(--muted)}
+main>header .header-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;margin-left:auto}
+main>header .header-utility,main>header .header-buttons{display:contents}
+main>header .language-switch{display:inline-flex;height:28px;gap:0;padding:2px;border:1px solid #d6dfce;border-radius:6px;background:#fff}
+main>header .language-switch button{font-size:11px;line-height:16px;font-weight:500;white-space:nowrap;padding:2px 7px;margin:0;min-height:0;border:0;border-radius:3px;background:#fff;color:var(--ink)}
+main>header .language-switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
+main>header .header-buttons button{height:28px;min-height:28px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #d6dfce;border-radius:7px;padding:0 8px;background:#fff;color:var(--ink);font-size:11px;line-height:16px;font-weight:500;white-space:nowrap}
+main>header .header-buttons button span{overflow-wrap:normal}
+main>header .header-icon{width:14px;height:14px;flex:0 0 14px}

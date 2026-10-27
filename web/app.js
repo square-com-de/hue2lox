@@ -1,6 +1,6 @@
 'use strict';
 const $=s=>document.querySelector(s);
-const names={monitor:[t('HTTP-Monitor.'),t('Loxone-Befehlen auf der Spur.')],scenes:[t('Lichtstimmungen im Griff.'),t('In Hue gestaltet. Über Loxone abgerufen.')],overview:[t('Hue im Griff.'),t('Dein Licht in besten Armen. Mit Hue2Lox.')],lights:[t('Jede Lampe im Griff.'),t('Fähigkeiten, Befehle und XML direkt zur Hand.')],bridges:[t('Bridges in besten Armen.'),t('Mehrere Bridges verbinden und gemeinsam verwalten.')],loxone:[t('Loxone-Einstellungen.'),t('Miniserver und Zugriffstoken verwalten.')]};
+const names={overview:[t("Übersicht"),t("Bridges, Lampen und aktuelle Zustände im Überblick.")],lights:[t("Lampen"),t("Lampen verwalten und Steuerbefehle für Loxone exportieren.")],scenes:[t("Szenen"),t("Hue-Szenen einlesen und für Loxone konfigurieren.")],bridges:[t("Bridges"),t("Hue Bridges suchen, koppeln und verwalten.")],monitor:[t("HTTP-Monitor"),t("Eingehende Loxone-Anfragen und Hue-Antworten prüfen.")],loxone:[t("Loxone-Einstellungen"),t("Miniserver-Link und Zugriffstoken verwalten.")]};
 let data=null,busy=false,filteredLights=[];
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
 function badge(text,kind=''){return node('span',text,'badge '+kind);}

@@ -161,7 +161,7 @@
   "Hue im Griff.": "Get a grip on Hue.",
   "Hue-Szenen": "Hue scenes",
   "Hue2Lox Zugriffstoken": "Hue2Lox access token",
-  "Hue2Lox · Hue im Griff": "Hue2Lox · Get a grip on Hue",
+  "hue2lox · Hue im Griff": "hue2lox · Get a grip on Hue",
   "IP-Adresse": "IP address",
   "Ignorieren": "Ignore",
   "Ignoriert": "Ignored",
@@ -443,5 +443,12 @@
   "Dein Licht in besten Armen.": "Your lights in good hands.",
   "Standard-Anmeldung: admin / admin": "Initial login: admin / admin",
   "Passwort anzeigen": "Show password",
-  "Passwort verbergen": "Hide password"
+  "Passwort verbergen": "Hide password",
+  "Bridges": "Bridges",
+  "Bridges, Lampen und aktuelle Zustände im Überblick.": "View bridges, lights and their current states.",
+  "Lampen verwalten und Steuerbefehle für Loxone exportieren.": "Manage lights and export control commands for Loxone.",
+  "Hue-Szenen einlesen und für Loxone konfigurieren.": "Import Hue scenes and configure them for Loxone.",
+  "Hue Bridges suchen, koppeln und verwalten.": "Find, pair and manage Hue Bridges.",
+  "Eingehende Loxone-Anfragen und Hue-Antworten prüfen.": "Inspect incoming Loxone requests and Hue responses.",
+  "Miniserver-Link und Zugriffstoken verwalten.": "Manage the Miniserver link and access token."
 }

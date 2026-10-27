@@ -49,7 +49,7 @@ while i<len(lines):
     paragraph=[line];i+=1
     while i<len(lines) and lines[i].strip() and not re.match(r'^(#|\||```|!\[|- |\d+\. )',lines[i]):paragraph.append(lines[i]);i+=1
     body.append('<p>'+inline(' '.join(paragraph))+'</p>')
-page='<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hue2Lox · Anleitung für Loxone Config</title><link rel="stylesheet" href="/assets/tutorial.css"></head><body><nav><a href="/">← Zurück zu Hue2Lox</a><span>ANLEITUNG</span></nav><main>'+''.join(body)+'</main><footer>Hue2Lox · by square | com</footer></body></html>\n'
+page='<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>hue2lox · Anleitung für Loxone Config</title><link rel="stylesheet" href="/assets/tutorial.css"></head><body><nav><a href="/">← Zurück zu Hue2Lox</a><span>ANLEITUNG</span></nav><main>'+''.join(body)+'</main><footer>Hue2Lox · by square | com</footer></body></html>\n'
 if LANG=='en':
     page=page.replace('lang="de"','lang="en"').replace('Anleitung für Loxone Config','Loxone Config guide').replace('← Zurück zu Hue2Lox','← Back to Hue2Lox').replace('ANLEITUNG','GUIDE').replace('Anklicken zum Vergrößern','Click to enlarge')
 page=page.replace('</nav>','<a href="/tutorial">Deutsch</a><a href="/tutorial/en">English</a></nav>')
