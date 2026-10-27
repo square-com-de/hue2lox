@@ -105,3 +105,12 @@ function lampIconPicker(light){
  };
  wrap.append(select);return wrap;
 }
+
+// Local password visibility only; credentials and submission remain unchanged.
+(()=>{
+ const input=document.querySelector('#login-password'),button=document.querySelector('#toggle-login-password');
+ function render(){const showing=input.type==='text';button.setAttribute('aria-pressed',String(showing));button.setAttribute('aria-label',t(showing?'Passwort verbergen':'Passwort anzeigen'));button.querySelector('use').setAttribute('href','/assets/sidebar-icons.svg#'+(showing?'eye-closed':'eye'));}
+ button.addEventListener('click',()=>{input.type=input.type==='password'?'text':'password';render();});
+ document.querySelector('#login-form').addEventListener('submit',()=>{input.type='password';render();});
+ render();
+})();

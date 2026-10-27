@@ -438,5 +438,10 @@
   "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.": "Anmeldung fehlgeschlagen. Bitte Serverkonfiguration und Verbindung prüfen.",
   "Lokale Verwaltung": "Lokale Verwaltung",
   "Version unbekannt": "Version unbekannt",
-  "Hue2Lox · Entwicklungsbuild": "Hue2Lox · Entwicklungsbuild"
+  "Hue2Lox · Entwicklungsbuild": "Hue2Lox · Entwicklungsbuild",
+  "Aktualisieren": "Aktualisieren",
+  "Dein Licht in besten Armen.": "Dein Licht in besten Armen.",
+  "Standard-Anmeldung: admin / admin": "Standard-Anmeldung: admin / admin",
+  "Passwort anzeigen": "Passwort anzeigen",
+  "Passwort verbergen": "Passwort verbergen"
 }

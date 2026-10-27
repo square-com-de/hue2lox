@@ -132,3 +132,40 @@ body[data-page="scenes"] #notice:not(.error){display:none}
 nav .sidebar-icon{width:22px;height:22px;flex:0 0 22px;display:block;pointer-events:none}nav button{gap:14px}nav button>span{min-width:0;overflow-wrap:anywhere}
 
 .scene-switch-settings{margin:8px 0 12px;min-width:0}.scene-switch-controls{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.scene-switch-controls label{display:flex;align-items:center;gap:8px;font-size:13px}.scene-switch-controls select{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);max-width:100%}.scene-switch-settings p{margin:8px 0}.scene-switch-settings .info{overflow-wrap:anywhere}@media(max-width:700px){.scene-switch-controls label{flex-wrap:wrap;max-width:100%}}
+
+/* Compact language/account utility and matching header actions. */
+header>div{min-width:0}
+.header-actions{justify-content:flex-end;min-width:0}
+.header-utility{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0;max-width:100%}
+.header-utility #admin-user{font-size:12px;color:var(--muted);overflow-wrap:anywhere;min-width:0}
+.language-switch{display:inline-flex;gap:2px;border:1px solid var(--line);border-radius:5px;padding:2px;flex-shrink:0}
+.language-switch button{font-size:11px;line-height:1;padding:4px 8px;margin:0;min-height:0;background:transparent;color:var(--muted);border:0;border-radius:3px}
+.language-switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.header-buttons{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;max-width:100%}
+.header-buttons button{display:inline-flex;align-items:center;justify-content:center;gap:7px;max-width:100%;min-width:0}
+.header-buttons button span{min-width:0;overflow-wrap:anywhere}
+.header-icon{flex:none;stroke:currentColor}
+@media(max-width:1050px){header{flex-wrap:wrap}.header-actions{margin-left:auto}}
+@media(max-width:700px){.header-actions{width:100%;gap:10px}.header-buttons{gap:7px}}
+
+/* Shared 410px login geometry, preserving Hue branding and authentication. */
+#login-screen{padding:25px;font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#login-form{width:min(410px,100%);max-width:410px;margin:0;padding:40px 42px;border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 70px #192c2508;min-width:0}
+#login-form .login-utility{display:flex;justify-content:flex-end;align-items:center;margin:0 0 14px}
+#login-form .language-switch{border-radius:7px;overflow:hidden;gap:0;padding:0}
+#login-form .language-switch button{border:0;border-radius:0;padding:5px 9px;margin:0;font:inherit;font-size:11px;line-height:1.55;min-width:0;min-height:0}
+#login-form>.login-logo{width:300px;max-width:100%;height:auto;object-fit:contain;margin:0 auto 18px}
+#login-form .login-tagline{font-size:13px;line-height:1.55;font-weight:400;color:var(--muted);margin:0 0 30px;text-align:center;white-space:nowrap}
+#login-form>label{display:block;font-size:12px;line-height:1.55;font-weight:500;margin:0}
+#login-form input{display:block;width:100%;height:auto;min-height:0;padding:11px 12px;border:1px solid var(--line);border-radius:7px;margin:7px 0 15px;color:var(--ink);font:inherit;font-size:12px;line-height:1.55;min-width:0}
+#login-submit{width:100%;height:auto;min-height:0;margin:7px 0 0;padding:12px 18px;display:inline-flex;align-items:center;justify-content:center;gap:16px;border:0;border-radius:8px;font:inherit;font-size:13px;line-height:1.55;font-weight:550;white-space:nowrap}
+#login-submit svg{width:13px;height:13px;flex:none}
+#login-message{min-height:20px;font-size:12px;line-height:1.55;margin:12px 0 0;text-align:left;overflow-wrap:anywhere}
+#login-form .login-footer{text-align:center;padding:0;margin:4.5px 0 0;color:var(--muted);font-size:10px;line-height:1.55}
+#login-form .login-footer p,#login-form .login-footer span{display:block;font:inherit;margin:0}
+@media(max-width:450px){#login-form{padding:30px 25px}}
+
+#login-form .login-password-field{display:flow-root;position:relative}
+#login-form .login-password-field input{padding-right:44px}
+#login-form #toggle-login-password{position:absolute;right:1px;top:8px;width:40px;height:40px;min-height:0;padding:0;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:6px;color:var(--muted)}
+#login-form #toggle-login-password:focus-visible{outline:2px solid currentColor;outline-offset:-3px}

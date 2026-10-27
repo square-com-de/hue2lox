@@ -31,4 +31,26 @@
 <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M19.6224 10.3954L18.5247 7.7448L20 6L18 4L16.2647 5.48295L13.5578 4.36974L12.9353 2H10.981L10.3491 4.40113L7.70441 5.51596L6 4L4 6L5.45337 7.78885L4.3725 10.4463L2 11V13L4.40111 13.6555L5.51575 16.2997L4 18L6 20L7.79116 18.5403L10.397 19.6123L11 22H13L13.6045 19.6132L16.2551 18.5155C16.6969 18.8313 18 20 18 20L20 18L18.5159 16.2494L19.6139 13.598L21.9999 12.9772L22 11L19.6224 10.3954Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
+<symbol id="refresh" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+<path d="M21.8883 13.5C21.1645 18.3113 17.013 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C16.1006 2 19.6248 4.46819 21.1679 8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17 8H21.4C21.7314 8 22 7.73137 22 7.4V3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="key" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+<path d="M10 12C10 14.2091 8.20914 16 6 16C3.79086 16 2 14.2091 2 12C2 9.79086 3.79086 8 6 8C8.20914 8 10 9.79086 10 12ZM10 12H22V15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M18 12V15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="log-out" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+<path d="M12 12H19M19 12L16 15M19 12L16 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="eye" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+<path d="M3 13C6.6 5 17.4 5 21 13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 17C10.3431 17 9 15.6569 9 14C9 12.3431 10.3431 11 12 11C13.6569 11 15 12.3431 15 14C15 15.6569 13.6569 17 12 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="eye-closed" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+<path d="M19.5 16L17.0248 12.6038" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 17.5V14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.5 16L6.96895 12.6124" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3 8C6.6 16 17.4 16 21 8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
 </svg>
