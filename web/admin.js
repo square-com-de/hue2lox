@@ -116,4 +116,4 @@ function lampIconPicker(light){
 })();
 
 // The server release label already includes the product name.
-(()=>{const release=document.querySelector('#release-version');if(!release)return;const version=release.textContent.trim().replace(/^Hue2Lox\s*(?:[·:]\s*)?/i,'');release.textContent='Hue2Lox · '+version;release.title=release.textContent;})();
+(()=>{const release=document.querySelector('#release-version');if(!release)return;const version=release.textContent.trim().replace(/^Hue2Lox\s*(?:[·:]\s*)?/i,'');release.textContent='hue2lox · '+version;release.title=release.textContent;})();
