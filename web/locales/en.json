@@ -441,5 +441,7 @@
   "Hue2Lox · Entwicklungsbuild": "Hue2Lox · Development build",
   "Aktualisieren": "Refresh",
   "Dein Licht in besten Armen.": "Your lights in good hands.",
-  "Standard-Anmeldung: admin / admin": "Initial login: admin / admin"
+  "Standard-Anmeldung: admin / admin": "Initial login: admin / admin",
+  "Passwort anzeigen": "Show password",
+  "Passwort verbergen": "Hide password"
 }

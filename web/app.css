@@ -164,3 +164,8 @@ header>div{min-width:0}
 #login-form .login-footer{text-align:center;padding:0;margin:4.5px 0 0;color:var(--muted);font-size:10px;line-height:1.55}
 #login-form .login-footer p,#login-form .login-footer span{display:block;font:inherit;margin:0}
 @media(max-width:450px){#login-form{padding:30px 25px}}
+
+#login-form .login-password-field{display:flow-root;position:relative}
+#login-form .login-password-field input{padding-right:44px}
+#login-form #toggle-login-password{position:absolute;right:1px;top:8px;width:40px;height:40px;min-height:0;padding:0;margin:0;display:flex;align-items:center;justify-content:center;background:transparent;border:0;border-radius:6px;color:var(--muted)}
+#login-form #toggle-login-password:focus-visible{outline:2px solid currentColor;outline-offset:-3px}
