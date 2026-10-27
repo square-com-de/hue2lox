@@ -189,3 +189,16 @@ aside nav{padding-bottom:24px}
 .sidebar-release{font-size:11px;line-height:18px;font-weight:400;color:#94afa1;flex-shrink:0;max-width:calc(100% - 32px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body>main{margin-left:240px}
 @media(max-width:700px){body>aside{position:static;width:auto}aside nav{flex-direction:row;flex-wrap:wrap}aside nav button{width:auto;flex:1 1 150px}aside .sidefoot{margin-top:0}body>main{margin-left:0}}
+
+/* Compact app header; login language controls keep their existing layout. */
+main>header{align-items:flex-start;gap:12px;margin-bottom:20px}
+main>header h1{font-size:28px;line-height:1.2;letter-spacing:-.6px;margin:0}
+main>header #subtitle{font-size:12px;line-height:18px;margin:6px 0 0;color:var(--muted)}
+main>header .header-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;margin-left:auto}
+main>header .header-utility,main>header .header-buttons{display:contents}
+main>header .language-switch{display:inline-flex;height:28px;gap:0;padding:2px;border:1px solid #d6dfce;border-radius:6px;background:#fff}
+main>header .language-switch button{font-size:11px;line-height:16px;font-weight:500;white-space:nowrap;padding:2px 7px;margin:0;min-height:0;border:0;border-radius:3px;background:#fff;color:var(--ink)}
+main>header .language-switch button[aria-pressed="true"]{background:var(--ink);color:#fff}
+main>header .header-buttons button{height:28px;min-height:28px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid #d6dfce;border-radius:7px;padding:0 8px;background:#fff;color:var(--ink);font-size:11px;line-height:16px;font-weight:500;white-space:nowrap}
+main>header .header-buttons button span{overflow-wrap:normal}
+main>header .header-icon{width:14px;height:14px;flex:0 0 14px}
